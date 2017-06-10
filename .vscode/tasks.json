@@ -1,0 +1,83 @@
+{
+    "version": "0.1.0",
+    
+    "tasks": [
+        { 
+            "taskName": "Package: zip",
+            "command": "ant",
+            "isShellCommand": true,
+            "showOutput": "always",
+            "echoCommand": true,
+            "suppressTaskName": true,
+            "args": ["-f", "${workspaceRoot}/build.xml", "zip"]
+        },
+        { 
+            "taskName": "Package: clean",
+            "command": "ant",
+            "isShellCommand": true,     
+            "showOutput": "always",
+            "echoCommand": true,
+            "suppressTaskName": true,
+            "args": ["-f", "${workspaceRoot}/build.xml", "clean"]
+        },
+        { 
+            "taskName": "Component: symlink",
+            "command": "ant",
+            "isShellCommand": true,     
+            "showOutput": "always",
+            "echoCommand": true,
+            "suppressTaskName": true,
+            "args": ["-f", "${workspaceRoot}/component/build.xml", "symlink"]
+        },
+        { 
+            "taskName": "Component: zip",
+            "command": "ant",
+            "isShellCommand": true,     
+            "showOutput": "always",
+            "echoCommand": true,
+            "suppressTaskName": true,
+            "args": ["-f", "${workspaceRoot}/component/build.xml", "zipComponent"]
+        },
+        { 
+            "taskName": "Component: clean",
+            "command": "ant",
+            "isShellCommand": true,     
+            "showOutput": "always",
+            "echoCommand": true,
+            "suppressTaskName": true,
+            "args": ["-f", "${workspaceRoot}/component/build.xml", "clean"]
+        },
+
+        {
+            "taskName": "Docs: make html",
+            "command": "make",
+            "isShellCommand": true,     
+            "showOutput": "always",
+            "echoCommand": true,
+            "suppressTaskName": true,
+            "args": ["-C", "${workspaceRoot}/docs/", "html"]
+        },
+
+        {
+            "taskName": "Docs: clean",
+            "command": "make",
+            "isShellCommand": true,     
+            "showOutput": "always",
+            "echoCommand": true,
+            "suppressTaskName": true,
+            "args": ["-C", "${workspaceRoot}/docs/", "clean"]
+        }
+
+        /**{
+            "taskName": "start php language server",
+            "command": "php",
+            "isShellCommand": true,     
+            "showOutput": "always",
+            "echoCommand": true,
+            "suppressTaskName": true,
+            "args": ["vendor/felixfbecker/language-server/bin/php-language-server.php"]
+        },
+        */
+        
+    ]
+}
