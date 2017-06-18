@@ -4,7 +4,9 @@
 * @copyright  Copyright (C) 2017 Markus Moser. All rights reserved.
 * @license    GNU General Public License version 2 or later; see LICENSE.txt
 */
+
 defined('_JEXEC') or die;
+
 /**
 * sidebar helper
 */
@@ -14,5 +16,8 @@ class TkdclubHelperSidebar
     {
         JHtmlSidebar::addEntry(
             JText::_('COM_TKDCLUB_SIDEBAR_MEMBERS'), 'index.php?option=com_tkdclub&view=members', $vName == 'members');
+
+        JHtmlSidebar::addEntry(
+            JText::_('COM_TKDCLUB_SIDEBAR_TRAININGS'), 'index.php?option=com_tkdclub&view=trainings', $vName == 'trainings');
     }
 }

@@ -4,12 +4,16 @@
 * @copyright  Copyright (C) 2017 Markus Moser. All rights reserved.
 * @license    GNU General Public License version 2 or later; see LICENSE.txt
 */
+
 defined('_JEXEC') or die;
+
 /**
 * memberform controller
 */
 class TkdclubControllerMember extends JControllerForm
 {
+    protected $text_prefix = 'COM_TKDCLUB_MEMBER';
+
     public function __construct($config = array())
     {
         parent::__construct($config);
@@ -24,7 +28,6 @@ class TkdclubControllerMember extends JControllerForm
         
         //calling the Model with upload functionality
         $this->getModel()->uploadfile();
-        
         
         //setting the redirect back to the edited item
         $this->setRedirect
@@ -42,8 +45,6 @@ class TkdclubControllerMember extends JControllerForm
     */
     public function save($key = null, $urlVar = null)
     {
-        //setting cusom prefix for language string
-        $this->text_prefix = 'COM_TKDCLUB_MEMBER';
         //getting the saving user and the current datetime
         $user_id = JFactory::getUser()->id;
         $date = JFactory::getDate()->toSql();

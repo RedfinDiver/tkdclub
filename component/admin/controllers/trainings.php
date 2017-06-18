@@ -7,17 +7,15 @@
 
 defined('_JEXEC') or die;
 
-/**
-* listview members controller
-*/
-class TkdclubControllerMembers extends JControllerAdmin
+class TkdClubControllerTrainings extends JControllerAdmin
 {
-    protected $text_prefix = 'COM_TKDCLUB_MEMBER';
+    protected $text_prefix = 'COM_TKDCLUB_TRAINING';
 
-    public function getModel($name = 'member', $prefix = 'TkdClubModel', $config = array())
+    public function getModel($name = 'training', $prefix = 'TkdClubModel', $config = array())
     {
         $config['ignore_request'] = true;
         $model = parent::getModel($name, $prefix, $config);
         return $model;
     }
+
 }

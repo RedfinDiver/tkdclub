@@ -45,7 +45,7 @@ JFactory::getDocument()->addScriptDeclaration("
     <div class="form-horizontal">
 	    <?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'personal')); ?>
                          
-            <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'personal', empty($this->item->member_id) ? JText::_('COM_TKDCLUB_MEMBER_NEW', true) : JText::_('COM_TKDCLUB_MEMBER_EDIT', true)); ?>
+            <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'personal', empty($this->item->member_id) ? JText::_('COM_TKDCLUB_MEMBER_NEW_TAB', true) : JText::_('COM_TKDCLUB_MEMBER_EDIT', true)); ?>
                 <div class="row-fluid">
                     <div class="span12">
                         <div class="span4">
@@ -160,10 +160,10 @@ JFactory::getDocument()->addScriptDeclaration("
                 <?php endif; ?>
             <?php echo JHtml::_('bootstrap.endTab'); ?>
             
-            <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'item_data', JText::_('COM_TKDCLUB_MEMBER_MODDATA', true)); ?>
+            <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'item_data', JText::_('COM_TKDCLUB_ITEM_DATA', true)); ?>
                 <?php if (empty($this->item->member_id)) : ?>
                     <div class="alert alert-no-items">
-                        <?php echo JText::_('COM_TKDCLUB_NO_MODDATA'); ?>
+                        <?php echo JText::_('COM_TKDCLUB_NO_ITEM_DATA'); ?>
                     </div>
                 <?php else : ?>                          
                     <div> 

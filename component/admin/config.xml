@@ -46,34 +46,26 @@
         label="COM_TKDCLUB_CONFIG_TRAININGS"
         description="COM_TKDCLUB_CONFIG_TRAININGS_DESC" 
         addfieldpath="/administrator/components/com_tkdclub/models/fields">
-    
-            <field
-                name="trainer"
-                label="COM_TKDCLUB_CONFIG_TRAINER"
-                description="COM_TKDCLUB_CONFIG_TRAINER_DESC"
-                type="text" default="" size="60">
-
-             </field>
 
              <field
                 name="training_types"
-                label="COM_TKDCLUB_CONFIG_TYPES"
-                description="COM_TKDCLUB_CONFIG_TYPES_DESC"
+                label="COM_TKDCLUB_CONFIG_TRAINING_TYPES"
+                description="COM_TKDCLUB_CONFIG_TRAINING_TYPES_DESC"
                 type="text" default="" size="60">
 
              </field>
              
              <field
                 name="training_years"
-                label="COM_TKDCLUB_CONFIG_YEARS"
-                description="COM_TKDCLUB_CONFIG_YEAR_DESC"
+                label="COM_TKDCLUB_CONFIG_TRAINING_YEARS"
+                description="COM_TKDCLUB_CONFIG_TRAINING_YEARS_DESC"
                 type="text" default="" size="10" filter="integer">
              </field>
              
               <field
                 name="training_salary"
-                label="COM_TKDCLUB_CONFIG_SALARY"
-                description="COM_TKDCLUB_CONFIG_SALARY_DESC"
+                label="COM_TKDCLUB_CONFIG_TRAINER_SALARY"
+                description="COM_TKDCLUB_CONFIG_TRAINER_SALARY_DESC"
                 type="text" default="" size="10" filter="integer">
              </field>
              

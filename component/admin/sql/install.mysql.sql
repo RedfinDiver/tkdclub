@@ -30,3 +30,27 @@ CREATE TABLE IF NOT EXISTS `#__tkdclub_members` (
   `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`member_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `#__tkdclub_trainings` (
+  `training_id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` date NOT NULL,
+  `trainer` int(5) NOT NULL,
+  `km_trainer` int(4) NOT NULL,
+  `assist1` int(5) NOT NULL,
+  `km_assist1` int(4) NOT NULL,
+  `assist2` int(5) NOT NULL,
+  `km_assist2` int(4) NOT NULL,
+  `assist3` int(5) NOT NULL,
+  `km_assist3` int(4) NOT NULL,
+  `type` varchar(50) NOT NULL,
+  `participants` int(5) NOT NULL,
+  `notes` text NOT NULL,
+  `payment_state` tinyint(3) NOT NULL DEFAULT 0,
+  `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_by` INT(10) unsigned NOT NULL DEFAULT '0',
+  `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `modified_by` INT(10) unsigned NOT NULL DEFAULT '0',
+  `checked_out` int(10) NOT NULL,
+  `checked_out_time` datetime NOT NULL,
+  PRIMARY KEY (`training_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;

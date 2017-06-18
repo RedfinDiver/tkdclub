@@ -41,6 +41,7 @@
 
         <submenu>
            <menu link="option=com_tkdclub&amp;view=members" img="class:icon-tkdclub">COM_TKDCLUB_SUBMENU_MEMBERS</menu>
+           <menu link="option=com_tkdclub&amp;view=trainings"   img="class:icon-tkdclub">COM_TKDCLUB_SUBMENU_TRAININGS</menu>
         </submenu>
         
         <files folder="admin">

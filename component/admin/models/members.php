@@ -54,7 +54,7 @@ class TkdClubModelMembers extends JModelList
 	 *
 	 * @since   1.0
 	 */
-    protected function populateState($ordering = 'member_id', $direction = 'ASC')
+    protected function populateState($ordering = 'm.member_id', $direction = 'ASC')
     {
         /* inputs for search bar filter */
         $search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search', '', 'string');
@@ -106,7 +106,6 @@ class TkdClubModelMembers extends JModelList
         $id	.= ':'.$this->getState('filter.search');
         $id	.= ':'.$this->getState('filter.grade');
         $id	.= ':'.$this->getState('filter.member_state');
-        $id	.= ':'.$this->getState('filter.delete');
 
         return parent::getStoreId($id);
     }
@@ -122,7 +121,7 @@ class TkdClubModelMembers extends JModelList
     {
         $db = $this->getDbo();
         $query = $db->getQuery(true);
-        $query->select('*')->from($db->quoteName('#__tkdclub_members'));
+        $query->select('m.*')->from($db->quoteName('#__tkdclub_members') . ' as m');
 
         $gradeselect = $this->getState('filter.grade');
         switch ($gradeselect)
@@ -131,29 +130,29 @@ class TkdClubModelMembers extends JModelList
                 break; // show all members
 
             case '0':
-                $query->where('grade = ' . (int) $gradeselect); // empty or null field
+                $query->where('m.grade = ' . (int) $gradeselect); // empty or null field
                 break;
 
             case 'students': // show only students
                 $students_list = "'" . implode("','", $this->students_grade) . "'";
-                $query->where('grade IN ('.$students_list.')');
+                $query->where('m.grade IN ('.$students_list.')');
                 break;
             
             case 'masters': // show only masters
                 $masters_list = "'" . implode("','", $this->masters_grade) . "'";
-                $query->where('grade IN ('.$masters_list.')');
+                $query->where('m.grade IN ('.$masters_list.')');
                 break;
 
             default: // default behavier for grades
                 $gs = $db->quote($db->escape($gradeselect, true));
-                $query->where('grade = ' . $gs);
+                $query->where('m.grade = ' . $gs);
         }
 
         $stateselect = $this->getState('filter.member_state');
         if ($stateselect == 'active' || $stateselect == 'inactive' || $stateselect == 'support')
         {
             $ss = $db->quote($db->escape($stateselect, true));
-            $query->where('member_state = ' .$ss);
+            $query->where('m.member_state = ' .$ss);
         } 
 
         $search = $this->getState('filter.search');
@@ -166,19 +165,19 @@ class TkdClubModelMembers extends JModelList
             else
             {
                 $search = $db->quote('%'. $db->escape($search, true).'%');
-                $query->where('member_id LIKE' .$search
-                            .'OR lastname LIKE' .$search
-                            .'OR firstname LIKE' .$search
-                            .'OR street LIKE' .$search
-                            .'OR zip LIKE' .$search
-                            .'OR city LIKE' .$search
-                            .'OR memberpass LIKE' .$search);
+                $query->where('m.member_id LIKE' .$search
+                            .'OR m.lastname LIKE' .$search
+                            .'OR m.firstname LIKE' .$search
+                            .'OR m.street LIKE' .$search
+                            .'OR m.zip LIKE' .$search
+                            .'OR m.city LIKE' .$search
+                            .'OR m.memberpass LIKE' .$search);
             }
         }
 
         // Join over the users for the checked out user.
-		$query->select('uc.name AS editor')
-			->join('LEFT', '#__users AS uc ON uc.id=checked_out');
+		$query->select('u.name AS editor')
+			->join('LEFT', '#__users AS u ON u.id=m.checked_out');
 
         $sort = $this->getState('list.ordering');
         $order = $this->getState('list.direction');

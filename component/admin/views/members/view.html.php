@@ -4,8 +4,11 @@
 * @copyright  Copyright (C) 2017 Markus Moser. All rights reserved.
 * @license    GNU General Public License version 2 or later; see LICENSE.txt
 */
+
 defined('_JEXEC') or die;
+
 JLoader::register('TkdclubHelperActions', JPATH_COMPONENT_ADMINISTRATOR. '/helpers/actions.php');
+
 /**
  * View class for a list of members.
  *
@@ -26,7 +29,6 @@ class TkdClubViewMembers extends JViewLegacy
      */
     public function display($tpl = null)
     {
-
         $this->items = $this->get('Items');
         $this->state = $this->get('State');
         $this->pagination = $this->get('Pagination');
