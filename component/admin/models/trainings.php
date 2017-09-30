@@ -174,14 +174,14 @@ class TkdClubModelTrainings extends JModelList
     }
 
     /**
-        * Method to calculate trainer salary
-        * The given parameters are used to calculate, so please define them to get
-        * the right calculation
-        * 
-        * @param  type float $km distance made by car for training
-        * @return type float The calculated trainer salary
-        * 
-        */
+     * Method to calculate trainer salary
+     * The given parameters are used to calculate, so please define them to get
+     * the right calculation
+     * 
+     * @param  type float $km distance made by car for training
+     * @return type float The calculated trainer salary
+     * 
+     */
     public static function getTrainerSalary($km)
     {
         $training = JComponentHelper::getParams('com_tkdclub')->get('training_salary', 0);
@@ -289,11 +289,10 @@ class TkdClubModelTrainings extends JModelList
     /**
      * Get all the data for a specific trainer
      *
-     * With this function one gets the data for every trainer in the database
+     * This function gets the data for every trainer in the database
      *
-     * @param Type $var Description
-     * @return type
-     * @throws conditon
+     * @return  mixed   The data for the trainers
+     *
      **/
     public function getTrainerData()
     {   
@@ -305,39 +304,46 @@ class TkdClubModelTrainings extends JModelList
         // getting all trainer names from database
         $names = $this->get_all_trainer_from_database();
 
-        // loop through the trainer names an get their data
+        // getting all trainingyears from the database
+        $training_years = $this->get_all_training_years_from_database();
+
+        // loop through the trainer names and get their data
         foreach ($names as $trainer_id => $trainer_name)
         {
-            $trainer = new stdClass; // initialise the container
+            // initialise the container ans some variables
+            $trainer = new stdClass;
             $trainer->trainer_id   = $trainer_id;
             $trainer->trainer_name = $trainer_name;
+            $year_data = array();
+            $sum_data = array('trainings' => 0,
+                              'types' => array(),
+                              'roles' => array(),
+                              'payment_states' => array());
 
-            // get overall trainingsdata from the database for the trainer
-            $all_trainings = $this->get_all_trainings_for_one_trainer($trainer_id);
-
-            $overall_to_transfer = array();
-            $overall_to_transfer['trainings'] = count($all_trainings);
-            $overall_to_transfer['types'] = array_count_values(array_column($all_trainings, 'type'));
-            $overall_to_transfer['payment_state'] = array_count_values(array_column($all_trainings, 'payment_state'));
-
-            $trainer->sums = $overall_to_transfer; 
-            
-            // get trainingsdata for every year from the database
-            $training_years = $this->get_all_training_years_from_database();
-
+            // get trainingsdata for every year from database
             foreach ($training_years as $year)
             {
-                $trainings_in_year             = $this->get_all_trainings_for_one_trainer($trainer_id, $year);
+                $trainings_in_year = $this->get_all_trainings_for_one_trainer($trainer_id, $year);
+                $roles_payment = $this->get_roles_and_payment_of_trainers($trainings_in_year, $trainer_id, $training_salary, $assist_salary, $distance_rate);
                 
-                $year_to_transfer = array();
-                $year_to_transfer['trainings'] = count($trainings_in_year);
-                $year_to_transfer['types'] = array_count_values(array_column($trainings_in_year, 'type'));
-                $year_to_transfer['payment_state'] = array_count_values(array_column($trainings_in_year, 'payment_state'));
+                $year_data['trainings'] = count($trainings_in_year);
+                $sum_data['trainings'] += $year_data['trainings'];
 
-                $trainer->$year        = $year_to_transfer;
+                $year_data['types'] = array_count_values(array_column($trainings_in_year, 'type'));
+                $sum_data['types'] = $this->sum_up($sum_data['types'], $year_data['types']);
+
+                $year_data['roles'] = $roles_payment['roles'];
+                $sum_data['roles'] = $this->sum_up($sum_data['roles'], $year_data['roles']);
+
+                $year_data['payment_states'] = $roles_payment['payment_state'];
+                $sum_data['payment_states'] = $this->sum_up($sum_data['payment_states'], $year_data['payment_states']);
+                
+                $trainer->sums = $sum_data;
+                $trainer->$year = $year_data;
+                
             }
-
-            $trainerdata[] = $trainer;
+            
+            $trainerdata[] = $trainer;  // send the collected data to variable
         }
 
         usort($trainerdata, array($this, 'sortTrainers')); // sort by most trainings
@@ -431,16 +437,75 @@ class TkdClubModelTrainings extends JModelList
     }
 
     /**
-     * get the sum of distance for not paid trainings for a specfic trainer
+     * get the role of trainers
+     * 
+     * This functions counts the role for a specific trainer in
+     * the trainingsdata   
      *
-     * @return int
+     * @return array sums of the trainings as trainer or assistent
      **/
-    public function get_sum_distance_of_unpaid_trainings($trainer_id)
+    public function get_roles_and_payment_of_trainers($trainings_data, $trainer_id, $training_salary = 0, $assist_salary = 0, $distance_rate = 0)
     {
+        $trainer = 0;
+        $assist = 0;
+        $unpaid_trainer = 0;
+        $unpaid_assist = 0;
+        $unpaid_km = 0;
+        $container = array();
 
+        foreach ($trainings_data as $key => $value)
+        {
+            if ($value['trainer'] == $trainer_id )
+            {
+                $trainer++;
+                if ($value['payment_state'] == 0)
+                {  
+                    $unpaid_trainer++;
+                    $unpaid_km += $value['km_trainer'];
+                }
+            }
+            else
+            {
+                $assist++;
+                if ($value['payment_state'] == 0)
+                {
+                    $unpaid_assist++;
+                    $value['assist1'] == $trainer_id ? $unpaid_km += $value['km_assist1'] : null;
+                    $value['assist2'] == $trainer_id ? $unpaid_km += $value['km_assist1'] : null;
+                    $value['assist3'] == $trainer_id ? $unpaid_km += $value['km_assist1'] : null;
+                }
+            }
+        }
+
+        $container['roles'] = array('trainer' => $trainer,'assist' => $assist);
+        $container['payment_state'] = array('unpaid' => $unpaid_trainer + $unpaid_assist,
+                                            'unpaid_sum' => $unpaid_km * $distance_rate + 
+                                                            $unpaid_trainer * $training_salary +
+                                                            $unpaid_assist * $assist_salary);
+
+        return $container;
     }
 
+    /**
+     * Method to sum all types in an array
+     *
+     */
+     public function sum_up($a, &$b)
+     {
+         foreach ($a as $key => $value)
+         {
+             if (array_key_exists($key, $b))
+             {
+                $b[$key] = $value + $b[$key];
+             }
+             else
+             {
+                $b[$key] = $value;
+             }
+         }
 
+         return $b;
+     }
 
     /**
 	 * Method to get the data that should be exported.

@@ -14,11 +14,6 @@ JHtml::_('formbehavior.chosen', 'select');
 JHtml::_('script', 'administrator/components/com_tkdclub/assets/js/rawsubmitbutton.js');
 
 /**
- * register TkdClubModelTrainings-class, used for getTrainerSalary-method-call
- */
-JLoader::register('TkdClubModelTrainings', JPATH_COMPONENT. '/models/trainings.php' );
-
-/**
  * initilise some variables
  */
 $currency = JComponentHelper::getParams('com_tkdclub')->get('currency', '€');
@@ -35,8 +30,6 @@ $filter_year   = $this->state->get('filter.year');
 $filter_search = $this->state->get('filter.search');
 $filter_payment_state  = $this->state->get('filter.payment_state');
 ?>
-
-
 
 <form action="<?php echo JRoute::_('index.php?option=com_tkdclub&view=trainings'); ?>" method="post" name="adminForm" id="adminForm">
     <?php if (!empty( $this->sidebar)) : ?>
