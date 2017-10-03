@@ -18,27 +18,20 @@ class TkdClubViewTrainings extends JViewLegacy
     protected $pagination;
     protected $state;
     protected $total;
-    //allrows in the database
-    protected $allrows;
-    protected $trainings;
-    protected $trainingspart;
- 
+    protected $trainerdata;
+    protected $trainingsdata;
 
     public function display($tpl = null)
     {
-        
         $this->items = $this->get('Items');
-        $this->state = $this->get('State');
         $this->pagination = $this->get('Pagination');
+        $this->state = $this->get('State');
+        $this->filterForm = $this->get('FilterForm');
+        $this->activeFilters = $this->get('ActiveFilters');
         $this->total = $this->get('Total');
-        //allrows in the database
-        $this->allrows = $this->get('Allrows');
-        $this->trainings = $this->get('Trainings');
-	    $this->trainingspart = $this->get('Trainingspart');
         $this->trainerdata = $this->get('Trainerdata');
-        $this->filterForm    = $this->get('FilterForm');
-		$this->activeFilters = $this->get('ActiveFilters');
-
+        $this->trainingsdata = $this->get('Trainingsdata');
+        
         $this->addToolbar();
         $this->sidebar = JHtmlSidebar::render();
         parent::display($tpl);

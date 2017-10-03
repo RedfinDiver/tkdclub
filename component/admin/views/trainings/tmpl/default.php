@@ -22,8 +22,6 @@ $listDirn = $this->state->get('list.direction');
 $listLimit = $this->state->get('list.limit');
 
 $filter_trainer = $this->state->get('filter.trainer');
-$assist_name    = TkdclubModelTrainings::getTrainerName($filter_trainer);
-$trainer_name   = TkdclubModelTrainings::getTrainerName($filter_trainer);
 
 $filter_type   = $this->state->get('filter.type');
 $filter_year   = $this->state->get('filter.year');
@@ -53,7 +51,7 @@ $filter_payment_state  = $this->state->get('filter.payment_state');
             <div class="btn-group pull-left hidden-phone">
                 <label>
                     <b><?php echo $this->total; ?></b> <?php echo JText::_('COM_TKDCLUB_TRAINING_FROM'); ?>
-                        <b><?php echo $this->allrows; ?></b>
+                        <b><?php echo $this->trainingsdata->sums['trainings']; ?></b>
                     <?php echo JText::_('COM_TKDCLUB_TRAINING_ENTRIES'); ?>
                 </label>
             </div>  

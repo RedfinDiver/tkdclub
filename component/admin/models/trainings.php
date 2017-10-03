@@ -13,7 +13,14 @@ defined('_JEXEC') or die;
  * @since  1.0
  */
 class TkdClubModelTrainings extends JModelList
-{      
+{   
+    public $trainer_names; // all trainers in database
+    public $training_years; // all years in which a training was held
+    public $training_salary;
+    public $training_types;
+    public $assist_salary;
+    public $distance_rate;
+
     public function __construct($config = array())
     {
         if (empty($config['filter_fields']))
@@ -21,6 +28,20 @@ class TkdClubModelTrainings extends JModelList
             $config['filter_fields'] = 
             array('training_id', 'date', 'trainer', 'type', 'payment_state', 'year');
         }
+
+        // getting all trainer names from database
+        $this->trainer_names = $this->get_all_trainer_from_database();
+
+        // getting all trainingyears from database
+        $this->training_years = $this->get_all_training_years_from_database();
+
+        // getting all trainingtypes from database
+        $this->training_types = $this->get_all_training_types_from_database();
+
+        // get values from configuration
+        $this->training_salary = JComponentHelper::getParams('com_tkdclub')->get('training_salary', 0);
+        $this->assist_salary = JComponentHelper::getParams('com_tkdclub')->get('assistent_salary', 0);
+        $this->distance_rate = JComponentHelper::getParams('com_tkdclub')->get('distance_salary', 0);
         
         parent::__construct($config);
     }
@@ -116,10 +137,7 @@ class TkdClubModelTrainings extends JModelList
             {
                 $search = $db->Quote('%'. $db->escape($search).'%');
                 $query->where('training_id LIKE' .$search
-                            .'OR date LIKE' .$search
-                            .'OR trainer LIKE' .$search
-                            .'OR assist1 LIKE' .$search
-                            .'OR type LIKE' .$search);
+                            .'OR date LIKE' .$search);
             }
         }
 
@@ -132,162 +150,7 @@ class TkdClubModelTrainings extends JModelList
     }
 
     /**
-    * Method to get the number of all entries in the trainings-table
-    * 
-    * @return type integer
-    * 
-    */
-    public function getAllRows()
-    {
-
-        $db = $this->getDbo();
-        $query = $db->getQuery(true);
-        $query->select('COUNT(*)')
-                ->from($db->quoteName('#__tkdclub_trainings'));
-
-        $db->setQuery($query);
-        $allrows = $db->loadResult();
-
-        return $allrows;
-
-    }
-
-    /**
-        * Method to get sum of all participants of all entries in the trainings-table
-        * 
-        * @return type integer number of all entries in the trainings-table
-        * 
-        */
-    public function getTrainingspart()
-    {
-
-        $db = $this->getDbo();
-        $query = $db->getQuery(true);
-        $query->select('SUM(participants)')
-                ->from($db->quoteName('#__tkdclub_trainings'));
-
-        $db->setQuery($query);
-        $trainingspart = $db->loadResult();
-
-        return $trainingspart;
-
-    }
-
-    /**
-     * Method to calculate trainer salary
-     * The given parameters are used to calculate, so please define them to get
-     * the right calculation
-     * 
-     * @param  type float $km distance made by car for training
-     * @return type float The calculated trainer salary
-     * 
-     */
-    public static function getTrainerSalary($km)
-    {
-        $training = JComponentHelper::getParams('com_tkdclub')->get('training_salary', 0);
-        $distance = JComponentHelper::getParams('com_tkdclub')->get('distance_salary', 0);
-
-        $salary = $training + ($distance * $km);
-
-        return floatval($salary);
-    }
-
-    /**
-        * Method to calculate assistent salary.
-        * The given parameters are used to calculate, so please define them in config to get
-        * the right calculation
-        * 
-        * @param type float $km distance made by car for training
-        * @return type float The calculated assistent salary
-        * 
-        * @since   2.0
-        */
-    public static function getAssistentSalary($km)
-    {
-
-        $training = JComponentHelper::getParams('com_tkdclub')->get('assistent_salary', 0);          
-        $distance = JComponentHelper::getParams('com_tkdclub')->get('distance_salary', 0);
-
-        $salary = $training + ($distance * $km);
-
-        return floatval($salary);
-    }
-
-    /** 
-        * Get training numbers from database
-        * 
-        * @return type string The calculated assistent salary
-        * 
-        */
-    public function getTrainings()
-    {   
-        if ($this->getState('filter.type') != '')
-        {
-
-            $filter_type = 'AND type = '.'"'.$this->getState('filter.type'). '"';
-        }
-        else
-        {
-            $filter_type = NULL;
-        }
-
-        if ($this->getState('filter.year') != '')
-        {
-
-            $filter_year = 'AND date LIKE '.'"%'.$this->getState('filter.year'). '%"';
-
-        }
-        else
-        {
-            $filter_year = NULL;
-        }
-
-        $db = $this->getDbo();
-        $query = $db->getQuery(true);
-        $query->select('COUNT(*)')
-                ->from($db->quoteName('#__tkdclub_trainings'))
-                ->where('trainer = '.'"' .$this->getState('filter.trainer'). '"'
-                        .$filter_type
-                        .$filter_year
-
-                        );
-
-        $db->setQuery($query);
-        $trainings = $db->loadResult();
-
-        return $trainings;
-    }
-
-    /** 
-        * Get trainer name from database
-        * 
-        * @return type string trainer name in 'firstname lastname' format
-        * 
-        */
-    public static function getTrainerName ($member_id)
-    {
-        if ($member_id)
-        {
-            $db = JFactory::getDbo();
-            $query = $db->getQuery(true);
-            $query->select(array('firstname, lastname'))
-                ->from($db->quoteName('#__tkdclub_members'))
-                ->where("member_id = " . (int) $member_id);
-
-            $db->setQuery($query);
-            $result = $db->loadObject();
-
-            return $result->firstname . ' ' . $result->lastname;
-        }
-        else
-        {
-            return '';
-        }
-
-    }
-
-    /**
-     * Get all the data for a specific trainer
+     * Get all the statistc data for a specific trainer
      *
      * This function gets the data for every trainer in the database
      *
@@ -296,21 +159,10 @@ class TkdClubModelTrainings extends JModelList
      **/
     public function getTrainerData()
     {   
-        // get values from configuration
-        $training_salary = JComponentHelper::getParams('com_tkdclub')->get('training_salary', 0);
-        $assist_salary = JComponentHelper::getParams('com_tkdclub')->get('assistent_salary', 0);
-        $distance_rate = JComponentHelper::getParams('com_tkdclub')->get('distance_salary', 0);
-
-        // getting all trainer names from database
-        $names = $this->get_all_trainer_from_database();
-
-        // getting all trainingyears from the database
-        $training_years = $this->get_all_training_years_from_database();
-
         // loop through the trainer names and get their data
-        foreach ($names as $trainer_id => $trainer_name)
+        foreach ($this->trainer_names as $trainer_id => $trainer_name)
         {
-            // initialise the container ans some variables
+            // initialise the container and some variables
             $trainer = new stdClass;
             $trainer->trainer_id   = $trainer_id;
             $trainer->trainer_name = $trainer_name;
@@ -321,10 +173,10 @@ class TkdClubModelTrainings extends JModelList
                               'payment_states' => array());
 
             // get trainingsdata for every year from database
-            foreach ($training_years as $year)
+            foreach ($this->training_years as $year)
             {
-                $trainings_in_year = $this->get_all_trainings_for_one_trainer($trainer_id, $year);
-                $roles_payment = $this->get_roles_and_payment_of_trainers($trainings_in_year, $trainer_id, $training_salary, $assist_salary, $distance_rate);
+                $trainings_in_year = $this->get_trainings_from_db($trainer_id, $year);
+                $roles_payment = $this->get_roles_and_payment_of_trainers($trainings_in_year, $trainer_id, $this->training_salary, $this->assist_salary, $this->distance_rate);
                 
                 $year_data['trainings'] = count($trainings_in_year);
                 $sum_data['trainings'] += $year_data['trainings'];
@@ -340,7 +192,6 @@ class TkdClubModelTrainings extends JModelList
                 
                 $trainer->sums = $sum_data;
                 $trainer->$year = $year_data;
-                
             }
             
             $trainerdata[] = $trainer;  // send the collected data to variable
@@ -352,6 +203,70 @@ class TkdClubModelTrainings extends JModelList
     }
 
     /**
+     * Get all the statitics data for all trainings
+     *
+     * This function gets the statistic data for all trainings in the database
+     *
+     * @return  mixed   The statistic data of all trainings
+     *
+     **/
+     public function getTrainingsData()
+     {  
+        // initialise the container and some variables
+        $trainingsdata = new stdClass;
+        $sum_data = array('trainings' => 0, 'average' => 0, 'types' => array(), 'parts' => array());
+        $sum_parts = 0; // collecting sum of participants for every year
+
+        // get trainingsdata for every year from database
+        foreach ($this->training_years as $year)
+        {
+            $i = 0; // count variable to make sure the overall participants are not count twice or more each year
+            $data = $this->get_trainings_from_db(null, $year);
+
+            $year_data = array();
+            $sum_parts_year = 0;
+            $year_data['trainings'] = count($data);
+            $sum_data['trainings'] += $year_data['trainings'];
+
+            $year_data['types'] = array_count_values(array_column($data, 'type'));
+            $sum_data['types'] = $this->sum_up($year_data['types'], $sum_data['types']);
+
+            // loop through the training types and calculate the average participants
+            foreach ($this->training_types as $type)
+            {   
+                $parts = 0;
+                !isset($sum_parts_overall[$type]) ? $sum_parts_overall[$type] = 0 : null; // collecting sum of participants for all types overall all traininigs
+
+                foreach ($data as $item)
+                {
+                    $item['type'] == $type ? $parts += $item['participants'] : null;
+                    $i == 0 ? $sum_parts += $item['participants'] : null; // check if it is the first run for the type
+                    $i == 0 ? $sum_parts_year += $item['participants'] : null; // check if it is the first run for the type
+                }
+
+                $parts > 0 ? $year_data['parts'][$type] = round($parts / $year_data['types'][$type], 1) : null;
+                $sum_parts_overall[$type] += $parts;
+                $i++;
+            }
+
+            $year_data['average'] = round($sum_parts_year / $year_data['trainings'], 1);
+            $trainingsdata->$year = $year_data;
+        }
+
+        // calculating the average participation for all trainings
+        foreach ($sum_data['types'] as $key => $value) 
+        {
+            $sum_parts_overall[$key] = round($sum_parts_overall[$key] / $value, 1);
+        }
+        
+        $sum_data['parts'] = $sum_parts_overall;
+        $sum_data['average'] = round($sum_parts / $sum_data['trainings'], 1);
+        $trainingsdata->sums = $sum_data;
+
+        return $trainingsdata;
+     }
+
+    /**
      * sort function for trainings
      **/
     function sortTrainers($a, $b)
@@ -360,6 +275,24 @@ class TkdClubModelTrainings extends JModelList
             return 0;
         }
         return ($a->sums['trainings'] < $b->sums['trainings']) ? -1 : 1;
+    }
+
+    /**
+     * Get all trainining types from database
+     *
+     * This method is used to get every type of training from the database
+     *
+     * @return array a list of all trainings from the database
+     **/
+    public function get_all_training_types_from_database()
+    {
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+        $query->select('DISTINCT type');
+            $query->from($db->quoteName('#__tkdclub_trainings'));
+            $db->setQuery($query);
+
+        return $db->loadColumn();
     }
 
     /**
@@ -385,26 +318,31 @@ class TkdClubModelTrainings extends JModelList
     }
 
     /**
-     * Load all datasets for 1 specific trainer (per year)
+     * Load training datasets
      *
-     * With this function all datasets for 1 specific trainer are loaded
+     * Retreive data for trainings from the database.
+     * Given the 1. paramter data ist for 1. specific trainer
      * Given the 2. parameter the data is loaded for a specfic year
      *
      * @param  $trainer_id  int    member_id of the trainer
      * @param  $year        int    year of training data 4 digits e.g. '2017'
      * @return              array  the datasets as array
      **/
-    public function get_all_trainings_for_one_trainer($trainer_id, $year = null)
+    public function get_trainings_from_db($trainer_id = null, $year = null)
     {
         $db = JFactory::getDbo();
         $query = $db->getQuery(true);
-        $query->select('*')
-              ->from($db->quoteName('#__tkdclub_trainings'))
-              ->where('('.$db->quoteName('trainer') . ' = ' .  $trainer_id
+        $query->select('*');
+        $query->from($db->quoteName('#__tkdclub_trainings'));
+
+        if ($trainer_id)
+        {
+              $query->where('('.$db->quoteName('trainer') . ' = ' .  $trainer_id
              . ' OR ' . $db->quoteName('assist1') . ' = ' .  $trainer_id
              . ' OR ' . $db->quoteName('assist2') . ' = ' .  $trainer_id
              . ' OR ' . $db->quoteName('assist3') . ' = ' .  $trainer_id . ')');
-        
+        }
+             
         if($year)
         {
             $query->where($db->quoteName('date') . ' LIKE ' . $db->quote('%'. $year .'%'));
