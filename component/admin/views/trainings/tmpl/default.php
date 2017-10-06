@@ -61,7 +61,7 @@ $filter_payment_state  = $this->state->get('filter.payment_state');
         
         <div class="alert alert-info">
             <?php  
-                include_once(JPATH_COMPONENT . '/includes/trainersalary.php');
+                include_once(JPATH_COMPONENT . '/includes/trainingsstats.php');
             ?>
         </div>
     

@@ -6,55 +6,40 @@
 */
 
 defined('_JEXEC') or die;
- 
+
+$start = microtime(true);
 /********************************************************************************
  * Calculation of unpaid trainings and getting the data for the selected trainer
  ********************************************************************************/
 
-// initialise variables
-$sum = 0;
-$sum_text = '';
-
-// Calculation of the sum of ALL unpaid Trainings if no filter is set 
+// Calculation of the sum of ALL unpaid Trainings and displaying if no filter is set 
 if (!$filter_trainer && !$filter_type && !$filter_year)
-{                                               
+{   
+    $sum = 0;
+
     foreach ($this->trainerdata as $trainer)
     {
-        $sum += $trainer->sums['payment_states']['unpaid_sum'];
+        $sum += $trainer->sums['unpaid_sum'];
     }
     
-    $sum_text = 'Entschädigung aller ' . 'nicht abgerechneten Trainings (Trainer und Assistenten): '.'<b>'. \number_format($sum, 2, ',', ' ') .' '. $currency .'</b>'. '</br>';
+    echo JText::_('COM_TKDCLUB_TRAINING_NOT_PAID_TRAININGS').'<b>'. \number_format($sum, 2, ',', ' ') .' '. $currency .'</b>'. '</br>';
 }
 
-// Calculation of the sum of unpaid trainings for SELECTED TRAINER when trainer/assistent filter is set             
+// Calculation of the sum of unpaid trainings for SELECTED TRAINER when trainer/assistent filter is set and preparing text            
 if ($filter_trainer)
-{
-    //init variables
-    $sum = 0;
-    
+{    
     foreach ($this->trainerdata as $trainer)
     {
        if ($trainer->trainer_id == $filter_trainer)
        {
-           $sum = $trainer->sums['payment_states']['unpaid_sum'];
+           $sum = $trainer->sums['unpaid_sum'];
            $trainer_data = $trainer; // this is the data for the selected trainer used latre in the script
        }
     }
 
-    $sum_text = 'Summe aller nicht abgerechneten Trainings als Trainer UND Assistent für '.$trainer_data->trainer_name.': '.'<b>'. $sum . ' ' . $currency . '</b>'. '</br>';
+    // text is used later in the script
+    $sum_text_trainer = JText::_('COM_TKDCLUB_TRAINING_NOT_PAID_TRAININGS_TRAINER').$trainer_data->trainer_name.': '.'<b>'. $sum . ' ' . $currency . '</b>'. '</br>';
 }
-                      
-/*
- * Show unpaid trainings only when no paid/undpaid filter is active OR unpaid filter is active
- * AND no year and type filter is active
- */
-if ($filter_payment_state == '0' 
-    || $filter_payment_state == '' 
-    && $filter_year == ''
-    && $filter_type == ''
-    && $filter_trainer == '')
-    
-{ echo $sum_text; }
          
 /***************************************************
  * Calculation of average participants
@@ -106,19 +91,19 @@ if (!$filter_trainer && $filter_payment_state === '')
 // wenn nur der Trainer ausgewählt ist
 if ($filter_trainer && !$filter_type && !$filter_year)
 {
-    $as_trainer = $trainer_data->sums['roles']['trainer'];
-    $as_assistent = $trainer_data->sums['roles']['assist'];
+    $as_trainer = $trainer_data->sums['trainer'];
+    $as_assistent = $trainer_data->sums['assistent'];
 
     echo '<b>'. $trainer_data->trainer_name .'</b>'. '</br>';
     echo 'Insgesamt '.$this->total . ' Trainings von '. $trainer_data->trainer_name. ' in der Datenbank'. ', davon '.$as_trainer . ' als Trainer' .' und '. $as_assistent .' als Assistent'.'</br>';
-    echo $sum_text;
+    echo $sum_text_trainer;
 }
 
 // wenn Trainer und Type ausgewählt ist
 if ($filter_trainer && $filter_type && !$filter_year)
 {
-    $as_trainer = $trainer_data->sums['roles']['trainer'];
-    $as_assistent = $trainer_data->sums['roles']['assist'];
+    $as_trainer = $trainer_data->sums['types'][$filter_type]['trainer'];
+    $as_assistent = $trainer_data->sums['types'][$filter_type]['assistent'];
 
     echo '<b>'. $trainer_data->trainer_name .'</b>'. '</br>';
     echo 'Insgesamt '.$this->total .'x '.$filter_type.' von '. $trainer_data->trainer_name. ' in der Datenbank'. ', davon '.$as_trainer . 'x als Trainer'.' und '. $as_assistent .'x als Assistent'.'</br>';
@@ -127,8 +112,8 @@ if ($filter_trainer && $filter_type && !$filter_year)
 // wenn Trainer und Jahr ausgewählt sind 
 if ($filter_trainer && !$filter_type && $filter_year)
 {
-    $as_trainer = $trainer_data->$filter_year['roles']['trainer'];
-    $as_assistent = $trainer_data->$filter_year['roles']['assist'];
+    $as_trainer = $trainer_data->$filter_year['trainer'];
+    $as_assistent = $trainer_data->$filter_year['assistent'];
 
     echo '<b>'. $trainer_data->trainer_name .'</b>'. '</br>';
     echo 'Insgesamt '.$this->total .'x '.' Training in '.$filter_year.' von '. $trainer_data->trainer_name. ' in der Datenbank'. ', davon '. $as_trainer . 'x als Trainer'.' und '. $as_assistent .'x als Assistent'.'</br>';
@@ -137,8 +122,8 @@ if ($filter_trainer && !$filter_type && $filter_year)
 // wenn Trainer, Jahr und Type ausgewählt sind
 if ($filter_trainer && $filter_type && $filter_year) 
 {
-    $as_trainer = $trainer_data->$filter_year['roles']['trainer'];
-    $as_assistent = $trainer_data->$filter_year['roles']['assist'];
+    $as_trainer = $trainer_data->$filter_year['trainer'];
+    $as_assistent = $trainer_data->$filter_year['assistent'];
 
     echo '<b>'. $trainer_data->trainer_name .'</b>'. '</br>';
     echo 'Insgesamt '.$this->total .'x '.$filter_type .' in '.$filter_year.' von '. $trainer_data->trainer_name. ' in der Datenbank'. ', davon '. $as_trainer . 'x als Trainer'.' und '. $as_assistent .'x als Assistent'.'</br>';
@@ -155,5 +140,8 @@ if (!$filter_trainer && !$filter_type && !$filter_year && !$filter_search && $fi
 { 
     echo 'Gesamtzahl der abgerechneten Trainings in der Datenbank: ' .'<b>'.$this->total .'</b>';
 }
-         
+
+$end = microtime(true);
+$diff = $end - $start;
+$hold = 1;
 ?>

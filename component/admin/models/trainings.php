@@ -168,30 +168,18 @@ class TkdClubModelTrainings extends JModelList
             $trainer->trainer_name = $trainer_name;
             $year_data = array();
             $sum_data = array('trainings' => 0,
-                              'types' => array(),
-                              'roles' => array(),
-                              'payment_states' => array());
+                              'trainer' => 0,
+                              'assistent' => 0,
+                              'unpaid' => 0,
+                              'unpaid_sum' => 0, 
+                              'types' => array());
 
-            // get trainingsdata for every year from database
+            // get trainingsdata for every year from database and analyse it
             foreach ($this->training_years as $year)
             {
                 $trainings_in_year = $this->get_trainings_from_db($trainer_id, $year);
-                $roles_payment = $this->get_roles_and_payment_of_trainers($trainings_in_year, $trainer_id, $this->training_salary, $this->assist_salary, $this->distance_rate);
-                
-                $year_data['trainings'] = count($trainings_in_year);
-                $sum_data['trainings'] += $year_data['trainings'];
-
-                $year_data['types'] = array_count_values(array_column($trainings_in_year, 'type'));
-                $sum_data['types'] = $this->sum_up($sum_data['types'], $year_data['types']);
-
-                $year_data['roles'] = $roles_payment['roles'];
-                $sum_data['roles'] = $this->sum_up($sum_data['roles'], $year_data['roles']);
-
-                $year_data['payment_states'] = $roles_payment['payment_state'];
-                $sum_data['payment_states'] = $this->sum_up($sum_data['payment_states'], $year_data['payment_states']);
-                
-                $trainer->sums = $sum_data;
-                $trainer->$year = $year_data;
+                $trainer->$year = $this->analyse_trainerdata($trainings_in_year, $trainer_id, $this->training_salary, $this->assist_salary, $this->distance_rate);
+                $trainer->sums = $this->sum_up_trainerdata($trainer->$year, $sum_data);
             }
             
             $trainerdata[] = $trainer;  // send the collected data to variable
@@ -375,27 +363,28 @@ class TkdClubModelTrainings extends JModelList
     }
 
     /**
-     * get the role of trainers
-     * 
-     * This functions counts the role for a specific trainer in
-     * the trainingsdata   
+     * analyses the trainer data  
      *
-     * @return array sums of the trainings as trainer or assistent
+     * @return array statistics of the trainings as trainer or assistent
      **/
-    public function get_roles_and_payment_of_trainers($trainings_data, $trainer_id, $training_salary = 0, $assist_salary = 0, $distance_rate = 0)
+    public function analyse_trainerdata($trainings_data, $trainer_id, $training_salary = 0, $assist_salary = 0, $distance_rate = 0)
     {
         $trainer = 0;
         $assist = 0;
         $unpaid_trainer = 0;
         $unpaid_assist = 0;
         $unpaid_km = 0;
+        $types = array();
         $container = array();
+
+        $trainings = count($trainings_data);
 
         foreach ($trainings_data as $key => $value)
         {
             if ($value['trainer'] == $trainer_id )
             {
                 $trainer++;
+                isset($types[$value['type']]['trainer']) ? $types[$value['type']]['trainer']++ : $types[$value['type']]['trainer'] = 1;
                 if ($value['payment_state'] == 0)
                 {  
                     $unpaid_trainer++;
@@ -405,6 +394,7 @@ class TkdClubModelTrainings extends JModelList
             else
             {
                 $assist++;
+                isset($types[$value['type']]['assistent']) ? $types[$value['type']]['assistent']++ : $types[$value['type']]['assistent'] = 1;
                 if ($value['payment_state'] == 0)
                 {
                     $unpaid_assist++;
@@ -415,12 +405,34 @@ class TkdClubModelTrainings extends JModelList
             }
         }
 
-        $container['roles'] = array('trainer' => $trainer,'assist' => $assist);
-        $container['payment_state'] = array('unpaid' => $unpaid_trainer + $unpaid_assist,
-                                            'unpaid_sum' => $unpaid_km * $distance_rate + 
-                                                            $unpaid_trainer * $training_salary +
-                                                            $unpaid_assist * $assist_salary);
+        $container = array('trainings' => $trainings, 'trainer' => $trainer,'assistent' => $assist,
+                            'unpaid' => $unpaid_trainer + $unpaid_assist,
+                            'unpaid_sum' => $unpaid_km * $distance_rate + 
+                                            $unpaid_trainer * $training_salary +
+                                            $unpaid_assist * $assist_salary);
 
+
+        foreach ($types as &$type)
+        {
+           if (array_key_exists('trainer', $type) && !array_key_exists('assistent', $type))
+           {
+                $type['trainings'] = $type['trainer'];
+                $type['assistent'] = 0;
+           }
+
+           if (!array_key_exists('trainer', $type) && array_key_exists('assistent', $type))
+           {
+                $type['trainings'] = $type['assistent'];
+                $type['trainer'] = 0;
+           }
+
+           if (array_key_exists('trainer', $type) && array_key_exists('assistent', $type))
+           {
+                $type['trainings'] = $type['assistent'] + $type['trainer'];
+           }
+        }
+
+        $container['types'] = $types;                                                        
         return $container;
     }
 
@@ -443,6 +455,37 @@ class TkdClubModelTrainings extends JModelList
          }
 
          return $b;
+     }
+
+     /**
+     * Method to sum all trainerdata
+     *
+     */
+     public function sum_up_trainerdata($year_data, &$sum_data)
+     {
+        $sum_data['trainings'] += $year_data['trainings'];
+        $sum_data['trainer'] += $year_data['trainer'];
+        $sum_data['assistent'] += $year_data['assistent'];
+        $sum_data['unpaid'] += $year_data['unpaid'];
+        $sum_data['unpaid_sum'] += $year_data['unpaid_sum'];
+
+        foreach($year_data['types'] as $type => $value)
+        {
+            if (isset($sum_data['types'][$type]))
+            {
+                $sum_data['types'][$type]['trainings'] += $value['trainings'];
+                $sum_data['types'][$type]['trainer'] += $value['trainer'];
+                $sum_data['types'][$type]['assistent'] += $value['assistent'];
+            }
+            else
+            {
+                $sum_data['types'][$type]['trainings'] = $value['trainings'];
+                $sum_data['types'][$type]['trainer'] = $value['trainer'];
+                $sum_data['types'][$type]['assistent'] = $value['assistent'];
+            }
+        }
+
+        return $sum_data;
      }
 
     /**
