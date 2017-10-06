@@ -20,6 +20,7 @@ class TkdClubViewTrainings extends JViewLegacy
     protected $total;
     protected $trainerdata;
     protected $trainingsdata;
+    public    $togglestats;  
 
     public function display($tpl = null)
     {
@@ -29,9 +30,15 @@ class TkdClubViewTrainings extends JViewLegacy
         $this->filterForm = $this->get('FilterForm');
         $this->activeFilters = $this->get('ActiveFilters');
         $this->total = $this->get('Total');
-        $this->trainerdata = $this->get('Trainerdata');
-        $this->trainingsdata = $this->get('Trainingsdata');
+        $this->allrows = $this->get('Allrows');
+        $this->togglestats = $this->get('Togglestats');
         
+        if ($this->togglestats)
+        {
+            $this->trainerdata = $this->get('Trainerdata');
+            $this->trainingsdata = $this->get('Trainingsdata');
+        }
+
         $this->addToolbar();
         $this->sidebar = JHtmlSidebar::render();
         parent::display($tpl);
@@ -66,8 +73,13 @@ class TkdClubViewTrainings extends JViewLegacy
         JToolBarHelper::unpublish('trainings.unpublish', 'COM_TKDCLUB_TRAINING_NOT_PAID', true);
 
         $toolbar = JToolbar::getInstance('toolbar');
-		$toolbar->addButtonPath(JPATH_COMPONENT.'/buttons');
-		$toolbar->appendButton('RawFormat',  'download', 'Export csv', 'export.trainings');
+        $toolbar->addButtonPath(JPATH_COMPONENT.'/buttons');
+
+        if ($this->togglestats)
+        {$toolbar->appendButton('TrainingsStats',  'eye-close', 'COM_TKDCLUB_BUTTON_STATS', 'trainings.togglestats', false);}
+        else {$toolbar->appendButton('TrainingsStats',  'eye-open', 'COM_TKDCLUB_BUTTON_STATS', 'trainings.togglestats', false);}
+        
+        $toolbar->appendButton('RawFormat',  'download', 'COM_TKDCLUB_BUTTON_EXPORT', 'export.trainings');
         
         if ($canDo->get('core.admin'))
         {   JToolBarHelper::divider();

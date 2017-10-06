@@ -51,20 +51,20 @@ $filter_payment_state  = $this->state->get('filter.payment_state');
             <div class="btn-group pull-left hidden-phone">
                 <label>
                     <b><?php echo $this->total; ?></b> <?php echo JText::_('COM_TKDCLUB_TRAINING_FROM'); ?>
-                        <b><?php echo $this->trainingsdata->sums['trainings']; ?></b>
+                        <b><?php echo $this->allrows; ?></b>
                     <?php echo JText::_('COM_TKDCLUB_TRAINING_ENTRIES'); ?>
                 </label>
             </div>  
         </div>
     
         <div class="clearfix"> </div>
-        
+    <?php if($this->togglestats) :  ?>
         <div class="alert alert-info">
             <?php  
                 include_once(JPATH_COMPONENT . '/includes/trainingsstats.php');
             ?>
         </div>
-    
+    <?php endif; ?>
         <!-- Beginn der Tabelle mit den Einträgen--> 
         <table class="table table-condensed">
             <!-- Überschriften der Tabelle-->

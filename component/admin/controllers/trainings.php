@@ -18,4 +18,30 @@ class TkdClubControllerTrainings extends JControllerAdmin
         return $model;
     }
 
+    /**
+     *  Toggle on/off the stats
+     * 
+     * With this method the trainings statistics are switched on or off
+     * in the trainings list view
+     * 
+     * @return void
+     */ 
+    public function togglestats()
+    {
+        $session = JFactory::getSession();
+
+        if (!$session->get('togglestats', null, 'tkdclub'))
+        {
+            $session->set('togglestats', 'ON', 'tkdclub');
+            $msg = 'COM_TKDCLUB_TOGGLE_STATS_ON';  
+        }
+        else
+        {
+            $session->clear('togglestats','tkdclub');
+            $msg = 'COM_TKDCLUB_TOGGLE_STATS_OFF';  
+        }
+        
+        $this->setRedirect('index.php?option=com_tkdclub&view=trainings', JText::_($msg));
+    }
+
 }
