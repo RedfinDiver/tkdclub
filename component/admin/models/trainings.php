@@ -504,23 +504,23 @@ class TkdClubModelTrainings extends JModelList
                         
 		$query-> select($db->quoteName($fields))
 			  -> from($db->quoteName('#__tkdclub_trainings'))
-			  -> where('id IN ('.$pklist.')')
-              ->order('id DESC');
+			  -> where('training_id IN ('.$pklist.')')
+              ->order('training_id DESC');
 
 		$db	-> setQuery((string)$query);
 		$rows	= $db->loadRowList();
 
         $headers = array(
             JText::_('COM_TKDCLUB_TRAINING_ID'),            // training_id
-            JText::_('COM_TKDCLUB_TRAINING_DATE'),          // date
+            JText::_('COM_TKDCLUB_DATE'),                   // date
             JText::_('COM_TKDCLUB_TRAINING_TRAINER'),       // trainer
-            JText::_('COM_TKDCLUB_TRAINING_KM'),            // km_trainer
+            JText::_('COM_TKDCLUB_TRAINING_TRAINER_KM'),    // km_trainer
             JText::_('COM_TKDCLUB_TRAINING_ASSISTENT1'),    // assist1
-            JText::_('COM_TKDCLUB_ASSSIT1_KM'),             // km_assist1       
+            JText::_('COM_TKDCLUB_TRAINING_ASSISTENT1_KM'), // km_assist1       
             JText::_('COM_TKDCLUB_TRAINING_ASSISTENT2'),    // assist2
-            JText::_('COM_TKDCLUB_ASSSIT2_KM'),             // km_assist2
+            JText::_('COM_TKDCLUB_TRAINING_ASSISTENT2_KM'), // km_assist2
             JText::_('COM_TKDCLUB_TRAINING_ASSISTENT3'),    // assist3
-            JText::_('COM_TKDCLUB_ASSSIT3_KM'),             // km_assist2
+            JText::_('COM_TKDCLUB_TRAINING_ASSISTENT3_KM'),             // km_assist2
             JText::_('COM_TKDCLUB_TRAINING_TYPE'),          // type
             JText::_('COM_TKDCLUB_TRAINING_PARTICIPANTS'),  // participants
             JText::_('COM_TKDCLUB_TRAINING_PAID'),          // payment_state
