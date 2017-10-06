@@ -48,7 +48,7 @@ $listDirn  = $this->state->get('list.direction');
                 </div>
     <?php else : ?>
 
-    <div class="btn-toolbar">
+    <div id="filter-bar" class="btn-toolbar">
         <div class="btn-group pull-left">
             <label>
                 <b><?php echo $this->total; ?></b> <?php echo JText::_('COM_TKDCLUB_MEMBER_FROM'); ?>
