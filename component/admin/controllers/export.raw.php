@@ -81,7 +81,7 @@ class TkdClubControllerExport extends JControllerForm
 			print implode(';', $row)."\n"; // write data to the browser
 		}
 
-		$this->setHeaders(JText::_('COM_TKDCLUB_SUBMENU_TRAININGS'));
+		$this->setHeaders(JText::_('COM_TKDCLUB_SIDEBAR_TRAININGS'));
 	}
 
 	/**
