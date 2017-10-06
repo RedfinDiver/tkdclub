@@ -73,7 +73,7 @@ class TkdClubViewMembers extends JViewLegacy
 
         $toolbar = JToolbar::getInstance('toolbar');
         $toolbar->addButtonPath(JPATH_COMPONENT.'/buttons');
-        $toolbar->appendButton('RawFormat',  'download', 'Export csv', 'export.members');
+        $toolbar->appendButton('RawFormat',  'download', 'COM_TKDCLUB_BUTTON_EXPORT', 'export.members');
 
         if ($canDo->get('core.admin'))
         {
