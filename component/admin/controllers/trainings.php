@@ -19,9 +19,9 @@ class TkdClubControllerTrainings extends JControllerAdmin
     }
 
     /**
-     *  Toggle on/off the stats
+     * Toggle on/off the stats
      * 
-     * With this method the trainings statistics are switched on or off
+     * With this method the statistics are switched on or off
      * in the trainings list view
      * 
      * @return void
