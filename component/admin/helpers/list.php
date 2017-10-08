@@ -9,7 +9,7 @@ defined('_JEXEC') or die;
 
 /**
 * helper class to get a associative array from string
-* mostly used for generating lists for select boxes out of paramters
+* mostly used for generating lists for select boxes out of parameters
 */
 class TkdclubHelperList
 {  
