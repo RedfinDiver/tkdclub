@@ -30,14 +30,14 @@ class TkdClubControllerTrainings extends JControllerAdmin
     {
         $session = JFactory::getSession();
 
-        if (!$session->get('togglestats', null, 'tkdclub'))
+        if (!$session->get('togglestats_trainings', null, 'tkdclub'))
         {
-            $session->set('togglestats', 'ON', 'tkdclub');
+            $session->set('togglestats_trainings', 'ON', 'tkdclub');
             $msg = 'COM_TKDCLUB_TOGGLE_STATS_ON';  
         }
         else
         {
-            $session->clear('togglestats','tkdclub');
+            $session->clear('togglestats_trainings','tkdclub');
             $msg = 'COM_TKDCLUB_TOGGLE_STATS_OFF';  
         }
         

@@ -489,17 +489,6 @@ class TkdClubModelTrainings extends JModelList
      }
 
     /**
-     * Method to get condition of stats toogle
-     * 
-     * @return mixed "ON" if set, null if unset
-     * 
-     */
-     public function getTogglestats()
-     {
-         return JFactory::getSession()->get('togglestats', null, 'tkdclub');
-     }
-
-    /**
     * Method to get the number of all entries in the trainings-table
     * 
     * @return type integer

@@ -31,7 +31,7 @@ class TkdClubViewTrainings extends JViewLegacy
         $this->activeFilters = $this->get('ActiveFilters');
         $this->total = $this->get('Total');
         $this->allrows = $this->get('Allrows');
-        $this->togglestats = $this->get('Togglestats');
+        $this->togglestats = JFactory::getSession()->get('togglestats_trainings', null, 'tkdclub');
         
         if ($this->togglestats)
         {
@@ -76,8 +76,8 @@ class TkdClubViewTrainings extends JViewLegacy
         $toolbar->addButtonPath(JPATH_COMPONENT.'/buttons');
 
         if ($this->togglestats)
-        {$toolbar->appendButton('TrainingsStats',  'eye-close', 'COM_TKDCLUB_BUTTON_STATS', 'trainings.togglestats', false);}
-        else {$toolbar->appendButton('TrainingsStats',  'eye-open', 'COM_TKDCLUB_BUTTON_STATS', 'trainings.togglestats', false);}
+        {JToolBarHelper::custom('trainings.togglestats', 'eye-close', 'eye-close', 'COM_TKDCLUB_BUTTON_STATS', false);}
+        else {JToolBarHelper::custom('trainings.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);}
         
         $toolbar->appendButton('RawFormat',  'download', 'COM_TKDCLUB_BUTTON_EXPORT', 'export.trainings');
         
