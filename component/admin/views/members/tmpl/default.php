@@ -57,6 +57,12 @@ $listDirn  = $this->state->get('list.direction');
             </label>
         </div>        
     </div>
+
+    <?php if($this->togglestats) :  ?>
+        <?php  
+            include_once(JPATH_COMPONENT . '/includes/membersstats.php');
+        ?>
+    <?php endif; ?>
                 
     <div class="clearfix"> </div>
 

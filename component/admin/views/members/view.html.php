@@ -32,13 +32,16 @@ class TkdClubViewMembers extends JViewLegacy
         $this->items = $this->get('Items');
         $this->state = $this->get('State');
         $this->pagination = $this->get('Pagination');
-        $this->total = $this->get('Total');
-        
-        //allrows in the database
-        $this->allrows = $this->get('Allrows');
-
         $this->filterForm    = $this->get('FilterForm');
         $this->activeFilters = $this->get('ActiveFilters');
+        $this->total = $this->get('Total');
+        $this->allrows = $this->get('Allrows');
+        $this->togglestats = JFactory::getSession()->get('togglestats_members', null, 'tkdclub');
+
+        if ($this->togglestats)
+        {
+            $this->memberdata = $this->get('Memberdata');
+        }
 
         $this->addToolbar();
         $this->sidebar = JHtmlSidebar::render();
@@ -73,6 +76,11 @@ class TkdClubViewMembers extends JViewLegacy
 
         $toolbar = JToolbar::getInstance('toolbar');
         $toolbar->addButtonPath(JPATH_COMPONENT.'/buttons');
+
+        if ($this->togglestats)
+        {JToolBarHelper::custom('members.togglestats', 'eye-close', 'eye-close', 'COM_TKDCLUB_BUTTON_STATS', false);}
+        else {JToolBarHelper::custom('members.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);}
+
         $toolbar->appendButton('RawFormat',  'download', 'COM_TKDCLUB_BUTTON_EXPORT', 'export.members');
 
         if ($canDo->get('core.admin'))

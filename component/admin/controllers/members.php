@@ -20,4 +20,30 @@ class TkdclubControllerMembers extends JControllerAdmin
         $model = parent::getModel($name, $prefix, $config);
         return $model;
     }
+
+    /**
+     * Toggle on/off the stats
+     * 
+     * With this method the statistics are switched on or off
+     * in the members list view
+     * 
+     * @return void
+     */ 
+    public function togglestats()
+    {
+        $session = JFactory::getSession();
+
+        if (!$session->get('togglestats_members', null, 'tkdclub'))
+        {
+            $session->set('togglestats_members', 'ON', 'tkdclub');
+            $msg = 'COM_TKDCLUB_TOGGLE_STATS_ON';  
+        }
+        else
+        {
+            $session->clear('togglestats_members','tkdclub');
+            $msg = 'COM_TKDCLUB_TOGGLE_STATS_OFF';  
+        }
+        
+        $this->setRedirect('index.php?option=com_tkdclub&view=members', JText::_($msg));
+    }
 }

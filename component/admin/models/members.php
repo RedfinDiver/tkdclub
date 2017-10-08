@@ -7,6 +7,8 @@
 
 defined('_JEXEC') or die;
 
+JLoader::register('TkdClubHelperAge', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/agecalc.php');
+
 /**
  * Model-class for list view 'members'
  */
@@ -204,6 +206,113 @@ class TkdClubModelMembers extends JModelList
 
         return $allrows;
 
+    }
+
+    /**
+    * Method for getting inormation about members
+    *
+    * @param   string   $type      What to return.
+    *
+    * @return  mixed  an array on success, false on failure
+    *
+    * @since   2.2.0
+    */
+    public function getMemberdata()
+    {   
+        //initilise some variables
+        $memberdata = new stdClass;
+        $active = 0;
+        $inactive = 0;
+        $support = 0;
+        $agedistribution = array
+        (
+            '0-9' => 0, '10-19' => 0, '20-29' => 0, '30-39' => 0,
+            '40-49' => 0, '50-59' => 0, '60-69' => 0, '+70' => 0, 
+        );
+        $agesum = 0;
+        $genderdist = array('female' => 0, 'male' => 0);
+        $now = date('Y-m-d');
+        $oldest = array('name' => '', 'age_y' => 0, 'age_d' => 0);
+        $youngest = array('name' => '', 'age_y' => 100, 'age_d' => 36500);
+
+        //getting all data from memberdatabase
+        $data = $this->getData('#__tkdclub_members', 'member_id');
+        
+        //all rows in members table
+        $allrows = count($data);
+        
+        //getting Memberstates, age and gender distribution
+        foreach ($data as $member)
+        {
+            $member->member_state == 'active' ? $active++ : '';          
+            $member->member_state == 'inactive' ? $inactive++ : '';
+            $member->member_state == 'support' ? $support++ : '';
+            
+            if ($member->member_state == 'active')
+            {
+                $age = TkdClubHelperAge::getAgetoDate($now, $member->birthdate);
+                $age_in_days = TkdClubHelperAge::getAge($member->birthdate, 'days'); //important for youngest/oldest calculation
+                $age <= 9 ? $agedistribution['0-9'] += 1 : ''; //0-9 years
+                $age >= 10 && $age <= 19 ? $agedistribution['10-19'] += 1 : ''; //10-19 years
+                $age >= 20 && $age <= 29 ? $agedistribution['20-29'] += 1 : ''; //20-29 years
+                $age >= 30 && $age <= 39 ? $agedistribution['30-39'] += 1 : ''; //30-39 years
+                $age >= 40 && $age <= 49 ? $agedistribution['40-49'] += 1 : ''; //40-49 years
+                $age >= 50 && $age <= 59 ? $agedistribution['50-59'] += 1 : ''; //50-59 years
+                $age >= 60 && $age <= 69 ? $agedistribution['60-69'] += 1 : ''; //60-69 years
+                $age >= 70 ? $agedistribution['+70'] += 1 : ''; //more than 70 years
+                
+                $agesum += $age; //cumulation age for average calculation
+                
+                //oldest and youngest
+                if ($age_in_days < $youngest['age_d'])
+                {
+                    $youngest = array('age_y' => $age, 'name' => $member->firstname .' ' . $member->lastname, 'age_d' => $age_in_days);
+                }
+                elseif ($age_in_days > $oldest['age_d'])
+                {
+                    $oldest = array('age_y' => $age, 'name' => $member->firstname .' ' . $member->lastname, 'age_d' => $age_in_days);
+                }
+                
+                //gender
+                $member->sex == 'female' ? $genderdist['female']++ : $genderdist['male']++;
+
+            }
+        }
+
+        $memberdata->allrows = $allrows;
+        $memberdata->active = $active;
+        $memberdata->inactive= $inactive;
+        $memberdata->support = $support;
+        $memberdata->agedist = $agedistribution;
+        $memberdata->average_age = round($agesum/$active, 1);
+        $memberdata->genderdist = $genderdist;
+        $memberdata->oldest = $oldest;
+        $memberdata->youngest = $youngest;
+        
+        return $memberdata;
+    }
+
+    /**
+    * Method for getting all data from database table
+    *
+    * @param   string   $database      the database.
+    * @param   string   $ordering      the ordering column.
+    *
+    * @return  mixed  A Jobject on success, false on failure
+    *
+    * @since   2.2.0
+    */
+    protected function getData($database, $ordering)
+    {
+        $db = $this->getDbo();
+        $query = $db->getQuery(true);
+        $query->select('*')
+              ->from($db->quoteName($database))
+              ->order($db->quoteName($ordering) . ' ASC');;
+        $db->setQuery($query);
+        $data = $db->loadObjectList();  
+        
+        return $data;
     }
 
     /**
