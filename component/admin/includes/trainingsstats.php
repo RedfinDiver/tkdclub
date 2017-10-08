@@ -94,7 +94,7 @@ if ($filter_trainer && !$filter_type && !$filter_year)
     $as_trainer = $trainer_data->sums['trainer'];
     $as_assistent = $trainer_data->sums['assistent'];
 
-    echo '<b>'. $trainer_data->trainer_name .'</b>'. '</br>';
+    echo '<h4>'. $trainer_data->trainer_name .'</h4>';
     echo 'Insgesamt '.$this->total . ' Trainings von '. $trainer_data->trainer_name. ' in der Datenbank'. ', davon '.$as_trainer . ' als Trainer' .' und '. $as_assistent .' als Assistent'.'</br>';
     echo $sum_text_trainer;
 }
@@ -105,7 +105,7 @@ if ($filter_trainer && $filter_type && !$filter_year)
     $as_trainer = $trainer_data->sums['types'][$filter_type]['trainer'];
     $as_assistent = $trainer_data->sums['types'][$filter_type]['assistent'];
 
-    echo '<b>'. $trainer_data->trainer_name .'</b>'. '</br>';
+    echo '<h4>'. $trainer_data->trainer_name .'</h4>';
     echo 'Insgesamt '.$this->total .'x '.$filter_type.' von '. $trainer_data->trainer_name. ' in der Datenbank'. ', davon '.$as_trainer . 'x als Trainer'.' und '. $as_assistent .'x als Assistent'.'</br>';
 }
     
@@ -115,7 +115,7 @@ if ($filter_trainer && !$filter_type && $filter_year)
     $as_trainer = $trainer_data->$filter_year['trainer'];
     $as_assistent = $trainer_data->$filter_year['assistent'];
 
-    echo '<b>'. $trainer_data->trainer_name .'</b>'. '</br>';
+    echo '<h4>'. $trainer_data->trainer_name .'</h4>';
     echo 'Insgesamt '.$this->total .'x '.' Training in '.$filter_year.' von '. $trainer_data->trainer_name. ' in der Datenbank'. ', davon '. $as_trainer . 'x als Trainer'.' und '. $as_assistent .'x als Assistent'.'</br>';
 }
 
@@ -125,7 +125,7 @@ if ($filter_trainer && $filter_type && $filter_year)
     $as_trainer = $trainer_data->$filter_year['trainer'];
     $as_assistent = $trainer_data->$filter_year['assistent'];
 
-    echo '<b>'. $trainer_data->trainer_name .'</b>'. '</br>';
+    echo '<h4>'. $trainer_data->trainer_name .'</h4>';
     echo 'Insgesamt '.$this->total .'x '.$filter_type .' in '.$filter_year.' von '. $trainer_data->trainer_name. ' in der Datenbank'. ', davon '. $as_trainer . 'x als Trainer'.' und '. $as_assistent .'x als Assistent'.'</br>';
 }
 
