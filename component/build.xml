@@ -8,23 +8,19 @@
     <property name="adminsrc" location="admin"/>
     <property name="sitesrc" location="site"/>
     <property name="build" location="../zips"/>
+    <property name="temp" location="../zips/temp"/>
     
     <property name="sitetest" value="${web.root}components/com_${name}" />
     <property name="admintest" value="${web.root}administrator/components/com_${name}" />
     <property name="manifest" value="${src}/${name}.xml" />
     
     <target name="init">
-        <mkdir dir="${build}"/>
-        <echo message="Creating ${build} directory"/>
-        <echo message="Name ${name} "/>
-        <echo message="Build ${build} "/>
-        <echo message="Web Root ${web.root} "/>
-        <echo message="Src var: ${src} "/>
-        <echo message="SiteSrc var: ${sitesrc} "/>
-        <echo message="Admin var: ${adminsrc} "/>
-        <echo message="AdminTest var: ${admintest} "/>
-        <echo message="SiteTest var: ${sitetest} "/>
-        <echo message="Manifest: ${manifest} "/>
+        <mkdir dir="${build}"/>   <mkdir dir="${temp}"/>
+         <copy todir="${temp}">
+            <fileset dir="${basedir}"/>
+        </copy>
+        <move file="${temp}/admin/${name}.xml" todir="${temp}"/>
+        <delete file="${temp}/build.xml"/>
     </target>
 
     <target name="symlink">
@@ -34,15 +30,13 @@
 
     <target name="zipComponent" depends="init" description="zips the archive" >
         <zip destfile="${build}/com_${name}.zip">
-            <zipfileset dir="${adminsrc}" excludes="**/.svn/,**/nbproject/**,**/zip/**,*.ant,${name}.xml" prefix="admin" />
-            <zipfileset dir="${sitesrc}" excludes="**/.svn/,**/nbproject/**,**/zip/**,*.ant" prefix="site"/>
-            <zipfileset dir="${basedir}" excludes="**/.svn/,**/nbproject/**,**/zip/**,*.ant,**/admin/**,**/site/**" />
+            <zipfileset dir="${temp}" excludes="**/.svn/,**/nbproject/**,**/zip/**,*.ant" />
         </zip>
+        <delete dir="${temp}"/>
     </target>
 
     <target name="clean" description="deletes the com_${name}.zip">
-        <delete file="${build}/com_${name}.zip" />
-        <echo message="com_${name}.zip deleted!" />
+        <delete dir="${build}" />
     </target>
    
 </project>
