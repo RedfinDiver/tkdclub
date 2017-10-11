@@ -28,6 +28,9 @@ class TkdClubControllerTrainings extends JControllerAdmin
      */ 
     public function togglestats()
     {
+        // Check for request forgeries.
+        JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+        
         $session = JFactory::getSession();
 
         if (!$session->get('togglestats_trainings', null, 'tkdclub'))
