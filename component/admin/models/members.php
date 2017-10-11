@@ -195,7 +195,6 @@ class TkdClubModelMembers extends JModelList
     */
     public function getAllRows()
     {
-
         $db = $this->getDbo();
         $query = $db->getQuery(true);
         $query->select('COUNT(*)')
@@ -205,7 +204,6 @@ class TkdClubModelMembers extends JModelList
         $allrows = (int) $db->loadResult();
 
         return $allrows;
-
     }
 
     /**
