@@ -65,7 +65,7 @@ class TkdClubModelMember extends JModelAdmin
         $file = $input->files->get('jform', '', '');
         $possible_file_extensions = ['pdf', 'png', 'jpg'];
 
-        // just processing the file if there ist no error with it
+        // just processing the file if there is no error with it
         if ($file['file']['error'] != 0)
         {
             $app->enqueueMessage(JText::_('COM_TKDCLUB_MEMBER_FILEUPLOAD_FAILED'), 'error');
@@ -242,7 +242,7 @@ class TkdClubModelMember extends JModelAdmin
 	 */
     public function getMedals()
     {
-        $id_win = JFactory::getApplication()->input->get('member_id');
+        $id_win = JFactory::getApplication()->input->getInt('member_id');
 
         $db = JFactory::getDbo();
         $query = $db->getQuery(true);
@@ -260,7 +260,7 @@ class TkdClubModelMember extends JModelAdmin
     }
 
     /**
-    * Overrload getItem method for multiple functions
+    * Overrload getItem method for multiple club functions
     */
     public function getItem($pk = null)
     {   
