@@ -180,17 +180,17 @@ class TkdClubModelMember extends JModelAdmin
         $id = $input->getInt('member_id', 0);
         $filename = $input->getString('filename', '');
 
-        //building file path and getting already existing attachment data
+        // building file path and getting already existing attachment data
         $file = JPATH_COMPONENT_ADMINISTRATOR . '/attachments/members/' . $id . '/' . $filename;
 
-        //check if file exists then proceed
+        // check if file exists then proceed
         if (!JFile::exists($file))
         {
             $app->enqueueMessage(JText::_('COM_TKDCLUB_MEMBER_FILE_NOT_EXISTS'), 'error');
             return false;
         }
 
-        //delete the file, throw error if it didn't work
+        // delete the file, throw error if it didn't work
         if (!JFile::delete($file))
         {
             $app->enqueueMessage(JText::_('COM_TKDCLUB_MEMBER_FILE_DELETE_ERROR'), 'error');
