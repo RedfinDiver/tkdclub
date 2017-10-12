@@ -106,18 +106,19 @@ JFactory::getDocument()->addScriptDeclaration("
                                     <?php $question = JText::_('COM_TKDCLUB_MEMBER_FILE_DELETE_QUESTION') . $filename; ?>
                                     onclick='return window.confirm("<?php echo $question ?>");'
                                     data-original-title="<?php echo JText::_('COM_TKDCLUB_MEMBER_FILE_DELETE'); ?>"
-                                    href="index.php?option=com_tkdclub&view=member&layout=edit&task=member.deletefile&filename=<?php echo $filename . '&member_id=' . $this->item->member_id ?>"
+                                    href="index.php?option=com_tkdclub&view=member&layout=edit&task=member.deletefile&filename=<?php echo $filename . '&member_id=' . $this->item->member_id . '&' . JSession::getFormToken() .'=1'; ?>"
                                     >
                                     <span class="icon-unpublish"></span>
                                 </a>
 
                                 <a class="btn btn-micro hasTooltip" data-original-title="<?php echo JText::_('COM_TKDCLUB_MEMBER_FILE_DOWNLOAD'); ?>"
-                                    href="index.php?option=com_tkdclub&task=member.downloadfile&filename=<?php echo $filename . '&member_id=' . $this->item->member_id; ?>"
+                                    href="index.php?option=com_tkdclub&task=member.downloadfile&filename=<?php echo $filename . '&member_id=' . $this->item->member_id . '&' . JSession::getFormToken() .'=1'; ?>"
                                     target="_blank">
                                     <span class="icon-download"></span> 
                                 </a>
                             </div>
-                                <a target="_blank" href="index.php?option=com_tkdclub&task=member.downloadfile&filename=<?php echo $filename . '&member_id=' . $this->item->member_id; ?>"><?php echo $filename; ?></a>
+                                <a target="_blank" href="index.php?option=com_tkdclub&task=member.downloadfile&filename=<?php echo $filename . '&member_id=' . $this->item->member_id . '&' . JSession::getFormToken() .'=1'; ?>">
+                                <?php echo $filename; ?></a>
                         </div>
 
                         <?php endforeach; ?>
@@ -179,6 +180,6 @@ JFactory::getDocument()->addScriptDeclaration("
     <!-- end of tabs -->
                       
     <input type="hidden" name="task" value="" />
-    <?php   echo JHtml::_('form.token'); ?>
+    <?php echo JHtml::_('form.token'); ?>
 
 </form>

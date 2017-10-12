@@ -23,13 +23,16 @@ class TkdclubControllerMember extends JControllerForm
     
     public function uploadfile()
     {   
-        //saving the item id in variable for proper redirect later on
+        // Check for request forgeries.
+        JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+
+        // saving the item id in variable for proper redirect later on
         $recordId = $this->input->get('member_id', null);
         
-        //calling the Model with upload functionality
+        // calling the Model with upload functionality
         $this->getModel()->uploadfile();
         
-        //setting the redirect back to the edited item
+        // setting the redirect back to the edited item
         $this->setRedirect
         (
                 JRoute::_(
@@ -45,10 +48,11 @@ class TkdclubControllerMember extends JControllerForm
     */
     public function save($key = null, $urlVar = null)
     {
-        //getting the saving user and the current datetime
+        // getting the saving user and the current datetime
         $user_id = JFactory::getUser()->id;
         $date = JFactory::getDate()->toSql();
-        //getting the data array
+        
+        // getting the data array
         $fields = $this->input->post->get('jform', array(), 'array');
         
         if ($this->input->get('member_id') > 0)
@@ -89,6 +93,9 @@ class TkdclubControllerMember extends JControllerForm
      */
     public function deleteFile()
     {
+        // Check for request forgeries.
+        JSession::checkToken('get') or jexit(JText::_('JINVALID_TOKEN'));
+
         $id = $this->input->get('member_id');
         
         if ($id > 0) {
@@ -104,6 +111,9 @@ class TkdclubControllerMember extends JControllerForm
      */
     public function downloadFile()
     {
+        // Check for request forgeries.
+        JSession::checkToken('get') or jexit(JText::_('JINVALID_TOKEN'));
+
         $model = $this->getModel();
         $model->downloadFile();
     }
