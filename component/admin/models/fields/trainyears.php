@@ -17,7 +17,7 @@ class JFormFieldTrainyears extends JFormFieldList
      * The form field type.
      *
      * @var		string
-     * @since   2.0
+     * 
      */
     protected $type = 'trainyears';
     
@@ -25,8 +25,7 @@ class JFormFieldTrainyears extends JFormFieldList
      * Method to get the field input markup.
      *
      * @return  string	The field input markup.
-     *
-     * @since   2.0
+     * 
      */
     public function getOptions()
     {   
@@ -41,7 +40,7 @@ class JFormFieldTrainyears extends JFormFieldList
         
         if ($years = $db->loadColumn())
         {
-            //maximum years to show as set in the configuration
+            // maximum years to show as set in the configuration
             $number_years = JComponentHelper::getParams('com_tkdclub')->get('training_years', 5);
             $min_year = max($years) - $number_years;
 
