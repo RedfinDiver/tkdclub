@@ -127,7 +127,7 @@ JFactory::getDocument()->addScriptDeclaration("
             <?php echo JHtml::_('bootstrap.endTab'); ?>
             
             <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'wins', JText::_('COM_TKDCLUB_MEMBER_MEDALS', true)); ?>
-                <?php if (empty($this->item->medals)) : ?>
+                <?php if (empty($this->medals)) : ?>
                     <div class="alert alert-no-items">
                         <?php echo JText::_('COM_TKDCLUB_MEMBER_NO_MEDALS'); ?>
                     </div>
@@ -147,10 +147,10 @@ JFactory::getDocument()->addScriptDeclaration("
                                     <tr>
 
                                         <td>
-                                            <?php echo JHtml::_('date', $medal->date_win, JText::_('DATE_FORMAT_LC4')); ?>
+                                            <?php echo JHtml::_('date', $medal->date, JText::_('DATE_FORMAT_LC4')); ?>
                                         </td>
-                                        <td width=""><?php echo $medal->c_ship; ?></td>
-                                        <td width=""><?php echo $medal->wa_class; ?></td>
+                                        <td width=""><?php echo $medal->championship; ?></td>
+                                        <td width=""><?php echo $medal->class; ?></td>
                                         <td class="center" width=""><?php echo $medal->placing; ?></td>
 
                                     </tr>
