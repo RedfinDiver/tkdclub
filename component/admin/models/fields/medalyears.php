@@ -40,9 +40,7 @@ class JFormFieldMedalyears extends JFormFieldList
                     
         foreach($years as $year)
         {
-
             $options[] = JHtml::_('select.option', $year, $year);
-
         }
         
         if ($this->form) //checking if we are in a form, then merge additional xml data
