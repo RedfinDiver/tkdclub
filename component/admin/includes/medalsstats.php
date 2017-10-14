@@ -6,12 +6,11 @@
 */
 
 defined('_JEXEC') or die;
-
 ?>
 
-
-<div id="medals" class="btn-toolbar">
-    <label>
+<div class="container-fluid alert alert-info">
+    <div class="span3">
+        <h4 class="alert-heading"><?php echo JText::_('COM_TKDCLUB_MEDAL_DISTRIBUTION'); ?></h4>
         <span class="tkdclub-goldmedal">
             <p><?php echo $this->medaldata['placings']['1']; ?></p>
         </span>  <?php echo JText::_('COM_TKDCLUB_MEDAL_GOLD') ?>
@@ -22,9 +21,10 @@ defined('_JEXEC') or die;
         
         <span class="tkdclub-bronzemedal">
             <?php echo $this->medaldata['placings']['1']; ?>
-
         </span>  <?php echo JText::_('COM_TKDCLUB_MEDAL_BRONCE') ?>
-        <?php echo ' | '; ?>
-        <?php echo JText::_('COM_TKDCLUB_MEDAL_SUMMARY').' ' .'<strong>' . $this->medaldata['sum'] . '</strong>'; ?>  
-    </label>
+    </div>
+
+    <div class="span3">
+        <?php echo JText::_('COM_TKDCLUB_MEDAL_SUMMARY').': ' .'<strong>' . $this->medaldata['sum'] . '</strong>'; ?>  
+    </div>
 </div>
