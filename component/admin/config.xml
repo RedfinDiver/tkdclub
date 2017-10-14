@@ -40,7 +40,7 @@
              </field>
              
     </fieldset>
-    
+
     <fieldset
         name="trainings"
         label="COM_TKDCLUB_CONFIG_TRAININGS"
@@ -83,6 +83,20 @@
                 type="text" default="" size="10" filter="float">
              </field>
 
+    </fieldset>
+
+    <fieldset
+        name="medals"
+        label="COM_TKDCLUB_CONFIG_MEDALS"
+        description="COM_TKDCLUB_CONFIG_MEDALS_DESC">
+
+            <field
+                name="championship_types"
+                label="COM_TKDCLUB_CONFIG_CHAMPIONSHIP_TYPES"
+                description="COM_TKDCLUB_CONFIG_CHAMPIONSHIP_TYPES_DESC"
+                type="text" defautlt="" size="60" filter="safehtml">
+            </field>
+    
     </fieldset>
     
     <fieldset
