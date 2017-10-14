@@ -4,8 +4,10 @@
 * @copyright  Copyright (C) 2017 Markus Moser. All rights reserved.
 * @license    GNU General Public License version 2 or later; see LICENSE.txt
 */
+
 defined('_JEXEC') or die;
 JLoader::register('TkdclubHelperActions', JPATH_COMPONENT_ADMINISTRATOR. '/helpers/actions.php');
+
 /**
  * View class for a edit screen for one member.
  *
@@ -16,6 +18,7 @@ class TkdClubViewMember extends JViewLegacy
     protected $form;
     protected $attachments;
     protected $medals;
+
     /**
 	 * Display the view
 	 */
@@ -26,7 +29,7 @@ class TkdClubViewMember extends JViewLegacy
         $this->form = $this->get('Form');
         $this->item = $this->get('Item');
         $this->attachments = $this->get('Attachments');
-        //$this->medals = $this->get('Medals');
+        $this->medals = $this->get('Medals');
 
         $this->addToolbar();
         parent::display($tpl);
