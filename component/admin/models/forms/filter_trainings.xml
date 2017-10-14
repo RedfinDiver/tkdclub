@@ -32,7 +32,8 @@
         </field>
 
         <field 
-            name="type" type="traintypes"
+            name="type"
+            type="filtertraintypes"
             class="inputbox"
             label="COM_TKDCLUB_SELECT_TRAINING_TYPE"
             description=""
