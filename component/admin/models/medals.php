@@ -145,15 +145,7 @@ class TkdClubModelMedals extends JModelList
      */
     public function getAllRows()
     {
-        $db = $this->getDbo();
-        $query = $db->getQuery(true);
-        $query->select('COUNT(*)')
-                ->from($db->quoteName('#__tkdclub_medals'));
-
-        $db->setQuery($query);
-        $allrows = $db->loadResult();
-
-        return (int)$allrows;
+        return $this->getMedaldata($count = true);
     }
          
     /**
@@ -176,6 +168,33 @@ class TkdClubModelMedals extends JModelList
 
             return (int) $medals;
 
+    }
+
+    /**
+    * Method for getting inormation about medals
+    *
+    * @return  mixed  an array on success, false on failure
+    */
+    public function getMedaldata($count = false)
+    {
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+        $query->select('*')->from('#__tkdclub_medals');
+
+        $db->setQuery($query);
+        $data = $db->loadObjectList();
+
+        if ($count == true)
+        {
+            return (int) count($data);
+        }
+
+        $statistics = array();
+        $statistics['sum'] = count($data);
+
+        $statistics['placings'] = array_count_values(array_column($data, 'placing'));
+
+        return $statistics;
     }
 
     /**
