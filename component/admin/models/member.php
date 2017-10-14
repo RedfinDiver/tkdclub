@@ -247,16 +247,14 @@ class TkdClubModelMember extends JModelAdmin
         $db = JFactory::getDbo();
         $query = $db->getQuery(true);
 
-        // @TODO creating a JSON field in database for id_win and handle it here
         $query->select('*')
                 ->from('#__tkdclub_medals')
-                ->where('id_win REGEXP \'' . '[[:<:]]' . (int)$id_win . '[[:>:]]\'')
-                ->order('date_win DESC');
+                ->where('winner_ids REGEXP \'' . '[[:<:]]' . (int) $id_win . '[[:>:]]\'')
+                ->order('date DESC');
 
         $db->setQuery($query);
-        $results = $db->loadObjectList();
 
-        return $results;
+        return $db->loadObjectList();
     }
 
     /**
