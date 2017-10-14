@@ -32,10 +32,9 @@ class JFormFieldTrainyears extends JFormFieldList
         $db = JFactory::getDbo();
         $query = $db->getQuery(true);
 
-        $query->select('DISTINCT substring(date,1,4)');
+        $query->select('DISTINCT YEAR(date)');
         $query->from($db->quoteName('#__tkdclub_trainings'));
-        $query->order($db->quoteName('date') . 'ASC');
-
+        $query->order('date DESC');
         $db->setQuery($query);
         
         if ($years = $db->loadColumn())
@@ -57,7 +56,6 @@ class JFormFieldTrainyears extends JFormFieldList
                 $options[] = JHtml::_('select.option', $year, $year);
             }
             
-            $options = array_reverse($options);
 
             if ($this->form) //checking if we are in a form, then merge additional xml data
             {
