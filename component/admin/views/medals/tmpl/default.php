@@ -43,11 +43,9 @@ $helper = new TkdClubHelperMembers;
             <?php echo JText::_('COM_TKDCLUB_ENTRIES'); ?>
         </div>
     <?php if($this->togglestats) :  ?>
-        <div class="alert alert-info">
-            <?php  
-                include_once(JPATH_COMPONENT . '/includes/medalsstats.php');
-            ?>
-        </div>
+        <?php  
+            include_once(JPATH_COMPONENT . '/includes/medalsstats.php');
+        ?>
     <?php endif; ?>
 
     <div class="clearfix"> </div>
