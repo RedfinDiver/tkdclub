@@ -38,25 +38,22 @@ $filter_payment_state  = $this->state->get('filter.payment_state');
     <?php else : ?>
         <div id="j-main-container">
     <?php endif;?>
-        <!-- filters and sorting tools -->
-        <?php
-            echo JLayoutHelper::render('joomla.searchtools.default', array('view' => $this));
-        ?>
+<!-- filters and sorting tools -->
+    <?php
+        echo JLayoutHelper::render('joomla.searchtools.default', array('view' => $this));
+    ?>
     <?php if (empty($this->items)) : ?>
         <div class="alert alert-no-items">
             <?php echo JText::_('JGLOBAL_NO_MATCHING_RESULTS'); ?>
         </div>
     <?php else : ?>            
-        <div id="filter-bar" class="btn-toolbar">
-            <div class="btn-group pull-left hidden-phone">
-                <label>
-                    <b><?php echo $this->total; ?></b> <?php echo JText::_('COM_TKDCLUB_TRAINING_FROM'); ?>
-                        <b><?php echo $this->allrows; ?></b>
-                    <?php echo JText::_('COM_TKDCLUB_TRAINING_ENTRIES'); ?>
-                </label>
-            </div>  
-        </div>
-    
+
+        <div class="tkdclub-numbers">
+            <b><?php echo $this->total; ?></b> <?php echo JText::_('COM_TKDCLUB_FROM'); ?>
+                <b><?php echo $this->allrows; ?></b>
+            <?php echo JText::_('COM_TKDCLUB_ENTRIES'); ?>
+        </div>  
+
         <div class="clearfix"> </div>
     <?php if($this->togglestats) :  ?>
         <div class="alert alert-info">

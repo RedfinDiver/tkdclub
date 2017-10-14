@@ -48,14 +48,10 @@ $listDirn  = $this->state->get('list.direction');
                 </div>
     <?php else : ?>
 
-    <div id="filter-bar" class="btn-toolbar">
-        <div class="btn-group pull-left">
-            <label>
-                <b><?php echo $this->total; ?></b> <?php echo JText::_('COM_TKDCLUB_MEMBER_FROM'); ?>
-                    <b><?php echo $this->allrows; ?></b>
-                <?php echo JText::_('COM_TKDCLUB_MEMBER_ENTRIES'); ?>
-            </label>
-        </div>        
+    <div class="tkdclub-numbers">
+        <b><?php echo $this->total; ?></b> <?php echo JText::_('COM_TKDCLUB_FROM'); ?>
+            <b><?php echo $this->allrows; ?></b>
+        <?php echo JText::_('COM_TKDCLUB_ENTRIES'); ?>
     </div>
 
     <?php if($this->togglestats) :  ?>
