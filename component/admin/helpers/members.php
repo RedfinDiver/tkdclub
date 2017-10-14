@@ -50,7 +50,7 @@ class TkdclubHelperMembers
      * @return  array    ["member_id" => "firstname lastname"]
      *
      */
-    public function getMemberlist()
+    public static function getMemberlist()
     {
         $db = JFactory::getDbo();
         $query = $db->getQuery(true);
