@@ -27,15 +27,18 @@ class TkdClubViewMedals extends JViewLegacy
         $this->items = $this->get('Items');
         $this->state = $this->get('State');
         $this->pagination = $this->get('Pagination');
-        $this->total = $this->get('Total');
-        $this->allrows = $this->get('Allrows');
-
-        $helper = new TkdClubHelperMembers();
-        $this->memberlist = $helper->getMemberlist();
-
         $this->filterForm    = $this->get('FilterForm');
         $this->activeFilters = $this->get('ActiveFilters');
-        $this->togglestats = 0;
+        $this->total = $this->get('Total');
+        $this->allrows = $this->get('Allrows');
+        $this->memberlist = TkdClubHelperMembers::getMemberlist();
+
+        $this->togglestats = JFactory::getSession()->get('togglestats_medals', null, 'tkdclub');
+        
+        if ($this->togglestats)
+        {
+            $this->medaldata = $this->get('Medaldata');
+        }
         
         $this->addToolbar();
         $this->sidebar = JHtmlSidebar::render();
@@ -58,6 +61,10 @@ class TkdClubViewMedals extends JViewLegacy
         
         if ($canDo->get('core.delete'))
         {JToolBarHelper::deleteList('', 'medals.delete','JTOOLBAR_DELETE');}
+
+        if ($this->togglestats)
+        {JToolBarHelper::custom('medals.togglestats', 'eye-close', 'eye-close', 'COM_TKDCLUB_BUTTON_STATS', false);}
+        else {JToolBarHelper::custom('medals.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);}
         
         $toolbar = JToolbar::getInstance('toolbar');
 		$toolbar->addButtonPath(JPATH_COMPONENT.'/buttons');
