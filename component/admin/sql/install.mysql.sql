@@ -54,3 +54,20 @@ CREATE TABLE IF NOT EXISTS `#__tkdclub_trainings` (
   `checked_out_time` datetime NOT NULL,
   PRIMARY KEY (`training_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `#__tkdclub_medals` (
+  `medal_id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` date NOT NULL,
+  `championship` varchar(50) NOT NULL,
+  `class` varchar(50) NOT NULL,
+  `placing` tinyint(11) NOT NULL,
+  `winner_ids` varchar(50) NOT NULL,
+  `notes` text NOT NULL,
+  `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_by` INT(10) unsigned NOT NULL DEFAULT '0',
+  `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `modified_by` INT(10) unsigned NOT NULL DEFAULT '0',
+  `checked_out` int(10) NOT NULL,
+  `checked_out_time` datetime NOT NULL,
+  PRIMARY KEY (`medal_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;

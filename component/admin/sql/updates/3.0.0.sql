@@ -82,3 +82,19 @@ ALTER TABLE `#__tkdclub_trainings`
     CHANGE `checked_out` `checked_out` int(10) NOT NULL,
     CHANGE `checked_out_time` `checked_out_time` datetime NOT NULL,
     ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
+
+ALTER TABLE `#__tkdclub_medals`
+	CHANGE `id` `medal_id` int(11) NOT NULL AUTO_INCREMENT,
+    CHANGE `date_win` `date` date NOT NULL,
+    CHANGE `c_ship` `championship` varchar(50) NOT NULL,
+    CHANGE `wa_class` `class` varchar(50) NOT NULL,
+    CHANGE `placing` `placing` tinyint(11) NOT NULL,
+    CHANGE `id_win` `winner_ids` varchar(50) NOT NULL,
+    CHANGE `notes_medals` `notes` text NOT NULL,
+    ADD `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+    ADD `created_by` INT(10) unsigned NOT NULL DEFAULT '0',
+    ADD `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+    ADD `modified_by` INT(10) unsigned NOT NULL DEFAULT '0',
+    CHANGE `checked_out` `checked_out` int(10) NOT NULL,
+    CHANGE `checked_out_time` `checked_out_time` datetime NOT NULL,
+    ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;

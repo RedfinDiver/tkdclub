@@ -19,5 +19,8 @@ class TkdclubHelperSidebar
 
         JHtmlSidebar::addEntry(
             JText::_('COM_TKDCLUB_SIDEBAR_TRAININGS'), 'index.php?option=com_tkdclub&view=trainings', $vName == 'trainings');
+
+        JHtmlSidebar::addEntry(
+            JText::_('COM_TKDCLUB_SIDEBAR_MEDALS'), 'index.php?option=com_tkdclub&view=medals', $vName == 'medals');
     }
 }

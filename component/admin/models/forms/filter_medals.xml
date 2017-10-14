@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form>
+
+    <fields name="filter">
+        <field
+            name="search"
+            type="text"
+            label="COM_TKDCLUB_SEARCH_IN_COLOUMS_MEDALS"
+            description="COM_TKDCLUB_SEARCH_IN_COLOUMS_MEDALS"
+            hint="JSEARCH_FILTER"
+        />
+
+        <field
+            name="winner"
+            type="members"
+            label="COM_TKDCLUB_SELECT_WINNER"
+            description=""
+            onchange="this.form.submit();">
+            <option value="">COM_TKDCLUB_SELECT_ATHLET</option>
+        </field>
+
+        <field
+            name="medalyear"
+            type="medalyears"
+            label="COM_TKDCLUB_SELECT_MEDALYEAR"
+            description=""
+            onchange="this.form.submit();">
+            <option value="">COM_TKDCLUB_SELECT_YEAR</option>
+        </field>
+
+        <field 
+            name="placing" type="integer"
+            class="inputbox"
+            label="COM_TKDCLUB_MEDAL_PLACING"
+            description="COM_TKDCLUB_MEDAL_PLACING_DESC"
+            first="1" last="3" step="1" filter="integer"
+            onchange="this.form.submit();">
+            <option value="">COM_TKDCLUB_SELECT_PLACING</option>
+            
+        </field>
+
+    </fields>
+
+    <fields name="list">
+
+        <field
+            name="fullordering" type="list"
+            label=""
+            description=""
+            default="date DESC"
+			onchange="this.form.submit();">
+
+			<option value="">JGLOBAL_SORT_BY</option>
+            <option value="date DESC">COM_TKDCLUB_MEDAL_ORDER_BY_DATE_DESC</option>
+			<option value="date ASC">COM_TKDCLUB_MEDAL_ORDER_BY_DATE_ASC</option>
+
+        </field> 
+
+        <field
+            name="limit"
+            type="limitbox"
+            class="input-mini"
+            label="COM_CONTENT_LIST_LIMIT"
+            description="COM_CONTENT_LIST_LIMIT_DESC"
+            onchange="this.form.submit();"
+        />        
+            
+    </fields> 
+
+</form>
+
