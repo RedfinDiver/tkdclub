@@ -42,22 +42,22 @@ class JFormFieldFunctions extends JFormFieldList
                 }
             }
 
-            // make sure to have always a trainer option in array
+            // make sure to have always some common standard function to select from
             if ($this->form->getValue('sex') == 'male' || $this->form->getValue('sex') == '')
             {
                 $options[] = JHtml::_('select.option', 'president', JText::_('COM_TKDCLUB_SELECT_PRESIDENT'));
                 $options[] = JHtml::_('select.option', 'vpresident', JText::_('COM_TKDCLUB_SELECT_VICE_PRESIDENT'));
                 $options[] = JHtml::_('select.option', 'treasurer', JText::_('COM_TKDCLUB_SELECT_TREASURER'));
-                $options[] = JHtml::_('select.option', 'sectratary', JText::_('COM_TKDCLUB_SELECT_SECRETARY'));
-                $options[] = JHtml::_('select.option', 'trainer', JText::_('COM_TKDCLUB_SELECT_TRAINER'));
+                $options[] = JHtml::_('select.option', 'secratary', JText::_('COM_TKDCLUB_SELECT_SECRETARY'));
+                $options[] = JHtml::_('select.option', 'trainer', JText::_('COM_TKDCLUB_SELECT_TRAINER_IN_MEMBERFORM'));
             }
             elseif ($this->form->getValue('sex') == 'female')
             {
                 $options[] = JHtml::_('select.option', 'president', JText::_('COM_TKDCLUB_SELECT_PRESIDENT_FEMALE'));
                 $options[] = JHtml::_('select.option', 'vpresident', JText::_('COM_TKDCLUB_SELECT_VICE_PRESIDENT_FEMALE'));
                 $options[] = JHtml::_('select.option', 'treasurer', JText::_('COM_TKDCLUB_SELECT_TREASURER_FEMALE'));
-                $options[] = JHtml::_('select.option', 'sectratary', JText::_('COM_TKDCLUB_SELECT_SECRETARY_FEMALE'));
-                $options[] = JHtml::_('select.option', 'trainer', JText::_('COM_TKDCLUB_SELECT_TRAINER_FEMALE'));
+                $options[] = JHtml::_('select.option', 'secratary', JText::_('COM_TKDCLUB_SELECT_SECRETARY_FEMALE'));
+                $options[] = JHtml::_('select.option', 'trainer', JText::_('COM_TKDCLUB_SELECT_TRAINER_INMEMBERFORM_FEMALE'));
             }
 
             $options = array_merge(parent::getOptions(), $options); 
