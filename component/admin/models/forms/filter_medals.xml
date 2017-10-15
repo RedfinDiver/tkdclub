@@ -6,8 +6,8 @@
         <field
             name="search"
             type="text"
-            label="COM_TKDCLUB_SEARCH_IN_COLOUMS_MEDALS"
-            description="COM_TKDCLUB_SEARCH_IN_COLOUMS_MEDALS"
+            label="COM_TKDCLUB_MEDAL_SEARCH_IN_COLOUMS"
+            description="COM_TKDCLUB_MEDAL_SEARCH_IN_COLOUMS"
             hint="JSEARCH_FILTER"
         />
 

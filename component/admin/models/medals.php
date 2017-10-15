@@ -136,10 +136,7 @@ class TkdClubModelMedals extends JModelList
             $query->where('medal_id LIKE' .$search
                         .'OR date LIKE' .$search
                         .'OR championship LIKE' .$search
-                        .'OR type LIKE' .$search
-                        .'OR class LIKE' .$search
-                        .'OR placing LIKE' .$search
-                        .'OR winner_ids LIKE' .$search);
+                        .'OR class LIKE' .$search);
 
         }
 
