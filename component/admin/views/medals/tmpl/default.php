@@ -63,6 +63,7 @@ $helper = new TkdClubHelperMembers;
                 </th>
                 <th class="center" width="100"><?php echo JText::_('COM_TKDCLUB_DATE'); ?></th>
                 <th width=""><?php echo JText::_('COM_TKDCLUB_MEDAL_CHAMPIONSSHIP'); ?></th>
+                <th width=""><?php echo JText::_('COM_TKDCLUB_MEDAL_CHAMPIONSSHIP_TYPE'); ?></th>
                 <th width=""><?php echo JText::_('COM_TKDCLUB_MEDAL_CLASS'); ?></th>
                 <th width=""><?php echo JText::_('COM_TKDCLUB_MEDAL_PLACING'); ?></th>
                 <th width=""><?php echo JText::_('COM_TKDCLUB_ATHLETS'); ?></th>
@@ -92,6 +93,7 @@ $helper = new TkdClubHelperMembers;
                 ?>
                 </td>
                 <td width=""><?php echo $this->escape($item->championship); ?></td>
+                <td width=""><?php echo $this->escape($item->type); ?></td>
                 <td width=""><?php echo $this->escape($item->class); ?></td>
                 <td class="center" width=""><?php echo $this->escape($item->placing); ?></td>
                 <td width=""><?php echo $helper->getMembersNames($item->winner_ids, $this->memberlist); ?></td>
