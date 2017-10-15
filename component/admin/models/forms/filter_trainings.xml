@@ -25,6 +25,7 @@
         <field
             name="trainer"
             type="trainers"
+            isFilter="true"
             label="COM_TKDCLUB_SELECT_TRAINER"
             description=""
             onchange="this.form.submit();">
@@ -33,7 +34,8 @@
 
         <field 
             name="type"
-            type="filtertraintypes"
+            type="traintypes"
+            isFilter="true"
             class="inputbox"
             label="COM_TKDCLUB_SELECT_TRAINING_TYPE"
             description=""
