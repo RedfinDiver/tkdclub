@@ -25,7 +25,7 @@ class TkdClubModelMedals extends JModelList
         if (empty($config['filter_fields']))
         {
             $config['filter_fields'] = 
-            array('medal_id', 'date', 'championship', 'class', 'placing', 'winner_ids', 'winner', 'medalyear');
+            array('medal_id', 'date', 'championship', 'type', 'class', 'placing', 'winner_ids', 'winner', 'medalyear');
         }
         
         parent::__construct($config);
@@ -62,6 +62,9 @@ class TkdClubModelMedals extends JModelList
         $medalyear = $this->getUserStateFromRequest($this->context.'.filter.medalyear', 'filter_medalyear', '', 'integer');
         $this->setState('filter.medalyear', $medalyear);
 
+        $search = $this->getUserStateFromRequest($this->context.'.filter.type', 'filter_type', '', 'string');
+        $this->setState('filter.type', $search);
+
         parent::populateState($ordering, $direction);
     }
     
@@ -83,6 +86,7 @@ class TkdClubModelMedals extends JModelList
         $id	.= ':'.$this->getState('filter.placing');
         $id	.= ':'.$this->getState('filter.winner');
         $id	.= ':'.$this->getState('filter.medalyear');
+        $id	.= ':'.$this->getState('filter.type');
 
         return parent::getStoreId($id);
     }
@@ -118,6 +122,13 @@ class TkdClubModelMedals extends JModelList
             $query->where('date LIKE ' . $medalyear);
         }
 
+        $championshiptype = $this->getState('filter.type');
+        if (!empty($championshiptype))
+        {
+            $championshiptype = $db->quote($championshiptype);
+            $query->where('type=' . $championshiptype);
+        }
+
         $search = $this->getState('filter.search');
         if (!empty($search))
         {
@@ -125,6 +136,7 @@ class TkdClubModelMedals extends JModelList
             $query->where('medal_id LIKE' .$search
                         .'OR date LIKE' .$search
                         .'OR championship LIKE' .$search
+                        .'OR type LIKE' .$search
                         .'OR class LIKE' .$search
                         .'OR placing LIKE' .$search
                         .'OR winner_ids LIKE' .$search);
