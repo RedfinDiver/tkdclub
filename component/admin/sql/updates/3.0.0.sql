@@ -87,6 +87,7 @@ ALTER TABLE `#__tkdclub_medals`
 	CHANGE `id` `medal_id` int(11) NOT NULL AUTO_INCREMENT,
     CHANGE `date_win` `date` date NOT NULL,
     CHANGE `c_ship` `championship` varchar(50) NOT NULL,
+    ADD `type` varchar(50) NOT NULL AFTER `championsship`,
     CHANGE `wa_class` `class` varchar(50) NOT NULL,
     CHANGE `placing` `placing` tinyint(11) NOT NULL,
     CHANGE `id_win` `winner_ids` varchar(50) NOT NULL,

@@ -59,6 +59,7 @@ CREATE TABLE IF NOT EXISTS `#__tkdclub_medals` (
   `medal_id` int(11) NOT NULL AUTO_INCREMENT,
   `date` date NOT NULL,
   `championship` varchar(50) NOT NULL,
+  `type` varchar(50) NOT NULL, 
   `class` varchar(50) NOT NULL,
   `placing` tinyint(11) NOT NULL,
   `winner_ids` varchar(50) NOT NULL,
