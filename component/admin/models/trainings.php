@@ -150,7 +150,7 @@ class TkdClubModelTrainings extends JModelList
     }
 
     /**
-     * Get all the statistc data for a specific trainer
+     * Get all the statistic data for a specific trainer
      *
      * This function gets the data for every trainer in the database
      *
