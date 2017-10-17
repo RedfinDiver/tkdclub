@@ -47,9 +47,9 @@ class TkdClubViewMedals extends JViewLegacy
     
     protected function addToolbar()
     {
-        $clubname = JComponentHelper::getParams('com_tkdclub')->get('club_name');
-        $clubname == TRUE ? JToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_MEDAL_ADMIN_VIEW'), 'tkdclub') 
-                          : JToolBarHelper::title(JText::_('COM_TKDCLUB') . JText::_('COM_TKDCLUB_MEDAL_ADMIN_VIEW'), 'tkdclub');
+        $clubname = JComponentHelper::getParams('com_tkdclub')->get('club_name', JText::_('COM_TKDCLUB'));
+
+        JToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_MEDAL_ADMIN_VIEW'), 'tkdclub');
         
         $canDo = TkdClubHelperActions::getActions();
         
@@ -60,7 +60,7 @@ class TkdClubViewMedals extends JViewLegacy
         {JToolBarHelper::editList('medal.edit', 'JTOOLBAR_EDIT');}
         
         if ($canDo->get('core.delete'))
-        {JToolBarHelper::deleteList('', 'medals.delete','JTOOLBAR_DELETE');}
+        {JToolBarHelper::deleteList('COM_TKDCLUB_MEDAL_DELETE_QUESTION', 'medals.delete','JTOOLBAR_DELETE');}
 
         if ($this->togglestats)
         {JToolBarHelper::custom('medals.togglestats', 'eye-close', 'eye-close', 'COM_TKDCLUB_BUTTON_STATS', false);}

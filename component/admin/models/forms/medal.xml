@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form>
+    
+    <fieldset name="medal_data">
+            
+        <field 
+            name="date" type="calendar"
+            class="inputbox"
+            label="COM_TKDCLUB_DATE"
+            description="COM_TKDCLUB_MEDAL_DATE_DESC"
+            size="12" required="true" filter="safehtml" />
+        
+        <field 
+            name="championship" type="text"
+            class="inputbox"
+            label="COM_TKDCLUB_MEDAL_CHAMPIONSSHIP"
+            description="COM_TKDCLUB_MEDAL_CHAMPIONSSHIP_DESC"
+            filter="safehtml" > 
+        </field>
+
+        <field 
+            name="type" type="championshiptypes"
+            class="inputbox"
+            label="COM_TKDCLUB_MEDAL_CHAMPIONSSHIP_TYPE"
+            description="COM_TKDCLUB_MEDAL_CHAMPIONSSHIP_TYPE_DESC"
+            filter="safehtml" >
+            <option value="">COM_TKDCLUB_SELECT_CHAMPIONSHIP_TYPE</option>
+        </field>
+
+        <field 
+            name="class" type="text"
+            class="inputbox"
+            label="COM_TKDCLUB_MEDAL_CLASS"
+            description="COM_TKDCLUB_MEDAL_CLASS_DESC"
+            filter="safehtml" >
+        </field>
+            
+        <field 
+            name="placing" type="integer"
+            class="inputbox"
+            label="COM_TKDCLUB_MEDAL_PLACING"
+            description="COM_TKDCLUB_MEDAL_PLACING_DESC"
+            first="1" last="3" step="1" filter="integer"
+            required="true">
+            <option value="">COM_TKDCLUB_MEDAL_SELECT_PLACING</option>
+        </field>
+        
+        <field 
+            name="winner_ids" type="members"
+            multiple="true"
+            class="inputbox"
+            label="COM_TKDCLUB_ATHLETS"
+            description="COM_TKDCLUB_MEDAL_WINNERS_DESC"
+            filter="safehtml" required="true" >
+            
+        </field>
+
+        <field 
+            name="notes" type="textarea"
+            class="inputbox"
+            rows="7"
+            label="COM_TKDCLUB_NOTES"
+            description="COM_TKDCLUB_NOTES_DESC"
+            filter="safehtml" />
+        
+    </fieldset>
+
+    <fieldset name="item_data">       
+
+        <field
+            name="medal_id" type="text" default="0" filter="safehtml"
+            label="COM_TKDCLUB_FIELD_ID" description="COM_TKDCLUB_FIELD_ID_DESC"
+            readonly="true" class="readonly"/>       
+
+        <field 
+            name="created" type="calendar" label="COM_TKDCLUB_FIELD_CREATED"
+            description="COM_TKDCLUB_FIELD_CREATED_DESC" size="22"
+            format="%Y-%m-%d %H:%M:%S" filter="user_utc" 
+            class="readonly" readonly="true" />
+
+        <field
+            name="created_by" type="user"
+            label="COM_TKDCLUB_FIELD_CREATED_BY" 
+            description="COM_TKDCLUB_FIELD_CREATED_BY_DESC"
+            class="readonly" readonly="true" />
+
+        <field
+            name="modified" type="calendar" class="readonly"
+            label="COM_TKDCLUB_FIELD_MODIFIED" description="COM_TKDCLUB_FIELD_MODIFIED_DESC"
+            size="22" readonly="true" format="%Y-%m-%d %H:%M:%S" filter="user_utc" />
+
+        <field
+            name="modified_by" type="user"
+            label="COM_TKDCLUB_FIELD_MODIFIED_BY" description="COM_TKDCLUB_FIELD_MODIFIED_BY_DESC"
+            class="readonly" readonly="true" />
+
+    </fieldset>
+       
+</form>

@@ -7,6 +7,7 @@
 
 defined('_JEXEC') or die;
 
+JFormHelper::loadFieldClass('list');
 JLoader::register('TkdClubHelperList', JPATH_COMPONENT_ADMINISTRATOR. '/helpers/list.php');
 
 /**
@@ -49,7 +50,7 @@ class JFormFieldChampionshiptypes extends JFormFieldList
         {
             $types = TkdClubHelperList::getList(JComponentHelper::getParams('com_tkdclub')->get('championship_types'));
 
-            if (isset($types))
+            if ($types)
             {
                 foreach($types as $type)
                 {
@@ -58,8 +59,8 @@ class JFormFieldChampionshiptypes extends JFormFieldList
             }
 
             // make sure to have always "Poomse" and "Kyorugie" available
-            $options[] = JHtml::_('select.option', 'Kyorugi', JText::_('COM_TKDCLUB_MEDAL_KYORUGIE'));
-            $options[] = JHtml::_('select.option', 'Poomsae', JText::_('COM_TKDCLUB_MEDAL_POOMSE'));
+            $options[] = JHtml::_('select.option', 'Kyorugi', JText::_('COM_TKDCLUB_KYORUGI'));
+            $options[] = JHtml::_('select.option', 'Poomsae', JText::_('COM_TKDCLUB_POOMSAE'));
         }
 
         if ($this->form) // checking if we are in a form, then merge additional xml data

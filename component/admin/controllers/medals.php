@@ -9,6 +9,8 @@ defined('_JEXEC') or die;
 
 class TkdClubControllerMedals extends JControllerAdmin
 {
+    protected $text_prefix = 'COM_TKDCLUB_MEDAL';
+
     public function getModel($name = 'medal', $prefix = 'TkdClubModel', $config = array())
     {
         $config['ignore_request'] = true;

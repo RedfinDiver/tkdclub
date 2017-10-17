@@ -88,7 +88,7 @@ $helper = new TkdClubHelperMembers;
                 <td class="center" width="10"><?php echo (int) $item->medal_id; ?></td>
                 <td class="title" width="60">
                 <?php
-                $mylink = JRoute::_("index.php?option=com_tkdclub&task=medal.edit&id=".$item->medal_id);
+                $mylink = JRoute::_("index.php?option=com_tkdclub&task=medal.edit&medal_id=".$item->medal_id);
                 echo '<a href="'.$mylink.'">'.JHtml::_('date', $item->date, JText::_('DATE_FORMAT_LC4')).'</a>';
                 ?>
                 </td>
