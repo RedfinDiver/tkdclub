@@ -33,7 +33,7 @@ JFactory::getDocument()->addScriptDeclaration("
 		<!-- Begin Medals -->
 		<div class="form-horizontal">
             <?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'medal')); ?>
-                     <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'medal', empty($this->item->medal_id) ? JText::_('COM_TKDCLUB_MEDAL_ADD', true) : JText::sprintf('COM_TKDCLUB_MEDAL_EDIT', $this->item->medal_id, true)); ?>
+                     <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'medal', empty($this->item->medal_id) ? JText::_('COM_TKDCLUB_MEDAL_NEW_TAB', true) : JText::sprintf('COM_TKDCLUB_MEDAL_EDIT', $this->item->medal_id, true)); ?>
                      <?php foreach ($this->form->getFieldset('medal_data') as $field) : ?>
                             <?php echo $field->renderField(); ?>
                     <?php endforeach; ?> 

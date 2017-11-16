@@ -43,7 +43,7 @@
             description="COM_TKDCLUB_MEDAL_PLACING_DESC"
             first="1" last="3" step="1" filter="integer"
             required="true">
-            <option value="">COM_TKDCLUB_MEDAL_SELECT_PLACING</option>
+            <option value="">COM_TKDCLUB_SELECT_PLACING</option>
         </field>
         
         <field 
