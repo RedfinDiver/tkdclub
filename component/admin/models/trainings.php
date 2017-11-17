@@ -7,6 +7,8 @@
 
 defined('_JEXEC') or die;
 
+JLoader::register('TkdclubHelperTrainer', JPATH_COMPONENT_ADMINISTRATOR. '/helpers/trainer.php');
+
 /**
  * Model-class for list view 'trainings'
  *
@@ -30,7 +32,7 @@ class TkdClubModelTrainings extends JModelList
         }
 
         // getting all trainer names from database
-        $this->trainer_names = $this->get_all_trainer_from_database();
+        $this->trainer_names = TkdclubHelperTrainer::getTrainer($fromTrainingsTable = true);
 
         // getting all trainingyears from database
         $this->training_years = $this->get_all_training_years_from_database();
@@ -44,6 +46,23 @@ class TkdClubModelTrainings extends JModelList
         $this->distance_rate = JComponentHelper::getParams('com_tkdclub')->get('distance_salary', 0);
         
         parent::__construct($config);
+    }
+    /**
+     * checks if the parameters for calculating the trainer/assistent salary are properly set
+     * 
+     * @return bool true if all parameters are set, false if one ore more are not set
+     * 
+     */
+    public function getSalaryparams()
+    {
+        if ($this->training_salary && $this->assist_salary && $this->distance_rate)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
       
     protected function populateState($ordering = 'date', $direction = 'DESC')
@@ -159,6 +178,12 @@ class TkdClubModelTrainings extends JModelList
      **/
     public function getTrainerData()
     {   
+        // return if there are no trainers, which basically means there are no datasets
+        if (!$this->trainer_names)
+        {
+            return null;
+        }
+
         // loop through the trainer names and get their data
         foreach ($this->trainer_names as $trainer_id => $trainer_name)
         {
@@ -200,6 +225,12 @@ class TkdClubModelTrainings extends JModelList
      **/
      public function getTrainingsData()
      {  
+        // return if there are no training years, which basically means there are no datasets
+        if (!$this->training_years)
+        {
+            return null;
+        }
+
         // initialise the container and some variables
         $trainingsdata = new stdClass;
         $sum_data = array('trainings' => 0, 'average' => 0, 'types' => array(), 'parts' => array());
@@ -281,28 +312,6 @@ class TkdClubModelTrainings extends JModelList
             $db->setQuery($query);
 
         return $db->loadColumn();
-    }
-
-    /**
-     * Get all trainers from database
-     *
-     * This method is used to get the id and the name of every single
-     * trainer in the database
-     *
-     * @return array in the form [ int trainer_id => strg 'firstname lastname']
-     **/
-    public function get_all_trainer_from_database()
-    {
-        $db = JFactory::getDbo();
-        $query = $db->getQuery(true);
-        $query->select('member_id AS trainer_id')
-              ->select('CONCAT(firstname, " ", lastname) AS trainer_name' )
-              ->from($db->quoteName('#__tkdclub_members'))
-              ->where($db->quoteName('functions') . ' LIKE ' . $db->quote('%trainer%'))
-              ->where($db->quoteName('member_state') . ' = ' .  $db->quote('active'));
-        $db->setQuery($query);
-        
-        return $db->loadAssocList('trainer_id', 'trainer_name');
     }
 
     /**
