@@ -22,7 +22,14 @@ if (!$filter_trainer && !$filter_type && !$filter_year)
         $sum += $trainer->sums['unpaid_sum'];
     }
     
-    echo JText::_('COM_TKDCLUB_TRAINING_NOT_PAID_TRAININGS').'<b>'. \number_format($sum, 2, ',', ' ') .' '. $currency .'</b>'. '</br>';
+    if ($salaryparams == true)
+    {
+        echo JText::_('COM_TKDCLUB_TRAINING_NOT_PAID_TRAININGS').'<b>'. \number_format($sum, 2, ',', ' ') .' '. $currency .'</b>'. '</br>';
+    }
+    else
+    {
+        echo '<b>' . JText::_('COM_TKDCLUB_TRAINING_SALARY_CALC_NOT_POSSIBLE') . '</b>' . '</br>';
+    }
 }
 
 // Calculation of the sum of unpaid trainings for SELECTED TRAINER when trainer/assistent filter is set and preparing text            
@@ -38,7 +45,14 @@ if ($filter_trainer)
     }
 
     // text is used later in the script
-    $sum_text_trainer = JText::_('COM_TKDCLUB_TRAINING_NOT_PAID_TRAININGS_TRAINER').$trainer_data->trainer_name.': '.'<b>'. $sum . ' ' . $currency . '</b>'. '</br>';
+    if ($salaryparams == true)
+    {
+        $sum_text_trainer = JText::_('COM_TKDCLUB_TRAINING_NOT_PAID_TRAININGS_TRAINER').$trainer_data->trainer_name.': '.'<b>'. $sum . ' ' . $currency . '</b>'. '</br>';
+    }
+    else
+    {
+        $sum_text_trainer = '<b>' . JText::_('COM_TKDCLUB_TRAINING_SALARY_CALC_NOT_POSSIBLE') . '</b>';
+    }
 }
          
 /***************************************************
