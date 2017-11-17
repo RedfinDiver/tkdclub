@@ -32,11 +32,17 @@ class TkdClubViewTrainings extends JViewLegacy
         $this->total = $this->get('Total');
         $this->allrows = $this->get('Allrows');
         $this->togglestats = JFactory::getSession()->get('togglestats_trainings', null, 'tkdclub');
+        $this->salaryparams = $this->get('Salaryparams');
         
         if ($this->togglestats)
         {
             $this->trainerdata = $this->get('Trainerdata');
             $this->trainingsdata = $this->get('Trainingsdata');
+        }
+
+        if (!$this->salaryparams && $this->togglestats)
+        {
+            JFactory::getApplication()->enqueueMessage(JText::_('COM_TKDCLUB_TRAINING_NO_SALARY_DEFINED'), 'warning');
         }
 
         $this->addToolbar();
