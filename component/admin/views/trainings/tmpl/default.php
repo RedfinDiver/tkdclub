@@ -17,6 +17,8 @@ JHtml::_('script', 'administrator/components/com_tkdclub/assets/js/rawsubmitbutt
  * initilise some variables
  */
 $currency = JComponentHelper::getParams('com_tkdclub')->get('currency', '€');
+$salaryparams = $this->salaryparams;
+$togglestats = $this->togglestats;
 $listOrder = $this->state->get('list.ordering');
 $listDirn = $this->state->get('list.direction');
 $listLimit = $this->state->get('list.limit');
