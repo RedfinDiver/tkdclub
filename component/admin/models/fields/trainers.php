@@ -7,6 +7,8 @@
 
 defined('_JEXEC') or die;
 
+JLoader::register('TkdclubHelperTrainer', JPATH_COMPONENT_ADMINISTRATOR. '/helpers/trainer.php');
+
 class JFormFieldTrainers extends JFormFieldList
 {       
     /**
@@ -15,75 +17,35 @@ class JFormFieldTrainers extends JFormFieldList
     protected $type = 'trainers';
 
     /**
-    * Method to get the field input markup for field 'trainers'.
-    *
-    */       
+     * Method to get the field input markup for field 'trainers'.
+     */       
     public function getOptions()
     {   
         $options = array();
 
-        // for filter use add trainers from the existing trainining table
+        // for filter use add trainers from the existing training table
         if ($this->element['isFilter'] == 'true')
         {
-            $db = JFactory::getDBO();
+            $trainers = TkdclubHelperTrainer::getTrainer($fromTrainingsTable = true);
 
-            $q1 = $db->getQuery(true)
-                  ->select(array('a.member_id', 'a.firstname', 'a.lastname'))->from($db->quoteName('#__tkdclub_members', 'a'))
-                  ->join('LEFT', $db->quoteName('#__tkdclub_trainings', 'b') . ' ON(' . $db->quoteName('a.member_id') . ' = ' . $db->quoteName('b.trainer') . ')' )
-                  ->where('trainer>0');
-            
-            $q2 = $db->getQuery(true)
-            ->select(array('a.member_id', 'a.firstname', 'a.lastname'))->from($db->quoteName('#__tkdclub_members', 'a'))
-            ->join('LEFT', $db->quoteName('#__tkdclub_trainings', 'b') . ' ON(' . $db->quoteName('a.member_id') . ' = ' . $db->quoteName('b.assist1') . ')' )
-            ->where('assist1>0');
-            
-            $q3 = $db->getQuery(true)
-            ->select(array('a.member_id', 'a.firstname', 'a.lastname'))->from($db->quoteName('#__tkdclub_members', 'a'))
-            ->join('LEFT', $db->quoteName('#__tkdclub_trainings', 'b') . ' ON(' . $db->quoteName('a.member_id') . ' = ' . $db->quoteName('b.assist2') . ')' )
-            ->where('assist2>0');
 
-            $q4 = $db->getQuery(true)
-            ->select(array('a.member_id', 'a.firstname', 'a.lastname'))->from($db->quoteName('#__tkdclub_members', 'a'))
-            ->join('LEFT', $db->quoteName('#__tkdclub_trainings', 'b') . ' ON(' . $db->quoteName('a.member_id') . ' = ' . $db->quoteName('b.assist3') . ')' )
-            ->where('assist3>0');
-            
-            $query = $q1->union($q2)->union($q3)->union($q4);
-            $db->setQuery($query);
-
-            $trainers = $db->loadObjectList();
-
-            foreach($trainers as $trainer)
-            {
-                $options[] = JHtml::_('select.option', $trainer->member_id, $trainer->firstname . ' ' . $trainer->lastname);
-            }
-            
         }
-        else // NO filter use, add trainers from the members table where in functions the member is defined as trainer
+
+        // NO filter use, add trainers from the members table where in functions the member is defined as trainer
+        if ($this->element['isFilter'] == 'false')
         {
-            $db = JFactory::getDBO();
-            $query = $db->getQuery(true);
-    
-            $query->select($db->quoteName(array('member_id', 'firstname', 'lastname')));
-            $query->from($db->quoteName('#__tkdclub_members'));
-            $query->order('member_id ASC');
-            $query->where($db->quoteName('functions') . ' LIKE '. $db->quote('%Trainer%'));
-    
-            $db->setQuery($query);
-    
-            $trainers = $db->loadObjectList();
+            $trainers = TkdclubHelperTrainer::getTrainer($fromTrainingsTable = false);
     
             if (!$trainers)
             {
                 JFactory::getApplication()->enqueueMessage(JText::_('COM_TKDCLUB_TRAINING_NO_TRAINERS_DEFINED'), 'warning');
             }
-            else
-            {
-                foreach($trainers as $trainer)
-                {
-                    $options[] = JHtml::_('select.option', $trainer->member_id, $trainer->firstname . ' ' . $trainer->lastname);
-                }
-            }
 
+        }
+
+        foreach($trainers as $id => $name)
+        {
+            $options[] = JHtml::_('select.option', $id, $name);
         }
 
         if ($this->form) //checking if we are in a form, then merge additional xml data
