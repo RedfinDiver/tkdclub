@@ -24,6 +24,7 @@
         
         <field 
             name="trainer" type="trainers"
+            isFilter="false"
             class="inputbox"
             label="COM_TKDCLUB_TRAINING_TRAINER"
             description="COM_TKDCLUB_TRAINING_TRAINER_DESC"
@@ -40,6 +41,7 @@
         
          <field 
             name="assist1" type="trainers"
+            isFilter="false"
             class="inputbox"
             label="COM_TKDCLUB_TRAINING_ASSISTENT1"
             description="COM_TKDCLUB_TRAINING_ASSISTENT1_DESC"
@@ -61,6 +63,7 @@
         
          <field 
             name="assist2" type="trainers"
+            isFilter="false"
             class="inputbox"
             label="COM_TKDCLUB_TRAINING_ASSISTENT2"
             description="COM_TKDCLUB_TRAINING_ASSISTENT2_DESC"
@@ -82,6 +85,7 @@
          
         <field 
             name="assist3" type="trainers"
+            isFilter="false"
             class="inputbox"
             label="COM_TKDCLUB_TRAINING_ASSISTENT3"
             description="COM_TKDCLUB_TRAINING_ASSISTENT3_DESC"
