@@ -8,11 +8,17 @@
 defined('_JEXEC') or die;
 
 /**
-* helper for getting trainer names from database
-*/
+ * Helper for getting trainer names from database
+ * 
+ * @param   bool    $fromTrainingsTable  true = get trainernames from Trainingstable, false = get names from aktive members with trainer function
+ * 
+ * @return  array   array with trainer names like [member_id => "firstname lastname"]
+ * 
+ * @since   3.0.0
+ */
 class TkdclubHelperTrainer
 {
-    public static function getTrainer($fromTrainingsTable = true)
+    public static function getTrainer($fromTrainingsTable)
     {
         if ($fromTrainingsTable == true)
         {

@@ -99,3 +99,22 @@ ALTER TABLE `#__tkdclub_medals`
     CHANGE `checked_out` `checked_out` int(10) NOT NULL,
     CHANGE `checked_out_time` `checked_out_time` datetime NOT NULL,
     ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
+
+RENAME TABLE `#__tkdclub_exams` TO `#__tkdclub_promotions`
+
+ALTER TABLE `#__tkdclub_promotions`
+    CHANGE `id` `promotion_id` int(10) NOT NULL AUTO_INCREMENT,
+    CHANGE `date_exam` `date` date NOT NULL,
+    CHANGE `city_exam` `city` varchar(20) NOT NULL,
+    CHANGE `exam_type` `type` varchar(20) NOT NULL,
+    CHANGE `examiner_name` `examiner_name` varchar(50),
+    CHANGE `examiner_adress` `examiner_adress` varchar(50) NOT NULL,
+    CHANGE `examiner_email` `examiner_email` varchar(50) NOT NULL,
+    CHANGE `published` `promotion_state` tinyint(4) NOT NULL,
+    ADD `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+    ADD `created_by` INT(10) unsigned NOT NULL DEFAULT '0',
+    ADD `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+    ADD `modified_by` INT(10) unsigned NOT NULL DEFAULT '0',
+    CHANGE `checked_out` `checked_out` int(10) NOT NULL,
+    CHANGE `checked_out_time` `checked_out_time` datetime NOT NULL,
+    ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;

@@ -22,5 +22,8 @@ class TkdclubHelperSidebar
 
         JHtmlSidebar::addEntry(
             JText::_('COM_TKDCLUB_SIDEBAR_MEDALS'), 'index.php?option=com_tkdclub&view=medals', $vName == 'medals');
+
+        JHtmlSidebar::addEntry(
+            JText::_('COM_TKDCLUB_SIDEBAR_PROMOTIONS'), 'index.php?option=com_tkdclub&view=promotions', $vName == 'promotions');
     }
 }
