@@ -25,7 +25,7 @@ class TkdClubModelPromotions extends JModelList
             //currently not used, but does no harm
         if (empty($config['filter_fields']))
         {
-            $config['filter_fields'] = array('id', 'date_exam');
+            $config['filter_fields'] = array('promotion_id', 'date');
         }
         
         parent::__construct($config);
@@ -47,7 +47,7 @@ class TkdClubModelPromotions extends JModelList
 	 *
 	 * @since   1.0
 	 */
-    protected function populateState($ordering = 'date_exam', $direction = 'DESC')
+    protected function populateState($ordering = 'date', $direction = 'DESC')
     {
         parent::populateState($ordering, $direction);
     }

@@ -7,6 +7,8 @@
 
 defined('_JEXEC') or die;
 
+JLoader::register('TkdclubHelperActions', JPATH_COMPONENT_ADMINISTRATOR. '/helpers/actions.php');
+
 /**
  * view-class for view: 'promotions'
  */
@@ -16,26 +18,24 @@ class TkdClubViewPromotions extends JViewLegacy
     protected $pagination;
     protected $state;
     protected $total;
-    //allrows in the database
     protected $allrows;
-    //all participants of published exams, used for building select-list for filter
-    protected $allparticipants;
-    //all exam-dates of published exams, used for building select-list for filter
-    protected $allexamdates;
 
     public function display($tpl = null)
     {
         
         $this->items = $this->get('Items');
-        $this->state = $this->get('State');
         $this->pagination = $this->get('Pagination');
+        $this->state = $this->get('State');
         $this->total = $this->get('Total');
-        //allrows in the database
         $this->allrows = $this->get('Allrows');
-        //all participants of published exams, used for building select-list for filter
-        $this->allparticipants = $this->get('Allparticipantsnames');
-        //all exam-dates of published exams, used for building select-list for filter
-        $this->allexamdates = $this->get('AllExamDates');
+        $this->filterForm    = $this->get('FilterForm');
+        $this->activeFilters = $this->get('ActiveFilters');
+        $this->togglestats = JFactory::getSession()->get('togglestats_promotions', null, 'tkdclub');
+        
+        if ($this->togglestats)
+        {
+            $this->memberdata = $this->get('Promotionsdata');
+        }
         
         $this->addToolbar();
         $this->sidebar = JHtmlSidebar::render();
@@ -45,33 +45,55 @@ class TkdClubViewPromotions extends JViewLegacy
     protected function addToolbar()
     {
         $clubname = JComponentHelper::getParams('com_tkdclub')->get('club_name');
-        $clubname == TRUE ? JToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_ADMIN_EXAMS'), 'exams.png') 
-                          : JToolBarHelper::title(JText::_('COM_TKD_CLUB') . JText::_('COM_TKDCLUB_ADMIN_EXAMS'), 'exams.png');
+        $clubname == TRUE ? JToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_PROMOTION_ADMIN_VIEW'), 'tkdclub') 
+                          : JToolBarHelper::title(JText::_('COM_TKDCLUB') . JText::_('COM_TKDCLUB_PROMOTION_ADMIN_VIEW'), 'tkdclub');
         
-        $canDo = TkdClubHelper::getActions();
+        $canDo = TkdClubHelperActions::getActions();
         
         JToolBarHelper::divider();
         
         if ($canDo->get('core.create'))
-        {JToolBarHelper::addNew('exam.add');}
-        
+        {
+            JToolBarHelper::addNew('promotion.add', 'JTOOLBAR_NEW');
+        }
+
         if ($canDo->get('core.edit'))
-        {JToolBarHelper::editList('exam.edit','COM_TKDCLUB_TOOLBAR_EXAM_EDITEXAM');}
-        
+        {
+            JToolBarHelper::editList('promotion.edit', 'JTOOLBAR_EDIT');   
+        }
+
+        if ($canDo->get('core.edit.state'))
+        {
+            JToolBarHelper::publish('promotions.publish', 'JTOOLBAR_CHECKIN', true);
+            JToolBarHelper::unpublish('promotions.unpublish', 'COM_TKDCLUB_PROMOTION_UNPUBLISH', true);
+        }
+
         if ($canDo->get('core.delete'))
-        {JToolBarHelper::deleteList('', 'exams.delete', 'COM_TKDCLUB_TOOLBAR_EXAM_DELETE');}
-        
-        if ($canDo->get('core.create'))
-        {JToolBarHelper::publish('exams.publish', 'COM_TKDCLUB_TOOLBAR_EXAM_PUBLISH');}
-        
-        if ($canDo->get('core.create'))
-        {JToolBarHelper::archiveList('exams.archive', 'COM_TKDCLUB_TOOLBAR_EXAM_ARCHIVE');}
+        {
+            JToolBarHelper::deleteList('COM_TKDCLUB_PROMOTIN_DELETE_QUESTION', 'promotions.delete','JTOOLBAR_DELETE', true);
+        }
         
         if ($canDo->get('core.admin'))
-        {JToolBarHelper::preferences('com_tkdclub');}
-        
-        JToolBarHelper::back('COM_TKDCLUB_TOOLBAR_BACK_TO_PARTS', 'index.php?option=com_tkdclub&view=examparts');
+        {
+            JToolBarHelper::preferences('com_tkdclub');
+        }
+
+        $toolbar = JToolbar::getInstance('toolbar');
+        $toolbar->addButtonPath(JPATH_COMPONENT.'/buttons');
+
+        if ($this->togglestats)
+        {JToolBarHelper::custom('promotions.togglestats', 'eye-close', 'eye-close', 'COM_TKDCLUB_BUTTON_STATS', false);}
+        else {JToolBarHelper::custom('promotions.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);}
+
+        $toolbar->appendButton('RawFormat',  'download', 'COM_TKDCLUB_BUTTON_EXPORT', 'export.promotions');
         
         JToolbarHelper::help('', '', 'http://tkdclub.readthedocs.io/de/latest/pruefungen.html');
     }
+
+    protected function getSortFields()
+	{
+		return array(
+			'date' => JText::_('COM_TKDCLUB_PROMOTION_DATE'),
+		);
+	}
 }

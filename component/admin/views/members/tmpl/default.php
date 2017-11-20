@@ -130,7 +130,7 @@ $listDirn  = $this->state->get('list.direction');
                     </td>
                     <td class="center">
                         <?php 
-                            //creating array for alernatives tooltip text on member_state coloum
+                            //creating array for altnatives tooltip text on member_state coloum
                             $states = array('active' => array('COM_TKDCLUB_MEMBER_STATE_ACTIVE', 'publish'),
                                             'inactive' => array('COM_TKDCLUB_MEMBER_STATE_INACTIVE', 'unpublish'),
                                             'support' => array('COM_TKDCLUB_MEMBER_STATE_SUPPORTER','archive'));
