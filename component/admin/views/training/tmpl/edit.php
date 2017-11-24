@@ -12,18 +12,17 @@ JHtml::_('formbehavior.chosen', 'select');
 
 JHtml::stylesheet('administrator/components/com_tkdclub/assets/css/tkdclub.css');
 
-?>
+JFactory::getDocument()->addScriptDeclaration("
+Joomla.submitbutton = function(task)
+{
+    if (task == 'training.cancel' || document.formvalidator.isValid(document.getElementById('training-form'))) 
+            {
+        Joomla.submitform(task, document.getElementById('training-form'));
+    }
+};
+");
 
-<script type="text/javascript">
-	Joomla.submitbutton = function(task)
-	{
-		if (task == 'training.cancel' || document.formvalidator.isValid(document.id('training-form')))
-		{
-			
-			Joomla.submitform(task, document.getElementById('training-form'));
-		}
-	}
-</script>
+?>
 
 <form action="<?php echo JRoute::_('index.php?option=com_tkdclub&training_id=' .(int) $this->item->training_id); ?>"
       method="post"
