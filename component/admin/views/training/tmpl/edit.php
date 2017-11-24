@@ -7,9 +7,10 @@
 
 defined('_JEXEC') or die;
 
-JHtml::stylesheet('administrator/components/com_tkdclub/assets/css/tkdclub.css');
 JHtml::_('behavior.formvalidation');
 JHtml::_('formbehavior.chosen', 'select');
+
+JHtml::stylesheet('administrator/components/com_tkdclub/assets/css/tkdclub.css');
 
 ?>
 
