@@ -17,15 +17,12 @@ class TkdClubModelPromotions extends JModelList
      *
      * @param   array  $config  An optional associative array of configuration settings.
      *
-     * @see     JModelLegacy
-     * @since   1.0
      */
     public function __construct($config = array())
     {
-            //currently not used, but does no harm
         if (empty($config['filter_fields']))
         {
-            $config['filter_fields'] = array('promotion_id', 'date');
+            $config['filter_fields'] = array('promotion_id', 'promotion_state', 'type', 'city', 'examiner_name',);
         }
         
         parent::__construct($config);
@@ -49,6 +46,15 @@ class TkdClubModelPromotions extends JModelList
 	 */
     protected function populateState($ordering = 'date', $direction = 'DESC')
     {
+        $search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search', '', 'string');
+        $this->setState('filter.search', $search);
+
+        $state = $this->getUserStateFromRequest($this->context.'.filter.promotion_state', 'filter_promotion_state', '');
+        $this->setState('filter.promotion_state', $state);
+
+        $type = $this->getUserStateFromRequest($this->context.'.filter.type', 'filter_type', '');
+        $this->setState('filter.type', $type);
+
         parent::populateState($ordering, $direction);
     }
     
@@ -67,6 +73,10 @@ class TkdClubModelPromotions extends JModelList
 	 */
     protected function getStoreId($id = '')
     {
+        $id	.= ':'.$this->getState('filter.search');
+        $id	.= ':'.$this->getState('filter.promotion_state');
+        $id	.= ':'.$this->getState('filter.type');
+        
         return parent::getStoreId($id);
     }
 
@@ -81,21 +91,47 @@ class TkdClubModelPromotions extends JModelList
     {
         $db = $this->getDbo();
         $query = $db->getQuery(true);
-        $query->select('*')
-                ->from($db->quoteName('#__tkdclub_promotions'));
+        $query->select('*')->from($db->quoteName('#__tkdclub_promotions'));
+
+        $stateselect = $this->getState('filter.promotion_state'); // TODO
+        if (is_numeric($stateselect))
+        {   
+            $query->where('promotion_state = ' . (int) $stateselect);
+        }
+
+        $typeselect = $this->getState('filter.type');
+        if (!empty($typeselect))
+        {   
+            $type = $db->quote($db->escape($typeselect, true));
+            $query->where('type = ' .$type);
+        }
+
+        $search = $this->getState('filter.search');
+        if (!empty($search))
+        {
+            if (stripos($search, 'id:') === 0)
+            {
+                $query->where('promotion_id = '.(int) substr($search, 3));
+            }
+            else
+            {
+                $search = $db->Quote('%'. $db->escape($search).'%');
+                $query->where('promotion_id LIKE' .$search
+                            .'OR city LIKE' .$search
+                            .'OR examiner_name LIKE' .$search);
+            }
+        }
 
         $sort = $this->getState('list.ordering');
         $order = $this->getState('list.direction');
         $query->order($db->escape($sort).' '.$db->escape($order));
 
         return $query;
-
     }
 
     /**
     * Method to get the number of all entries in the exams-table
     * 
-    * @since   1.0
     * @return type integer 
     */
     public function getAllRows()
