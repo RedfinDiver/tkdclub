@@ -70,7 +70,7 @@ class TkdClubViewPromotions extends JViewLegacy
 
         if ($canDo->get('core.delete'))
         {
-            JToolBarHelper::deleteList('COM_TKDCLUB_PROMOTIN_DELETE_QUESTION', 'promotions.delete','JTOOLBAR_DELETE', true);
+            JToolBarHelper::deleteList('COM_TKDCLUB_PROMOTION_DELETE_QUESTION', 'promotions.delete','JTOOLBAR_DELETE', true);
         }
         
         if ($canDo->get('core.admin'))
