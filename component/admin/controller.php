@@ -4,8 +4,10 @@
 * @copyright  Copyright (C) 2017 Markus Moser. All rights reserved.
 * @license    GNU General Public License version 2 or later; see LICENSE.txt
 */
+
 defined('_JEXEC') or die;
 JLoader::register('TkdclubHelperSidebar', JPATH_COMPONENT_ADMINISTRATOR. '/helpers/sidebar.php');
+
 /**
  * TKD Club Main Controller
  */
@@ -37,6 +39,26 @@ class TkdClubController extends JControllerLegacy
 			$this->setError(JText::sprintf('JLIB_APPLICATION_ERROR_UNHELD_ID', $id));
 			$this->setMessage($this->getError(), 'error');
 			$this->setRedirect(JRoute::_('index.php?option=com_tkdclub&view=trainings', false));
+
+			return false;
+		}
+
+		if ($view == 'medal' && $layout == 'edit' && !$this->checkEditId('com_tkdclub.edit.medal', $id))
+		{
+			// Somehow the person just went to the form - we don't allow that.
+			$this->setError(JText::sprintf('JLIB_APPLICATION_ERROR_UNHELD_ID', $id));
+			$this->setMessage($this->getError(), 'error');
+			$this->setRedirect(JRoute::_('index.php?option=com_tkdclub&view=medals', false));
+
+			return false;
+		}
+
+		if ($view == 'promotion' && $layout == 'edit' && !$this->checkEditId('com_tkdclub.edit.promotion', $id))
+		{
+			// Somehow the person just went to the form - we don't allow that.
+			$this->setError(JText::sprintf('JLIB_APPLICATION_ERROR_UNHELD_ID', $id));
+			$this->setMessage($this->getError(), 'error');
+			$this->setRedirect(JRoute::_('index.php?option=com_tkdclub&view=promotions', false));
 
 			return false;
 		}
