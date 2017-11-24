@@ -12,9 +12,11 @@ JHtml::_('behavior.multiselect');
 JHtml::_('formbehavior.chosen', 'select');
 
 JHtml::stylesheet('administrator/components/com_tkdclub/assets/css/tkdclub.css');
+JHtml::_('script', 'administrator/components/com_tkdclub/assets/js/rawsubmitbutton.js');
 
 $listOrder = $this->state->get('list.ordering');
 $listDirn  = $this->state->get('list.direction');
+
 ?>
 
 <form action="<?php echo JRoute::_('index.php?option=com_tkdclub&view=promotions'); ?>"
