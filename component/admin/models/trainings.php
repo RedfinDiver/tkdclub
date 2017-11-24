@@ -150,7 +150,7 @@ class TkdClubModelTrainings extends JModelList
         {
             if (stripos($search, 'id:') === 0)
             {
-                $query->where('id = '.(int) substr($search, 3));
+                $query->where('trainings_id = '.(int) substr($search, 3));
             }
             else
             {
