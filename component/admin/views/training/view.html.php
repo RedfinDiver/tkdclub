@@ -30,17 +30,16 @@ class TkdClubViewTraining extends JViewLegacy
     
     protected function addToolbar()
     {
-        $clubname = JComponentHelper::getParams('com_tkdclub')->get('club_name');
-        if(!$clubname){
-            $c_name = JText::_('COM_TKDCLUB');
-        } else {
-            $c_name = $clubname;
-        }
+        $clubname = JComponentHelper::getParams('com_tkdclub')->get('club_name', JText::_('COM_TKDCLUB'));
         
-        if ($this->item->training_id == NULL) {
-        JToolBarHelper::title($c_name.JText::_('COM_TKDCLUB_TRAINING_NEW'), 'tkdclub');
-        } else {
-        JToolBarHelper::title($c_name.JText::_('COM_TKDCLUB_TRAINING_CHANGE'), 'tkdclub'); }
+        if ($this->item->training_id == NULL)
+        {
+            JToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_TRAINING_NEW'), 'tkdclub');
+        }
+        else 
+        {
+            JToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_TRAINING_CHANGE'), 'tkdclub');
+        }
       
         $canDo = TkdClubHelperActions::getActions();
         
@@ -53,7 +52,6 @@ class TkdClubViewTraining extends JViewLegacy
         
         if ($canDo->get('core.create'))
         {JToolBarHelper::save2new('training.save2new');}
-        
         
         JToolBarHelper::cancel('training.cancel', 'JTOOLBAR_CANCEL');
     }
