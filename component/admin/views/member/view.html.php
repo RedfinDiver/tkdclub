@@ -6,6 +6,7 @@
 */
 
 defined('_JEXEC') or die;
+
 JLoader::register('TkdclubHelperActions', JPATH_COMPONENT_ADMINISTRATOR. '/helpers/actions.php');
 
 /**
@@ -38,45 +39,36 @@ class TkdClubViewMember extends JViewLegacy
 	 * Add the page title and toolbar.
 	 *
 	 */
-        protected function addToolbar()
+    protected function addToolbar()
+    {
+        $clubname = JComponentHelper::getParams('com_tkdclub')->get('club_name', JText::_('COM_TKDCLUB'));
+
+        if ($this->item->member_id == NULL)
         {
-            $clubname = JComponentHelper::getParams('com_tkdclub')->get('club_name');
+            JToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_MEMBER_NEW_TITLE'), 'tkdclub');
             
-            if(!$clubname)
-            {
-                $c_name = JText::_('COM_TKDCLUB');
-            }
-            else
-            {
-                $c_name = $clubname;
-            }
-
-            if ($this->item->member_id == NULL)
-            {
-                JToolBarHelper::title($c_name.JText::_('COM_TKDCLUB_MEMBER_NEW'), 'tkdclub');
-                
-            }
-            else
-            {
-                JToolBarHelper::title($c_name.JText::_('COM_TKDCLUB_MEMBER_CHANGE'), 'tkdclub');
-            }
-
-            $canDo = TkdClubHelperActions::getActions();
-
-            JToolBarHelper::apply('member.apply', 'JTOOLBAR_APPLY');
-
-            JToolBarHelper::save('member.save', 'JTOOLBAR_SAVE');
-
-            if ($canDo->get('core.create'))
-            {
-                JToolBarHelper::save2copy('member.save2copy');               
-            }
-
-            if ($canDo->get('core.create'))
-            {
-                JToolBarHelper::save2new('member.save2new');
-            }
-
-            JToolBarHelper::cancel('member.cancel', 'JTOOLBAR_CANCEL');
         }
+        else
+        {
+            JToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_MEMBER_EDIT_TITLE'), 'tkdclub');
+        }
+
+        $canDo = TkdClubHelperActions::getActions();
+
+        JToolBarHelper::apply('member.apply', 'JTOOLBAR_APPLY');
+
+        JToolBarHelper::save('member.save', 'JTOOLBAR_SAVE');
+
+        if ($canDo->get('core.create'))
+        {
+            JToolBarHelper::save2copy('member.save2copy');               
+        }
+
+        if ($canDo->get('core.create'))
+        {
+            JToolBarHelper::save2new('member.save2new');
+        }
+
+        JToolBarHelper::cancel('member.cancel', 'JTOOLBAR_CANCEL');
+    }
 }
