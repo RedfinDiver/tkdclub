@@ -13,12 +13,12 @@ JLoader::register('TkdclubHelperMembers', JPATH_COMPONENT. '/helpers/members.php
 class TkdClubControllerExport extends JControllerForm
 {	
 	/**
-	*method to get the content for csv export
-	*
-	*@param string $model the name of model to call
-	*
-	*@return array an array with data in it
-	*/
+	 * method to get the content for csv export
+	 *
+	 * @param string $model the name of model to call
+	 *
+	 * @return array an array with data in it
+	 */
 	public function getContent($model = '')
 	{
 		// Get the input from the url / post
@@ -31,11 +31,11 @@ class TkdClubControllerExport extends JControllerForm
 	}
 
 	/**
-	*method for setting the header in all downloaded csv files
-	*
-	*@param string $filename name of the file to download
-	*
-	**/
+	 * method for setting the header in all downloaded csv files
+	 *
+	 * @param string $filename name of the file to download
+	 *
+	 **/
 	public function setHeaders($filename = 'download')
 	{
 		$app = JFactory::getApplication();
@@ -54,7 +54,9 @@ class TkdClubControllerExport extends JControllerForm
 		$content = $this->getContent('members');
 
 		foreach ($content as $row)
-			{ print implode(';', $row)."\n";  }
+		{
+			print implode(';', $row)."\n";
+		}
 
 		$this->setHeaders(JText::_('COM_TKDCLUB_SIDEBAR_MEMBERS'));
 	}
@@ -85,8 +87,8 @@ class TkdClubControllerExport extends JControllerForm
 	}
 
 	/**
-	*	csv export function for medals-view
-	**/
+	 * csv export function for medals-view
+	 **/
     public function medals()
 	{	
 		$helper = new TkdclubHelperMembers;
@@ -99,10 +101,32 @@ class TkdClubControllerExport extends JControllerForm
 			{
 				$row[] = $helper->getMembersNames($row[5], $memberlist);
 			}
+
 			print implode(';', $row)."\n"; 
 		}
 
 		$this->setHeaders(JText::_('COM_TKDCLUB_SIDEBAR_MEDALS'));
+	}
+
+	/**
+	 * csv export function for promotion-view
+	 **/
+    public function promotions()
+	{	
+		$content = $this->getContent('promotions');
+
+		foreach ($content as $key => &$row)
+		{
+			if ($key > 0)
+			{
+				$row[3] == 'kup' ? $row[3] = JText::_('COM_TKDCLUB_PROMOTION_KUP') : $row[3] = JText::_('COM_TKDCLUB_PROMOTION_DAN');
+				$row[7] == 1 ? $row[7] = JText::_('COM_TKDCLUB_PROMOTION_ACTIVE') : $row[7] = JText::_('COM_TKDCLUB_PROMOTION_INACTIVE');
+			}
+
+			print implode(';', $row)."\n";
+		}
+
+		$this->setHeaders(JText::_('COM_TKDCLUB_SIDEBAR_PROMOTIONS'));
 	}
 
 	/**

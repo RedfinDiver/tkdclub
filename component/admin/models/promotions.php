@@ -147,4 +147,41 @@ class TkdClubModelPromotions extends JModelList
 
         return $allrows;
     }
+
+    /**
+	 * Method to get the data that should be exported.
+     * 
+	 * @return  mixed  The data.
+	 */
+	public function getExportData($pks)
+	{
+		$pklist = implode(',', $pks);
+
+		$db	= JFactory::getDBO();
+		$query	= $db->getQuery(true);
+		$query-> select('promotion_id, date, city, type, examiner_name, examiner_address, examiner_email, promotion_state, notes')
+			  -> from($db->quoteName('#__tkdclub_promotions'))
+			  -> where('promotion_id IN ('.$pklist.')')
+              ->order('date DESC');
+
+		$db	-> setQuery((string)$query);
+		$rows	= $db->loadRowList();
+
+        $headers = array(
+            JText::_('COM_TKDCLUB_PROMOTION_ID'),               // promotion_id
+            JText::_('COM_TKDCLUB_DATE'),                       // date
+            JText::_('COM_TKDCLUB_PROMOTION_CITY'),             // city
+            JText::_('COM_TKDCLUB_PROMOTION_TYPE'),             // type
+            JText::_('COM_TKDCLUB_PROMOTION_EXAMINER'),         // examiner_name
+            JText::_('COM_TKDCLUB_PROMOTION_EXAMINER_ADDRESS'), // examiner_address      
+            JText::_('COM_TKDCLUB_PROMOTION_EXAMINER_EMAIL'),   // examiner_email  
+            JText::_('JSTATUS'),                                // promotion_state
+            JText::_('COM_TKDCLUB_NOTES')                       // notes
+        );
+
+		// return the results as an array of items, each consisting of an array of fields
+		$content	= array($headers);	// header with column names
+		$content	= array_merge( $content,  $rows);
+		return $content;
+	}
  }
