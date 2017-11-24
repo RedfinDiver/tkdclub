@@ -8,7 +8,7 @@
 defined('_JEXEC') or die;
 
 /**
- * Renders an csv download button
+ * Renders a csv download button
  */
 class JToolbarButtonRawFormat extends JToolbarButtonStandard
 {
