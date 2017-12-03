@@ -44,3 +44,14 @@
     text-align: center;
     width: 24px;
 }
+
+.loading {
+    background-image: url("../images/loading-24.gif");
+    background-repeat: no-repeat;
+    background-size: auto auto;
+    display: block;
+    height: 24px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    width: 24px;
+}

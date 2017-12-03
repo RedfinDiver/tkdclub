@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form>
+    
+    <fieldset name="candidate_data" addrulepath="administrator/components/com_tkdclub/models/rules">
+
+        <field 
+            name="promotion_id" type="promotions"
+            class="inputbox" 
+            label="COM_TKDCLUB_PROMOTION"
+            description="COM_TKDCLUB_PROMOTION_DESC"
+            required="true" filter="integer">
+            <option value="">COM_TKDCLUB_SELECT_PROMOTION</option>
+            
+        </field>
+
+        <field 
+            name="id_candidate" type="members" showon="promotion_id!:"
+            class="inputbox" id="id_candidate"
+            label="COM_TKDCLUB_CANDIDATE"
+            description="COM_TKDCLUB_CANDIDATE_DESC"
+            filter="safehtml" default="" required="true" onchange="getcandidatedata()"
+            onlyactive="true" >
+            
+            <option value="">COM_TKDCLUB_SELECT_CANDIDATE</option>
+        </field>
+
+        <field 
+            name="lastpromotion" type="text" showon="id_candidate!:"
+            id="lastpromotion"
+            label="COM_TKDCLUB_MEMBER_LAST_PROMOTION"
+            description="COM_TKDCLUB_CANDIDATE_LAST_PROMOTION_DESC"
+            readonly="true" default=""
+            class="info" />
+        
+        <field 
+            name="grade" type="text" showon="id_candidate!:"
+            label="COM_TKDCLUB_MEMBER_GRADE"
+            description="COM_TKDCLUB_CANDIDATE_CURRENT_GRADE_DESC"
+            readonly="true" default=""
+            class="info" />
+        
+        <field name="grade_achieve" type="text" showon="id_candidate!:"
+            label="COM_TKDCLUB_CANDIDATE_PROMOTION_GRADE_ACHIEVE"
+            description="COM_TKDCLUB_CANDIDATE_PROMOTION_GRADE_ACHIEVE_DESC"
+            default="" required="true" validate="grade"
+            filter="safehtml" readonly="true">
+                <option value="">COM_TKDCLUB_SELECT_GRADE</option>
+        </field>
+        
+    </fieldset>
+   
+</form>

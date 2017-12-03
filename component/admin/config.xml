@@ -100,45 +100,97 @@
     </fieldset>
     
     <fieldset
-        name="exams"
-        label="COM_TKDCLUB_CONFIG_EXAMS"
-        description="COM_TKDCLUB_CONFIG_EXAMS_DESC" >
+        name="promotions_kup"
+        label="COM_TKDCLUB_CONFIG_PROMOTIONS_KUP"
+        description="COM_TKDCLUB_CONFIG_PROMOTIONS_KUP_DESC" >
     
             <field
                 name="badge_cost"
-                label="COM_TKDCLUB_CONFIG_EXAM_BADGE"
-                description="COM_TKDCLUB_CONFIG_EXAM_BADGE_DESC"
+                label="COM_TKDCLUB_CONFIG_PROMOTION_KUP_BADGE"
+                description="COM_TKDCLUB_CONFIG_PROMOTION_KUP_BADGE_DESC"
                 type="text" default="" size="10" filter="float">
              </field>
 
              <field
-                name="examer_cost"
-                label="COM_TKDCLUB_CONFIG_EXAM_EXAMER"
-                description="COM_TKDCLUB_CONFIG_EXAM_EXAMER_DESC"
+                name="examiner_cost"
+                label="COM_TKDCLUB_CONFIG_PROMOTION_KUP_EXAMINER"
+                description="COM_TKDCLUB_CONFIG_PROMOTION_KUP_EXAMINER_DESC"
                 type="text" default="" size="10" filter="float">
              </field>
 
              <field
                 name="club_cost"
-                label="COM_TKDCLUB_CONFIG_EXAM_CLUB"
-                description="COM_TKDCLUB_CONFIG_EXAM_CLUB_DESC"
+                label="COM_TKDCLUB_CONFIG_PROMOTION_KUP_CLUB"
+                description="COM_TKDCLUB_CONFIG_PROMOTION_KUP_CLUB_DESC"
                 type="text" default="" size="10" filter="float">
              </field>
 
 
              <field
-                name="fed_cost_to"
-                label="COM_TKDCLUB_CONFIG_EXAM_COSTTO15"
-                description="COM_TKDCLUB_CONFIG_EXAM_COSTTO15_DESC"
+                name="fed_cost_under_15"
+                label="COM_TKDCLUB_CONFIG_PROMOTION_COST_UNDER_15"
+                description="COM_TKDCLUB_CONFIG_PROMOTION_COST_UNDER_15_DESC"
                 type="text" default="" size="10" filter="float">
              </field>
 
              <field
-                name="fed_cost_up"
-                label="COM_TKDCLUB_CONFIG_EXAM_COSTUP15"
-                description="COM_TKDCLUB_CONFIG_EXAM_COSTUP15_DESC"
+                name="fed_cost_from_15"
+                label="COM_TKDCLUB_CONFIG_PROMOTION_COST_FROM_15"
+                description="COM_TKDCLUB_CONFIG_PROMOTION_COST_FROM_15_DESC"
                 type="text" default="" size="10" filter="float">
              </field>
+
+    </fieldset>
+
+    <fieldset
+        name="promotions_dan"
+        label="COM_TKDCLUB_CONFIG_PROMOTIONS_DAN"
+        description="COM_TKDCLUB_CONFIG_PROMOTIONS_DAN_DESC" >
+    
+            <field
+                name="dan_1"
+                label="COM_TKDCLUB_CONFIG_PROMOTION_DAN1"
+                description="COM_TKDCLUB_CONFIG_PROMOTION_DAN1_DESC"
+                type="text" default="" size="10" filter="float">
+            </field>
+
+            <field
+                name="dan_2"
+                label="COM_TKDCLUB_CONFIG_PROMOTION_DAN2"
+                description="COM_TKDCLUB_CONFIG_PROMOTION_DAN2_DESC"
+                type="text" default="" size="10" filter="float">
+            </field>
+
+            <field
+                name="dan_3"
+                label="COM_TKDCLUB_CONFIG_PROMOTION_DAN3"
+                description="COM_TKDCLUB_CONFIG_PROMOTION_DAN3_DESC"
+                type="text" default="" size="10" filter="float">
+            </field>
+
+            <field
+                name="dan_4"
+                label="COM_TKDCLUB_CONFIG_PROMOTION_DAN4"
+                description="COM_TKDCLUB_CONFIG_PROMOTION_DAN4_DESC"
+                type="text" default="" size="10" filter="float">
+            </field>
+
+            <field
+                name="dan_5"
+                label="COM_TKDCLUB_CONFIG_PROMOTION_DAN5"
+                description="COM_TKDCLUB_CONFIG_PROMOTION_DAN5_DESC"
+                type="text" default="" size="10" filter="float">
+            </field>
+
+            <field
+                name="dan_6"
+                label="COM_TKDCLUB_CONFIG_PROMOTION_DAN6"
+                description="COM_TKDCLUB_CONFIG_PROMOTION_DAN6_DESC"
+                type="text" default="" size="10" filter="float">
+            </field>
+
+
+                         
 
     </fieldset>
     

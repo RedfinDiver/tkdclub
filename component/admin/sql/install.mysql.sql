@@ -91,3 +91,19 @@ CREATE TABLE IF NOT EXISTS `#__tkdclub_promotions` (
   `checked_out_time` datetime NOT NULL,
   PRIMARY KEY (`promotion_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `#__tkdclub_candidates` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `id_promotion` int(10) NOT NULL,
+  `id_candidate` int(10) NOT NULL,
+  `grade_achieve` varchar(20) NOT NULL,
+  `test_state` tinyint(4) NOT NULL,
+  `notes` text NOT NULL,
+  `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_by` INT(10) unsigned NOT NULL DEFAULT '0',
+  `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `modified_by` INT(10) unsigned NOT NULL DEFAULT '0',
+  `checked_out` int(10) NOT NULL,
+  `checked_out_time` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;

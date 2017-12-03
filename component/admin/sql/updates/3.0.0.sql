@@ -38,6 +38,7 @@ UPDATE `#__tkdclub_members` SET `member_state` = 'support' WHERE `member_state` 
 UPDATE `#__tkdclub_members` SET `sex` = '' WHERE `sex` = '0';
 UPDATE `#__tkdclub_members` SET `sex` = 'female' WHERE `sex` = '1';
 UPDATE `#__tkdclub_members` SET `sex` = 'male' WHERE `sex` = '2';
+UPDATE `#__tkdclub_members` SET `grade` = '0' WHERE `grade` = '';
 UPDATE `#__tkdclub_members` SET `grade` = '9. Kup' WHERE `grade` = '09. Kup';
 UPDATE `#__tkdclub_members` SET `grade` = '8. Kup' WHERE `grade` = '08. Kup';
 UPDATE `#__tkdclub_members` SET `grade` = '7. Kup' WHERE `grade` = '07. Kup';
@@ -122,3 +123,42 @@ ALTER TABLE `#__tkdclub_promotions`
 
 UPDATE `j_tkdclub_promotions` SET `type` = 'kup' WHERE `type` = '1';
 UPDATE `j_tkdclub_promotions` SET `type` = 'dan' WHERE `type` = '2';
+
+RENAME TABLE `#__tkdclub_examparts` TO `#__tkdclub_candidates`
+
+ALTER TABLE `#__tkdclub_candidates`
+    CHANGE `id` `id` int(10) NOT NULL AUTO_INCREMENT,
+    CHANGE `exam_id` `id_promotion` int(10) NOT NULL,
+    CHANGE `id_participant` `id_candidate` int(10) NOT NULL,
+    CHANGE `grade_achieve` `grade_achieve` varchar(20) NOT NULL,
+    CHANGE `published` `test_state` tinyint(4) NOT NULL,
+    CHANGE `checked_out` `checked_out` int(10) NOT NULL,
+    CHANGE `checked_out_time` `checked_out_time` datetime NOT NULL,
+    ADD `notes` text NOT NULL AFTER `test_state`,
+    ADD `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `notes`,
+    ADD `created_by` INT(10) unsigned NOT NULL DEFAULT '0' AFTER `created`,
+    ADD `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `created_by`,
+    ADD `modified_by` INT(10) unsigned NOT NULL DEFAULT '0' AFTER `modified`,
+    ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
+
+UPDATE `#__tkdclub_candidates` SET `grade_achieve` = '9. Kup' WHERE `grade_achieve` = '09. Kup';
+UPDATE `#__tkdclub_candidates` SET `grade_achieve` = '8. Kup' WHERE `grade_achieve` = '08. Kup';
+UPDATE `#__tkdclub_candidates` SET `grade_achieve` = '7. Kup' WHERE `grade_achieve` = '07. Kup';
+UPDATE `#__tkdclub_candidates` SET `grade_achieve` = '6. Kup' WHERE `grade_achieve` = '06. Kup';
+UPDATE `#__tkdclub_candidates` SET `grade_achieve` = '5. Kup' WHERE `grade_achieve` = '05. Kup';
+UPDATE `#__tkdclub_candidates` SET `grade_achieve` = '4. Kup' WHERE `grade_achieve` = '04. Kup';
+UPDATE `#__tkdclub_candidates` SET `grade_achieve` = '3. Kup' WHERE `grade_achieve` = '03. Kup';
+UPDATE `#__tkdclub_candidates` SET `grade_achieve` = '2. Kup' WHERE `grade_achieve` = '02. Kup';
+UPDATE `#__tkdclub_candidates` SET `grade_achieve` = '1. Kup' WHERE `grade_achieve` = '01. Kup';
+UPDATE `#__tkdclub_candidates` SET `grade_achieve` = '1. Poom' WHERE `grade_achieve` = '01. Poom';
+UPDATE `#__tkdclub_candidates` SET `grade_achieve` = '2. Poom' WHERE `grade_achieve` = '02. Poom';
+UPDATE `#__tkdclub_candidates` SET `grade_achieve` = '3. Poom' WHERE `grade_achieve` = '03. Poom';
+UPDATE `#__tkdclub_candidates` SET `grade_achieve` = '1. Dan' WHERE `grade_achieve` = '01. Dan';
+UPDATE `#__tkdclub_candidates` SET `grade_achieve` = '2. Dan' WHERE `grade_achieve` = '02. Dan';
+UPDATE `#__tkdclub_candidates` SET `grade_achieve` = '3. Dan' WHERE `grade_achieve` = '03. Dan';
+UPDATE `#__tkdclub_candidates` SET `grade_achieve` = '4. Dan' WHERE `grade_achieve` = '04. Dan';
+UPDATE `#__tkdclub_candidates` SET `grade_achieve` = '5. Dan' WHERE `grade_achieve` = '05. Dan';
+UPDATE `#__tkdclub_candidates` SET `grade_achieve` = '6. Dan' WHERE `grade_achieve` = '06. Dan';
+UPDATE `#__tkdclub_candidates` SET `grade_achieve` = '7. Dan' WHERE `grade_achieve` = '07. Dan';
+UPDATE `#__tkdclub_candidates` SET `grade_achieve` = '8. Dan' WHERE `grade_achieve` = '08. Dan';
+UPDATE `#__tkdclub_candidates` SET `grade_achieve` = '9. Dan' WHERE `grade_achieve` = '09. Dan';

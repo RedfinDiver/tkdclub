@@ -25,5 +25,8 @@ class TkdclubHelperSidebar
 
         JHtmlSidebar::addEntry(
             JText::_('COM_TKDCLUB_SIDEBAR_PROMOTIONS'), 'index.php?option=com_tkdclub&view=promotions', $vName == 'promotions');
+        
+            JHtmlSidebar::addEntry(
+                JText::_('COM_TKDCLUB_SIDEBAR_CANDIDATES'), 'index.php?option=com_tkdclub&view=candidates', $vName == 'candidates');
     }
 }

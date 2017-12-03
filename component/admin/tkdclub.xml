@@ -44,6 +44,7 @@
            <menu link="option=com_tkdclub&amp;view=trainings"   img="class:icon-tkdclub">COM_TKDCLUB_SUBMENU_TRAININGS</menu>
            <menu link="option=com_tkdclub&amp;view=medals"   img="class:icon-tkdclub">COM_TKDCLUB_SUBMENU_MEDALS</menu>
            <menu link="option=com_tkdclub&amp;view=promotions"   img="class:icon-tkdclub">COM_TKDCLUB_SUBMENU_PROMOTIONS</menu>
+           <menu link="option=com_tkdclub&amp;view=candidates"   img="class:icon-tkdclub">COM_TKDCLUB_SUBMENU_CANDIDATES</menu>
         </submenu>
         
         <files folder="admin">

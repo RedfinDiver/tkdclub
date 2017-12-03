@@ -88,7 +88,7 @@ $listDirn  = $this->state->get('list.direction');
                     <td class="center"><?php echo JHtml::_('grid.id', $i, $item->promotion_id); ?>
                     <td class="center hasTooltip">
                         <?php 
-                            //creating array for alernatives tooltip text on promotion_state coloum
+                            //creating array for alternatives tooltip text on promotion_state coloum
                             $states = array(1 => array('unpublish', 'COM_TKDCLUB_PROMOTION_ACTIVE', 'COM_TKDCLUB_PROMOTION_UNPUBLISH', 'JPUBLISHED', 'COM_TKDCLUB_PROMOTION_ACTIVE', 'publish', 'publish'),
                                             0 => array('publish', 'COM_TKDCLUB_PROMOTION_INACTIVE', 'COM_TKDCLUB_PROMOTION_PUBLISH', 'JUNPUBLISHED', 'COM_TKDCLUB_PROMOTION_INACTIVE', 'unpublish', 'unpublish'));
 
