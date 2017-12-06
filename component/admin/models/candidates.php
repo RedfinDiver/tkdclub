@@ -151,8 +151,8 @@ class TkdClubModelCandidates extends JModelList
                         .'OR b.birthdate LIKE' .$search);
         }
 
-        $sort = $this->getState('list.ordering');
-        $order = $this->getState('list.direction');
+        $sort = $this->getState('list.ordering', 'c.date');
+        $order = $this->getState('list.direction', 'DESC');
         $query->order($db->escape($sort).' '.$db->escape($order));
 
         return $query;

@@ -19,7 +19,6 @@ JLoader::register('Tkdclubmodelexamparts', JPATH_COMPONENT_ADMINISTRATOR .'/mode
 	{
 		if (task == 'candidate.cancel' || document.formvalidator.isValid(document.id('candidate-form')))
 		{
-			
 			Joomla.submitform(task, document.getElementById('candidate-form'));
 		}
 	}
@@ -32,12 +31,12 @@ JLoader::register('Tkdclubmodelexamparts', JPATH_COMPONENT_ADMINISTRATOR .'/mode
       class="form-validate">
     
     <div class="row-fluid"> 
-		<!-- Begin Examparts -->
 		<div class="span12 form-horizontal">
         <fieldset>
             <?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'exampart_data')); ?>
                 <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'candidate_data', empty($this->item->id) ? JText::_('COM_TKDCLUB_CANDIDATE_ADD_TAB', true) : JText::sprintf('COM_TKDCLUB_CANDIDATE_EDIT_TAB', $this->item->id, true)); ?>
-                    <?php echo $this->form->renderField('promotion_id'); ?>
+                    <?php echo $this->form->renderField('test_state'); ?>
+                    <?php echo $this->form->renderField('id_promotion'); ?>
                     <?php echo $this->form->renderField('id_candidate'); ?>
                     <?php echo $this->form->renderField('lastpromotion'); ?>
                     <?php echo $this->form->renderField('grade'); ?>

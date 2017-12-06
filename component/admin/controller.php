@@ -63,6 +63,16 @@ class TkdClubController extends JControllerLegacy
 			return false;
 		}
 
+		if ($view == 'candidate' && $layout == 'edit' && !$this->checkEditId('com_tkdclub.edit.candidate', $id))
+		{
+			// Somehow the person just went to the form - we don't allow that.
+			$this->setError(JText::sprintf('JLIB_APPLICATION_ERROR_UNHELD_ID', $id));
+			$this->setMessage($this->getError(), 'error');
+			$this->setRedirect(JRoute::_('index.php?option=com_tkdclub&view=candidates', false));
+
+			return false;
+		}
+
         parent::display($cachable, $urlparams);
 	}
 }

@@ -39,8 +39,8 @@
             description="COM_TKDCLUB_PROMOTION_TYPE_DESC"
             filter="safehtml" required="true" >
             <option value="">COM_TKDCLUB_SELECT_PROMOTION_TYPE</option>
-            <option value="kup">COM_TKDCLUB_PROMOTION_KUP</option>
-            <option value="dan">COM_TKDCLUB_PROMOTION_DAN</option>
+            <option value="kup">COM_TKDCLUB_KUP</option>
+            <option value="dan">COM_TKDCLUB_DAN</option>
         </field>
         
         <field 

@@ -2,10 +2,24 @@
 
 <form>
     
-    <fieldset name="candidate_data" addrulepath="administrator/components/com_tkdclub/models/rules">
+    <fieldset name="candidate_data">
+
+        <field
+            name="test_state" type="list"
+            label="JSTATUS"
+            description="COM_TKDCLUB_CANDIDATE_TEST_STATE_DESC"
+            default="2" >
+
+			<option value="">COM_TKDCLUB_SELECT_CANDIDATE_STATE</option>
+            <option value="1">COM_TKDCLUB_CANDIDATE_PASSED</option>
+			<option value="0">COM_TKDCLUB_CANDIDATE_NOT_PASSED</option>
+            <option value="2">COM_TKDCLUB_CANDIDATE_SUBSCRIBED</option>
+
+        </field>
 
         <field 
-            name="promotion_id" type="promotions"
+            name="id_promotion" type="promotions"
+            isCandidateForm="true"
             class="inputbox" 
             label="COM_TKDCLUB_PROMOTION"
             description="COM_TKDCLUB_PROMOTION_DESC"
@@ -15,7 +29,7 @@
         </field>
 
         <field 
-            name="id_candidate" type="members" showon="promotion_id!:"
+            name="id_candidate" type="members" showon="id_promotion!:"
             class="inputbox" id="id_candidate"
             label="COM_TKDCLUB_CANDIDATE"
             description="COM_TKDCLUB_CANDIDATE_DESC"
@@ -43,7 +57,7 @@
         <field name="grade_achieve" type="text" showon="id_candidate!:"
             label="COM_TKDCLUB_CANDIDATE_PROMOTION_GRADE_ACHIEVE"
             description="COM_TKDCLUB_CANDIDATE_PROMOTION_GRADE_ACHIEVE_DESC"
-            default="" required="true" validate="grade"
+            default="" required="true" 
             filter="safehtml" readonly="true">
                 <option value="">COM_TKDCLUB_SELECT_GRADE</option>
         </field>

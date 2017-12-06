@@ -11,6 +11,8 @@ JLoader::register('TkdClubHelperAge', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/
 
 class TkdClubControllerCandidate extends JControllerForm
 {
+    protected $text_prefix = 'COM_TKDCLUB_CANDIDATE';
+
     /**
      * the grades with a certain value, makes it easier to calculate
      * 
@@ -129,7 +131,7 @@ class TkdClubControllerCandidate extends JControllerForm
         $this->response($candidate_data);
     }
 
-    public function checkIDs ($candidate_id, $promotion_id)
+    protected function checkIDs ($candidate_id, $promotion_id)
     {   
         $errors = array();
         
@@ -139,7 +141,7 @@ class TkdClubControllerCandidate extends JControllerForm
         return $errors;
     }
 
-    public function checkData ($candidate_data)
+    protected function checkData ($candidate_data)
     {
         $errors = array();
         $this->birthdate = $candidate_data['birthdate'];
@@ -187,7 +189,7 @@ class TkdClubControllerCandidate extends JControllerForm
     /**
      * change grades for candidates < 15 years
      */
-    public function changeGrades()
+    protected function changeGrades()
     {
         if ($this->age < 15)
         {
@@ -208,7 +210,7 @@ class TkdClubControllerCandidate extends JControllerForm
         }
     }
 
-    public function checkAgeAndWaitingtime($grade_achieve_value, $grade_achieve)
+    protected function checkAgeAndWaitingtime($grade_achieve_value, $grade_achieve)
     {
         $errors = array();
 
@@ -231,7 +233,7 @@ class TkdClubControllerCandidate extends JControllerForm
         return $errors;
     }
 
-    public function response($data)
+    protected function response($data)
     {
         echo json_encode($data);
         $this->app->close();

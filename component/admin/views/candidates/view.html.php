@@ -75,10 +75,11 @@ class TkdClubViewCandidates extends JViewLegacy
         
         if ($canDo->get('core.edit.state'))
         {
-            JToolBarHelper::publish('candidate.publish', 'COM_TKDCLUB_CANDIDATE_PASSED', true);
-            JToolBarHelper::unpublish('candidate.unpublish', 'COM_TKDCLUB_CANDIDATE_NOT_PASSED', true);
+            JToolBarHelper::publish('candidates.publish', 'COM_TKDCLUB_CANDIDATE_PASSED', true);
+            JToolBarHelper::unpublish('candidates.unpublish', 'COM_TKDCLUB_CANDIDATE_NOT_PASSED', true);
+            JToolbarHelper::archiveList('candidates.archive', 'COM_TKDCLUB_CANDIDATE_SUBSCRIBED', true);
         }
-        
+
         if ($canDo->get('core.delete'))
         {
             JToolBarHelper::deleteList('COM_TKDCLUB_CANDIDATE_DELETE_QUESTION', 'candidate.delete','JTOOLBAR_DELETE');

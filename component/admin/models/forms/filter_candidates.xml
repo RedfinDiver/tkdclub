@@ -6,8 +6,8 @@
         <field
             name="search"
             type="text"
-            label="COM_TKDCLUB_SEARCH_IN_COLUMNS_CANDIDATES"
-            description="COM_TKDCLUB_SEARCH_IN_COLUMNS_CANDIDATES_DESC"
+            label="COM_TKDCLUB_CANDIDATE_SEARCH_IN_COLOUMS"
+            description="COM_TKDCLUB_CANDIDATE_SEARCH_IN_COLOUMS"
             hint="JSEARCH_FILTER"
         />
         
@@ -40,8 +40,8 @@
             description=""
             onchange="this.form.submit();">
             <option value="">COM_TKDCLUB_SELECT_PROMOTION_TYPE</option>
-            <option value="kup">COM_TKDCLUB_PROMOTION_KUP</option>
-            <option value="dan">COM_TKDCLUB_PROMOTION_DAN</option>
+            <option value="kup">COM_TKDCLUB_KUP</option>
+            <option value="dan">COM_TKDCLUB_DAN</option>
         </field>
 
         <field

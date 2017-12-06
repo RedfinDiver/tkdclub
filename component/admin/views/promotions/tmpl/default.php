@@ -42,14 +42,14 @@ $listDirn  = $this->state->get('list.direction');
     <?php if (empty($this->items)) : ?>
         <div class="alert alert-no-items">
             <?php echo JText::_('JGLOBAL_NO_MATCHING_RESULTS'); ?>
-        </div>
+        </div> 
     <?php else : ?>
         <div class="tkdclub-numbers">
             <b><?php echo $this->total; ?></b> <?php echo JText::_('COM_TKDCLUB_FROM'); ?>
                 <b><?php echo $this->allrows; ?></b>
             <?php echo JText::_('COM_TKDCLUB_ENTRIES'); ?>
         </div>
-    <?php endif; ?>
+   
      
     <div class="clearfix"> </div>
 
@@ -101,8 +101,8 @@ $listDirn  = $this->state->get('list.direction');
                         ?>
                     </td>
                     <td width="" class="left"><?php echo $this->escape($item->city); ?></td>
-                    <?php $types = array('kup' => 'COM_TKDCLUB_PROMOTION_KUP',
-                                         'dan' => 'COM_TKDCLUB_PROMOTION_DAN');
+                    <?php $types = array('kup' => 'COM_TKDCLUB_KUP',
+                                         'dan' => 'COM_TKDCLUB_DAN');
                             $string_to_take = $types[$item->type];
                     ?>
                     <td width="" class="left"><?php echo JText::_($string_to_take); ?></td>
@@ -115,6 +115,7 @@ $listDirn  = $this->state->get('list.direction');
             <?php endforeach; ?>
         </tbody>
     </table>
+    <?php endif; ?>
     <div>
         <input type="hidden" name="task" value="" />
         <input type="hidden" name="boxchecked" value="0" />

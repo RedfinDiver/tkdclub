@@ -24,7 +24,7 @@ function getcandidatedata () {
     var grade_achieveform = document.getElementById('jform_grade_achieve');
 
     // getting promotion and candidate id
-    var promotion_id = document.getElementById('jform_promotion_id').selectedOptions[0].value;
+    var promotion_id = document.getElementById('jform_id_promotion').selectedOptions[0].value;
     var candidate_id = document.getElementById('jform_id_candidate').value;
 
     // displaying some text during data fetch
