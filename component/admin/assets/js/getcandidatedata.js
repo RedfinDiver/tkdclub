@@ -1,43 +1,37 @@
+// Creating message container
 var message = {};
+
 /**
  * this function gets the data for a candidate 
  */
 function getcandidatedata () {
 
-    // deleting message boxes if any
-    var message_container = document.getElementById('system-message-container');
-
-    if (message_container.childElementCount > 0) {
-        
-        while (message_container.hasChildNodes()) {
-            message_container.removeChild(message_container.firstChild);
-        };
-
-        message = {};
-    };
+    // Delete old message-boxes if any
+    deleteMsgBoxes();
     
-    // initialising some variables
+    // Initialising some variables
     var waittext = document.getElementById('waittext').innerHTML;
     var errortext = document.getElementById('errortext').innerHTML;
     var gradeform = document.getElementById('jform_grade');
     var lastpromotionform = document.getElementById('jform_lastpromotion');
     var grade_achieveform = document.getElementById('jform_grade_achieve');
+    var notes_form = document.getElementById('jform_notes');
 
-    // getting promotion and candidate id
+    // Getting promotion and candidate id
     var promotion_id = document.getElementById('jform_id_promotion').selectedOptions[0].value;
     var candidate_id = document.getElementById('jform_id_candidate').value;
 
-    // displaying some text during data fetch
+    // Displaying some text during data fetch
     gradeform.value = waittext;
     lastpromotionform.value = waittext;
     grade_achieveform.value = waittext;
 
-    // building URL for request
+    // Building URL for request
     var url = 'index.php?option=com_tkdclub&task=candidate.getajaxdata'
                 + '&candidate_id=' + candidate_id 
                 + '&promotion_id=' + promotion_id ;
     
-    // trigger request
+    // Trigger request
     var request = new XMLHttpRequest();
     request.open('GET', url);
     request.responseType = 'json';
@@ -47,18 +41,33 @@ function getcandidatedata () {
         var responseText = request.response;
         
         // checking response for error messages, render if any
-        if (responseText['no_error'] == true ){
+        if (responseText['no_error'] == true ) {
+            
             // no errors, response goes to form
             gradeform.value = responseText['grade'];
             lastpromotionform.value = responseText['lastpromotion'];
             grade_achieveform.value = responseText['grade_achieve'];
+            
+            if (responseText['notes']) {
+                notes_form.value = responseText['notes'];
+            }
+            
+            // show save buttons again
+            handleSaveButtons('show');
+            
         } else {
+            
+            // we have some errors, write them to message var an render them
             checkErrors(responseText);
             Joomla.renderMessages(message);
-            // errors, errortext for form
+
+            // Fill in errortext in form
             gradeform.value = errortext;
             lastpromotionform.value = errortext;
             grade_achieveform.value = errortext;
+            
+            // Do not show save buttons, we don not want wrong data been saved
+            handleSaveButtons('hide');
         }
     }
 }
@@ -69,8 +78,8 @@ function getcandidatedata () {
  * 
  * @param {*} responseText 
  */
-function checkErrors(responseText)
-{
+function checkErrors(responseText) {
+    
     // object for determine the type of message
     var error_types = {
         error_candidate : 'error',
@@ -82,6 +91,9 @@ function checkErrors(responseText)
         error_minage : 'error',
         error_waitingtime : 'error',
         error : 'error',
+        error_already_double : 'error',
+        second_promotion : 'error',
+        error_type : 'error',
         edit_link : 'info'
     };
 
@@ -99,4 +111,51 @@ function checkErrors(responseText)
             message[error_types[element]].push(responseText[element]);
         }
     });
+}
+
+/**
+ * This function checks for old messages and deletes them
+ */
+function deleteMsgBoxes() {
+
+    // deleting message boxes if any
+    var message_container = document.getElementById('system-message-container');
+    
+    if (message_container.childElementCount > 0) {
+        
+        while (message_container.hasChildNodes()) {
+            message_container.removeChild(message_container.firstChild);
+        };
+
+        // Empty message object
+        message = {};
+    };
+}
+
+/**
+ * Adds or removes class from toolbar buttons
+ * @param {*} action 
+ */
+function handleSaveButtons(action) {
+
+    // Getting toolbar buttons
+    apply_button = document.getElementById('toolbar-apply');
+    save_button = document.getElementById('toolbar-save');
+    savenew_button = document.getElementById('toolbar-save-new');
+    class_name = 'tkdclub-toolbar-hide';
+
+    if (action == 'hide') {
+        
+        apply_button.classList.add(class_name);
+        save_button.classList.add(class_name);
+        savenew_button.classList.add(class_name);
+    }
+
+    if (action == 'show') {
+        
+        apply_button.classList.remove(class_name);
+        save_button.classList.remove(class_name);
+        savenew_button.classList.remove(class_name);
+
+    }
 }

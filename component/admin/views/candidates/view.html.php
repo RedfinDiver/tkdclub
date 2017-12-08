@@ -82,7 +82,7 @@ class TkdClubViewCandidates extends JViewLegacy
 
         if ($canDo->get('core.delete'))
         {
-            JToolBarHelper::deleteList('COM_TKDCLUB_CANDIDATE_DELETE_QUESTION', 'candidate.delete','JTOOLBAR_DELETE');
+            JToolBarHelper::deleteList('COM_TKDCLUB_CANDIDATE_DELETE_QUESTION', 'candidates.delete','JTOOLBAR_DELETE');
         }
         
         $toolbar = JToolbar::getInstance('toolbar');

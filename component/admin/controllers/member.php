@@ -70,7 +70,7 @@ class TkdclubControllerMember extends JControllerForm
 
         // checking if there is a array for multiple field date_add
         // for converting it to a string for saving in the database
-        if ($fields['functions']) 
+        if (isset($fields['functions']))
         {
             $registry = new JRegistry;
             $registry->loadArray($fields['functions']);
