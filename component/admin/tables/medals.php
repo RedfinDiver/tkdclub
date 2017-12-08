@@ -7,6 +7,8 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\Registry\Registry;
+
 /**
  * medals table class
  */
@@ -17,4 +19,31 @@ class TkdClubTableMedals extends JTable
         parent::__construct('#__tkdclub_medals', 'medal_id', $db);
     }
 
+    public function store($updateNulls = false) {
+
+        // Transform the winner_ids field
+        if (is_array($this->winner_ids))
+        {
+            // take json_encode for array conversion
+            $this->winner_ids = json_encode($this->winner_ids);
+        }
+
+        $date   = JFactory::getDate()->toSql();
+        $userId = JFactory::getUser()->id;
+
+        $this->modified = $date;
+
+        if ($this->medal_id)
+        {
+            // Existing item
+            $this->modified_by = $userId;
+        }
+        else
+        {
+            $this->created = $date;
+            $this->created_by = $userId;
+        }
+        
+        return parent::store($updateNulls = false);
+    }
 }
