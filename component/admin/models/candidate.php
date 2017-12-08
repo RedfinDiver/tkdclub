@@ -104,7 +104,7 @@ class TkdClubModelCandidate extends JModelAdmin
 
         if (!isset($item->id_promotion)) 
         {
-            // Prefill the promotion field with prior selected value
+            // Prefill the promotion field with prior selected value for convinience
             $session = JFactory::getSession();
             $preselected_promotion = $session->get('preselected_promotion', '', 'tkdclub');
             $item->id_promotion = $preselected_promotion;
@@ -123,8 +123,8 @@ class TkdClubModelCandidate extends JModelAdmin
     }
   
     /**
-     * Sucht in der Datenbank nach freigegebenen Prüfungen, verwendet
-     * der Controller TkdClubControllerExampart zum Absetzen einer Meldung
+     * Search the database for publihed promotions
+     * Controller TkdClubControllerExampart uses this for a message
      * 
      * @return  boolean     true if exams are published, false otherwise
      * @see TkdClubControllerCandidate
