@@ -18,4 +18,24 @@ class TkdClubTableTrainings extends JTable
         parent::__construct('#__tkdclub_trainings', 'training_id', $db);
     }
 
+    public function store($updateNulls = false) {
+        
+        $date   = JFactory::getDate()->toSql();
+        $userId = JFactory::getUser()->id;
+
+        $this->modified = $date;
+
+        if ($this->training_id)
+        {
+            // Existing item
+            $this->modified_by = $userId;
+        }
+        else
+        {
+            $this->created = $date;
+            $this->created_by = $userId;
+        }
+        
+        return parent::store($updateNulls = false);
+    }
 }
