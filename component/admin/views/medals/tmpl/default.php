@@ -104,7 +104,7 @@ $helper = new TkdClubHelperMembers;
         <!-- end of table body -->
     </table>
     <!-- end of table -->
-<?php endif; ?>
+    <?php endif; ?>
     <div>
        <input type="hidden" name="task" value="" />
        <input type="hidden" name="boxchecked" value="0" />
