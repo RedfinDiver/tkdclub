@@ -191,8 +191,8 @@ class TkdClubModelCandidates extends JModelList
         $query->select('b.memberpass,b.firstname,b.lastname,b.birthdate,b.sex,b.citizenship,b.zip,b.city,b.street');
         $query->from($db->quoteName('#__tkdclub_members', 'b'));  
 
-        // select fields from examparts table
-        $query->select('a.grade');
+        // select fields from candidates table
+        $query->select('a.grade_achieve');
         $query->join('LEFT', $db->quoteName('#__tkdclub_candidates', 'a') . ' ON a.id_candidate = b.member_id');
 
         // only selected items in the list
@@ -202,16 +202,16 @@ class TkdClubModelCandidates extends JModelList
 		$rows	= $db->loadRowList();
 
         $headers = array(
-            JText::_('COM_TKDCLUB_MEMBER_PASS'),        // b.memberpass
-            JText::_('COM_TKDCLUB_MEMBER_FIRSTNAME'),   // b.firstname
-            JText::_('COM_TKDCLUB_MEMBER_LASTNAME'),    // b.lastname
-            JText::_('COM_TKDCLUB_MEMBER_BIRTHDATE'),   // b.birthdate
-            JText::_('COM_TKDCLUB_MEMBERS_SEX'),        // b.sex
-            JText::_('COM_TKDCLUB_MEMBER_CITIZENSHIP'), // b.citizenship       
-            JText::_('COM_TKDCLUB_MEMBER_ZIP'),         // b.zip  
-            JText::_('COM_TKDCLUB_MEMBER_CITY'),        // b.city   
-            JText::_('COM_TKDCLUB_MEMBER_STREET'),      // b.street 
-            JText::_('COM_TKDCLUB_EXAM_GRADE_ACHIEVE')  // a.grade_achive  
+            JText::_('COM_TKDCLUB_MEMBER_PASS'),                        // b.memberpass
+            JText::_('COM_TKDCLUB_MEMBER_FIRSTNAME'),                   // b.firstname
+            JText::_('COM_TKDCLUB_MEMBER_LASTNAME'),                    // b.lastname
+            JText::_('COM_TKDCLUB_MEMBER_BIRTHDATE'),                   // b.birthdate
+            JText::_('COM_TKDCLUB_MEMBER_SEX'),                         // b.sex
+            JText::_('COM_TKDCLUB_MEMBER_CITIZENSHIP'),                 // b.citizenship       
+            JText::_('COM_TKDCLUB_MEMBER_ZIP'),                         // b.zip  
+            JText::_('COM_TKDCLUB_MEMBER_CITY'),                        // b.city   
+            JText::_('COM_TKDCLUB_MEMBER_STREET'),                      // b.street 
+            JText::_('COM_TKDCLUB_CANDIDATE_PROMOTION_GRADE_ACHIEVE')   // a.grade_achive  
         );
 
 		// return the results as an array of items, each consisting of an array of fields

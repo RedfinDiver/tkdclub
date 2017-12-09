@@ -10,6 +10,7 @@ defined('_JEXEC') or die;
 JLoader::register('TkdclubHelperAge', JPATH_COMPONENT_ADMINISTRATOR. '/helpers/agecalc.php');
 
 JHtml::stylesheet('administrator/components/com_tkdclub/assets/css/tkdclub.css');
+JHtml::_('script', 'administrator/components/com_tkdclub/assets/js/rawsubmitbutton.js');
 JHtml::_('formbehavior.chosen', 'select');
 JHtml::_('behavior.multiselect');
 

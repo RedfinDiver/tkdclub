@@ -130,23 +130,27 @@ class TkdClubControllerExport extends JControllerForm
 	}
 
 	/**
-	*	csv export function for examparts-view
-	*	the data fits right into the official exam protocol
+	*	csv export function for candidates-view
+	*	the data fits right into the official promotion protocol
 	*
 	**/
-	public function examparts()
+	public function candidates()
 	{	
-		$content = $this->getContent('examparts');
+		$content = $this->getContent('candidates');
 
 		foreach ($content as $key => &$row)
 		{ 	
 			// conversion of date in LC4-format
-			if ($key > 0) {$row[3] = JHtml::_('date', $row[3], JText::_('DATE_FORMAT_LC4')); }
+			if ($key > 0)
+			{
+				$row[3] = JHtml::_('date', $row[3], JText::_('DATE_FORMAT_LC4'));
+				$row[4] == 'male' ? $row[4] = JText::_('COM_TKDCLUB_MEMBER_SEX_MALE') : $row[4] = JText::_('COM_TKDCLUB_MEMBER_SEX_FEMALE');
+			}
 			
 			print implode(';', $row)."\n"; // write data to the browser
 		}
 
-		$this->setHeaders(JText::_('COM_TKDCLUB_SUBMENU_EXAMPARTS'));
+		$this->setHeaders(JText::_('COM_TKDCLUB_SIDEBAR_CANDIDATES'));
 	}
 
 	/**
