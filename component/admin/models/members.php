@@ -215,7 +215,7 @@ class TkdClubModelMembers extends JModelList
     *
     * @since   2.2.0
     */
-    public function getMemberdata()
+    public function getMemberdata($json = false)
     {   
         //initilise some variables
         $memberdata = new stdClass;
@@ -287,7 +287,7 @@ class TkdClubModelMembers extends JModelList
         $memberdata->oldest = $oldest;
         $memberdata->youngest = $youngest;
         
-        return $memberdata;
+        return $json ? json_encode($memberdata) : $memberdata;
     }
 
     /**

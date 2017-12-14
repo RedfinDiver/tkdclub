@@ -49,4 +49,16 @@ class TkdclubControllerMembers extends JControllerAdmin
         
         $this->setRedirect('index.php?option=com_tkdclub&view=members', JText::_($msg));
     }
+
+    /**
+     * For Ajax call in statistic view
+     */
+    public function getmemberdata()
+    {
+        $model = $this->getModel($name = 'members', $prefix = 'TkdClubModel', $config = array());
+        $data = $model->getmemberdata();
+        echo json_encode($data);
+
+        JFactory::getApplication()->close();
+    }
 }

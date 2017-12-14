@@ -160,7 +160,7 @@ class TkdClubModelCandidates extends JModelList
     }
 
     /**
-    * Method to get the number of all entries in the examparts-table
+    * Method to get the number of all entries in the candidates-table
     * 
     * @return type integer 
     */
@@ -174,6 +174,14 @@ class TkdClubModelCandidates extends JModelList
         $allrows = $db->loadResult();
 
         return (int) $allrows;
+    }
+
+    /**
+     * Get all statistics data for candidates
+     */
+    public function getCandidateData()
+    {
+        return TRUE;
     }
 
     /**

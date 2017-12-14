@@ -58,9 +58,9 @@ class TkdClubViewTrainings extends JViewLegacy
         // Adding the fieldpath for the filters
         JFormHelper::addFieldPath(JPATH_COMPONENT . '/models/fields');
 
-        $clubname = JComponentHelper::getParams('com_tkdclub')->get('club_name');
-        $clubname == TRUE ? JToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_TRAINING_ADMIN_VIEW'), 'tkdclub') 
-                          : JToolBarHelper::title(JText::_('COM_TKDCLUB') . JText::_('COM_TKDCLUB_TRAINING_ADMIN_VIEW'), 'tkdclub');
+        $clubname = JComponentHelper::getParams('com_tkdclub')->get('club_name', JText::_('COM_TKDCLUB'));
+        
+        JToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_TRAINING_ADMIN_VIEW'), 'tkdclub');
         
         $canDo = TkdClubHelperActions::getActions();
 

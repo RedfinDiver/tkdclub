@@ -45,6 +45,11 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
             <b><?php echo $this->allrows; ?></b>
         <?php echo JText::_('COM_TKDCLUB_ENTRIES'); ?>
         </div>
+    <?php if($this->togglestats) :  ?>
+    <?php  
+        include_once(JPATH_COMPONENT . '/includes/candidatesstats.php');
+    ?>
+    <?php endif; ?>
     <div class="clearfix"> </div>
 
     <table class="table table-condensed table-striped"> 

@@ -44,9 +44,9 @@ class TkdClubViewPromotions extends JViewLegacy
     
     protected function addToolbar()
     {
-        $clubname = JComponentHelper::getParams('com_tkdclub')->get('club_name');
-        $clubname == TRUE ? JToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_PROMOTION_ADMIN_VIEW'), 'tkdclub') 
-                          : JToolBarHelper::title(JText::_('COM_TKDCLUB') . JText::_('COM_TKDCLUB_PROMOTION_ADMIN_VIEW'), 'tkdclub');
+        $clubname = JComponentHelper::getParams('com_tkdclub')->get('club_name', JText::_('COM_TKDCLUB'));
+        
+        JToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_PROMOTION_ADMIN_VIEW'), 'tkdclub');
         
         $canDo = TkdClubHelperActions::getActions();
         

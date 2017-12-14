@@ -17,4 +17,33 @@ class TkdClubControllerCandidates extends JControllerAdmin
         $model = parent::getModel($name, $prefix, $config);
         return $model;
     }
+
+    /**
+     * Toggle on/off the stats
+     * 
+     * With this method the statistics are switched on or off
+     * in the medals list view
+     * 
+     * @return void
+     */ 
+    public function togglestats()
+    {
+        // Check for request forgeries.
+        JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+        
+        $session = JFactory::getSession();
+
+        if (!$session->get('togglestats_candidates', null, 'tkdclub'))
+        {
+            $session->set('togglestats_candidates', 'ON', 'tkdclub');
+            $msg = 'COM_TKDCLUB_TOGGLE_STATS_ON';  
+        }
+        else
+        {
+            $session->clear('togglestats_candidates','tkdclub');
+            $msg = 'COM_TKDCLUB_TOGGLE_STATS_OFF';  
+        }
+        
+        $this->setRedirect('index.php?option=com_tkdclub&view=candidates', JText::_($msg));
+    }
 }
