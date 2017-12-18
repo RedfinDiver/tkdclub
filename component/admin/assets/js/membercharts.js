@@ -23,7 +23,6 @@ window.onload = function () {
     document.getElementById('tkdclub-members-youngest').innerText += youngest_text;
 }
 
-
 /**
  * Prepares and drawes the MEMBERSTATE chart
  */
@@ -38,15 +37,14 @@ function drawStateChart () {
     );
 
     var options = {
-        legend : {
-            alignment : 'center',
-        },
-        width : '30%',
-        height : 180,
-        title : Joomla.JText._('COM_TKDCLUB_STATISTICS_STATE_ALL_MEMBERS_IN_DB'),
+        title : Joomla.JText._('COM_TKDCLUB_STATISTIC_STATE_ALL_MEMBERS_IN_DB'),
         titleTextStyle : { fontSize : 12, color : '#333' },  
         "colors": ["#3366CC", "#ec8f6e", "#F9A541"],
-        slices : { 2 : {offset: 0.1} }
+        slices : { 2 : {offset: 0.1} },
+        chartArea :  {
+            left : 30,
+            top : 50
+        },
     };
 
     var chart = new google.visualization.PieChart(document.getElementById("chart_state"));
@@ -66,13 +64,14 @@ function drawGenderChart() {
     );
     
     var options = {  
-        legend: {alignment : "center"},
-        width : '30%',
-        height : 180,
-        title : Joomla.JText._('COM_TKDCLUB_STATISTICS_GENDER_DIST'),
+        title : Joomla.JText._('COM_TKDCLUB_STATISTIC_GENDER_DIST'),
         titleTextStyle : { fontSize : 12, color : '#333' },
         "colors": ["#ec8f6e", "#3366CC"],
         slices: {2: {offset: 0.1} },
+        chartArea :  {
+            left : 30,
+            top : 50
+        }
     };
     
         var chart = new google.visualization.PieChart(document.getElementById("chart_genderdist"));
@@ -94,15 +93,15 @@ function drawAgeChart() {
     var data = new google.visualization.arrayToDataTable(preparedData, true);
 
     var options = {
-        chartArea : {
-            //left: 20,
-            width: '95%'
+        title: Joomla.JText._('COM_TKDCLUB_STATISTIC_AGE_DIST'),
+        titleTextStyle : { fontSize : 12, color : '#333' },
+        chartArea :  {
+            left : 30,
+            top : 50
         },
-        width : '95%',
-        height : 180,
-        legend : {position: "none"},
-        title: Joomla.JText._('COM_TKDCLUB_STATISTICS_AGE_DIST'),
-        titleTextStyle : { fontSize : 12, color : '#333' }
+        legend : {
+            position : 'none'
+        }
     };
 
     var chart = new google.visualization.ColumnChart(document.getElementById("chart_agedist"));

@@ -10,7 +10,7 @@ Tkdclub = {};
 // Load google charts
 google.charts.load("current", {"packages":["corechart"]});
 
-// function to get all data with AJAX
+// Function to get all data with AJAX
 Tkdclub.getData = function(controller, task, varname = controller) {
     var url = 'index.php?option=com_tkdclub&task=' + controller + '.' + task;
     var xhr = new XMLHttpRequest();
@@ -25,6 +25,5 @@ Tkdclub.getData = function(controller, task, varname = controller) {
 
 // Get all the data and store it in globale variable
 Tkdclub.getData('members', 'getmemberdata', 'memberdata');
-
-
-
+Tkdclub.getData('trainings', 'gettrainerdata', 'trainerdata');
+Tkdclub.getData('trainings', 'gettrainingsdata', 'trainingsdata');

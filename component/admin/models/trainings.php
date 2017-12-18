@@ -282,8 +282,84 @@ class TkdClubModelTrainings extends JModelList
         $sum_data['average'] = round($sum_parts / $sum_data['trainings'], 1);
         $trainingsdata->sums = $sum_data;
 
-        return $trainingsdata;
-     }
+        $data = $this->prepareTrainingYearsChart($trainingsdata);
+        $data = $this->prepareParticipantsYearChart($data);
+
+        return $data;
+    }
+
+    /**
+     * Prepare data for trainings per year chart
+     */
+    public function prepareTrainingYearsChart(&$data)
+    {
+        $chartdata = array();
+        $traintypes = array();
+
+        $chartdata[0][] = JText::_('COM_TKDCLUB_YEAR');
+
+        // First find all training - types in dataset
+        foreach ($data->sums['types'] as $type => $value)
+        {
+            $chartdata[0][] = $type;
+            $traintypes[] = $type;
+        }
+
+        foreach ($data as $year => $value)
+        {
+            $i = count($chartdata);
+            if (is_numeric($year))
+            {
+                $chartdata[$i][] = $year;
+                foreach ($traintypes as $traintype)
+                {
+                    if (array_key_exists($traintype, $value['types']))
+                    {
+                        $chartdata[$i][] = $value['types'][$traintype];
+                    }
+                    else
+                    {
+                        $chartdata[$i][] = 0;  // When there is no type set it to 0
+                    }
+                }
+            }
+        }
+        $data->TrainingYearsChart = $chartdata;
+        return $data;
+    }
+
+    /**
+     * Prepare data for average participants per year and training type chart
+     */
+    public function prepareParticipantsYearChart(&$data)
+    {
+        $chartdata = array();
+        $chartdata[0] = $data->TrainingYearsChart[0]; // The same as in the TrainingsYearsChart
+        
+        foreach ($data as $year => $value)
+        {
+            $j = count($chartdata);
+            if (is_numeric($year))
+            {
+                $chartdata[$j][] = $year;
+                foreach ($this->training_types as $type)
+                {
+                    if (array_key_exists($type, $data->{$year}['parts']))
+                    {
+                        $chartdata[$j][] = $data->{$year}['parts'][$type];
+                    }
+                    else
+                    {
+                        $chartdata[$j][] = 0;
+                    }
+                }
+
+            }
+        }
+
+        $data->ParticipantsYearChart = $chartdata;
+        return $data;
+    }
 
     /**
      * sort function for trainings

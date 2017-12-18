@@ -50,13 +50,24 @@ class TkdClubControllerTrainings extends JControllerAdmin
     /**
      * For Ajax call in statistic view
      */
-    public function gettrainingdata()
+    public function gettrainerdata()
     {
-        $model = $this->getModel($name = 'members', $prefix = 'TkdClubModel', $config = array());
-        $data = $model->getmemberdata();
+        $model = $this->getModel($name = 'trainings', $prefix = 'TkdClubModel', $config = array());
+        $data = $model->gettrainerdata();
         echo json_encode($data);
 
         JFactory::getApplication()->close();
     }
 
+    /**
+     * For Ajax call in statistic view
+     */
+    public function gettrainingsdata()
+    {
+        $model = $this->getModel($name = 'trainings', $prefix = 'TkdClubModel', $config = array());
+        $data = $model->gettrainingsdata();
+        echo json_encode($data);
+
+        JFactory::getApplication()->close();
+    }
 }
