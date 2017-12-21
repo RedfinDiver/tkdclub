@@ -188,10 +188,6 @@
                 description="COM_TKDCLUB_CONFIG_PROMOTION_DAN6_DESC"
                 type="text" default="" size="10" filter="float">
             </field>
-
-
-                         
-
     </fieldset>
     
     <fieldset
@@ -228,10 +224,10 @@
             </field>
             
             <field 
-                    name="email_user" type="usergroup"
-                    label="COM_TKDCLUB_EVENT_EMAILTO"
-                    description="COM_TKDCLUB_EVENT_EMAILTO_DESC"
-                    filter="unset" />
+                name="email_user" type="usergroup"
+                label="COM_TKDCLUB_EVENT_EMAILTO"
+                description="COM_TKDCLUB_EVENT_EMAILTO_DESC"
+                filter="unset" />
 
             <field
                 name="showuser_1"

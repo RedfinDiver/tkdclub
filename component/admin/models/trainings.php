@@ -225,18 +225,18 @@ class TkdClubModelTrainings extends JModelList
      **/
      public function getTrainingsData()
      {  
-        // return if there are no training years, which basically means there are no datasets
+        // Return if there are no training years, which basically means there are no datasets
         if (!$this->training_years)
         {
             return null;
         }
 
-        // initialise the container and some variables
+        // Initialise the container and some variables
         $trainingsdata = new stdClass;
         $sum_data = array('trainings' => 0, 'average' => 0, 'types' => array(), 'parts' => array());
         $sum_parts = 0; // collecting sum of participants for every year
 
-        // get trainingsdata for every year from database
+        // Get trainingsdata for every year from database
         foreach ($this->training_years as $year)
         {
             $i = 0; // count variable to make sure the overall participants are not count twice or more each year
@@ -284,6 +284,7 @@ class TkdClubModelTrainings extends JModelList
 
         $data = $this->prepareTrainingYearsChart($trainingsdata);
         $data = $this->prepareParticipantsYearChart($data);
+        $data->currency = JComponentHelper::getParams('com_tkdclub')->get('currency', '€');
 
         return $data;
     }
@@ -624,7 +625,7 @@ class TkdClubModelTrainings extends JModelList
             JText::_('COM_TKDCLUB_TRAINING_ASSISTENT2'),    // assist2
             JText::_('COM_TKDCLUB_TRAINING_ASSISTENT2_KM'), // km_assist2
             JText::_('COM_TKDCLUB_TRAINING_ASSISTENT3'),    // assist3
-            JText::_('COM_TKDCLUB_TRAINING_ASSISTENT3_KM'),             // km_assist2
+            JText::_('COM_TKDCLUB_TRAINING_ASSISTENT3_KM'), // km_assist2
             JText::_('COM_TKDCLUB_TRAINING_TYPE'),          // type
             JText::_('COM_TKDCLUB_TRAINING_PARTICIPANTS'),  // participants
             JText::_('COM_TKDCLUB_TRAINING_PAID'),          // payment_state

@@ -62,10 +62,29 @@
 
 .tkdclub-statistics {
     padding-left: 20px;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
 }
 
 .tkd-club-chart {
     width : 33%;
     height: 200px;
+}
+
+.tkdclub-loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: tkdclub-spin 2s linear infinite;
+}
+
+div.tkdclub-loader {
+    margin-top: 50px;
+    margin-left: 50px;
+}
+
+@keyframes tkdclub-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

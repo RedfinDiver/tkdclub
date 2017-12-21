@@ -4,24 +4,7 @@
 * @license    GNU General Public License version 2 or later; see LICENSE.txt
 */
 
-/**
- * Writes data to DOM
- */
-window.onload = function () {
-    document.getElementById('tkdclub-members-allrows').innerText += ' ' + Tkdclub.memberdata.allrows;
-    document.getElementById('tkdclub-members-active').innerText += ' ' + Tkdclub.memberdata.active;
-    document.getElementById('tkdclub-members-inactive').innerText += ' ' + Tkdclub.memberdata.inactive;
-    document.getElementById('tkdclub-members-support').innerText += ' ' + Tkdclub.memberdata.support;
 
-    document.getElementById('tkdclub-members-female').innerText += ' ' + Tkdclub.memberdata.genderdist.female;
-    document.getElementById('tkdclub-members-male').innerText += ' ' + Tkdclub.memberdata.genderdist.male;
-
-    document.getElementById('tkdclub-members-average').innerText += ' ' + Tkdclub.memberdata.average_age;
-    var oldest_text = ' ' + Tkdclub.memberdata.oldest.name + ' (' + Tkdclub.memberdata.oldest.age_y + ')';
-    document.getElementById('tkdclub-members-oldest').innerText += oldest_text;
-    var youngest_text = ' ' + Tkdclub.memberdata.youngest.name + ' (' + Tkdclub.memberdata.youngest.age_y + ')';
-    document.getElementById('tkdclub-members-youngest').innerText += youngest_text;
-}
 
 /**
  * Prepares and drawes the MEMBERSTATE chart
@@ -106,4 +89,24 @@ function drawAgeChart() {
 
     var chart = new google.visualization.ColumnChart(document.getElementById("chart_agedist"));
     chart.draw(data, options);
+}
+
+/**
+ * Writes the memberdata to DOM
+ */
+function writeMembers() {
+
+    document.getElementById('tkdclub-members-allrows').textContent += ' ' + Tkdclub.memberdata.allrows;
+    document.getElementById('tkdclub-members-active').textContent += ' ' + Tkdclub.memberdata.active;
+    document.getElementById('tkdclub-members-inactive').textContent += ' ' + Tkdclub.memberdata.inactive;
+    document.getElementById('tkdclub-members-support').textContent += ' ' + Tkdclub.memberdata.support;
+
+    document.getElementById('tkdclub-members-female').textContent += ' ' + Tkdclub.memberdata.genderdist.female;
+    document.getElementById('tkdclub-members-male').textContent += ' ' + Tkdclub.memberdata.genderdist.male;
+
+    document.getElementById('tkdclub-members-average').textContent += ' ' + Tkdclub.memberdata.average_age;
+    var oldest_text = ' ' + Tkdclub.memberdata.oldest.name + ' (' + Tkdclub.memberdata.oldest.age_y + ')';
+    document.getElementById('tkdclub-members-oldest').textContent += oldest_text;
+    var youngest_text = ' ' + Tkdclub.memberdata.youngest.name + ' (' + Tkdclub.memberdata.youngest.age_y + ')';
+    document.getElementById('tkdclub-members-youngest').textContent += youngest_text;
 }

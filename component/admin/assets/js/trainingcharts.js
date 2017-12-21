@@ -23,7 +23,7 @@ function drawTrainingsDistChart () {
 
     var options = {
         title : Joomla.JText._('COM_TKDCLUB_STATISTIC_TRAINTYPES_DIST'),
-        titleTextStyle : { fontSize : 12, color : '#333' },  
+        titleTextStyle : { fontSize : 10, color : '#333' },  
         "colors": colorsTypes,
         slices : { 2 : {offset: 0.1} },
         chartArea :  {
@@ -48,7 +48,7 @@ function drawTrainingYearsChart() {
     var options = {
         isStacked:true,
         title: Joomla.JText._('COM_TKDCLUB_STATISTIC_TRAININGS_PER_YEAR'),
-        titleTextStyle : { fontSize : 12, color : '#333' },  
+        titleTextStyle : { fontSize : 10, color : '#333' },  
         "colors": colorsTypes,
         chartArea :  {
             left : 40,
@@ -72,7 +72,7 @@ function drawParticipantsChart() {
     var options = {
         isStacked:false,
         title: Joomla.JText._('COM_TKDCLUB_STATISTIC_AVERAGE_PARTICIPANTS'),
-        titleTextStyle : { fontSize : 12, color : '#333' },  
+        titleTextStyle : { fontSize : 10, color : '#333' },  
         "colors": colorsTypes,
         chartArea :  {
             left : 40,
@@ -81,6 +81,27 @@ function drawParticipantsChart() {
         legend : {position : 'right', alignment : 'center'}
     };
 
-    var chart = new google.visualization.ColumnChart(document.getElementById("chart_participants"));
+    var chart = new google.visualization.LineChart(document.getElementById("chart_participants"));
     chart.draw(data, options);
 }
+
+/**
+ * Write Trainingsdata to DOM
+ */
+function writeTrainings() {
+    var unpaid = 0;
+    var unpaid_sum = 0;
+    var currency = Tkdclub.trainingsdata.currency;
+    var trainerdata = Tkdclub.trainerdata;
+    var l = trainerdata.length;
+    for (i=0; i<l; i++) {
+        unpaid += trainerdata[i]['sums']['unpaid'];
+        unpaid_sum += trainerdata[i]['sums']['unpaid_sum'];
+    }
+
+    document.getElementById('tkdclub-unpaidtrainings').textContent += ' ' + unpaid;
+    document.getElementById('tkdclub-unpaidsum').textContent += ' ' + unpaid_sum + ' ' + currency;
+    document.getElementById('tkdclub-alltrainings').textContent += ' ' + Tkdclub.trainingsdata.sums['trainings'];
+    document.getElementById('tkdclub-averageparts').textContent += ' ' + Tkdclub.trainingsdata.sums['average'];
+}
+
