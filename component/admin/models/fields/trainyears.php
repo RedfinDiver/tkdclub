@@ -7,6 +7,8 @@
 
 defined('_JEXEC') or die;
 
+JFormHelper::loadFieldClass('list');
+
 /**
  * Supports the options-markup for training years
  * used in backend and frontent

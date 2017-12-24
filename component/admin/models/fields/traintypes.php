@@ -7,6 +7,7 @@
 
 defined('_JEXEC') or die;
 
+JFormHelper::loadFieldClass('list');
 JLoader::register('TkdClubHelperList', JPATH_COMPONENT_ADMINISTRATOR. '/helpers/list.php');
 
 /**

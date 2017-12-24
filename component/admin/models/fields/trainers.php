@@ -7,6 +7,7 @@
 
 defined('_JEXEC') or die;
 
+JFormHelper::loadFieldClass('list');
 JLoader::register('TkdclubHelperTrainer', JPATH_COMPONENT_ADMINISTRATOR. '/helpers/trainer.php');
 
 class JFormFieldTrainers extends JFormFieldList

@@ -5,9 +5,9 @@
 * @license    GNU General Public License version 2 or later; see LICENSE.txt
 */
 defined('_JEXEC') or die;
-jimport('joomla.form.formfield');
-jimport('joomla.form.helper');
+
 JFormHelper::loadFieldClass('list');
+
 /**
  * Supports the options-markup for taekwondo-grades
  * used in backend an frontend
