@@ -23,7 +23,7 @@ function drawStateChart () {
         title : Joomla.JText._('COM_TKDCLUB_STATISTIC_STATE_ALL_MEMBERS_IN_DB'),
         titleTextStyle : { fontSize : 12, color : '#333' },  
         "colors": ["#3366CC", "#ec8f6e", "#F9A541"],
-        slices : { 2 : {offset: 0.1} },
+        slices : { 1 : {offset: 0.15} },
         chartArea :  {
             left : 30,
             top : 50
@@ -50,7 +50,6 @@ function drawGenderChart() {
         title : Joomla.JText._('COM_TKDCLUB_STATISTIC_GENDER_DIST'),
         titleTextStyle : { fontSize : 12, color : '#333' },
         "colors": ["#ec8f6e", "#3366CC"],
-        slices: {2: {offset: 0.1} },
         chartArea :  {
             left : 30,
             top : 50

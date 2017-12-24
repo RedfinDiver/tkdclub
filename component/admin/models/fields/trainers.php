@@ -23,12 +23,20 @@ class JFormFieldTrainers extends JFormFieldList
     {   
         $options = array();
 
-        // for filter use add trainers from the existing training table
+        // For filter use add trainers from the existing training table
         if ($this->element['isFilter'] == 'true')
         {
-            $trainers = TkdclubHelperTrainer::getTrainer($fromTrainingsTable = true);
+            /**
+             * Return of this function when called with $fromTrainingsTable = true is a object
+             * So some more work is to do for rendering the correct field
+             */
+            $names = TkdclubHelperTrainer::getTrainer($fromTrainingsTable = true);
+            $trainers = array();
 
-
+            foreach($names as $name)
+            {
+                $trainers[$name->member_id] = $name->firstname . ' ' . $name->lastname;
+            }
         }
 
         // NO filter use, add trainers from the members table where in functions the member is defined as trainer

@@ -75,7 +75,10 @@ ALTER TABLE `#__tkdclub_trainings`
     CHANGE `type` `type` varchar(50) NOT NULL,
     CHANGE `participants` `participants` int(5) NOT NULL,
     CHANGE `notes` `notes` text NOT NULL,
-    CHANGE `published` `payment_state` tinyint(3) NOT NULL DEFAULT 0,
+    ADD `trainer_paid` tinyint(3) NOT NULL DEFAULT 0 AFTER `km_trainer`,
+    ADD `assist1_paid` tinyint(3) NOT NULL DEFAULT 0 AFTER `km_assist1`,
+    ADD `assist2_paid` tinyint(3) NOT NULL DEFAULT 0 AFTER `km_assist2`,
+    ADD `assist3_paid` tinyint(3) NOT NULL DEFAULT 0 AFTER `km_assist3`,
     ADD `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     ADD `created_by` INT(10) unsigned NOT NULL DEFAULT '0',
     ADD `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -83,6 +86,18 @@ ALTER TABLE `#__tkdclub_trainings`
     CHANGE `checked_out` `checked_out` int(10) NOT NULL,
     CHANGE `checked_out_time` `checked_out_time` datetime NOT NULL,
     ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
+
+ALTER TABLE `#__tkdclub_trainings`
+    MODIFY `km_trainer` int(4) NOT NULL AFTER `trainer`,
+    MODIFY `trainer_paid` tinyint(3) NOT NULL DEFAULT 0 AFTER `km_trainer`;
+
+UPDATE `#__tkdclub_trainings` SET `trainer_paid` = '1' WHERE `published` = '1';
+UPDATE `#__tkdclub_trainings` SET `assist1_paid` = '1' WHERE `published` = '1';
+UPDATE `#__tkdclub_trainings` SET `assist2_paid` = '1' WHERE `published` = '1';
+UPDATE `#__tkdclub_trainings` SET `assist3_paid` = '1' WHERE `published` = '1';
+
+ALTER TABLE `#__tkdclub_trainings`
+    DROP `published`;
 
 ALTER TABLE `#__tkdclub_medals`
 	CHANGE `id` `medal_id` int(11) NOT NULL AUTO_INCREMENT,

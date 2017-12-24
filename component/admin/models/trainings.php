@@ -178,19 +178,23 @@ class TkdClubModelTrainings extends JModelList
      **/
     public function getTrainerData()
     {   
-        // return if there are no trainers, which basically means there are no datasets
+        // Return if there are no trainers, which basically means there are no datasets
         if (!$this->trainer_names)
         {
             return null;
         }
 
-        // loop through the trainer names and get their data
-        foreach ($this->trainer_names as $trainer_id => $trainer_name)
+        // Loop through the trainer names and get their data
+        foreach ($this->trainer_names as $container)
         {
-            // initialise the container and some variables
+            $trainer_id = $container->member_id;
+            $trainer_name = $container->firstname . ' ' . $container->lastname;
+
+            // Initialise the container and some variables
             $trainer = new stdClass;
             $trainer->trainer_id   = $trainer_id;
             $trainer->trainer_name = $trainer_name;
+            $trainer->sex = $container->sex;
             $year_data = array();
             $sum_data = array('trainings' => 0,
                               'trainer' => 0,
@@ -199,7 +203,7 @@ class TkdClubModelTrainings extends JModelList
                               'unpaid_sum' => 0, 
                               'types' => array());
 
-            // get trainingsdata for every year from database and analyse it
+            // Get trainingsdata for every year from database and analyse it
             foreach ($this->training_years as $year)
             {
                 $trainings_in_year = $this->get_trainings_from_db($trainer_id, $year);

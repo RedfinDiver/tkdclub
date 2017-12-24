@@ -116,6 +116,10 @@ JHtml::_('script', 'administrator/components/com_tkdclub/assets/js/trainingchart
                     </div>
                 </div>
 
+                <div class="row-fluid">
+                    <div class=span12" id="trainings-table">
+                </div>
+            
             <?php echo JHtml::_('bootstrap.endTab'); ?>
         <?php echo JHtml::_('bootstrap.endTabSet'); ?>
     </div>

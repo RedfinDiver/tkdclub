@@ -52,6 +52,9 @@ class TkdClubControllerTrainings extends JControllerAdmin
      */
     public function gettrainerdata()
     {
+        // Check for request forgeries.
+        JSession::checkToken('GET') or jexit(JText::_('JINVALID_TOKEN'));
+        
         $model = $this->getModel($name = 'trainings', $prefix = 'TkdClubModel', $config = array());
         $data = $model->gettrainerdata();
         echo json_encode($data);

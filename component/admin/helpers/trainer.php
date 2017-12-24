@@ -8,11 +8,13 @@
 defined('_JEXEC') or die;
 
 /**
- * Helper for getting trainer names from database
+ * Helper for getting trainer names from database, used for select fields
  * 
- * @param   bool    $fromTrainingsTable  true = get trainernames from Trainingstable, false = get names from aktive members with trainer function
+ * @param   bool    $fromTrainingsTable  true  = get trainernames from Trainingstable
+ *                                       false = get names from aktive members with trainer function
  * 
- * @return  array   array with trainer names like [member_id => "firstname lastname"]
+ * @return  object  when called with false, not directly usable for select fields, more data is fetched from db
+ * @return  array   array with trainer names like [member_id => "firstname lastname"] when called with false
  * 
  * @since   3.0.0
  */
@@ -25,29 +27,29 @@ class TkdclubHelperTrainer
             $db = JFactory::getDBO();
             
             $q1 = $db->getQuery(true)
-                    ->select(array('a.member_id', 'a.firstname', 'a.lastname'))->from($db->quoteName('#__tkdclub_members', 'a'))
+                    ->select(array('a.member_id', 'a.firstname', 'a.lastname', 'a.sex'))->from($db->quoteName('#__tkdclub_members', 'a'))
                     ->join('LEFT', $db->quoteName('#__tkdclub_trainings', 'b') . ' ON(' . $db->quoteName('a.member_id') . ' = ' . $db->quoteName('b.trainer') . ')' )
                     ->where('trainer>0');
             
             $q2 = $db->getQuery(true)
-            ->select(array('a.member_id', 'a.firstname', 'a.lastname'))->from($db->quoteName('#__tkdclub_members', 'a'))
+            ->select(array('a.member_id', 'a.firstname', 'a.lastname', 'a.sex'))->from($db->quoteName('#__tkdclub_members', 'a'))
             ->join('LEFT', $db->quoteName('#__tkdclub_trainings', 'b') . ' ON(' . $db->quoteName('a.member_id') . ' = ' . $db->quoteName('b.assist1') . ')' )
             ->where('assist1>0');
             
             $q3 = $db->getQuery(true)
-            ->select(array('a.member_id', 'a.firstname', 'a.lastname'))->from($db->quoteName('#__tkdclub_members', 'a'))
+            ->select(array('a.member_id', 'a.firstname', 'a.lastname', 'a.sex'))->from($db->quoteName('#__tkdclub_members', 'a'))
             ->join('LEFT', $db->quoteName('#__tkdclub_trainings', 'b') . ' ON(' . $db->quoteName('a.member_id') . ' = ' . $db->quoteName('b.assist2') . ')' )
             ->where('assist2>0');
 
             $q4 = $db->getQuery(true)
-            ->select(array('a.member_id', 'a.firstname', 'a.lastname'))->from($db->quoteName('#__tkdclub_members', 'a'))
+            ->select(array('a.member_id', 'a.firstname', 'a.lastname', 'a.sex'))->from($db->quoteName('#__tkdclub_members', 'a'))
             ->join('LEFT', $db->quoteName('#__tkdclub_trainings', 'b') . ' ON(' . $db->quoteName('a.member_id') . ' = ' . $db->quoteName('b.assist3') . ')' )
             ->where('assist3>0');
             
             $query = $q1->union($q2)->union($q3)->union($q4);
             $db->setQuery($query);
 
-            return TkdclubHelperTrainer::prepareArray($db->loadObjectList());
+            return $db->loadObjectList();
         }
 
         if ($fromTrainingsTable == false)

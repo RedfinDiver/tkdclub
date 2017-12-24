@@ -44,4 +44,10 @@ window.onload = function () {
     chartcontainer.classList.remove('hidden');
     loader = document.getElementById('tkdclub-loader');
     loader.classList.remove('tkdclub-loader');
+
+   writeTrainingsTable();
 }
+
+
+
+

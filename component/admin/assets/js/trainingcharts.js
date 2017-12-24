@@ -94,7 +94,7 @@ function writeTrainings() {
     var currency = Tkdclub.trainingsdata.currency;
     var trainerdata = Tkdclub.trainerdata;
     var l = trainerdata.length;
-    for (i=0; i<l; i++) {
+    for (var i=0; i<l; i++) {
         unpaid += trainerdata[i]['sums']['unpaid'];
         unpaid_sum += trainerdata[i]['sums']['unpaid_sum'];
     }
@@ -105,3 +105,111 @@ function writeTrainings() {
     document.getElementById('tkdclub-averageparts').textContent += ' ' + Tkdclub.trainingsdata.sums['average'];
 }
 
+/**
+ * Writes the trainings table to DOM
+ */
+function writeTrainingsTable () {
+
+
+    var rows = Tkdclub.trainerdata.length;
+    createTable('tkdclub-trainingstable', 'trainings-table');
+    addDataToTable('tkdclub-trainingstable', Tkdclub.trainerdata);
+}
+
+/**
+ * Creates a table
+ */
+function createTable(id, where) {
+    var table = '<table id="'+ id +'" class="table table-striped"><thead>';
+    table += '<tr><th></th>';
+    table += '<th>' + Joomla.JText._('COM_TKDCLUB_SIDEBAR_TRAININGS') + '</th>';
+
+    var types = Object.keys(Tkdclub.trainingsdata.sums.types);
+
+    for (type of types){
+        table += '<th>' + type + '</th>';
+    }
+
+    table += '<th>' + Joomla.JText._('COM_TKDCLUB_TRAINING_NOT_PAID') + '</th>';
+    table += '<th>' + Joomla.JText._('COM_TKDCLUB_SUM') + '</th>';
+    table += '<th></th></tr></thead>';
+    table += '<tbody></tbody>';
+    table += '</table>';
+    document.getElementById(where).innerHTML = table;
+}
+
+/**
+ * Adds Data to table
+ */
+function addDataToTable(id, data) {
+    
+    // first get training types
+    var types = Object.keys(Tkdclub.trainingsdata.sums.types);
+
+    var rows = '';
+
+    // Iterate through the data
+    for (var trainer of data){
+
+        var trainer_types = trainer.sums.types;
+        if (trainer.sex == 'male') {
+            var asTrainer = Joomla.JText._('COM_TKDCLUB_STATISTIC_AS_TRAINER_MALE');
+            var asAssistent = Joomla.JText._('COM_TKDCLUB_STATISTIC_AS_ASSISTENT_MALE');
+        } else {
+            var asTrainer = Joomla.JText._('COM_TKDCLUB_STATISTIC_AS_TRAINER_FEMALE');
+            var asAssistent = Joomla.JText._('COM_TKDCLUB_STATISTIC_AS_ASSISTENT_FEMALE');
+        }
+        var acomma = '';
+
+        rows += '<tr>';
+        rows += '<td><strong>' + trainer.trainer_name + '</strong></td>';
+        rows += '<td><strong>' + trainer.sums.trainings + '</strong>';
+        rows += '<div class="small">';
+        if (trainer.sums.trainer > 0){
+            rows += trainer.sums.trainer + asTrainer;
+            acomma = ', ';
+        }
+        if (trainer.sums.assistent > 0) {
+            rows += acomma;
+            rows += trainer.sums.assistent + asAssistent;
+        }
+        rows += '</div>'
+        rows += '</td>'
+
+        for (type of types){
+            if (trainer_types[type]) {
+                var tcomma = '';
+                rows += '<td><strong>' + trainer_types[type]['trainings'] + '</strong>';
+                rows += '<div class="small">';
+                if (trainer_types[type]['trainer'] > 0){
+                    rows += trainer_types[type]['trainer'] + asTrainer;
+                    tcomma = ', '
+                }
+                if (trainer_types[type]['assistent'] > 0){
+                    rows += tcomma;
+                    rows += trainer_types[type]['assistent'] + asAssistent;
+                }
+
+                rows += '</div>';
+                rows += '</td>';
+            }
+            else {
+                rows += '<td>0</td>';
+            }
+        }
+
+        rows += '<td><strong>' + trainer.sums.unpaid + '</strong></td>';
+        rows += '<td><strong>' + trainer.sums.unpaid_sum + '</strong></td>';
+        
+        var url_pay = 'index.php?option=com_tkdclub&task=statistics.paytrainings&member_id='
+                      + trainer.trainer_id
+                      + '&name=' + trainer.trainer_name
+                      + '&' + Joomla.optionsStorage['csrf.token'] + '=1';
+
+        rows += '<td><a href="'+url_pay+'" title="unbezahlte Trainings von '+trainer.trainer_name+' als bezahlt markieren" class="btn btn-small">';
+        rows += '<span class="icon-publish"></span></a></td>';
+        rows += '</tr>'
+    }
+
+    document.getElementById(id).getElementsByTagName("tbody")[0].innerHTML += rows;
+}

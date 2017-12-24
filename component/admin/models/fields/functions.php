@@ -57,7 +57,7 @@ class JFormFieldFunctions extends JFormFieldList
                 $options[] = JHtml::_('select.option', 'vpresident', JText::_('COM_TKDCLUB_SELECT_VICE_PRESIDENT_FEMALE'));
                 $options[] = JHtml::_('select.option', 'treasurer', JText::_('COM_TKDCLUB_SELECT_TREASURER_FEMALE'));
                 $options[] = JHtml::_('select.option', 'secratary', JText::_('COM_TKDCLUB_SELECT_SECRETARY_FEMALE'));
-                $options[] = JHtml::_('select.option', 'trainer', JText::_('COM_TKDCLUB_SELECT_TRAINER_INMEMBERFORM_FEMALE'));
+                $options[] = JHtml::_('select.option', 'trainer', JText::_('COM_TKDCLUB_SELECT_TRAINER_IN_MEMBERFORM_FEMALE'));
             }
 
             $options = array_merge(parent::getOptions(), $options); 
