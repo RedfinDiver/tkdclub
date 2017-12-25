@@ -142,7 +142,50 @@ class TkdClubModelTrainings extends JModelList
         $stateselect = $this->getState('filter.payment_state'); // TODO
         if (is_numeric($stateselect))
         {   
-            $query->where('payment_state = ' . (int) $stateselect);
+            // All unpaid trainings
+            if ($stateselect == 0)
+            {
+                // Remember: standard glue is AND, so every statement is joined to the query with 'and'!
+                $query->where('trainer_paid=0')->where('assist1_paid=0')->where('assist2_paid=0')->where('assist3_paid=0');
+            }
+            elseif ($stateselect == 1)
+            {
+                $condition1 = '(trainer_paid=1)';
+                $condition2 = '((`assist1`> 0 AND `assist1_paid`= 1) OR `assist1`= 0 )';
+                $condition3 = '((`assist2`> 0 AND `assist2_paid`= 1) OR `assist2`= 0 )';
+                $condition4 = '((`assist3`> 0 AND `assist3_paid`= 1) OR `assist3`= 0 )';
+
+                $query->where($condition1)->where($condition2)->where($condition3)->where($condition4);
+  
+            }
+            elseif ($stateselect == 2)
+            {
+                $condition1 = '(trainer_paid=1 AND
+                 ((assist1>0 AND assist1_paid=0) OR
+                  (assist2>0 AND assist2_paid=0) OR
+                  (assist3>0 AND assist3_paid=0)
+                ))';
+
+                $condition2 = '(assist1_paid=1 AND 
+                 ((trainer_paid=0) OR
+                  (assist2>0 AND assist2_paid=0) OR
+                  (assist3>0 AND assist3_paid=0)
+                ))';
+
+                $condition3 = '(assist2_paid=1 AND
+                 ((trainer_paid=0) OR
+                  (assist1>0 AND assist1_paid=0) OR
+                  (assist3>0 AND assist3_paid=0)
+                ))';
+
+                $condition4 = '(assist3_paid=1 AND
+                 ((trainer_paid=0) OR
+                  (assist1>0 AND assist1_paid=0) OR
+                  (assist2>0 AND assist2_paid=0)
+                ))';
+
+                $query->where($condition1, 'OR')->where($condition2, 'OR')->where($condition3, 'OR')->where($condition4, 'OR');
+            }
         }
 
         $search = $this->getState('filter.search');

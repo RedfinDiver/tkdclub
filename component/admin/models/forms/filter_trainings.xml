@@ -19,6 +19,7 @@
             onchange="this.form.submit();">
             <option value="">COM_TKDCLUB_SELECT_TRAINING_PAYMENT_STATE</option>
             <option value="1">COM_TKDCLUB_TRAINING_PAID</option>
+            <option value="2">COM_TKDCLUB_TRAINING_PARTLY_PAID</option>
             <option value="0">COM_TKDCLUB_TRAINING_NOT_PAID</option>
         </field>
 
