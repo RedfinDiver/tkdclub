@@ -7,7 +7,6 @@
 
 defined('_JEXEC') or die;
 
-$start = microtime(true);
 /********************************************************************************
  * Calculation of unpaid trainings and getting the data for the selected trainer
  ********************************************************************************/
@@ -40,11 +39,11 @@ if ($filter_trainer)
        if ($trainer->trainer_id == $filter_trainer)
        {
            $sum = $trainer->sums['unpaid_sum'];
-           $trainer_data = $trainer; // this is the data for the selected trainer used latre in the script
+           $trainer_data = $trainer; // this is the data for the selected trainer used later in the script
        }
     }
 
-    // text is used later in the script
+    // Text is used later in the script
     if ($salaryparams == true)
     {
         $sum_text_trainer = JText::_('COM_TKDCLUB_TRAINING_NOT_PAID_TRAININGS_TRAINER').$trainer_data->trainer_name.': '.'<b>'. $sum . ' ' . $currency . '</b>'. '</br>';
@@ -155,7 +154,4 @@ if (!$filter_trainer && !$filter_type && !$filter_year && !$filter_search && $fi
     echo 'Gesamtzahl der abgerechneten Trainings in der Datenbank: ' .'<b>'.$this->total .'</b>';
 }
 
-$end = microtime(true);
-$diff = $end - $start;
-$hold = 1;
 ?>
