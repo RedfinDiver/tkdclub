@@ -139,7 +139,7 @@ class TkdClubModelTrainings extends JModelList
             $query->where('type = ' .$type);
         }
 
-        $stateselect = $this->getState('filter.payment_state'); // TODO
+        $stateselect = $this->getState('filter.payment_state');
         if (is_numeric($stateselect))
         {   
             // All unpaid trainings
@@ -518,7 +518,7 @@ class TkdClubModelTrainings extends JModelList
             {
                 $trainer++;
                 isset($types[$value['type']]['trainer']) ? $types[$value['type']]['trainer']++ : $types[$value['type']]['trainer'] = 1;
-                if ($value['payment_state'] == 0)
+                if ($value['trainer_paid'] == 0)
                 {  
                     $unpaid_trainer++;
                     $unpaid_km += $value['km_trainer'];
@@ -528,12 +528,21 @@ class TkdClubModelTrainings extends JModelList
             {
                 $assist++;
                 isset($types[$value['type']]['assistent']) ? $types[$value['type']]['assistent']++ : $types[$value['type']]['assistent'] = 1;
-                if ($value['payment_state'] == 0)
+                
+                if($value['assist1'] == $trainer_id && $value['assist1_paid'] == 0)
                 {
                     $unpaid_assist++;
-                    $value['assist1'] == $trainer_id ? $unpaid_km += $value['km_assist1'] : null;
-                    $value['assist2'] == $trainer_id ? $unpaid_km += $value['km_assist1'] : null;
-                    $value['assist3'] == $trainer_id ? $unpaid_km += $value['km_assist1'] : null;
+                    $unpaid_km += $value['km_assist1'];
+                }
+                elseif($value['assist2'] == $trainer_id && $value['assist2_paid'] == 0)
+                {
+                    $unpaid_assist++;
+                    $unpaid_km += $value['km_assist2'];
+                }
+                elseif($value['assist3'] == $trainer_id && $value['assist3_paid'] == 0)
+                {
+                    $unpaid_assist++;
+                    $unpaid_km += $value['km_assist3'];
                 }
             }
         }
