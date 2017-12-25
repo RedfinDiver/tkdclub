@@ -37,7 +37,24 @@
             class="inputbox"
             label="COM_TKDCLUB_TRAINING_TRAINER_KM"
             description="COM_TKDCLUB_TRAINING_TRAINER_KM_DESC"
-            size="5" filter="integer" />        
+            size="5" filter="integer" />
+
+        <field
+            name="trainer_paid"
+            type="list"
+            label="COM_TKDCLUB_TRAINING_PAYMENT_STATE"
+            description="COM_TKDCLUB_TRAINING_PAYMENT_STATE_DESC"
+            default="0"
+        >
+            <option value="0">COM_TKDCLUB_TRAINING_NOT_PAID</option>
+            <option value="1">COM_TKDCLUB_TRAINING_PAID</option>
+
+        </field>
+
+        <field name="spacer4"
+	    
+        type="spacer"
+	    hr="true" />     
         
          <field 
             name="assist1" type="trainers"
@@ -50,11 +67,23 @@
         </field>
         
         <field 
-            name="km_assist1" type="text"
+            name="km_assist1" type="text" showon="assist1!:"
             class="inputbox"
             label="COM_TKDCLUB_TRAINING_ASSISTENT1_KM"
             description="COM_TKDCLUB_TRAINING_ASSISTENT1_KM_DESC"
             size="5" filter="integer" />
+        
+        <field
+            name="assist1_paid" showon="assist1!:"
+            type="list"
+            label="COM_TKDCLUB_TRAINING_PAYMENT_STATE"
+            description="COM_TKDCLUB_TRAINING_PAYMENT_STATE_DESC"
+            default="0"
+        >
+            <option value="0">COM_TKDCLUB_TRAINING_NOT_PAID</option>
+            <option value="1">COM_TKDCLUB_TRAINING_PAID</option>
+
+        </field>
         
         <field name="spacer1"
 	    
@@ -72,11 +101,23 @@
         </field>
         
         <field 
-            name="km_assist2" type="text"
+            name="km_assist2" type="text" showon="assist2!:"
             class="inputbox"
             label="COM_TKDCLUB_TRAINING_ASSISTENT2_KM"
             description="COM_TKDCLUB_TRAINING_ASSISTENT2_KM_DESC"
             size="5" filter="integer" />
+
+        <field
+            name="assist2_paid" showon="assist2!:"
+            type="list"
+            label="COM_TKDCLUB_TRAINING_PAYMENT_STATE"
+            description="COM_TKDCLUB_TRAINING_PAYMENT_STATE_DESC"
+            default="0"
+        >
+            <option value="0">COM_TKDCLUB_TRAINING_NOT_PAID</option>
+            <option value="1">COM_TKDCLUB_TRAINING_PAID</option>
+
+        </field>
         
         <field name="spacer2"
         
@@ -94,11 +135,23 @@
         </field>
         
         <field 
-            name="km_assist3" type="text"
+            name="km_assist3" type="text" showon="assist3!:"
             class="inputbox"
             label="COM_TKDCLUB_TRAINING_ASSISTENT3_KM"
             description="COM_TKDCLUB_TRAINING_ASSISTENT3_KM_DESC"
             size="5" filter="integer" />
+
+        <field
+            name="assist3_paid" showon="assist3!:"
+            type="list"
+            label="COM_TKDCLUB_TRAINING_PAYMENT_STATE"
+            description="COM_TKDCLUB_TRAINING_PAYMENT_STATE_DESC"
+            default="0"
+        >
+            <option value="0">COM_TKDCLUB_TRAINING_NOT_PAID</option>
+            <option value="1">COM_TKDCLUB_TRAINING_PAID</option>
+
+        </field>
 
 
         <field 

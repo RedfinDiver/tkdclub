@@ -71,10 +71,6 @@ class TkdClubViewTrainings extends JViewLegacy
         
         if ($canDo->get('core.edit'))
         {JToolBarHelper::editList('training.edit', 'JTOOLBAR_EDIT');}
-
-        if ($canDo->get('core.edit.state'))
-        {JToolBarHelper::publish('trainings.publish', 'COM_TKDCLUB_TRAINING_PAID', true);
-        JToolBarHelper::unpublish('trainings.unpublish', 'COM_TKDCLUB_TRAINING_NOT_PAID', true);}
         
         if ($canDo->get('core.delete'))
         {JToolBarHelper::deleteList('COM_TKDCLUB_TRAINING_DELETE_QUESTION', 'trainings.delete','JTOOLBAR_DELETE');}

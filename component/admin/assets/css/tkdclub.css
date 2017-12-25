@@ -88,3 +88,11 @@ div.tkdclub-loader {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+.tkdclub-icon-orange {
+    color: #C67605 !important;
+}
+
+.tkdclub-icon-red {
+    color: #942A25 !important;
+}

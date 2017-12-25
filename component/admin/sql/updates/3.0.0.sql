@@ -92,9 +92,9 @@ ALTER TABLE `#__tkdclub_trainings`
     MODIFY `trainer_paid` tinyint(3) NOT NULL DEFAULT 0 AFTER `km_trainer`;
 
 UPDATE `#__tkdclub_trainings` SET `trainer_paid` = '1' WHERE `published` = '1';
-UPDATE `#__tkdclub_trainings` SET `assist1_paid` = '1' WHERE `published` = '1';
-UPDATE `#__tkdclub_trainings` SET `assist2_paid` = '1' WHERE `published` = '1';
-UPDATE `#__tkdclub_trainings` SET `assist3_paid` = '1' WHERE `published` = '1';
+UPDATE `#__tkdclub_trainings` SET `assist1_paid` = '1' WHERE `published` = '1' AND assist1 > '0';
+UPDATE `#__tkdclub_trainings` SET `assist2_paid` = '1' WHERE `published` = '1' AND assist2 > '0';
+UPDATE `#__tkdclub_trainings` SET `assist3_paid` = '1' WHERE `published` = '1' AND assist3 > '0';
 
 ALTER TABLE `#__tkdclub_trainings`
     DROP `published`;

@@ -7,6 +7,8 @@
 
 defined('_JEXEC') or die;
 
+JLoader::register('TkdclubHelperGetpaystate', JPATH_COMPONENT_ADMINISTRATOR. '/helpers/getpaystate.php');
+
 JHtml::stylesheet('administrator/components/com_tkdclub/assets/css/tkdclub.css');
 JHtml::_('bootstrap.tooltip');
 JHtml::_('behavior.multiselect');
@@ -99,13 +101,17 @@ $filter_payment_state  = $this->state->get('filter.payment_state');
                 <tr class="row<?php echo $i % 2; ?>">
                     <td class="center"><?php echo JHtml::_('grid.id', $i, $item->training_id); ?>
                     <td class="center hasTooltip">
-                        <?php 
-                            //creating array for alernatives tooltip text on training_state coloum
-                            $states = array(1 => array('unpublish', 'COM_TKDCLUB_TRAINING_PAID', 'COM_TKDCLUB_TRAINING_UNPAY', 'JPUBLISHED', 'COM_TKDCLUB_TRAINING_PAID', 'publish', 'publish'),
-                                            0 => array('publish', 'COM_TKDCLUB_TRAINING_NOT_PAID', 'COM_TKDCLUB_TRAINING_PAY', 'JUNPUBLISHED', 'COM_TKDCLUB_TRAINING_NOT_PAID', 'unpublish', 'unpublish'));
-
-                            echo JHtml::_('jgrid.state', $states, $item->payment_state, $i, 'trainings.', true);
+                        <?php
+                            $state = TkdclubHelperGetpaystate::getpaystate($item->trainer_paid,
+                                                                           $item->assist1, $item->assist2, $item->assist3,
+                                                                           $item->assist1_paid, $item->assist2_paid, $item->assist3_paid);
+                            
+                            $classes = array(0 => 'icon-remove tkdclub-icon-red', 1 => 'icon-publish', 2 => 'icon-plus-2 tkdclub-icon-orange');
+                            $tooltip = array(0 => JText::_('COM_TKDCLUB_TRAINING_NOT_PAID'),
+                                             1 => JText::_('COM_TKDCLUB_TRAINING_PAID'),
+                                             2 => JText::_('COM_TKDCLUB_TRAINING_PARTLY_PAID'));
                         ?>
+                        <i class="btn btn-micro <?php echo $classes[$state]; ?> hasTooltip" title="" data-original-title="<?php echo $tooltip[$state]; ?>"></i>
 
                     </td>         
                     

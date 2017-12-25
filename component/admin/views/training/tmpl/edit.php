@@ -37,10 +37,11 @@ Joomla.submitbutton = function(task)
             <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'trainingdata', empty($this->item->training_id) ? JText::_('COM_TKDCLUB_TRAINING_NEW_TAB', true) : JText::sprintf('COM_TKDCLUB_TRAINING_EDIT', $this->item->training_id, true)); ?>
                 <div class="row-fluid">             
                     <div class="span6">
-                                <?php echo $this->form->renderField('payment_state'); ?>
                                 <?php echo $this->form->renderField('date'); ?>
                                 <?php echo $this->form->renderField('trainer'); ?>
                                 <?php echo $this->form->renderField('km_trainer'); ?>
+                                <?php echo $this->form->renderField('trainer_paid'); ?>
+                                <?php echo $this->form->renderField('spacer4'); ?>
                                 <?php echo $this->form->renderField('type'); ?>
                                 <?php echo $this->form->renderField('participants'); ?>
                                 <?php echo $this->form->renderField('km'); ?>
@@ -49,12 +50,15 @@ Joomla.submitbutton = function(task)
                     <div class="span6">
                                 <?php echo $this->form->renderField('assist1'); ?>
                                 <?php echo $this->form->renderField('km_assist1'); ?>
+                                <?php echo $this->form->renderField('assist1_paid'); ?>
                                 <?php echo $this->form->renderField('spacer1'); ?>
                                 <?php echo $this->form->renderField('assist2'); ?>
-                                    <?php echo $this->form->renderField('km_assist2'); ?>
+                                <?php echo $this->form->renderField('km_assist2'); ?>
+                                <?php echo $this->form->renderField('assist2_paid'); ?>
                                 <?php echo $this->form->renderField('spacer2'); ?>
                                 <?php echo $this->form->renderField('assist3'); ?>
                                 <?php echo $this->form->renderField('km_assist3'); ?>
+                                <?php echo $this->form->renderField('assist3_paid'); ?>
                     </div>
                 </div>        
             <?php echo JHtml::_('bootstrap.endTab'); ?>
