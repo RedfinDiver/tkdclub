@@ -41,7 +41,8 @@ class JFormFieldTraintypes extends JFormFieldList
             {
                 foreach($types as $type)
                 {
-                    $options[] = JHtml::_('select.option', $type, $type);
+                    // Just rendering existing types, not empty strings
+                    $type != '' ? $options[] = JHtml::_('select.option', $type, $type) : null;
                 }
             }
             
