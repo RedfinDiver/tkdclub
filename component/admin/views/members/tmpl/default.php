@@ -15,7 +15,6 @@ JHtml::_('script', 'administrator/components/com_tkdclub/assets/js/rawsubmitbutt
 /**
  * Get some variables
  */
-$app       = JFactory::getApplication();
 $user      = JFactory::getUser();
 $userId    = $user->get('id');
 $listOrder = $this->state->get('list.ordering');
@@ -142,7 +141,7 @@ $listDirn  = $this->state->get('list.direction');
                     </td>
                     <td class="title">
                         <?php if ($item->checked_out) : ?>
-									<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'members.', $canCheckin); ?>
+							<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'members.', $canCheckin); ?>
 						<?php endif; ?>
                         <?php
                             $mylink = JRoute::_("index.php?option=com_tkdclub&task=member.edit&member_id=" . $item->member_id);
