@@ -10,7 +10,7 @@ defined('_JEXEC') or die;
 use Joomla\Registry\Registry;
 
 /**
-* members table class
+* Members table class
 */
 class TkdClubTableMembers extends JTable
 {
