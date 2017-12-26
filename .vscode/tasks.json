@@ -88,5 +88,25 @@
             "suppressTaskName": true,
             "args": ["-f", "${workspaceRoot}/plugins/tkdclubgrade/build.xml", "symlink"]
         },
+
+        { 
+            "taskName": "Plugin tkdclubgrade: zipPlugin",
+            "command": "ant",
+            "isShellCommand": true,     
+            "showOutput": "always",
+            "echoCommand": true,
+            "suppressTaskName": true,
+            "args": ["-f", "${workspaceRoot}/plugins/tkdclubgrade/build.xml", "zipPlugin"]
+        },
+
+        { 
+            "taskName": "Plugin tkdclubgrade: clean",
+            "command": "ant",
+            "isShellCommand": true,     
+            "showOutput": "always",
+            "echoCommand": true,
+            "suppressTaskName": true,
+            "args": ["-f", "${workspaceRoot}/plugins/tkdclubgrade/build.xml", "clean"]
+        }
     ]
 }

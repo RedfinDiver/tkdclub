@@ -12,7 +12,7 @@
         "**/plugins": false,
         "**/modules": true,
         "**/docs": true,
-        "**/zips": true,
+        "**/zips": false,
         "**/*.ant": false,
         "**/pkg_tkdclub.xml": true,
         "**/site": true,
