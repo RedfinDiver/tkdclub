@@ -5,36 +5,31 @@
     <property name="name" value="tkdclubgrade"/>
     <property name="web.root" value="/home/markus/Dokumente/webroot/dev_tkdclub/"/>
     <property name="src" location="${basedir}"/>
-    <property name="adminsrc" location="admin"/>
-    <property name="sitesrc" location="site"/>
     <property name="build" location="../../zips"/>
     <property name="temp" location="../../zips/temp"/>
-    
-    <property name="sitetest" value="${web.root}components/com_${name}" />
-    <property name="admintest" value="${web.root}plugins/content/" />
-    <property name="manifest" value="${src}/${name}.xml" />
+    <property name="test" value="${web.root}plugins/content/" />
     
     <target name="init">
-        <mkdir dir="${build}"/>   <mkdir dir="${temp}"/>
+        <mkdir dir="${build}"/>
+        <mkdir dir="${temp}"/>
          <copy todir="${temp}">
             <fileset dir="${basedir}"/>
         </copy>
-        <move file="${temp}/${name}.xml" todir="${temp}"/>
         <delete file="${temp}/build.xml"/>
     </target>
 
     <target name="symlink">
-        <symlink link="${admintest}" resource="${basedir}" />
+        <symlink link="${test}" resource="${basedir}" />
     </target>
 
     <target name="zipPlugin" depends="init" description="zips the archive" >
-        <zip destfile="${build}/com_${name}.zip">
+        <zip destfile="${build}/plg_${name}.zip">
             <zipfileset dir="${temp}" excludes="**/.svn/,**/nbproject/**,**/zip/**,*.ant" />
         </zip>
         <delete dir="${temp}"/>
     </target>
 
-    <target name="clean" description="deletes the com_${name}.zip">
+    <target name="clean" description="deletes the plg_${name}.zip">
         <delete dir="${build}" />
     </target>
    
