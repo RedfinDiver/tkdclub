@@ -47,27 +47,67 @@ class TkdClubModelTraining extends JModelAdmin
 
     public function paytrainings($member_id)
     {
-        $db = JFactory::getDbo();
-        $query = $db->getQuery(true);
+        $this->updated_rows = 0;
+        $result = true;
 
-        // Fields to update.
-        $fields = array(
-            $db->quoteName('trainer_paid') . ' = 1'
+        // First create array for query parameters
+        $parameters = array(
+            'update_trainer' => array(
+                'field' => 'trainer_paid',
+                'conditions' => array(
+                    'trainer_paid', 'trainer'
+                )
+            ),
+            'update_assist1' => array(
+                'field' => 'assist1_paid',
+                'conditions' => array(
+                    'assist1_paid', 'assist1'
+                )
+            ),
+            'update_assist2' => array(
+                'field' => 'assist2_paid',
+                'conditions' => array(
+                    'assist2_paid', 'assist2'
+                )
+            ),
+            'update_assist3' => array(
+                'field' => 'assist3_paid',
+                'conditions' => array(
+                    'assist3_paid', 'assist3'
+                )
+            )
         );
 
-        // Conditions for which records should be updated.
-        $conditions = array(
-            $db->quoteName('trainer_paid') . ' = 0',
-            $db->quoteName('trainer') . ' = ' . $member_id
-        );
+        foreach ($parameters as $parameter)
+        {
+            $db = JFactory::getDbo();
+            $query = $db->getQuery(true);
 
-        $query->update($db->quoteName('#__tkdclub_trainings'))->set($fields)->where($conditions);
+            // Fields to update.
+            $fields = array(
+                $db->quoteName($parameter['field']) . ' = 1'
+            );
 
-        $db->setQuery($query);
+            // Conditions for which records should be updated.
+            $conditions = array(
+                $db->quoteName($parameter['conditions'][0]) . ' = 0',
+                $db->quoteName($parameter['conditions'][1]) . ' = ' . $member_id
+            );
 
-        $result = $db->execute();
-        $this->updated_rows = $db->getAffectedRows();
-        return $result;
+            $query->update($db->quoteName('#__tkdclub_trainings'))->set($fields)->where($conditions);
+            $db->setQuery($query);
+
+            $result = $db->execute();
+            $rows = $db->getAffectedRows();
+            $this->updated_rows += $db->getAffectedRows();
+            
+            if ($result === false)
+            {
+                return $result;
+            }
+        }
+
+        return true;
     }
 
 }
