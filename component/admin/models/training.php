@@ -44,4 +44,30 @@ class TkdClubModelTraining extends JModelAdmin
         return $data;
     }
 
+
+    public function paytrainings($member_id)
+    {
+        $db = JFactory::getDbo();
+        $query = $db->getQuery(true);
+
+        // Fields to update.
+        $fields = array(
+            $db->quoteName('trainer_paid') . ' = 1'
+        );
+
+        // Conditions for which records should be updated.
+        $conditions = array(
+            $db->quoteName('trainer_paid') . ' = 0',
+            $db->quoteName('trainer') . ' = ' . $member_id
+        );
+
+        $query->update($db->quoteName('#__tkdclub_trainings'))->set($fields)->where($conditions);
+
+        $db->setQuery($query);
+
+        $result = $db->execute();
+        $this->updated_rows = $db->getAffectedRows();
+        return $result;
+    }
+
 }

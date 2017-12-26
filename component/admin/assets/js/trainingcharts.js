@@ -201,13 +201,17 @@ function addDataToTable(id, data) {
         rows += '<td><strong>' + trainer.sums.unpaid + '</strong></td>';
         rows += '<td><strong>' + trainer.sums.unpaid_sum + '</strong></td>';
         
-        var url_pay = 'index.php?option=com_tkdclub&task=statistics.paytrainings&member_id='
-                      + trainer.trainer_id
-                      + '&name=' + trainer.trainer_name
-                      + '&' + Joomla.optionsStorage['csrf.token'] + '=1';
+        if (trainer.sums.unpaid > 0) {
+            var url_pay = 'index.php?option=com_tkdclub&view=statistics&task=trainings.paytrainings&member_id='
+                        + trainer.trainer_id
+                        + '&name=' + trainer.trainer_name
+                        + '&' + Joomla.optionsStorage['csrf.token'] + '=1';
 
-        rows += '<td><a href="'+url_pay+'" title="unbezahlte Trainings von '+trainer.trainer_name+' als bezahlt markieren" class="btn btn-small">';
-        rows += '<span class="icon-publish"></span></a></td>';
+            rows += '<td><a href="'+url_pay+'" class="btn btn-small">';
+            rows += '<span class="icon-publish"></span>'+ Joomla.JText._('COM_TKDCLUB_TRAINING_PAY')+'</a></td>';
+        } else {
+            rows += '<td></td>';
+        }
         rows += '</tr>'
     }
 

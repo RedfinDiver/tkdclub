@@ -106,10 +106,17 @@ if ($filter_trainer && !$filter_type && !$filter_year)
 {
     $as_trainer = $trainer_data->sums['trainer'];
     $as_assistent = $trainer_data->sums['assistent'];
-
-    echo '<h4>'. $trainer_data->trainer_name .'</h4>';
+    
+    echo '<h4>' . $trainer_data->trainer_name . '</h4>';
     echo 'Insgesamt '.$this->total . ' Trainings von '. $trainer_data->trainer_name. ' in der Datenbank'. ', davon '.$as_trainer . ' als Trainer' .' und '. $as_assistent .' als Assistent'.'</br>';
     echo $sum_text_trainer;
+
+    if ($trainer_data->sums['unpaid'] > 0)
+    {
+        $url = JRoute::_( 'index.php?option=com_tkdclub&task=trainings.paytrainings&member_id=' . $trainer_data->trainer_id . '&name=' . $trainer_data->trainer_name . '&' . JSession::getFormToken() .'=1');
+        $button = '<a class="btn btn-small" target="_self" href="' . $url .'" ><span class="icon-publish"></span>alle Trainings als bezahlt speichern</a>';
+        echo $button;
+    }
 }
 
 // wenn Trainer und Type ausgewählt ist

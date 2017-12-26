@@ -25,6 +25,7 @@ JText::script('COM_TKDCLUB_STATISTIC_AS_ASSISTENT_FEMALE');
 JText::script('COM_TKDCLUB_SIDEBAR_TRAININGS');
 JText::script('COM_TKDCLUB_TRAINING_NOT_PAID');
 JText::script('COM_TKDCLUB_SUM');
+JText::script('COM_TKDCLUB_TRAINING_PAY');
 
 /**
  * View class for statistics view

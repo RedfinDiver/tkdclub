@@ -10,6 +10,7 @@ defined('_JEXEC') or die;
 JHtml::stylesheet('administrator/components/com_tkdclub/assets/css/tkdclub.css');
 $this->document->addScript('https://www.gstatic.com/charts/loader.js');
 
+JHtml::_('behavior.tooltip');
 JHtml::_('script', 'administrator/components/com_tkdclub/assets/js/statistics.js');
 JHtml::_('script', 'administrator/components/com_tkdclub/assets/js/membercharts.js');
 JHtml::_('script', 'administrator/components/com_tkdclub/assets/js/trainingcharts.js');

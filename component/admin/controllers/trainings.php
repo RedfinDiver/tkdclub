@@ -76,4 +76,42 @@ class TkdClubControllerTrainings extends JControllerAdmin
 
         JFactory::getApplication()->close();
     }
+
+    /**
+     * Function to pay trainings
+     */
+    public function paytrainings()
+    {
+        // Check for request forgeries.
+        JSession::checkToken('get') or jexit(JText::_('JINVALID_TOKEN'));
+        
+        $app = JFactory::getApplication();
+        $member_id = $app->input->get('member_id', 0, 'int');
+        $name = $app->input->get('name', '', 'string');
+        $view = $app->input->get('view', 'trainings', 'string');
+        $model = $this->getModel();
+        
+        if ($model->paytrainings($member_id) === true)
+        {
+            $updated_rows = $model->updated_rows;
+            $updated_rows == 1 ? $msg = JText::plural('COM_TKDCLUB_TRAINING_PAID_TRAININGS_1', $updated_rows)
+                               : $msg = JText::plural('COM_TKDCLUB_TRAINING_PAID_TRAININGS', $updated_rows);
+
+            $app->enqueueMessage(
+                    $msg
+                    . JText::_('COM_TKDCLUB_FROM')
+                    . $name
+                    . JText::_('COM_TKDCLUB_TRAINING_SAVED_AS_PAID')
+                );
+        }
+        else
+        {
+            $app->enqueueMessage(
+                JText::_('COM_TKDCLUB_STATISTIC_UNPAID_TRAININGS_FROM_ERROR')
+                .$name
+                .JText::_('COM_TKDCLUB_STATISTIC_UNPAID_TRAININGS_PAID_ERROR'), 'error');
+        }
+        
+        $this->setRedirect('index.php?option=com_tkdclub&view=' . $view);
+    }
 }

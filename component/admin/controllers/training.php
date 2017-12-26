@@ -10,5 +10,4 @@ defined('_JEXEC') or die;
 class TkdClubControllerTraining extends JControllerForm
 {
     protected $text_prefix = 'COM_TKDCLUB_TRAINING';
-    
 }
