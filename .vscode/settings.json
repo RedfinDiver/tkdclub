@@ -9,7 +9,7 @@
         "**/.DS_Store": true,
         "**/.vscode": false,
         "**/nbproject": true,
-        "**/plugins": true,
+        "**/plugins": false,
         "**/modules": true,
         "**/docs": true,
         "**/zips": true,

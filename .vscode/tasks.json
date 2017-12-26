@@ -66,7 +66,7 @@
             "echoCommand": true,
             "suppressTaskName": true,
             "args": ["-C", "${workspaceRoot}/docs/", "clean"]
-        }
+        },
 
         /**{
             "taskName": "start php language server",
@@ -79,5 +79,14 @@
         },
         */
         
+        { 
+            "taskName": "Plugin tkdclubgrade: symlink",
+            "command": "ant",
+            "isShellCommand": true,     
+            "showOutput": "always",
+            "echoCommand": true,
+            "suppressTaskName": true,
+            "args": ["-f", "${workspaceRoot}/plugins/tkdclubgrade/build.xml", "symlink"]
+        },
     ]
 }

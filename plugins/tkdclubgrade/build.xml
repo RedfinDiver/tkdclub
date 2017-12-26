@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="build-tkdclubgrade-plugin" default="zipPlugin" basedir=".">
+    
+    <property name="name" value="tkdclubgrade"/>
+    <property name="web.root" value="/home/markus/Dokumente/webroot/dev_tkdclub/"/>
+    <property name="src" location="${basedir}"/>
+    <property name="adminsrc" location="admin"/>
+    <property name="sitesrc" location="site"/>
+    <property name="build" location="../../zips"/>
+    <property name="temp" location="../../zips/temp"/>
+    
+    <property name="sitetest" value="${web.root}components/com_${name}" />
+    <property name="admintest" value="${web.root}plugins/content/" />
+    <property name="manifest" value="${src}/${name}.xml" />
+    
+    <target name="init">
+        <mkdir dir="${build}"/>   <mkdir dir="${temp}"/>
+         <copy todir="${temp}">
+            <fileset dir="${basedir}"/>
+        </copy>
+        <move file="${temp}/${name}.xml" todir="${temp}"/>
+        <delete file="${temp}/build.xml"/>
+    </target>
+
+    <target name="symlink">
+        <symlink link="${admintest}" resource="${basedir}" />
+    </target>
+
+    <target name="zipPlugin" depends="init" description="zips the archive" >
+        <zip destfile="${build}/com_${name}.zip">
+            <zipfileset dir="${temp}" excludes="**/.svn/,**/nbproject/**,**/zip/**,*.ant" />
+        </zip>
+        <delete dir="${temp}"/>
+    </target>
+
+    <target name="clean" description="deletes the com_${name}.zip">
+        <delete dir="${build}" />
+    </target>
+   
+</project>
