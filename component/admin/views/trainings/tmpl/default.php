@@ -18,6 +18,8 @@ JHtml::_('script', 'administrator/components/com_tkdclub/assets/js/rawsubmitbutt
 /**
  * initilise some variables
  */
+$user      = JFactory::getUser();
+$userId    = $user->get('id');
 $currency = JComponentHelper::getParams('com_tkdclub')->get('currency', '€');
 $salaryparams = $this->salaryparams;
 $togglestats = $this->togglestats;
@@ -96,8 +98,12 @@ $filter_payment_state  = $this->state->get('filter.payment_state');
             </tfoot>
             <!-- table body-->
             <tbody>
-                <?php foreach ($this->items as $i => $item) : ?>
-                
+                <?php foreach ($this->items as $i => $item) :
+                    $canEdit    = $user->authorise('core.edit',       'com_tkdclub.training.' . $item->training_id);
+					$canCheckin = $user->authorise('core.manage',     'com_checkin') || $item->checked_out == $userId || $item->checked_out == 0;
+					$canEditOwn = $user->authorise('core.edit.own',   'com_tkdclub.training.' . $item->training_id) && $item->created_by == $userId;
+					$canChange  = $user->authorise('core.edit.state', 'com_tkdclub.training.' . $item->training_id) && $canCheckin;
+                ?>
                 <tr class="row<?php echo $i % 2; ?>">
                     <td class="center"><?php echo JHtml::_('grid.id', $i, $item->training_id); ?>
                     <td class="center hasTooltip">
@@ -115,7 +121,11 @@ $filter_payment_state  = $this->state->get('filter.payment_state');
 
                     </td>         
                     
-                    <td width="60" class="title"><?php
+                    <td width="" class="title">
+                    <?php if ($item->checked_out) : ?>
+						<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'trainings.', $canCheckin); ?>
+					<?php endif; ?>
+                    <?php
                         $mylink = JRoute::_("index.php?option=com_tkdclub&task=training.edit&training_id=".$item->training_id);
                         echo '<a href="'.$mylink.'">'.JHtml::_('date', $item->date, JText::_('DATE_FORMAT_LC4')).'</a>';
                         ?>
