@@ -44,38 +44,26 @@ class TkdClubModelTraining extends JModelAdmin
         return $data;
     }
 
-
+    /**
+     * Updates the training for the given trainer in database
+     * 
+     * @param   $member_id  integer The member-id in the database
+     * @return  bool    true if updates succeeded, false if not
+     */
     public function paytrainings($member_id)
     {
         $this->updated_rows = 0;
         $result = true;
 
-        // First create array for query parameters
+        /**
+         * First create array for query parameters
+         * Each array has the form ['field_to_update', 'field_condition_1', 'field_condition_2']
+         */
         $parameters = array(
-            'update_trainer' => array(
-                'field' => 'trainer_paid',
-                'conditions' => array(
-                    'trainer_paid', 'trainer'
-                )
-            ),
-            'update_assist1' => array(
-                'field' => 'assist1_paid',
-                'conditions' => array(
-                    'assist1_paid', 'assist1'
-                )
-            ),
-            'update_assist2' => array(
-                'field' => 'assist2_paid',
-                'conditions' => array(
-                    'assist2_paid', 'assist2'
-                )
-            ),
-            'update_assist3' => array(
-                'field' => 'assist3_paid',
-                'conditions' => array(
-                    'assist3_paid', 'assist3'
-                )
-            )
+            array('trainer_paid', 'trainer_paid', 'trainer'),
+            array('assist1_paid', 'assist1_paid', 'assist1'),
+            array('assist2_paid', 'assist2_paid', 'assist2'),
+            array('assist3_paid', 'assist3_paid', 'assist3'),
         );
 
         foreach ($parameters as $parameter)
@@ -85,20 +73,19 @@ class TkdClubModelTraining extends JModelAdmin
 
             // Fields to update.
             $fields = array(
-                $db->quoteName($parameter['field']) . ' = 1'
+                $db->quoteName($parameter[0]) . ' = 1'
             );
 
             // Conditions for which records should be updated.
             $conditions = array(
-                $db->quoteName($parameter['conditions'][0]) . ' = 0',
-                $db->quoteName($parameter['conditions'][1]) . ' = ' . $member_id
+                $db->quoteName($parameter[1]) . ' = 0',
+                $db->quoteName($parameter[2]) . ' = ' . $member_id
             );
 
             $query->update($db->quoteName('#__tkdclub_trainings'))->set($fields)->where($conditions);
             $db->setQuery($query);
 
             $result = $db->execute();
-            $rows = $db->getAffectedRows();
             $this->updated_rows += $db->getAffectedRows();
             
             if ($result === false)
@@ -106,8 +93,7 @@ class TkdClubModelTraining extends JModelAdmin
                 return $result;
             }
         }
-
+        
         return true;
     }
-
 }
