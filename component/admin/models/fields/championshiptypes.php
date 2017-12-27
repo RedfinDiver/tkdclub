@@ -58,7 +58,7 @@ class JFormFieldChampionshiptypes extends JFormFieldList
                 }
             }
 
-            // make sure to have always "Poomse" and "Kyorugie" available
+            // make sure to have always "Poomsae" and "Kyorugi" available
             $options[] = JHtml::_('select.option', 'Kyorugi', JText::_('COM_TKDCLUB_KYORUGI'));
             $options[] = JHtml::_('select.option', 'Poomsae', JText::_('COM_TKDCLUB_POOMSAE'));
         }
