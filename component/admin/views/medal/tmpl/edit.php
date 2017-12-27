@@ -23,7 +23,7 @@ JFactory::getDocument()->addScriptDeclaration("
 
 ?>
 
-<form action="<?php echo JRoute::_('index.php?option=com_tkdclub&id=' .(int) $this->item->medal_id); ?>"
+<form action="<?php echo JRoute::_('index.php?option=com_tkdclub&medal_id=' .(int) $this->item->medal_id); ?>"
       method="post"
       name="adminForm"
       id="medal-form"
