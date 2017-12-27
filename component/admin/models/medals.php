@@ -140,6 +140,9 @@ class TkdClubModelMedals extends JModelList
 
         }
 
+        // Join over the users for the checked out user.
+		$query->select('u.name AS editor')->join('LEFT', '#__users AS u ON u.id=checked_out');
+
         $sort = $this->getState('list.ordering');
         $order = $this->getState('list.direction');
         $query->order($db->escape($sort).' '.$db->escape($order));
