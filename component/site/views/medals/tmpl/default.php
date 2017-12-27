@@ -48,7 +48,6 @@ $helper = new TkdClubHelperMembers;
     <tbody>
         <?php foreach ($this->items as $i => $item) : ?>
         <tr class="row<?php echo $i % 2; ?>">
-            
             <td style="text-align:center"><?php echo JHtml::_('date', $item->date, JText::_('DATE_FORMAT_LC4')); ?></td>
             <td><?php echo $this->escape($item->championship); ?></td>
             <td><?php echo $this->escape($item->type); ?></td>
@@ -60,7 +59,6 @@ $helper = new TkdClubHelperMembers;
     </tbody>
 </table>
 <?php if (!empty($this->items)) : ?>
-
 <div class="pagination">
     <p class="counter">
         <?php echo $this->pagination->getPagesCounter(); ?>

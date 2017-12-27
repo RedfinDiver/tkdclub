@@ -34,6 +34,8 @@
         <folder>models</folder>
         <folder>views</folder>
         <folder>language</folder>
+        <file>controller.php</file>
+        <file>tkdclub.php</file>
     </files>
     
     <administration>
