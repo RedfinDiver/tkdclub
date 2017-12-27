@@ -20,6 +20,6 @@
         "**/build.xml": false
     },
 
-    "php.suggest.basic": false
+    "php.suggest.basic": true
 
 }
