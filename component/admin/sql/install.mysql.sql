@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `#__tkdclub_trainings` (
   `km_trainer` int(4) NOT NULL,
   `trainer_paid` tinyint(3) NOT NULL DEFAULT 0,
   `assist1` int(5) NOT NULL,
-  `km_assist1` int(4) NOT NULL,
+  `km_assist1` int(4) NOT NULL, 
   `assist1_paid` tinyint(3) NOT NULL DEFAULT 0,
   `assist2` int(5) NOT NULL,
   `km_assist2` int(4) NOT NULL,

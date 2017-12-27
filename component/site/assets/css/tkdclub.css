@@ -1,0 +1,41 @@
+.tkdclub-goldmedal {
+    background-image: url("../images/medals.png");
+    background-repeat: no-repeat;
+    display: inline-block;
+    font-size: 12px;
+    height: 24px;
+    line-height: 24px;
+    margin: 3px auto auto;
+    text-align: center;
+    width: 24px;
+}
+
+.tkdclub-silbermedal {
+    background-image: url("../images/medals.png");
+    background-position: -24px 0;
+    background-repeat: no-repeat;
+    display: inline-block;
+    font-size: 12px;
+    height: 24px;
+    line-height: 24px;
+    margin: 3px auto auto;
+    text-align: center;
+    width: 24px;
+}
+
+.tkdclub-bronzemedal {
+    background-image: url("../images/medals.png");
+    background-position: -48px 0;
+    background-repeat: no-repeat;
+    display: inline-block;
+    font-size: 12px;
+    height: 24px;
+    line-height: 24px;
+    margin: 3px auto auto;
+    text-align: center;
+    width: 24px;
+}
+
+.allmedals{
+    margin: 4px auto auto;
+}
