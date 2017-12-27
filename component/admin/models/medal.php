@@ -85,7 +85,7 @@ class TkdClubModelMedal extends JModelAdmin
         */
         public function getItem($pk = null)
         {   
-            //Handling the String for multible field
+            // Handling the String for multible field
             $items = parent::getItem($pk);
             $ids = json_decode($items->get('winner_ids'));
             $items->set('winner_ids',$ids);
