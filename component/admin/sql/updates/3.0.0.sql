@@ -117,6 +117,8 @@ ALTER TABLE `#__tkdclub_medals`
     ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
 UPDATE `#__tkdclub_medals` SET `winner_ids` = CONCAT('[', `winner_ids`, ']');
+UPDATE `#__tkdclub_medals` SET `type` = 'Poomsae' WHERE `class` LIKE '%Pooms%' OR `championship` LIKE '%Pooms%';
+UPDATE `#__tkdclub_medals` SET `type` = 'Kyorugi' WHERE `type` = '';
 
 RENAME TABLE `#__tkdclub_exams` TO `#__tkdclub_promotions`
 
