@@ -103,7 +103,7 @@ ALTER TABLE `#__tkdclub_medals`
 	CHANGE `id` `medal_id` int(11) NOT NULL AUTO_INCREMENT,
     CHANGE `date_win` `date` date NOT NULL,
     CHANGE `c_ship` `championship` varchar(50) NOT NULL,
-    ADD `type` varchar(50) NOT NULL AFTER `championsship`,
+    ADD `type` varchar(50) NOT NULL AFTER `championship`,
     CHANGE `wa_class` `class` varchar(50) NOT NULL,
     CHANGE `placing` `placing` tinyint(11) NOT NULL,
     CHANGE `id_win` `winner_ids` varchar(50) NOT NULL,
@@ -115,6 +115,8 @@ ALTER TABLE `#__tkdclub_medals`
     CHANGE `checked_out` `checked_out` int(10) NOT NULL,
     CHANGE `checked_out_time` `checked_out_time` datetime NOT NULL,
     ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
+
+UPDATE `#__tkdclub_medals` SET `winner_ids` = CONCAT('[', `winner_ids`, ']');
 
 RENAME TABLE `#__tkdclub_exams` TO `#__tkdclub_promotions`
 
