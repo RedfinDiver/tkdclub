@@ -14,9 +14,9 @@
         <echo message="Name ${name} "/>
         <echo message="Build ${build} "/>
         <echo message="Manifest: ${manifest} "/>
+        <antcall target="clean"></antcall>
     </target>
  
-    
     <target name="zip" description="zips all files and copies them in ./package" depends="init">
         <!-- component zipping -->
         <echo message="Running package build..." />
@@ -50,13 +50,12 @@
             <filelist
                 dir="${src}/zips"
                 files="com_tkdclub.zip
-                       mod_tkdclub.zip
-                       plg_quickicon_tkdclub.zip
+                       plg_quickicon_tkdclublogo.zip
                        plg_content_tkdclubgrade.zip
                        pkg_tkdclub.xml"/>
         </delete>
         
-        <echo message="Packacke created!" />
+        <echo message="Package created!" />
         
     </target>
   
