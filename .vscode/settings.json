@@ -14,7 +14,7 @@
         "**/docs": true,
         "**/zips": false,
         "**/*.ant": false,
-        "**/pkg_tkdclub.xml": true,
+        "**/pkg_tkdclub.xml": false,
         "**/site": false,
         "**/README.rst": true,
         "**/build.xml": false
