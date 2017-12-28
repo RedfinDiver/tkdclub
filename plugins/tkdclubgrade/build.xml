@@ -2,12 +2,19 @@
 
 <project name="build-tkdclubgrade-plugin" default="zipPlugin" basedir=".">
     
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
     <property name="name" value="tkdclubgrade"/>
     <property name="web.root" value="/home/markus/Dokumente/webroot/dev_tkdclub/"/>
     <property name="src" location="${basedir}"/>
     <property name="build" location="../../zips"/>
     <property name="temp" location="../../zips/temp"/>
     <property name="test" value="${web.root}plugins/content/" />
+    <xmlproperty file="${name}.xml" keepRoot="false" semanticAttributes="true"/>
+    <propertyregex property="version_i"
+               input="${version}"
+               regexp="\."
+               replace=""
+               global="true" />
     
     <target name="init">
         <mkdir dir="${build}"/>
@@ -23,14 +30,14 @@
     </target>
 
     <target name="zipPlugin" depends="init" description="zips the archive" >
-        <zip destfile="${build}/plg_${name}.zip">
+        <zip destfile="${build}/plg_${name}_v${version_i}.zip">
             <zipfileset dir="${temp}" excludes="**/.svn/,**/nbproject/**,**/zip/**,*.ant" />
         </zip>
         <delete dir="${temp}"/>
     </target>
 
     <target name="clean" description="deletes the plg_${name}.zip">
-        <delete file="${build}/plg_${name}.zip" />
+        <delete file="${build}/plg_${name}_v${version_i}.zip" />
     </target>
    
 </project>

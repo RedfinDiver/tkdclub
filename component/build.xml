@@ -2,6 +2,7 @@
 
 <project name="build-tkdclub-component" default="zipComponent" basedir=".">
     
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
     <property name="name" value="tkdclub"/>
     <property name="web.root" value="/home/markus/Dokumente/webroot/dev_tkdclub/"/>
     <property name="src" location="${basedir}"/>
@@ -13,6 +14,13 @@
     <property name="sitetest" value="${web.root}components/com_${name}" />
     <property name="admintest" value="${web.root}administrator/components/com_${name}" />
     <property name="manifest" value="${src}/${name}.xml" />
+
+    <xmlproperty file="admin/${name}.xml" keepRoot="false" semanticAttributes="true"/>
+    <propertyregex property="version_i"
+               input="${version}"
+               regexp="\."
+               replace=""
+               global="true" />
     
     <target name="init">
         <mkdir dir="${build}"/>   <mkdir dir="${temp}"/>
@@ -29,7 +37,7 @@
     </target>
 
     <target name="zipComponent" depends="init" description="zips the archive" >
-        <zip destfile="${build}/com_${name}.zip">
+        <zip destfile="${build}/com_${name}_v${version_i}.zip">
             <zipfileset dir="${temp}" excludes="**/.svn/,**/nbproject/**,**/zip/**,*.ant" />
         </zip>
         <delete dir="${temp}"/>

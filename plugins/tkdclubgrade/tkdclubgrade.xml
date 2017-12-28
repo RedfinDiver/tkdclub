@@ -5,7 +5,7 @@
 	<creationDate>December 2017</creationDate>
 	<copyright>Copyright (C) 2013 Markus Moser. All rights reserved.</copyright>
 	<license>GNU General Public License version 2 or later</license>
-	<version>3.0</version>
+	<version>3.0.0</version>
 	<description>PLG_CONTENT_TKDCLUBGRADE_XML_DESCRIPTION</description>
 	<files>
 		<folder>language</folder> 
