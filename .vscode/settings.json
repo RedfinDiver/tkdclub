@@ -7,17 +7,17 @@
         "**/.svn": true,
         "**/.hg": true,
         "**/.DS_Store": true,
-        "**/.vscode": false,
+        "**/.vscode": true,
         "**/nbproject": true,
         "**/plugins": false,
         "**/modules": true,
         "**/docs": true,
         "**/zips": false,
         "**/*.ant": false,
-        "**/pkg_tkdclub.xml": false,
+        "**/pkg_tkdclub.xml": true,
         "**/site": false,
         "**/README.rst": true,
-        "**/build.xml": false
+        "**/build.xml": true
     },
 
     "php.suggest.basic": true
