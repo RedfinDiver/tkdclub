@@ -35,7 +35,7 @@
         <delete dir="${temp}"/>
     </target>
 
-    <target name="clean" description="deletes the com_${name}.zip">
+    <target name="clean" description="deletes the ${build}-folder">
         <delete dir="${build}" />
     </target>
    

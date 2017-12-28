@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.0" method="upgrade" type="plugin" group="quickicon">
+	<name>plg_quickicon_tkdclublogo</name>
+	<author>Markus Moser</author>
+	<creationDate>December 2017</creationDate>
+	<copyright>Markus Moser All rights reserved.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<version>3.0</version>
+	<description>PLG_QUICKICON_TKDCLUBLOGO_XML_DESCRIPTION</description>
+	<scriptfile>install.php</scriptfile>
+    <files>
+        <folder>language</folder>
+        <filename plugin="tkdclublogo">tkdclublogo.php</filename>
+	</files>
+</extension>

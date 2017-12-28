@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="build-tkdclubgrade-plugin" default="zipPlugin" basedir=".">
+<project name="build-tkdclublogo-plugin" default="zipPlugin" basedir=".">
     
-    <property name="name" value="tkdclubgrade"/>
+    <property name="name" value="tkdclublogo"/>
     <property name="web.root" value="/home/markus/Dokumente/webroot/dev_tkdclub/"/>
     <property name="src" location="${basedir}"/>
     <property name="build" location="../../zips"/>
     <property name="temp" location="../../zips/temp"/>
-    <property name="test" value="${web.root}plugins/content/" />
+    <property name="test" value="${web.root}plugins/quickicon/" />
     
     <target name="init">
         <mkdir dir="${build}"/>

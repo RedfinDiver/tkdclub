@@ -107,6 +107,36 @@
             "echoCommand": true,
             "suppressTaskName": true,
             "args": ["-f", "${workspaceRoot}/plugins/tkdclubgrade/build.xml", "clean"]
-        }
+        },
+
+        { 
+            "taskName": "Plugin tkdclublogo: symlink",
+            "command": "ant",
+            "isShellCommand": true,     
+            "showOutput": "always",
+            "echoCommand": true,
+            "suppressTaskName": true,
+            "args": ["-f", "${workspaceRoot}/plugins/tkdclublogo/build.xml", "symlink"]
+        },
+
+        { 
+            "taskName": "Plugin tkdclublogo: zipPlugin",
+            "command": "ant",
+            "isShellCommand": true,     
+            "showOutput": "always",
+            "echoCommand": true,
+            "suppressTaskName": true,
+            "args": ["-f", "${workspaceRoot}/plugins/tkdclublogo/build.xml", "zipPlugin"]
+        },
+
+        { 
+            "taskName": "Plugin tkdclublogo: clean",
+            "command": "ant",
+            "isShellCommand": true,     
+            "showOutput": "always",
+            "echoCommand": true,
+            "suppressTaskName": true,
+            "args": ["-f", "${workspaceRoot}/plugins/tkdclublogo/build.xml", "clean"]
+        },
     ]
 }
