@@ -23,14 +23,20 @@ class TkdclubHelperMembers
      */
     public function getMembersNames($ids, $memberlist)
     {   
-        $ids = json_decode($ids);
-        $i = count($ids);
-
-        if ($i == 0)
+        if(empty($ids)) // no id passed
         {
             return false;
         }
+        
+        $ids = json_decode($ids);
+        $i = count($ids);
 
+        if(!is_array($ids)) // only 1 id to check
+        {
+            return $memberlist[$ids];
+        }
+
+        // more ids in array
         $names = '';
         $it = 0;
 

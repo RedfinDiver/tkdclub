@@ -663,8 +663,12 @@ class TkdClubModelTrainings extends JModelList
 		$db	= JFactory::getDBO();
 		$query	= $db->getQuery(true);
         $fields = array(
-                        'training_id', 'date', 'trainer', 'km_trainer', 'assist1', 'km_assist1', 'assist2', 'km_assist2', 'assist3', 'km_assist3',
-                        'type', 'participants', 'payment_state');
+                        'training_id', 'date',
+                        'trainer', 'km_trainer', 'trainer_paid',
+                        'assist1', 'km_assist1', 'assist1_paid',
+                        'assist2', 'km_assist2', 'assist2_paid',
+                        'assist3', 'km_assist3', 'assist3_paid',
+                        'type', 'participants');
                         
 		$query-> select($db->quoteName($fields))
 			  -> from($db->quoteName('#__tkdclub_trainings'))
@@ -675,19 +679,22 @@ class TkdClubModelTrainings extends JModelList
 		$rows	= $db->loadRowList();
 
         $headers = array(
-            JText::_('COM_TKDCLUB_TRAINING_ID'),            // training_id
-            JText::_('COM_TKDCLUB_DATE'),                   // date
-            JText::_('COM_TKDCLUB_TRAINING_TRAINER'),       // trainer
-            JText::_('COM_TKDCLUB_TRAINING_TRAINER_KM'),    // km_trainer
-            JText::_('COM_TKDCLUB_TRAINING_ASSISTENT1'),    // assist1
-            JText::_('COM_TKDCLUB_TRAINING_ASSISTENT1_KM'), // km_assist1       
-            JText::_('COM_TKDCLUB_TRAINING_ASSISTENT2'),    // assist2
-            JText::_('COM_TKDCLUB_TRAINING_ASSISTENT2_KM'), // km_assist2
-            JText::_('COM_TKDCLUB_TRAINING_ASSISTENT3'),    // assist3
-            JText::_('COM_TKDCLUB_TRAINING_ASSISTENT3_KM'), // km_assist2
-            JText::_('COM_TKDCLUB_TRAINING_TYPE'),          // type
-            JText::_('COM_TKDCLUB_TRAINING_PARTICIPANTS'),  // participants
-            JText::_('COM_TKDCLUB_TRAINING_PAID'),          // payment_state
+            JText::_('COM_TKDCLUB_TRAINING_ID'),                // training_id
+            JText::_('COM_TKDCLUB_DATE'),                       // date
+            JText::_('COM_TKDCLUB_TRAINING_TRAINER'),           // trainer
+            JText::_('COM_TKDCLUB_TRAINING_TRAINER_KM'),        // km_trainer
+            JText::_('COM_TKDCLUB_TRAINING_TRAINER_PAID'),      // trainer_paid
+            JText::_('COM_TKDCLUB_TRAINING_ASSISTENT1'),        // assist1
+            JText::_('COM_TKDCLUB_TRAINING_ASSISTENT1_KM'),     // km_assist1
+            JText::_('COM_TKDCLUB_TRAINING_ASSISTENT1_PAID'),   // assist1_paid      
+            JText::_('COM_TKDCLUB_TRAINING_ASSISTENT2'),        // assist2
+            JText::_('COM_TKDCLUB_TRAINING_ASSISTENT2_KM'),     // km_assist2
+            JText::_('COM_TKDCLUB_TRAINING_ASSISTENT2_PAID'),   // assist2_paid    
+            JText::_('COM_TKDCLUB_TRAINING_ASSISTENT3'),        // assist3
+            JText::_('COM_TKDCLUB_TRAINING_ASSISTENT3_KM'),     // km_assist2
+            JText::_('COM_TKDCLUB_TRAINING_ASSISTENT3_PAID'),   // assist3_paid 
+            JText::_('COM_TKDCLUB_TRAINING_TYPE'),              // type
+            JText::_('COM_TKDCLUB_TRAINING_PARTICIPANTS'),      // participants
         );
 
 		// return the results as an array of items, each consisting of an array of fields

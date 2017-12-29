@@ -74,10 +74,26 @@ class TkdClubControllerExport extends JControllerForm
 		{
 			if ($key > 0)
 			{
-				if ($row[2] > 0) {$row[2] = $helper->getMembersNames($row[2], $memberlist);}
-				if ($row[4] > 0) {$row[4] = $helper->getMembersNames($row[4], $memberlist);}
-				if ($row[6] > 0) {$row[6] = $helper->getMembersNames($row[6], $memberlist);}
-				if ($row[8] > 0) {$row[8] = $helper->getMembersNames($row[8], $memberlist);}
+				if ($row[2] > 0)
+				{
+					$row[2] = $helper->getMembersNames($row[2], $memberlist);
+					$row[4] == 1 ? $row[4] = JText::_('COM_TKDCLUB_TRAINING_PAID') : $row[4] = JText::_('COM_TKDCLUB_TRAINING_NOT_PAID');
+				}
+				if ($row[5] > 0)
+				{
+					$row[5] = $helper->getMembersNames($row[5], $memberlist);
+					$row[7] == 1 ? $row[7] = JText::_('COM_TKDCLUB_TRAINING_PAID') : $row[7] = JText::_('COM_TKDCLUB_TRAINING_NOT_PAID');
+				}
+				if ($row[8] > 0)
+				{
+					$row[8] = $helper->getMembersNames($row[8], $memberlist);
+					$row[10] == 1 ? $row[10] = JText::_('COM_TKDCLUB_TRAINING_PAID') : $row[10] = JText::_('COM_TKDCLUB_TRAINING_NOT_PAID');
+				}
+				if ($row[11] > 0)
+				{
+					$row[11] = $helper->getMembersNames($row[11], $memberlist);
+					$row[13] == 1 ? $row[13] = JText::_('COM_TKDCLUB_TRAINING_PAID') : $row[13] = JText::_('COM_TKDCLUB_TRAINING_NOT_PAID');
+				}
 			}
 
 			print implode(';', $row)."\n"; // write data to the browser
