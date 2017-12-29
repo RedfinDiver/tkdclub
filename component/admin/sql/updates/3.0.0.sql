@@ -181,3 +181,20 @@ UPDATE `#__tkdclub_candidates` SET `grade_achieve` = '6. Dan' WHERE `grade_achie
 UPDATE `#__tkdclub_candidates` SET `grade_achieve` = '7. Dan' WHERE `grade_achieve` = '07. Dan';
 UPDATE `#__tkdclub_candidates` SET `grade_achieve` = '8. Dan' WHERE `grade_achieve` = '08. Dan';
 UPDATE `#__tkdclub_candidates` SET `grade_achieve` = '9. Dan' WHERE `grade_achieve` = '09. Dan';
+
+ALTER TABLE `#__tkdclub_events`
+    CHANGE `id` `event_id` int(10) NOT NULL AUTO_INCREMENT,
+    CHANGE `title` `title` text NOT NULL,
+    CHANGE `date` `date` date NOT NULL DEFAULT '0000-00-00',
+    CHANGE `deadline` `deadline` date NOT NULL DEFAULT '0000-00-00',
+    CHANGE `min_parts` `min` int(11) NOT NULL,
+    CHANGE `max_parts` `max` int(11) NOT NULL,
+    CHANGE `published` `published` tinyint(1) NOT NULL,
+    CHANGE `checked_out` `checked_out` int(10) NOT NULL,
+    CHANGE `checked_out_time` `checked_out_time` datetime NOT NULL,
+    ADD `notes` text NOT NULL AFTER `published`,
+    ADD `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `notes`,
+    ADD `created_by` INT(10) unsigned NOT NULL DEFAULT '0' AFTER `created`,
+    ADD `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `created_by`,
+    ADD `modified_by` INT(10) unsigned NOT NULL DEFAULT '0' AFTER `modified`,
+    ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
