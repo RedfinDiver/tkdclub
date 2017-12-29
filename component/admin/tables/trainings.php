@@ -8,7 +8,7 @@
 defined('_JEXEC') or die;
 
 /**
-* trainings table class
+* Trainings table class
 */
 class TkdClubTableTrainings extends JTable
 {
