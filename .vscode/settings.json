@@ -17,7 +17,12 @@
         "**/pkg_tkdclub.xml": true,
         "**/site": true,
         "**/README.rst": true,
-        "**/build.xml": true
+        "**/build.xml": true,
+        "**/candidate*/**": true,
+        "**/medal*/**": true,
+        "**/promotion*/**": false,
+        "**/training*/**": true,
+        "**/statistic*/**": true,
     },
 
     "php.suggest.basic": true,
