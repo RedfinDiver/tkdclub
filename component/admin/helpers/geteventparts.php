@@ -12,9 +12,11 @@ class TkdclubHelperGetEventparts
     /**
      * Gets the number of participants for a event
      * 
-     * @param int $event_id id of the event in the events-table
+     * @param   int $event_id id of the event in the events-table
      * 
-     * @return int number of participants for the event
+     * @return  int number of participants for the event
+     * 
+     * @see     views/events/default.php
      */
     public static function getEventparts($event_id)
     {
@@ -22,8 +24,8 @@ class TkdclubHelperGetEventparts
         $query = $db->getQuery(true);
 
         $query->select('sum('.$db->quoteName('participants').')')
-              ->from($db->quoteName('#__tkdclub_eventparts'))
-              ->where('event_id = '.$event_id);
+              ->from($db->quoteName('#__tkdclub_event_participants'))
+              ->where('event_id = '.$db->quote($event_id));
 
         $db->setQuery($query);
         $db->execute();

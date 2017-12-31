@@ -22,9 +22,23 @@
             <option value="1">JPUBLISHED</option>
             <option value="0">JUNPUBLISHED</option>
         </field>
+
     </fields>
     
     <fields name="list">
+
+        <field
+            name="fullordering" type="list"
+            label=""
+            description=""
+            default=""
+			onchange="this.form.submit();">
+
+			<option value="">JGLOBAL_SORT_BY</option>
+            <option value="date DESC">COM_TKDCLUB_EVENT_ORDER_BY_DATE_DESC</option>
+			<option value="date ASC">COM_TKDCLUB_EVENT_ORDER_BY_DATE_ASC</option>
+
+        </field> 
        
         <field
             name="limit"

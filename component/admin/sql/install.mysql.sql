@@ -129,3 +129,28 @@ CREATE TABLE IF NOT EXISTS `#__tkdclub_events` (
   `checked_out_time` datetime NOT NULL,
   PRIMARY KEY (`event_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS `#__tkdclub_event_participants` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `event_id` int(11) NOT NULL,
+  `firstname` varchar(50) NOT NULL,
+  `lastname` varchar(50) NOT NULL,
+  `clubname` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `participants` INT(3) NOT NULL,
+  `grade` varchar(30) NOT NULL,
+  `age` TINYTEXT NOT NULL,
+  `notes` text NOT NULL,
+  `user1` varchar(50) NOT NULL,
+  `user2` varchar(50) NOT NULL,
+  `user3` varchar(50) NOT NULL,
+  `user4` varchar(50) NOT NULL,  
+  `published` tinyint(4) NOT NULL,
+  `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_by` INT(10) unsigned NOT NULL DEFAULT '0',
+  `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `modified_by` INT(10) unsigned NOT NULL DEFAULT '0',
+  `checked_out` int(10) NOT NULL,
+  `checked_out_time` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;

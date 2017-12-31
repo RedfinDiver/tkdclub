@@ -198,3 +198,29 @@ ALTER TABLE `#__tkdclub_events`
     ADD `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `created_by`,
     ADD `modified_by` INT(10) unsigned NOT NULL DEFAULT '0' AFTER `modified`,
     ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
+
+RENAME TABLE `#__tkdclub_eventparts` TO `#__tkdclub_event_participants`;
+
+ALTER TABLE `#__tkdclub_event_participants`
+    CHANGE `id` `id` int(10) NOT NULL AUTO_INCREMENT,
+    CHANGE `event_id` `event_id` int(11) NOT NULL,
+    CHANGE `firstname` `firstname` varchar(50) NOT NULL,
+    CHANGE `lastname` `lastname` varchar(50) NOT NULL,
+    CHANGE `clubname` `clubname` varchar(50) NOT NULL,
+    CHANGE `email` `email` varchar(50) NOT NULL,
+    CHANGE `participants` `participants` INT(3) NOT NULL,
+    CHANGE `grade` `grade` varchar(30) NOT NULL,
+    CHANGE `age` `age` TINYTEXT NOT NULL,
+    CHANGE `notes` `notes` text NOT NULL,
+    CHANGE `user1` `user1` varchar(50) NOT NULL,
+    CHANGE `user2` `user2` varchar(50) NOT NULL,
+    CHANGE `user3` `user3` varchar(50) NOT NULL,
+    CHANGE `user4` `user4`varchar(50) NOT NULL,  
+    CHANGE `published` `published` tinyint(4) NOT NULL,
+    CHANGE `checked_out` `checked_out` int(10) NOT NULL,
+    CHANGE `checked_out_time` `checked_out_time` datetime NOT NULL,
+    ADD `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `published`,
+    ADD `created_by` INT(10) unsigned NOT NULL DEFAULT '0' AFTER `created`,
+    ADD `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `created_by`,
+    ADD `modified_by` INT(10) unsigned NOT NULL DEFAULT '0' AFTER `modified`,
+    ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;

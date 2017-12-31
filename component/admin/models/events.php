@@ -138,5 +138,51 @@ class TkdClubModelEvents extends JModelList
 
         return $allrows;
     }
+
+    /**
+	 * Method to get the data that should be exported.
+     * 
+	 * @return  mixed  The data.
+	 */
+	public function getExportData($pks)
+	{
+        JLoader::register('TkdclubHelperGetEventParts', JPATH_COMPONENT_ADMINISTRATOR. '/helpers/geteventparts.php');
+		$pklist = implode(',', $pks);
+
+		$db	= JFactory::getDBO();
+		$query	= $db->getQuery(true);
+		$query-> select($db->quoteName(array('event_id', 'title', 'date', 'deadline', 'min', 'max', 'published', 'notes')))
+			  -> from($db->quoteName('#__tkdclub_events'))
+			  -> where($db->quoteName('event_id') . ' IN ' . '(' . $pklist . ')')
+              -> order($db->quoteName('date') . ' DESC');
+
+		$db	-> setQuery((string)$query);
+        $rows	= $db->loadRowList();
+        
+        foreach ($rows as $key => &$row)
+        {
+            $first = array_slice($row,0,6);
+            $second = array_slice($row,6);
+            $first[] = TkdclubHelperGetEventParts::geteventparts($row[0]);
+            $row = array_merge($first, $second);
+        }
+
+        $headers = array(
+            JText::_('COM_TKDCLUB_EVENT_ID'),                       // event_id
+            JText::_('COM_TKDCLUB_EVENT_TITLE'),                    // title
+            JText::_('COM_TKDCLUB_DATE'),                           // date
+            JText::_('COM_TKDCLUB_EVENT_DEADLINE'),                 // deadline
+            JText::_('COM_TKDCLUB_EVENT_MINIMUM_PARTICIPANTS'),     // min
+            JText::_('COM_TKDCLUB_EVENT_MAXIMUM_PARTICIPANTS'),     // max
+            JText::_('COM_TKDCLUB_EVENT_SUBSCRIBED_PARTICIPANTS'),  // subscribed
+            JText::_('JSTATUS'),                                    // published     
+            JText::_('COM_TKDCLUB_NOTES')                           // notes
+        );
+
+		// return the results as an array of items, each consisting of an array of fields
+		$content	= array($headers);	// header with column names
+		$content	= array_merge( $content,  $rows);
+		return $content;
+	}
  
  }

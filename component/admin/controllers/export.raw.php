@@ -170,6 +170,29 @@ class TkdClubControllerExport extends JControllerForm
 	}
 
 	/**
+	 * csv export function for events-view
+	 */
+	public function events()
+	{	
+		$content = $this->getContent('events');
+
+		foreach ($content as $key => &$row)
+		{ 	
+			// conversion of date in LC4-format
+			if ($key > 0)
+			{
+				$row[2] = JHtml::_('date', $row[2], JText::_('DATE_FORMAT_LC4'));
+				$row[3] = JHtml::_('date', $row[3], JText::_('DATE_FORMAT_LC4'));
+				$row[7] == 1 ? $row[7] = JText::_('JPUBLISHED') : $row[7] = JText::_('JUNPUBLISHED');
+			}
+			
+			print implode(';', $row)."\n"; 
+		}
+
+		$this->setHeaders(JText::_('COM_TKDCLUB_SIDEBAR_EVENTS'));
+	}
+
+	/**
 	*	csv export function for eventparts-view
 	**/
 	public function eventparts()

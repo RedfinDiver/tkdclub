@@ -30,10 +30,10 @@ class TkdClubViewEvents extends JViewLegacy
         $this->allrows = $this->get('Allrows');
         $this->filterForm = $this->get('FilterForm');
         $this->activeFilters = $this->get('ActiveFilters');
-        $this->togglestats = JFactory::getSession()->get('togglestats_members', null, 'tkdclub');
+        $this->togglestats = JFactory::getSession()->get('togglestats_events', null, 'tkdclub');
         if ($this->togglestats)
         {
-            //@TODO implement statistics
+            // @TODO implement statistics
         }
 
         $this->addToolbar();
@@ -45,7 +45,7 @@ class TkdClubViewEvents extends JViewLegacy
     {
         $clubname = JComponentHelper::getParams('com_tkdclub')->get('club_name', JText::_('COM_TKDCLUB'));
     
-        JToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_ADMIN_EVENTS'), 'tkdclub');
+        JToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_EVENT_ADMIN_VIEW'), 'tkdclub');
         
         $canDo = TkdClubHelperActions::getActions();
 
@@ -95,7 +95,7 @@ class TkdClubViewEvents extends JViewLegacy
     protected function getSortFields()
 	{
 		return array(
-			'date' => JText::_('COM_TKDCLUB_EVENT_DATE'),
+			'date' => JText::_('COM_TKDCLUB_PROMOTION_DATE'),
 		);
 	}
 }

@@ -20,4 +20,33 @@ class TkdClubControllerEvents extends JControllerAdmin
         $model = parent::getModel($name, $prefix, $config);
         return $model;
     }
+
+    /**
+     * Toggle on/off the stats
+     * 
+     * With this method the statistics are switched on or off
+     * in the events list view
+     * 
+     * @return void
+     */ 
+    public function togglestats()
+    {
+        // Check for request forgeries.
+        JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+        
+        $session = JFactory::getSession();
+
+        if (!$session->get('togglestats_events', null, 'tkdclub'))
+        {
+            $session->set('togglestats_events', 'ON', 'tkdclub');
+            $msg = 'COM_TKDCLUB_TOGGLE_STATS_ON';  
+        }
+        else
+        {
+            $session->clear('togglestats_events','tkdclub');
+            $msg = 'COM_TKDCLUB_TOGGLE_STATS_OFF';  
+        }
+        
+        $this->setRedirect('index.php?option=com_tkdclub&view=events', JText::_($msg));
+    }
 }
