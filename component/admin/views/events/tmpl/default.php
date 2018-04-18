@@ -9,7 +9,9 @@ defined('_JEXEC') or die;
 
 JHtml::_('bootstrap.tooltip');
 JHtml::_('behavior.multiselect');
+JHtml::_('formbehavior.chosen', 'select');
 JHtml::_('script', 'administrator/components/com_tkdclub/assets/js/rawsubmitbutton.js');
+JHtml::stylesheet('administrator/components/com_tkdclub/assets/css/tkdclub.css');
 
 JLoader::register('TkdclubHelperGetEventParts', JPATH_COMPONENT_ADMINISTRATOR. '/helpers/geteventparts.php');
 

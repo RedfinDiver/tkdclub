@@ -3,11 +3,11 @@
     
     "files.exclude":
     {
-        "**/.git*": true,
+        "**/.git*": false,
         "**/.svn": true,
         "**/.hg": true,
         "**/.DS_Store": true,
-        "**/.vscode": true,
+        "**/.vscode": false,
         "**/nbproject": true,
         "**/plugins": true,
         "**/modules": true,
@@ -18,11 +18,12 @@
         "**/site": true,
         "**/README.rst": true,
         "**/build.xml": true,
-        "**/candidate*/**": true,
-        "**/medal*/**": true,
+        "**/candidate*/**": false,
+        "**/medal*/**": false,
         "**/promotion*/**": false,
-        "**/training*/**": true,
-        "**/statistic*/**": true,
+        "**/training*/**": false,
+        "**/statistic*/**": false,
+        "**/.gitignore/**": true,
     },
 
     "php.suggest.basic": true,

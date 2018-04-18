@@ -48,6 +48,7 @@
            <menu link="option=com_tkdclub&amp;view=promotions"   img="class:icon-tkdclub">COM_TKDCLUB_SUBMENU_PROMOTIONS</menu>
            <menu link="option=com_tkdclub&amp;view=candidates"   img="class:icon-tkdclub">COM_TKDCLUB_SUBMENU_CANDIDATES</menu>
            <menu link="option=com_tkdclub&amp;view=events"   img="class:icon-tkdclub">COM_TKDCLUB_SUBMENU_EVENTS</menu>
+           <menu link="option=com_tkdclub&amp;view=participants"   img="class:icon-tkdclub">COM_TKDCLUB_SUBMENU_PARTICIPANTS</menu>
            <menu link="option=com_tkdclub&amp;view=statistics"   img="class:icon-tkdclub">COM_TKDCLUB_SUBMENU_STATISTICS</menu>
         </submenu>
         

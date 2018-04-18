@@ -24,7 +24,7 @@ class TkdClubTableEvents extends JTable
 
         $this->modified = $date;
 
-        if ($this->training_id)
+        if ($this->event_id)
         {
             // Existing item
             $this->modified_by = $userId;
