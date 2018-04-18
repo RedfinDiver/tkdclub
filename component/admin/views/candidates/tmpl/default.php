@@ -17,6 +17,9 @@ JHtml::_('behavior.multiselect');
 $params = JComponentHelper::getParams('com_tkdclub');
 $currency = $params->get('currency', '€');
 $costs = $params->get('badge_cost', 0) + $params->get('examiner_cost', 0) + $params->get('club_cost', 0);
+
+$user      = JFactory::getUser();
+$userId    = $user->get('id');
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn  = $this->escape($this->state->get('list.direction'));
 
@@ -80,7 +83,12 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
         </tfoot>
 
         <tbody>
-            <?php foreach ($this->items as $i => $item) : ?>
+            <?php foreach ($this->items as $i => $item) : 
+                $canEdit    = $user->authorise('core.edit',       'com_tkdclub.candidate.' . $item->id);
+                $canCheckin = $user->authorise('core.manage',     'com_checkin') || $item->checked_out == $userId || $item->checked_out == 0;
+                $canEditOwn = $user->authorise('core.edit.own',   'com_tkdclub.candidate.' . $item->id) && $item->created_by == $userId;
+                $canChange  = $user->authorise('core.edit.state', 'com_tkdclub.candidate.' . $item->id) && $canCheckin;
+            ?>
                 <tr class="row<?php echo $i % 2; ?>">
                     <td class="center"><?php echo JHtml::_('grid.id', $i, $item->id); ?>
                     <td class="center hasTooltip">
@@ -95,9 +103,12 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                         </div>
                     </td>
                     <td class="title center">
+                        <?php if ($item->checked_out) : ?>
+							<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'candidates.', $canCheckin); ?>
+						<?php endif; ?>
                         <?php
-                        $mylink = JRoute::_("index.php?option=com_tkdclub&task=candidate.edit&form=candidate_edit&id=".$item->id);
-                        echo '<a href="'.$mylink.'">'.JHtml::_('date', $item->date, JText::_('DATE_FORMAT_LC4')) . '</a>';
+                            $mylink = JRoute::_("index.php?option=com_tkdclub&task=candidate.edit&form=candidate_edit&id=".$item->id);
+                            echo '<a href="'.$mylink.'">'.JHtml::_('date', $item->date, JText::_('DATE_FORMAT_LC4')) . '</a>';
                         ?>
                         <span class="small"><?php echo '(' . $this->escape($item->city) . ')'?></span>      
                     </td>

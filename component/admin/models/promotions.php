@@ -91,19 +91,19 @@ class TkdClubModelPromotions extends JModelList
     {
         $db = $this->getDbo();
         $query = $db->getQuery(true);
-        $query->select('*')->from($db->quoteName('#__tkdclub_promotions'));
+        $query->select('*')->from($db->quoteName('#__tkdclub_promotions') . ' as p');
 
         $stateselect = $this->getState('filter.promotion_state'); // TODO
         if (is_numeric($stateselect))
         {   
-            $query->where('promotion_state = ' . (int) $stateselect);
+            $query->where('p.promotion_state = ' . (int) $stateselect);
         }
 
         $typeselect = $this->getState('filter.type');
         if (!empty($typeselect))
         {   
             $type = $db->quote($db->escape($typeselect, true));
-            $query->where('type = ' .$type);
+            $query->where('p.type = ' .$type);
         }
 
         $search = $this->getState('filter.search');
@@ -111,16 +111,20 @@ class TkdClubModelPromotions extends JModelList
         {
             if (stripos($search, 'id:') === 0)
             {
-                $query->where('promotion_id = '.(int) substr($search, 3));
+                $query->where('p.promotion_id = '.(int) substr($search, 3));
             }
             else
             {
                 $search = $db->Quote('%'. $db->escape($search).'%');
-                $query->where('promotion_id LIKE' .$search
-                            .'OR city LIKE' .$search
-                            .'OR examiner_name LIKE' .$search);
+                $query->where('p.promotion_id LIKE' .$search
+                            .'OR p.city LIKE' .$search
+                            .'OR p.examiner_name LIKE' .$search);
             }
         }
+
+        // Join over the users for the checked out user.
+		$query->select('u.name AS editor')
+        ->join('LEFT', '#__users AS u ON u.id=p.checked_out');
 
         $sort = $this->getState('list.ordering');
         $order = $this->getState('list.direction');

@@ -14,6 +14,8 @@ JHtml::_('formbehavior.chosen', 'select');
 JHtml::stylesheet('administrator/components/com_tkdclub/assets/css/tkdclub.css');
 JHtml::_('script', 'administrator/components/com_tkdclub/assets/js/rawsubmitbutton.js');
 
+$user      = JFactory::getUser();
+$userId    = $user->get('id');
 $listOrder = $this->state->get('list.ordering');
 $listDirn  = $this->state->get('list.direction');
 
@@ -83,7 +85,12 @@ $listDirn  = $this->state->get('list.direction');
         </tfoot>
         <!-- table body -->
         <tbody>
-            <?php foreach ($this->items as $i => $item) : ?>
+            <?php foreach ($this->items as $i => $item) : 
+                $canEdit    = $user->authorise('core.edit',       'com_tkdclub.promotion.' . $item->promotion_id);
+                $canCheckin = $user->authorise('core.manage',     'com_checkin') || $item->checked_out == $userId || $item->checked_out == 0;
+                $canEditOwn = $user->authorise('core.edit.own',   'com_tkdclub.promotion.' . $item->promotion_id) && $item->created_by == $userId;
+                $canChange  = $user->authorise('core.edit.state', 'com_tkdclub.promotion.' . $item->promotion_id) && $canCheckin;
+            ?>
                 <tr class="row<?php echo $i % 2; ?>">
                     <td class="center"><?php echo JHtml::_('grid.id', $i, $item->promotion_id); ?>
                     <td class="center hasTooltip">
@@ -95,9 +102,13 @@ $listDirn  = $this->state->get('list.direction');
                             echo JHtml::_('jgrid.state', $states, $item->promotion_state, $i, 'promotions.', true);
                         ?>
                     </td>         
-                    <td width="60" class="title"><?php
-                        $mylink = JRoute::_("index.php?option=com_tkdclub&task=promotion.edit&promotion_id=".$item->promotion_id);
-                        echo '<a href="'.$mylink.'">'.JHtml::_('date', $item->date, JText::_('DATE_FORMAT_LC4')).'</a>';
+                    <td width="100" class="title">
+                        <?php if ($item->checked_out) : ?>
+							<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'promotions.', $canCheckin); ?>
+						<?php endif; ?>
+                        <?php
+                            $mylink = JRoute::_("index.php?option=com_tkdclub&task=promotion.edit&promotion_id=".$item->promotion_id);
+                            echo '<a href="'.$mylink.'">'.JHtml::_('date', $item->date, JText::_('DATE_FORMAT_LC4')).'</a>';
                         ?>
                     </td>
                     <td width="" class="left"><?php echo $this->escape($item->city); ?></td>

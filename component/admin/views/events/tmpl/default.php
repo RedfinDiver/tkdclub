@@ -104,9 +104,13 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                     <td>
                         <?php echo JHtml::_('jgrid.published', $item->published, $i, 'events.', TRUE); ?>
                     </td>
-                    <td class="title"><?php
-                        $mylink = JRoute::_("index.php?option=com_tkdclub&task=event.edit&event_id=".$item->event_id);
-                        echo '<a href="'.$mylink.'">'.JHtml::_('date', $item->date, JText::_('DATE_FORMAT_LC4')).'</a>';
+                    <td class="title">
+                        <?php if ($item->checked_out) : ?>
+							<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'events.', $canCheckin); ?>
+						<?php endif; ?>
+                        <?php
+                            $mylink = JRoute::_("index.php?option=com_tkdclub&task=event.edit&event_id=".$item->event_id);
+                            echo '<a href="'.$mylink.'">'.JHtml::_('date', $item->date, JText::_('DATE_FORMAT_LC4')).'</a>';
                         ?>
                     </td>
                     <td>

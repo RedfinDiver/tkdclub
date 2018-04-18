@@ -91,7 +91,7 @@ class TkdClubModelEvents extends JModelList
         $db = $this->getDbo();
         $query = $db->getQuery(true);
         $query->select('*')
-                ->from($db->quoteName('#__tkdclub_events'));
+                ->from($db->quoteName('#__tkdclub_events', 'e'));
 
         // Search filter      
         $search = $this->getState('filter.search');
@@ -99,9 +99,9 @@ class TkdClubModelEvents extends JModelList
         {
             
             $search = $db->quote('%'. $db->escape($search, true).'%');
-            $query->where('event_id LIKE' .$search
-                        .' OR title LIKE' .$search
-                        .' OR date LIKE' .$search);
+            $query->where('e.event_id LIKE' .$search
+                        .' OR e.title LIKE' .$search
+                        .' OR e.date LIKE' .$search);
             
         }
 
@@ -109,8 +109,12 @@ class TkdClubModelEvents extends JModelList
         $stateselect = $this->getState('filter.state');
         if (is_numeric($stateselect))
         {
-            $query->where('published = ' . $stateselect);
+            $query->where('e.published = ' . $stateselect);
         }
+
+        // Join over the users for the checked out user.
+		$query->select('u.name AS editor')
+        ->join('LEFT', '#__users AS u ON u.id=e.checked_out');
 
         $sort  = $this->getState('list.ordering', 'date');
         $order = $this->getState('list.direction', 'desc');

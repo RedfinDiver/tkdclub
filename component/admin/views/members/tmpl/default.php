@@ -27,6 +27,7 @@ $listDirn  = $this->state->get('list.direction');
       name="adminForm"
       id="adminForm">
     
+    <!-- sidebar -->
     <?php if (!empty( $this->sidebar)) : ?>
         <div id="j-sidebar-container" class="span2">
             <?php echo $this->sidebar; ?>
@@ -36,7 +37,7 @@ $listDirn  = $this->state->get('list.direction');
         <div id="j-main-container">
     <?php endif;?>   
 
-    <!-- Filterbar und Listensortierung -->
+    <!-- filterbar and list sorting -->
     <?php
         echo JLayoutHelper::render('joomla.searchtools.default', array('view' => $this));
     ?>
