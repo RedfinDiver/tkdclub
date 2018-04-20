@@ -23,7 +23,7 @@ class TkdclubHelperGetEventparts
         $db = JFactory::getDbo();
         $query = $db->getQuery(true);
 
-        $query->select('sum('.$db->quoteName('participants').')')
+        $query->select('sum('.$db->quoteName('registered').')')
               ->from($db->quoteName('#__tkdclub_event_participants'))
               ->where('event_id = '.$db->quote($event_id));
 
