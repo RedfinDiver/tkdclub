@@ -208,7 +208,7 @@ ALTER TABLE `#__tkdclub_event_participants`
     CHANGE `lastname` `lastname` varchar(50) NOT NULL,
     CHANGE `clubname` `clubname` varchar(50) NOT NULL,
     CHANGE `email` `email` varchar(50) NOT NULL,
-    CHANGE `participants` `participants` INT(3) NOT NULL,
+    CHANGE `participants` `registered` INT(3) NOT NULL,
     CHANGE `grade` `grade` varchar(30) NOT NULL,
     CHANGE `age` `age` TINYTEXT NOT NULL,
     CHANGE `notes` `notes` text NOT NULL,

@@ -8,13 +8,11 @@
 defined('_JEXEC') or die;
 
 /**
- * listview promotions controller
+ * Participants list view controller
  */
-class TkdClubControllerPromotions extends JControllerAdmin
+class TkdClubControllerParticipants extends JControllerAdmin
 {
-    protected $text_prefix = 'COM_TKDCLUB_PROMOTION';
-    
-    public function getModel($name = 'promotion', $prefix = 'TkdClubModel', $config = array())
+    public function getModel($name = 'participants', $prefix = 'TkdClubModel', $config = array())
     {
         $config['ignore_request'] = true;
         $model = parent::getModel($name, $prefix, $config);
@@ -25,7 +23,7 @@ class TkdClubControllerPromotions extends JControllerAdmin
      * Toggle on/off the stats
      * 
      * With this method the statistics are switched on or off
-     * in the promotions list view
+     * in the participants list view
      * 
      * @return void
      */ 
@@ -36,17 +34,17 @@ class TkdClubControllerPromotions extends JControllerAdmin
         
         $session = JFactory::getSession();
 
-        if (!$session->get('togglestats_promotions', null, 'tkdclub'))
+        if (!$session->get('togglestats_participants', null, 'tkdclub'))
         {
-            $session->set('togglestats_promotions', 'ON', 'tkdclub');
+            $session->set('togglestats_participants', 'ON', 'tkdclub');
             $msg = 'COM_TKDCLUB_TOGGLE_STATS_ON';  
         }
         else
         {
-            $session->clear('togglestats_promotions','tkdclub');
+            $session->clear('togglestats_participants','tkdclub');
             $msg = 'COM_TKDCLUB_TOGGLE_STATS_OFF';  
         }
         
-        $this->setRedirect('index.php?option=com_tkdclub&view=promotions', JText::_($msg));
+        $this->setRedirect('index.php?option=com_tkdclub&view=participants', JText::_($msg));
     }
 }

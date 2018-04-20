@@ -134,7 +134,7 @@ class TkdClubModelPromotions extends JModelList
     }
 
     /**
-    * Method to get the number of all entries in the exams-table
+    * Method to get the number of all entries in the promotions-table
     * 
     * @return type integer 
     */

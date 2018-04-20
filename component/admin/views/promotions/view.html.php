@@ -22,7 +22,6 @@ class TkdClubViewPromotions extends JViewLegacy
 
     public function display($tpl = null)
     {
-        
         $this->items = $this->get('Items');
         $this->pagination = $this->get('Pagination');
         $this->state = $this->get('State');
@@ -70,7 +69,7 @@ class TkdClubViewPromotions extends JViewLegacy
 
         if ($canDo->get('core.delete'))
         {
-            JToolBarHelper::deleteList('COM_TKDCLUB_PROMOTION_DELETE_QUESTION', 'promotions.delete','JTOOLBAR_DELETE', true);
+            JToolBarHelper::deleteList('COM_TKDCLUB_PROMOTION_DELETE_QUESTION', 'promotions.delete', 'JTOOLBAR_DELETE', true);
         }
         
         if ($canDo->get('core.admin'))
@@ -82,8 +81,13 @@ class TkdClubViewPromotions extends JViewLegacy
         $toolbar->addButtonPath(JPATH_COMPONENT.'/buttons');
 
         if ($this->togglestats)
-        {JToolBarHelper::custom('promotions.togglestats', 'eye-close', 'eye-close', 'COM_TKDCLUB_BUTTON_STATS', false);}
-        else {JToolBarHelper::custom('promotions.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);}
+        {
+            JToolBarHelper::custom('promotions.togglestats', 'eye-close', 'eye-close', 'COM_TKDCLUB_BUTTON_STATS', false);
+        }
+        else
+        {
+            JToolBarHelper::custom('promotions.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);
+        }
 
         $toolbar->appendButton('RawFormat',  'download', 'COM_TKDCLUB_BUTTON_EXPORT', 'export.promotions');
         

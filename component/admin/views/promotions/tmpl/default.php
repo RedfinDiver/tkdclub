@@ -52,7 +52,6 @@ $listDirn  = $this->state->get('list.direction');
             <?php echo JText::_('COM_TKDCLUB_ENTRIES'); ?>
         </div>
    
-     
     <div class="clearfix"> </div>
 
     <!--start of table promotions -->
@@ -127,6 +126,7 @@ $listDirn  = $this->state->get('list.direction');
         </tbody>
     </table>
     <?php endif; ?>
+    </div>
     <div>
         <input type="hidden" name="task" value="" />
         <input type="hidden" name="boxchecked" value="0" />

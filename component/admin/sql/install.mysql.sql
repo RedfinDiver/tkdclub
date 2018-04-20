@@ -137,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `#__tkdclub_event_participants` (
   `lastname` varchar(50) NOT NULL,
   `clubname` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `participants` INT(3) NOT NULL,
+  `registered` INT(3) NOT NULL,
   `grade` varchar(30) NOT NULL,
   `age` TINYTEXT NOT NULL,
   `notes` text NOT NULL,
