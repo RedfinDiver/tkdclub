@@ -97,12 +97,10 @@ class TkdClubModelEvents extends JModelList
         $search = $this->getState('filter.search');
         if (!empty($search))
         {
-            
             $search = $db->quote('%'. $db->escape($search, true).'%');
             $query->where('e.event_id LIKE' .$search
                         .' OR e.title LIKE' .$search
                         .' OR e.date LIKE' .$search);
-            
         }
 
         // State filter

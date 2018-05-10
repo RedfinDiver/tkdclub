@@ -11,7 +11,7 @@ JFormHelper::loadFieldClass('list');
 
 /**
  * Supports the options-markup for events
- * used in backend and frontent
+ * used in backend and frontend
  */
 class JFormFieldEvents extends JFormFieldList
 {

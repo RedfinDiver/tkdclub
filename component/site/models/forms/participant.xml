@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+   
+    <fieldset name="participant_multiple">
+
+        <field
+            name="group" type="list" required="true"
+            label="COM_TKDCLUB_EVENTPARTS_MULTIPLE_SUBS"
+            description="COM_TKDCLUB_EVENTPARTS_MULTIPLE_SUBS_DESC"
+            default="0"
+            onchange="getmultiple()" >
+
+            <option value="0">COM_TKDCLUB_EVENTPARTS_OPTION_SINGLE</option>
+            <option value="1">COM_TKDCLUB_EVENTPARTS_OPTION_GROUP</option>        
+        </field>
+
+    </fieldset>
+
+    <fieldset name="participant_data_all">
+        
+        <field
+            name="id" type="text" default="0" filter="safehtml" hidden="true" />
+
+        <field 
+            name="firstname" type="text"
+            class="inputbox"
+            label="COM_TKDCLUB_EVENTPARTS_FIRSTNAME"
+            description="COM_TKDCLUB_EVENTPARTS_FIRSTNAME_DESC"
+            required="true" filter="safehtml" />
+               
+        <field 
+            name="lastname" type="text"
+            class="inputbox"
+            label="COM_TKDCLUB_EVENTPARTS_LASTNAME"
+            description="COM_TKDCLUB_EVENTPARTS_LASTNAME_DESC"
+            required="true" filter="safehtml" />
+        
+         <field 
+            name="email" type="email"
+            class="required validate-email"
+            label="COM_TKDCLUB_EVENTPARTS_EMAIL"
+            description="COM_TKDCLUB_EVENTPARTS_EMAIL_DESC"
+            message="COM_TKDCLUB_VALIDATE_MESSAGE"
+            required="true" validate="email" filter="safehtml" />       
+               
+        <field 
+            name="clubname" type="text"
+            class="inputbox"
+            label="COM_TKDCLUB_EVENTPARTS_CLUB"
+            description="COM_TKDCLUB_EVENTPARTS_CLUB_DESC"
+            size="" required="true" filter="safehtml" />
+
+    </fieldset>
+
+    <fieldset name="participant_data_single" addfieldpath="/administrator/components/com_tkdclub/models/fields">      
+
+        <field 
+            name="age" type="text"
+            class="validate-numeric"
+            label="COM_TKDCLUB_EVENTPARTS_AGE"
+            description="COM_TKDCLUB_EVENTPARTS_AGE_DESC"
+            required="true" filter="integer" /> 
+        
+
+        <field 
+            name="grade" type="grades"
+            class="inputbox"
+            label="COM_TKDCLUB_MEMBER_GRADE"
+            description="COM_TKDCLUB_MEMBER_GRADE_DESC"
+            multiple="false" required="true" filter="safehtml" default=""
+            validate="list" >
+            <option value="">COM_TKDCLUB_EVENTPART_GRADE_SELECT</option>
+        </field>
+
+        <field 
+            name="kupgradesachieve" type="kupgradesachieve"
+            class="inputbox"
+            label="COM_TKDCLUB_EVENTPARTS_KUPGRADE"
+            description="COM_TKDCLUB_EVENTPARTS_KUPGRADE_DESC"
+            multiple="false" required="true" filter="safehtml" default=""
+            validate="list" >
+            <option value="">COM_TKDCLUB_EVENTPART_KUPGRADE_SELECT</option>
+        </field>
+
+    </fieldset>
+
+    <fieldset name="participant_data_multiple" addfieldpath="/administrator/components/com_tkdclub/models/fields">
+        
+        <field 
+            name="participants" type="text"
+            class="required validate-numeric"
+            label="Anzahl Teilnehmer"
+            description="Schreiben Sie hier die Anzahl der Teilnehmer hinein"
+            required="true"
+            filter="integer" />
+
+        <field 
+            name="age_dist" type="text"
+            class="inputbox"
+            label="COM_TKDCLUB_EVENTPARTS_AGE_DIST"
+            description="COM_TKDCLUB_EVENTPARTS_AGE_DIST_DESC"
+            required="true" filter="safehtml" />
+
+        <field 
+            name="grade_dist" type="text"
+            class="inputbox"
+            label="COM_TKDCLUB_MEMBER_GRADE_DIST"
+            description="COM_TKDCLUB_MEMBER_GRADE_DIST_DESC"
+            required="true" filter="safehtml" default="" />
+
+    </fieldset>
+
+    <fieldset name="participant_data_userfields">
+        <field 
+            name="user1" type="text"
+            class="inputbox"
+            label=""
+            description=""
+            size="" required="true" filter="safehtml"  />
+        
+        <field 
+            name="user2" type="text"
+            class="inputbox"
+            label=""
+            description=""
+            size="" required="true" filter="safehtml"  />       
+
+        <field 
+            name="user3" type="text"
+            class="inputbox"
+            label=""
+            description=""
+            size="" required="true" filter="safehtml"  />
+
+        <field 
+            name="user4" type="text"
+            class="inputbox"
+            label=""
+            description=""
+            size="" required="true" filter="safehtml"  /> 
+
+        <field 
+            name="notes" type="textarea"
+            class="inputbox"
+            label="COM_TKDCLUB_EVENTPARTS_NOTES"
+            description="COM_TKDCLUB_EVENTPARTS_NOTES_DESC"
+            size="" required="false" filter="safehtml"  /> 
+
+    </fieldset>
+
+    <fieldset name="participant_data_captcha">
+        
+        <field
+            name="captcha"
+            type="captcha"
+            label="COM_TKDCLUB_CAPTCHA_LABEL"
+            description="COM_TKDCLUB_CAPTCHA_DESC"
+            validate="captcha"
+            namespace="tkdclub" />
+
+    </fieldset>
+
+</form>

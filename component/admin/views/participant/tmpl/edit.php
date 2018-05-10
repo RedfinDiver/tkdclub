@@ -30,7 +30,6 @@ JFactory::getDocument()->addScriptDeclaration("
 
     <div class="row-fluid">
         <div class="span12 form-horizontal">
-            <fieldset>
                 <?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'participant')); ?>
                     <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'participant', empty($this->item->id) ? JText::_('COM_TKDCLUB_PARTICIPANT_NEW_TAB', true) : JText::_('COM_TKDCLUB_PARTICIPANT_EDIT_TAB', true)); ?>
                         <?php
@@ -44,8 +43,20 @@ JFactory::getDocument()->addScriptDeclaration("
                             };
                         ?>
                     <?php echo JHtml::_('bootstrap.endTab'); ?>
+                    <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'item_data', JText::_('COM_TKDCLUB_ITEM_DATA', true)); ?>
+                        <?php if (empty($this->item->id)) : ?>
+                            <div class="alert alert-no-items">
+                                <?php echo JText::_('COM_TKDCLUB_NO_ITEM_DATA'); ?>
+                            </div>
+                        <?php else : ?>                          
+                            <div> 
+                                <?php foreach ($this->form->getFieldset('item_data') as $field) : ?>
+                                        <?php echo $field->renderField(); ?>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>          
+                    <?php echo JHtml::_('bootstrap.endTab'); ?>
                 <?php echo JHtml::_('bootstrap.endTabset'); ?>
-            </fieldset>
         </div>
     </div>
     <div>

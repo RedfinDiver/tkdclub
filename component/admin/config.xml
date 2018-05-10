@@ -275,7 +275,7 @@
 
     </fieldset>
     
-        <fieldset
+    <fieldset
         name="mail"
         label="COM_TKDCLUB_CONFIG_MAIL"
         description="COM_TKDCLUB_CONFIG_MAIL_DESC" >

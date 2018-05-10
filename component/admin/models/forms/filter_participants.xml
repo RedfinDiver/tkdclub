@@ -6,8 +6,8 @@
         <field
             name="search"
             type="text"
-            label="COM_TKDCLUB_SEARCH_IN_COLOUM_EVENTPARTS"
-            description="COM_TKDCLUB_SEARCH_IN_COLOUM_EVENTPARTS"
+            label="COM_TKDCLUB_PARTICIPANTS_SEARCH_IN_COLOUMS"
+            description="COM_TKDCLUB_PARTICIPANTS_SEARCH_IN_COLOUMS"
             hint="JSEARCH_FILTER"
         />
 
@@ -18,7 +18,7 @@
             description=""
             onlypublished="true" 
             onchange="this.form.submit();">
-            <option value="">COM_TKDCLUB_EVENT_SELECT</option>
+            <option value="">COM_TKDCLUB_SELECT_EVENT</option>
         </field>
 
         <field
@@ -45,8 +45,8 @@
 			onchange="this.form.submit();">
 
 			<option value="">JGLOBAL_SORT_BY</option>
-            <option value="b.date DESC">COM_TKDCLUB_EVENTPARTS_ORDER_BY_DATE_DESC</option>
-			<option value="b.date ASC">COM_TKDCLUB_EVENTPARTS_ORDER_BY_DATE_ASC</option>
+            <option value="b.date DESC">COM_TKDCLUB_PARTICIPANT_ORDER_BY_DATE_DESC</option>
+			<option value="b.date ASC">COM_TKDCLUB_PARTICIPANT_ORDER_BY_DATE_ASC</option>
 
         </field> 
 

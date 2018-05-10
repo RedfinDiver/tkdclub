@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+    <layout title="COM_TKDCLUB_EVENTPART_NEW" option="COM_TKDCLUB_EVENTPART_NEW"> </layout>
+    
+    <fields name="params" addfieldpath="/administrator/components/com_tkdclub/models/fields">
+        
+        <fieldset name="event" label="COM_TKDCLUB_EVENT_TAB_TITLE">
+
+            <field 
+                name="event_id" 
+                type="events"
+                onlypublished="true"
+                label="COM_TKDCLUB_EVENT_TITLE"
+                description="COM_TKDCLUB_EVENT_SELECT_DESC"
+                multiple="false" required="true" filter="safehtml" default="">
+                
+                <option value="">COM_TKDCLUB_EVENT_SELECT</option> 
+            </field>
+            
+            <field
+                name="send_email"
+                type="radio"
+                class="btn-group btn-group-yesno"
+                label="COM_TKDCLUB_FIELD_SENDEMAIL"
+                description="COM_TKDCLUB_FIELD_SENDEMAIL_DESC"
+                default="0">
+        
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>           
+            
+            <field 
+                name="email_user" type="usergrouplist"
+                label="COM_TKDCLUB_EVENT_EMAILTO"
+                description="COM_TKDCLUB_EVENT_EMAILTO_DESC"
+                showon="send_email:1" />
+        
+            <field
+                name="allow_multi"
+                type="radio"
+                class="btn-group btn-group-yesno"
+                label="Mehrfachanmeldungem"
+                description="Legen Sie fest, ob Mehrfachanmeldungen gestattet sein sollen"
+                default="0">
+        
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+
+            <field
+                name="show_places"
+                type="radio"
+                class="btn-group btn-group-yesno"
+                label="COM_TKDCLUB_FIELD_SHOWPLACES"
+                description="COM_TKDCLUB_FIELD_SHOWPLACES_DESC"
+                default="0" >
+
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+            
+            <field
+                name="block_form_places"
+                type="radio"
+                class="btn-group btn-group-yesno"
+                label="COM_TKDCLUB_FIELD_BLOCKFORM_PLACES"
+                description="COM_TKDCLUB_FIELD_BLOCKFORM_PLACES_DESC"
+                default="0" >
+
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+
+            <field
+                name="block_form_deadline"
+                type="radio"
+                class="btn-group btn-group-yesno"
+                label="COM_TKDCLUB_FIELD_BLOCKFORM_DEADLINE"
+                description="COM_TKDCLUB_FIELD_BLOCKFORM_DEADLINE_DESC"
+                default="0" >
+
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+
+            <field type="spacer" name="spacer1" hr="true" />
+            
+            <field 
+                name="show_email"
+                type="radio"
+                class="btn-group btn-group-yesno"
+                label="COM_TKDCLUB_FIELD_SHOWEMAIL"
+                description="COM_TKDCLUB_FIELD_SHOWEMAIL_DESC"
+                default="0">
+        
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+                
+            <field
+                name="show_age"
+                type="radio"
+                class="btn-group btn-group-yesno"
+                label="COM_TKDCLUB_FIELD_SHOWAGE"
+                description="COM_TKDCLUB_FIELD_SHOWAGE_DESC"
+                default="0" >
+
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+
+            <field
+                name="show_kupgradeachieve"
+                type="radio"
+                class="btn-group btn-group-yesno"
+                label="COM_TKDCLUB_FIELD_SHOW_KUPGRADEACHIEVE"
+                description="COM_TKDCLUB_FIELD_SHOW_KUPGRADEACHIEVE_DESC"
+                default="0" >
+
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+            
+            <field
+                name="show_grade"
+                type="radio"
+                class="btn-group btn-group-yesno"
+                label="COM_TKDCLUB_FIELD_SHOWGRADE"
+                description="COM_TKDCLUB_FIELD_SHOWGRADE_DESC"
+                default="0" >
+
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+            
+            <field
+                name="show_club"
+                type="radio"
+                class="btn-group btn-group-yesno"
+                label="COM_TKDCLUB_FIELD_SHOWCLUB"
+                description="COM_TKDCLUB_FIELD_SHOWCLUB_DESC"
+                default="0" >
+
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>
+            
+            <field
+                name="show_user1"
+                type="radio"
+                class="btn-group btn-group-yesno"
+                label="COM_TKDCLUB_FIELD_USER1"
+                description="COM_TKDCLUB_FIELD_USER1_DESC"
+                default="0" >
+
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>        
+                    
+            <field 
+                name="user1" type="text"
+                class="inputbox"
+                label="COM_TKDCLUB_FIELD_USER1_LABEL"
+                description="COM_TKDCLUB_FIELD_USER1_LABEL_DESC"
+                required="false" filter="safehtml"
+                showon="show_user1:1" />
+            
+            <field
+                name="show_user2"
+                type="radio"
+                class="btn-group btn-group-yesno"
+                label="COM_TKDCLUB_FIELD_USER1"
+                description="COM_TKDCLUB_FIELD_USER1_DESC"
+                default="0" >
+
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>        
+                    
+            <field 
+                name="user2" type="text"
+                class="inputbox"
+                label="COM_TKDCLUB_FIELD_USER2_LABEL"
+                description="COM_TKDCLUB_FIELD_USER2_LABEL_DESC"
+                required="false" filter="safehtml"
+                showon="show_user2:1" />
+            
+            <field
+                name="show_user3"
+                type="radio"
+                class="btn-group btn-group-yesno"
+                label="COM_TKDCLUB_FIELD_USER3"
+                description="COM_TKDCLUB_FIELD_USER3_DESC"
+                default="0" >
+
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>        
+                    
+            <field 
+                name="user3" type="text"
+                class="inputbox"
+                label="COM_TKDCLUB_FIELD_USER3_LABEL"
+                description="COM_TKDCLUB_FIELD_USER3_LABEL_DESC"
+                required="false" filter="safehtml"
+                showon="show_user3:1" />
+            
+            <field
+                name="show_user4"
+                type="radio"
+                class="btn-group btn-group-yesno"
+                label="COM_TKDCLUB_FIELD_USER4"
+                description="COM_TKDCLUB_FIELD_USER4_DESC"
+                default="0" >
+
+                <option value="1">JYES</option>
+                <option value="0">JNO</option>
+            </field>        
+                    
+            <field 
+                name="user4" type="text"
+                class="inputbox"
+                label="COM_TKDCLUB_FIELD_USER4_LABEL"
+                description="COM_TKDCLUB_FIELD_USER4_LABEL_DESC"
+                required="false" filter="safehtml"
+                showon="show_user4:1" />                
+                    
+        </fieldset>
+        
+    </fields>      
+    
+</metadata>
