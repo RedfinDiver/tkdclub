@@ -20,7 +20,7 @@ class TkdClubModelParticipant extends JModelForm
         $form = $this->loadForm('tkdclub', 'participant',  $options);
         
         // Removing not displayed fields from the form and labeling of userfields
-        $params = JFactory::getApplication()->getParams()->toObject();
+        $params = JFactory::getApplication()->getUserState('com_tkdclub.participant.itemparams');
         !$params->show_email ? $form->removeField('email') : null;
         !$params->show_age ? $form->removeField('age') && $form->removeField('age_dist') : null;
         !$params->show_grade ? $form->removeField('grade') && $form->removeField('grade_dist') : null;

@@ -10,7 +10,13 @@ defined('_JEXEC') or die;
 class TkdClubController extends JControllerLegacy
 {
     public function display($cachable = false, $urlparams = array()) 
-    {
+    {   
+        // At first request save the Item-params in the user-State variable to make sure to have it available at all time
+        $app = JFactory::getApplication();
+        $item_params = $app->getMenu()->getActive()->params->toObject();
+
+        $app->setUserState('com_tkdclub.participant.itemparams', $item_params);
+        
         parent::display($cachable, $urlparams);
     }
 }

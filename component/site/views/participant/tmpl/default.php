@@ -10,10 +10,10 @@ defined('_JEXEC') or die;
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.formvalidation');
 JHtml::_('formbehavior.chosen', 'select');
-JHtml::_('script', 'components/com_tkdclub/assets/js/field.js');
+JHtml::_('script', 'components/com_tkdclub/assets/js/reload_fields.js');
 
 $params = JComponentHelper::getParams('com_tkdclub');
-$item_params = JFactory::getApplication()->getParams()->toObject();
+$item_params = JFactory::getApplication()->getUserState('com_tkdclub.participant.itemparams');
 
 $places_free = $this->event_data['max'] - $this->event_data['subscribed'];
 $subscribed = $this->event_data['subscribed'];
@@ -41,12 +41,15 @@ JFactory::getDocument()->addScriptDeclaration("
 ?>
 
 <div>
-    <h2><?php echo JText::_('COM_TKDCLUB_SUBSCRIBE_SUCCESS') .'"'. $this->event_data['title'] .'"'. ' am ' . JHtml::_('date', $this->event_data['date'], JText::_('DATE_FORMAT_LC4')); ?></h2>
+    <h2>
+        <?php echo JText::_('COM_TKDCLUB_EVENT_SUBSCRIBE_TO') .'"'. $this->event_data['title'].'"'
+        . JText::_('COM_TKDCLUB_EVENT_ON') . JHtml::_('date', $this->event_data['date'], JText::_('DATE_FORMAT_LC4')); ?>
+    </h2>
     <!-- blocking form if it is set in parameters -->   
     <?php if ($item_params->block_form_places && $places_free <= 0) : ?>
-        <h4><?php echo JText::_('COM_TKDCLUB_SUBSCRIPTION_UNPOSSIBLE_PLACES'); ?></h4>
+        <h4><?php echo JText::_('COM_TKDCLUB_EVENT_SUBSCRIPTION_UNPOSSIBLE_PLACES'); ?></h4>
     <?php elseif ($item_params->block_form_deadline && $stop_sub == 1) : ?>
-        <h4><?php echo JText::_('COM_TKDCLUB_SUBSCRIPTION_UNPOSSIBLE_DEADLINE'); ?></h4>
+        <h4><?php echo JText::_('COM_TKDCLUB_EVENT_SUBSCRIPTION_UNPOSSIBLE_DEADLINE'); ?></h4>
     <?php else : ?>
         <div>
             <?php if ($item_params->show_places) : ?>
@@ -55,7 +58,7 @@ JFactory::getDocument()->addScriptDeclaration("
                     <p>    
                         <strong><?php echo JText::_('COM_TKDCLUB_EVENT_PLACES_FREE'); ?><?php echo $places_free; ?></strong>
                     <br/>
-                        <?php echo JText::_('COM_TKDCLUB_EVENT_SUBSCRIBED'); ?><?php echo $subscribed ?>
+                        <?php echo JText::_('COM_TKDCLUB_EVENT_SUBSCRIBED_PARTICIPANTS'); ?><?php echo $subscribed ?>
                     </p>
                 <?php endif; ?>
             
@@ -63,14 +66,14 @@ JFactory::getDocument()->addScriptDeclaration("
                     <p>    
                         <strong><?php echo JText::_('COM_TKDCLUB_EVENT_SUBSCRIBE_WAITLIST'); ?></strong>
                     <br/>
-                        <?php echo JText::_('COM_TKDCLUB_EVENT_WAITLIST'); ?><?php echo ($this->event_data['max_parts'] - $subscribed) * -1; ?>
+                        <?php echo JText::_('COM_TKDCLUB_EVENT_WAITLIST'); ?><?php echo ($this->event_data['max'] - $subscribed) * -1; ?>
                     </p>
             <?php endif;?>
         </div>   
     <?php endif;?>
 </div>
 <div>
-    <p> <?php echo JText::_('COM_TKDCLUB_PLEASE_FILL_IN'); ?></p>
+    <p> <?php echo JText::_('COM_TKDCLUB_EVENT_SUBSCIPTION_PLEASE_FILL'); ?></p>
 </div>
 <hr>
 <form action="<?php echo JRoute::_('index.php?option=com_tkdclub') ?>"
