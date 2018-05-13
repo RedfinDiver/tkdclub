@@ -29,4 +29,6 @@
 
     "php.suggest.basic": true,
 
+    "livereload.exts": "html,htm,css,js,png,gif,jpg,php,xml,ini",
+
 }
