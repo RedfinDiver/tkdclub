@@ -39,7 +39,7 @@ JFactory::getDocument()->addScriptDeclaration("
 ");
 ?>
 
-<div>
+<div class="tkdclub_subscribe">
     <h2>
         <?php echo JText::_('COM_TKDCLUB_EVENT_SUBSCRIBE_TO') .'"'. $this->event_data['title'].'"'
         . JText::_('COM_TKDCLUB_EVENT_ON') . JHtml::_('date', $this->event_data['date'], JText::_('DATE_FORMAT_LC4')); ?>
@@ -67,40 +67,28 @@ JFactory::getDocument()->addScriptDeclaration("
                     <br/>
                         <?php echo JText::_('COM_TKDCLUB_PARTICIPANT_WAITLIST'); ?><?php echo ($this->event_data['max'] - $subscribed) * -1; ?>
                     </p>
+                <?php endif;?>
             <?php endif;?>
         </div>   
     <?php endif;?>
-</div>
-<div>
-    <p> <?php echo JText::_('COM_TKDCLUB_EVENT_SUBSCIPTION_PLEASE_FILL'); ?></p>
-</div>
-<hr>
 
-<form action="<?php echo JRoute::_('index.php?option=com_tkdclub') ?>"
-      method="post"
-      name="adminForm"
-      id="participant-form"
-      class="form-validate">
+    <p><?php echo JText::_('COM_TKDCLUB_EVENT_SUBSCIPTION_PLEASE_FILL'); ?></p>
 
-	<div class="form-horizontal">
-        <fieldset>
-            <!-- check for multi-participants -->
-            <?php if ($item_params->allow_multi){ echo $this->form->renderField('group');} ?>
-            <!-- render fields for all participants -->
-            <?php
-                foreach($this->form->getFieldset('participant_data_all') as $field)
-                {
-                    // If the field is not hidden, render it
-                    if (!$field->hidden)
-                    {
-                        echo $this->form->renderField($field->fieldname);
-                    }
-                };
-            ?>
-            <!-- render fields for multiple or single participants -->
-            <div id="single_multiple">
+    <hr>
+
+    <form action="<?php echo JRoute::_('index.php?option=com_tkdclub') ?>"
+        method="post"
+        name="adminForm"
+        id="participant-form"
+        class="form-validate">
+
+        <div class="form-horizontal">
+            <fieldset>
+                <!-- check for multi-participants -->
+                <?php if ($item_params->allow_multi){ echo $this->form->renderField('group');} ?>
+                <!-- render fields for all participants -->
                 <?php
-                    foreach($this->form->getFieldset('participant_data_single') as $field)
+                    foreach($this->form->getFieldset('participant_data_all') as $field)
                     {
                         // If the field is not hidden, render it
                         if (!$field->hidden)
@@ -109,50 +97,61 @@ JFactory::getDocument()->addScriptDeclaration("
                         }
                     };
                 ?>
-            </div>
-            <!-- user fields -->
-            <?php
-                foreach($this->form->getFieldset('participant_data_userfields') as $field)
-                {
-                    // If the field is not hidden, render it
-                    if (!$field->hidden)
-                    {
-                        echo $this->form->renderField($field->fieldname);
-                    }
-                };
-            ?>
-            <!-- render captcha field -->
-            <?php echo $this->form->renderField('captcha'); ?>
-
-            <!-- render GDPR field -->
-            <?php 
-                $privacy_field = $this->form->getField('terms_of_use_ok');
-                $item_params->privacy_message ? $privacy_message = $item_params->privacy_message : $privacy_message = JText::_('COM_TKDCLUB_PARTICIPANT_MENUITEM_PRIVACY_MESSAGE_DEFAULT')
-            ?>
-            <div class="control-group">
-                <div class="control-label"><?php echo $privacy_field->label; ?>
+                <!-- render fields for multiple or single participants -->
+                <div id="single_multiple">
+                    <?php
+                        foreach($this->form->getFieldset('participant_data_single') as $field)
+                        {
+                            // If the field is not hidden, render it
+                            if (!$field->hidden)
+                            {
+                                echo $this->form->renderField($field->fieldname);
+                            }
+                        };
+                    ?>
                 </div>
-                <label class="controls checkbox"><?php echo $privacy_field->input; ?>
-                    <?php echo $privacy_message; ?>
-                </label>
+                <!-- user fields -->
+                <?php
+                    foreach($this->form->getFieldset('participant_data_userfields') as $field)
+                    {
+                        // If the field is not hidden, render it
+                        if (!$field->hidden)
+                        {
+                            echo $this->form->renderField($field->fieldname);
+                        }
+                    };
+                ?>
+                <!-- render captcha field -->
+                <?php echo $this->form->renderField('captcha'); ?>
+
+                <!-- render GDPR field -->
+                <?php 
+                    $privacy_field = $this->form->getField('terms_of_use_ok');
+                    $item_params->privacy_message ? $privacy_message = $item_params->privacy_message : $privacy_message = JText::_('COM_TKDCLUB_PARTICIPANT_MENUITEM_PRIVACY_MESSAGE_DEFAULT')
+                ?>
+                <div class="control-group">
+                    <div class="control-label"><?php echo $privacy_field->label; ?>
+                    </div>
+                    <label class="controls checkbox"><?php echo $privacy_field->input; ?>
+                        <?php echo $privacy_message; ?>
+                    </label>
+                </div>
+
+            </fieldset>
+
+            <div class="btn-toolbar">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary" onclick="Joomla.submitbutton('participant.subscribe')">
+                        <span class="icon-ok"></span> <?php echo JText::_('COM_TKDCLUB_SUBSCRIBE') ?>
+                    </button>
+                </div>
             </div>
-
-        </fieldset>
-
-        <div class="btn-toolbar">
-            <div class="btn-group">
-                <button type="button" class="btn btn-primary" onclick="Joomla.submitbutton('participant.subscribe')">
-                    <span class="icon-ok"></span> <?php echo JText::_('COM_TKDCLUB_SUBSCRIBE') ?>
-                </button>
+                    
             </div>
+                <input type="hidden" name="task" value="" />
+                <?php echo JHtml::_('form.token'); ?>
+            </div> 
         </div>
-                
-        </div>
-            <input type="hidden" name="task" value="" />
-            <?php echo JHtml::_('form.token'); ?>
-        </div> 
-    </div>
 
-</form>
-
-<?php endif; ?>
+    </form>
+</div>
