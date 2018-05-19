@@ -37,7 +37,6 @@ JFactory::getDocument()->addScriptDeclaration("
 		}
 	};
 ");
-
 ?>
 
 <div>
@@ -64,9 +63,9 @@ JFactory::getDocument()->addScriptDeclaration("
             
                 <?php if ($places_free <= 0) :?>
                     <p>    
-                        <strong><?php echo JText::_('COM_TKDCLUB_EVENT_SUBSCRIBE_WAITLIST'); ?></strong>
+                        <strong><?php echo JText::_('COM_TKDCLUB_PARTICIPANT_SUBSCRIBE_WAITLIST'); ?></strong>
                     <br/>
-                        <?php echo JText::_('COM_TKDCLUB_EVENT_WAITLIST'); ?><?php echo ($this->event_data['max'] - $subscribed) * -1; ?>
+                        <?php echo JText::_('COM_TKDCLUB_PARTICIPANT_WAITLIST'); ?><?php echo ($this->event_data['max'] - $subscribed) * -1; ?>
                     </p>
             <?php endif;?>
         </div>   
@@ -76,14 +75,14 @@ JFactory::getDocument()->addScriptDeclaration("
     <p> <?php echo JText::_('COM_TKDCLUB_EVENT_SUBSCIPTION_PLEASE_FILL'); ?></p>
 </div>
 <hr>
+
 <form action="<?php echo JRoute::_('index.php?option=com_tkdclub') ?>"
       method="post"
       name="adminForm"
       id="participant-form"
       class="form-validate">
 
-<div class="row-fluid">
-	<div class="span12 form-horizontal">
+	<div class="form-horizontal">
         <fieldset>
             <!-- check for multi-participants -->
             <?php if ($item_params->allow_multi){ echo $this->form->renderField('group');} ?>
@@ -96,7 +95,6 @@ JFactory::getDocument()->addScriptDeclaration("
                     {
                         echo $this->form->renderField($field->fieldname);
                     }
-
                 };
             ?>
             <!-- render fields for multiple or single participants -->
@@ -109,7 +107,6 @@ JFactory::getDocument()->addScriptDeclaration("
                         {
                             echo $this->form->renderField($field->fieldname);
                         }
-
                     };
                 ?>
             </div>
@@ -122,12 +119,26 @@ JFactory::getDocument()->addScriptDeclaration("
                     {
                         echo $this->form->renderField($field->fieldname);
                     }
-
                 };
             ?>
             <!-- render captcha field -->
             <?php echo $this->form->renderField('captcha'); ?>
+
+            <!-- render GDPR field -->
+            <?php 
+                $privacy_field = $this->form->getField('terms_of_use_ok');
+                $item_params->privacy_message ? $privacy_message = $item_params->privacy_message : $privacy_message = JText::_('COM_TKDCLUB_PARTICIPANT_MENUITEM_PRIVACY_MESSAGE_DEFAULT')
+            ?>
+            <div class="control-group">
+                <div class="control-label"><?php echo $privacy_field->label; ?>
+                </div>
+                <label class="controls checkbox"><?php echo $privacy_field->input; ?>
+                    <?php echo $privacy_message; ?>
+                </label>
+            </div>
+
         </fieldset>
+
         <div class="btn-toolbar">
             <div class="btn-group">
                 <button type="button" class="btn btn-primary" onclick="Joomla.submitbutton('participant.subscribe')">
@@ -135,12 +146,13 @@ JFactory::getDocument()->addScriptDeclaration("
                 </button>
             </div>
         </div>
+                
         </div>
             <input type="hidden" name="task" value="" />
             <?php echo JHtml::_('form.token'); ?>
         </div> 
     </div>
-</div>  
+
 </form>
 
 <?php endif; ?>

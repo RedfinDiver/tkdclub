@@ -140,8 +140,9 @@
                 <option value="0">JNO</option>
             </field>
 
-            <field type="spacer" name="spacer2" hr="true" />
+        </fieldset>
 
+        <fieldset name="user_fields" label="COM_TKDCLUB_PARTICIPANT_MENUITEM_USERFIELDS">
             <!-- Show up to 4 user fields in subscription form, every field can be labeled -->
             <!-- User defined field #1 -->
             <field
@@ -219,6 +220,20 @@
                 required="false" filter="safehtml"
                 showon="show_user4:1" />
                            
+        </fieldset>
+
+        <fieldset name="privacy" label="COM_TKDCLUB_PARTICIPANT_MENUITEM_PRIVACY_MESSAGE">
+            
+            <!-- Privacy message definition -->
+            <field
+                name="privacy_message" type="editor"
+                cols="5" rows="6"
+                filter="raw"
+                label="COM_TKDCLUB_PARTICIPANT_MENUITEM_PRIVACY_MESSAGE"
+                description="COM_TKDCLUB_PARTICIPANT_MENUITEM_PRIVACY_MESSAGE_DESC"
+                hide="readmore,pagebreak,image,article">
+            </field>
+            
         </fieldset>
         
     </fields>      

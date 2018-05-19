@@ -156,4 +156,14 @@
 
     </fieldset>
 
+    <fieldset name="participant_privacy_data">
+        <field 
+            name="terms_of_use_ok" type="checkbox"
+            class="inputbox"
+            label="COM_TKDCLUB_PARTICIPANT_PRIVACY"
+            description="COM_TKDCLUB_PARTICIPANT_PRIVACY_DESC"
+            required="true"
+            default="0"/>
+    </fieldset>
+
 </form>
