@@ -219,6 +219,7 @@ ALTER TABLE `#__tkdclub_event_participants`
     CHANGE `published` `published` tinyint(4) NOT NULL,
     CHANGE `checked_out` `checked_out` int(10) NOT NULL,
     CHANGE `checked_out_time` `checked_out_time` datetime NOT NULL,
+    ADD `store_email` tinyint(4) NOT NULL AFTER `user4`,
     ADD `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `published`,
     ADD `created_by` INT(10) unsigned NOT NULL DEFAULT '0' AFTER `created`,
     ADD `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `created_by`,

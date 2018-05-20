@@ -222,18 +222,27 @@
                            
         </fieldset>
 
-        <fieldset name="privacy" label="COM_TKDCLUB_PARTICIPANT_MENUITEM_PRIVACY_MESSAGE">
+        <fieldset name="privacy" label="COM_TKDCLUB_PARTICIPANT_MENUITEM_PRIVACY_TAB">
             
             <!-- Privacy message definition -->
             <field
                 name="privacy_message" type="editor"
-                cols="5" rows="6"
+                width="200" height="400"
                 filter="raw"
                 label="COM_TKDCLUB_PARTICIPANT_MENUITEM_PRIVACY_MESSAGE"
                 description="COM_TKDCLUB_PARTICIPANT_MENUITEM_PRIVACY_MESSAGE_DESC"
                 hide="readmore,pagebreak,image,article">
             </field>
-            
+
+            <field
+                name="store_email_message" type="editor"
+                width="200" height="400"
+                filter="raw"
+                label="COM_TKDCLUB_PARTICIPANT_MENUITEM_STORE_EMAIL_MESSAGE"
+                description="COM_TKDCLUB_PARTICIPANT_MENUITEM_STORE_EMAIL_MESSAGE_DESC"
+                hide="readmore,pagebreak,image,article">
+            </field>
+
         </fieldset>
         
     </fields>      

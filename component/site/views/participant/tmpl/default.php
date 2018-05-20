@@ -127,13 +127,26 @@ JFactory::getDocument()->addScriptDeclaration("
                 <!-- render GDPR field -->
                 <?php 
                     $privacy_field = $this->form->getField('terms_of_use_ok');
-                    $item_params->privacy_message ? $privacy_message = $item_params->privacy_message : $privacy_message = JText::_('COM_TKDCLUB_PARTICIPANT_MENUITEM_PRIVACY_MESSAGE_DEFAULT')
+                    $privacy_message = $item_params->privacy_message ? $item_params->privacy_message : JText::_('COM_TKDCLUB_PARTICIPANT_MENUITEM_PRIVACY_MESSAGE_DEFAULT')
                 ?>
                 <div class="control-group">
                     <div class="control-label"><?php echo $privacy_field->label; ?>
                     </div>
                     <label class="controls checkbox"><?php echo $privacy_field->input; ?>
                         <?php echo $privacy_message; ?>
+                    </label>
+                </div>
+
+                <!-- render store_email field -->
+                <?php
+                    $store_mail_field = $this->form->getField('store_email');
+                    $store_mail_message = $item_params->store_email_message ? $item_params->store_email_message : JText::_('COM_TKDCLUB_PARTICIPANT_MENUITEM_STORE_EMAIL_MESSAGE_DEFAULT');
+                ?>
+                <div class="control-group">
+                    <div class="control-label"><?php echo $store_mail_field->label; ?>
+                    </div>
+                    <label class="controls checkbox"><?php echo $store_mail_field->input; ?>
+                        <?php echo $store_mail_message; ?>
                     </label>
                 </div>
 
