@@ -29,7 +29,7 @@
             size="30" required="true" filter="safehtml" />
 
         <field 
-            name="participants" type="text"
+            name="registered" type="text"
             class="inputbox"
             label="COM_TKDCLUB_PARTICIPANT_REGISTERED"
             description="COM_TKDCLUB_PARTICIPANT_REGISTERED_DESC"
