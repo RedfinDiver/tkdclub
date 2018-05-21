@@ -67,6 +67,8 @@ JHtml::_('script', 'administrator/components/com_tkdclub/assets/js/rawsubmitbutt
                 <th><?php echo JText::_('COM_TKDCLUB_PARTICIPANT_GRADE'); ?></th>
                 <th><?php echo JText::_('COM_TKDCLUB_PARTICIPANT_AGE'); ?></th>
                 <th width="15%"><?php echo JText::_('COM_TKDCLUB_PARTICIPANT_NOTES'); ?></th>
+                <th><?php echo JText::_('COM_TKDCLUB_PARTICIPANT_STORE_DATA'); ?></th>
+                <th><?php echo JText::_('COM_TKDCLUB_PARTICIPANT_AGREED_PRIVACY_TERMS'); ?></th>
                 <th width="1%"><?php echo JText::_('COM_TKDCLUB_PARTICIPANTS_ID'); ?></th>
             </tr>
         </thead>
@@ -101,6 +103,18 @@ JHtml::_('script', 'administrator/components/com_tkdclub/assets/js/rawsubmitbutt
                     <td class="left"><?php echo $this->escape($item->grade); ?></td>
                     <td class="left"><?php echo $this->escape($item->age); ?></td>
                     <td class="left"><?php echo $this->escape($item->notes); ?></td>
+                    <td>
+                        <?php
+                           // echo $consent = $this->escape($item->store_data) ? JText::_('JYES') : JText::_('JNO');
+                           echo $consent = $this->escape($item->store_data) ? '<span class="icon-publish"></span>' : '<span class="icon-unpublish"></span>';
+                        ?>
+                    </td>
+                    <td>
+                        <?php
+                           // echo $consent = $this->escape($item->store_data) ? JText::_('JYES') : JText::_('JNO');
+                           echo $consent = $this->escape($item->privacy_agreed) ? '<span class="icon-publish"></span>' : '<span class="icon-unpublish"></span>';
+                        ?>
+                    </td>
                     <td width="10" class="center"><?php echo (int) $item->id; ?></td>
                 </tr>
             <?php endforeach; ?>
