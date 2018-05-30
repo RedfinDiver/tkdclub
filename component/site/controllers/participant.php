@@ -17,8 +17,8 @@ class TkdClubControllerParticipant extends JControllerForm
     }
     
     /**
-    *   JS method for inserting multiple field markup
-    */
+     *   JS method for inserting multiple field markup
+     */
     public function getMultipleFieldset()
     {
         $app = JFactory::getApplication();
@@ -52,87 +52,21 @@ class TkdClubControllerParticipant extends JControllerForm
     {
         JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));       
 
-        // Getting the application
+        // Getting some variables
         $app = JFactory::getApplication();
-        
-        // Get the menu item-id an the event-data via JMenuSite from the params of the menu item
-        $item_id = $app->getMenu()->getActive()->id;
-        $event_id = $app->getMenu()->getActive()->params->get('event_id');
-        $grp = $app->getMenu()->getActive()->params->get('email_user');
-        $send_mail = $app->getMenu()->getActive()->params->get('send_email');
-        $menu_params = $app->getMenu()->getActive()->params;
-        
         $model = $this->getModel('participant');
+
+        $this->menu_params = JFactory::getApplication()->getUserState('com_tkdclub.participant.itemparams');
+        $test = JComponentHelper::getParams('com_tkdclub')->get('captcha');
+        $this->item_id = $app->getMenu()->getActive()->id;
         $event_data = $model->getEventData();
-
-        // Get the params for the component
-        $params = JComponentHelper::getParams('com_tkdclub');
         
-        // Get Form-data from the JInput Object and cleaning and append event_id and publishing 
-        $input = $app->input;
-        $uncleaned_data = $input->getArray(array(
-                'jform' => array(
-                    'group' => 'int',
-                    'lastname' => 'word',
-                    'firstname' => 'word',
-                    'age' => 'string',
-                    'age_dist' => 'string',
-                    'clubname' => 'string',
-                    'participants' => 'int',
-                    'grade' => 'string',
-                    'grade_dist' => 'string',
-                    'kupgradesachieve' => 'string',
-                    'email' => 'string',
-                    'notes' => 'string',
-                    'user1' => 'string',
-                    'user2' => 'string',
-                    'user3' => 'string',
-                    'user4' => 'string',
-                )
-            ));
-
-        $data = array();
-         
-        foreach ($uncleaned_data['jform'] as $key => $value)
-        {
-            $data[$key] = $value;
-        }
-        
-        // Appending event_id and publishing        
-        $data['event_id'] = (int) $event_id;
-        $data['published'] = (int) 1;
-
-        if ($data['group'] == 0)
-        {
-            $data['participants'] = 1;
-        }
-
-        // Get the age data for the table
-        $data['age'] = $data['age_dist'] ? $data['age'] = $data['age_dist'] : $data['age'] = $data['age'];
-
-        // get the grade-data for the table
-        if ($data['grade'])
-        {
-            $data['grade'] = $data['grade'];
-        }
-        elseif ($data['grade_dist'])
-        {
-            $data['grade'] = $data['grade_dist'];
-        }
-        elseif ($data['kupgradesachieve'])
-        {
-             $data['grade'] = $data['kupgradesachieve'];
-        }
+        // Get the input and preprocess it
+        $this->data = $this->preprocessData($app->input);
 
         // Captcha Check
-        if (!$this->checkCaptcha() && $params->get('captcha') != '0' )
+        if (!$this->checkCaptcha())
         {
-            // set the fail message
-            $this->setMessage(JEventDispatcher::getInstance()->getError());
-            // save form data in session
-            $app->setUserState('com_tkdclub.participant.data', $data);
-            // Redirect back to the contact form.
-            $this->setRedirect(JRoute::_('index.php?option=com_tkdclub&view=participant&Itemid='. $item_id, false));
             return false;
         }
         
@@ -141,21 +75,26 @@ class TkdClubControllerParticipant extends JControllerForm
         {
             $table = $this->getTable();
             
-            if ($table->save($data))
+            if ($table->save($this->data))
             {
                 $this->message = JText::_('COM_TKDCLUB_SUBSCRIBE_SUCCESS') 
-                . '"' .$event_data['title'] . '" am ' 
+                . '"' .$event_data['title'] . '" ' .  JText::_('COM_TKDCLUB_AT') . ' '
                 . JHtml::_('date', $event_data['date'], JText::_('DATE_FORMAT_LC4')) 
                 . JText::_('COM_TKDCLUB_SUBSCRIBE_THANK_YOU');
-        
-                // Send the mail
-                if ($send_mail)
+
+                if ($this->data['email'])
                 {
-                    $model->send($event_data, $data, $grp);   
+                    $this->message .= JText::_('COM_TKDCLUB_EMAIL_CONFIRMATION');
+                }
+        
+                // Send the mail to organizer
+                if ($this->menu_params->send_email)
+                {
+                    $model->send($event_data, $this->data, $this->menu_params->email_user_group);   
                 }
                 
                 // Deleting the entered data, except value for clubname  
-                foreach ($data as $key => &$value)
+                foreach ($this->data as $key => &$value)
                 {
                     if ($key != "clubname" )
                     {
@@ -164,9 +103,8 @@ class TkdClubControllerParticipant extends JControllerForm
                 }
             
                 // Setting the cleaned state after successful saving   
-                $app->setUserState('com_tkdclub.participant.data', $data);  
+                $app->setUserState('com_tkdclub.participant.data', $this->data);  
           
-                
             }
             else
             {
@@ -179,24 +117,111 @@ class TkdClubControllerParticipant extends JControllerForm
             $this->message = $ex->getMessage();
         }
         
-        $this->setRedirect(JRoute::_('index.php?option=com_tkdclub&view=participant&Itemid='. $item_id, false));
+        $this->setRedirect(JRoute::_('index.php?option=com_tkdclub&view=participant&Itemid='. $this->item_id, false));
         
         return true;
     }
+
+    /* Preprocess the data before saving to the database
+     * 
+     * The data is cleaned and the data for age and grade is preprocessed
+     * 
+     * @param   object  $input  Joomla input object
+     * 
+     * @return  array   Preprocessed data, ready to save
+     * 
+     */
+    public function preprocessData($input)
+    {
+        $uncleaned_data = $input->getArray(array(
+            'jform' => array(
+                'group' => 'int',
+                'lastname' => 'word',
+                'firstname' => 'word',
+                'age' => 'string',
+                'age_dist' => 'string',
+                'clubname' => 'string',
+                'registered' => 'int',
+                'grade' => 'string',
+                'grade_dist' => 'string',
+                'kupgradesachieve' => 'string',
+                'email' => 'string',
+                'notes' => 'string',
+                'user1' => 'string',
+                'user2' => 'string',
+                'user3' => 'string',
+                'user4' => 'string',
+                'store_data' => 'int',
+                'privacy_agreed' => 'int',
+            )
+        ));
+
+        $data = array();
+     
+        foreach ($uncleaned_data['jform'] as $key => $value)
+        {
+            $data[$key] = $value;
+        }
     
+        // Appending event_id and publishing        
+        $data['event_id'] = $this->menu_params->event_id;
+        $data['published'] = (int) 1;
+
+        if ($data['group'] == 0)
+        {
+            $data['registered'] = 1;
+        }
+
+        // Set the age data for the table
+        $data['age'] = $data['age_dist'] ? $data['age'] = $data['age_dist'] : $data['age'] = $data['age'];
+
+        // Set the grade-data for the table
+        if ($data['grade'])
+        {
+            $data['grade'] = $data['grade'];
+        }
+        elseif ($data['grade_dist'])
+        {
+            $data['grade'] = $data['grade_dist'];
+        }
+        elseif ($data['kupgradesachieve'])
+        {
+            $data['grade'] = $data['kupgradesachieve'];
+        }
+
+        return $data;
+    }
     
     protected function checkCaptcha()
-    {
+    {   
+        $app = JFactory::getApplication();
+
+        // No captcha in configuration demanded
+        if (JComponentHelper::getParams('com_tkdclub')->get('captcha') == '0')
+        {
+            return true;
+        }
+
         // Get the plugin
         JPluginHelper::importPlugin('captcha');
         $dispatcher = JEventDispatcher::getInstance();
         
         // Get the response
-        $res = $dispatcher->trigger('onCheckAnswer', '');
+        $response = $dispatcher->trigger('onCheckAnswer', '');
+        //$response = array(false);
 
         // If empty, return false
-        if(!$res[0])
-        {
+        if($response[0] === false)
+        {   
+            // set the fail message
+            $this->setMessage('Fehler beim Captcha!', 'error');
+
+            // save form data in session
+            $app->setUserState('com_tkdclub.participant.data', $this->data);
+
+            // Redirect back to the contact form.
+            $this->setRedirect(JRoute::_('index.php?option=com_tkdclub&view=participant&Itemid='. $this->item_id, false));
+            
             return false;
         }
         

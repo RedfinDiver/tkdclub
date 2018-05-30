@@ -77,7 +77,7 @@
             </field>           
 
             <field 
-                name="email_user" type="usergrouplist"
+                name="email_user_group" type="usergrouplist"
                 label="COM_TKDCLUB_PARTICIPANT_MENUITEM_EMAILTO"
                 description="COM_TKDCLUB_PARTICIPANT_MENUITEM_EMAILTO_DESC"
                 showon="send_email:1" />

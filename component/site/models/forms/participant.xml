@@ -85,8 +85,8 @@
         <field 
             name="participants" type="text"
             class="required validate-numeric"
-            label="Anzahl Teilnehmer"
-            description="Schreiben Sie hier die Anzahl der Teilnehmer hinein"
+            label="COM_TKDCLUB_PARTICIPANT_SUM"
+            description="COM_TKDCLUB_PARTICIPANT_SUM_DESC"
             required="true"
             filter="integer" />
 
@@ -158,7 +158,7 @@
 
     <fieldset name="participant_privacy_data">
         <field 
-            name="terms_of_use_ok" type="checkbox"
+            name="privacy_agreed" type="checkbox"
             class="inputbox"
             label="COM_TKDCLUB_PARTICIPANT_PRIVACY"
             description="COM_TKDCLUB_PARTICIPANT_PRIVACY_DESC"
@@ -166,7 +166,7 @@
             default="0"/>
 
         <field 
-            name="store_email" type="checkbox"
+            name="store_data" type="checkbox"
             class="inputbox"
             label="Daten speichern"
             description="Hier können Sie ankreuzen ob wir ihre Daten speichern dürfen"

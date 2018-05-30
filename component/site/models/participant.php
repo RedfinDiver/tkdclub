@@ -136,76 +136,169 @@ class TkdClubModelParticipant extends JModelForm
 
         return $db->loadResult();
     }
-    
-    public function send($event_data, $data, $grp)
-	{       
-        require_once  JPATH_COMPONENT_ADMINISTRATOR . '/helpers/tkdclub.php';
-        $app = JFactory::getApplication();
-        $access = new JAccess;
-        $db     = $this->getDbo();
-        $parts  = TkdClubHelper::getParticipants($event_data['id']);
+
+    /**
+     * Send the emails to organizers and confirmation email to participant
+     * 
+     * 
+     */
+    public function send($event_data, $data, $group)
+	{   
+        $mail = new stdClass;
+
+        // Prepare the data for the email
+        $mail->title      = $event_data['title'];
+        $mail->date       = JHtml::_('date', $event_data['date'], JText::_('DATE_FORMAT_LC4'));
+        $mail->fields     = $this->prepareDataforEmail($data);
+        $mail->subscribed = $this->getSubscribedParticipants($event_data['event_id']);
+        $mail->free       = $event_data['max'] - $subscribed;
+        $mail->name       = $data['firstname'] . ' ' . $data['lastname'];
+        
+        $this->sendConformationMail($mail, $data['email']);                 
+        
+        $this->sendUsergroupMail($mail, $this->getOrganizerEmails($group));
+    }
+
+    /**
+     * Prepare the data from fields for the email
+     * 
+     * @param   array   $data   the preprocessed data from the form
+     * 
+     * @return  string  the data as string, ready to use in email body
+     * 
+     */
+    public function prepareDataforEmail($data = array())
+    {   
         $params = JFactory::getApplication()->getUserState('com_tkdclub.participant.itemparams', '');
+        $store_data = $data['store_data'] === 1 ? $store_data = JText::_('JYES') : $store_data = JText::_('JNO');
+        $field_text = '';
 
-		$title = $event_data['title'];
-		$subject = JText::_('COM_TKDCLUB_SUBSCRIPTION') . $title 
-                               . JText::_('COM_TKDCLUB_SUBSCRIPTION_AT') . JHtml::_('date', $event_data['date'], JText::_('DATE_FORMAT_LC4'))
-                               . JText::_('COM_TKDCLUB_SUBSCRIPTION_NEW');
-                
-        // Preparing the Fields for email-message
-        $params->show_grade  ? $field_grade =  JText::_('COM_TKDCLUB_EVENTPARTS_GRADE') . ': ' .  $data['grade']    .  "\r\n" : $field_grade = '';
-        $params->show_age    ? $field_age   =  JText::_('COM_TKDCLUB_EVENTPARTS_AGE')   . ': ' .  $data['age']      .  "\r\n" : $field_age   = '';
-        $params->show_club   ? $field_club  =  JText::_('COM_TKDCLUB_EVENTPARTS_CLUB')  . ': ' .  $data['clubname'] .  "\r\n" : $field_club  = '';
-        $params->show_email  ? $field_email =  JText::_('COM_TKDCLUB_EVENTPARTS_EMAIL') . ': ' .  $data['email']    .  "\r\n" : $field_email = '';
-        $data['notes'] != '' ? $field_notes =  JText::_('COM_TKDCLUB_EVENTPARTS_NOTES') . ': ' .  $data['notes']    .  "\r\n" : $field_notes = '';
-        $params->show_user1  ? $field_user1 = $params->user1 . ': ' . $data['user1'] . "\r\n" : $field_user1 = '';
-        $params->show_user2  ? $field_user2 = $params->user2 . ': ' . $data['user2'] . "\r\n" : $field_user2 = '';
-        $params->show_user3  ? $field_user3 = $params->user3 . ': ' . $data['user3'] . "\r\n" : $field_user3 = '';
-        $params->show_user4  ? $field_user4 = $params->user4 . ': ' . $data['user4'] . "\r\n" : $field_user4 = '';
-                
-        // Preparing email-message
-		$message_body = $data['firstname'] . ' ' . $data['lastname'] . JText::_('COM_TKDCLUB_EVENT_HAS_SUBSCRIBED') . "\r\n\r\n"
-                                . $field_grade
-                                . $field_age
-                                . $field_club
-                                . $field_email
-                                . $field_notes
-                                . $field_user1 . $field_user2 . $field_user3 . $field_user4 
-                                . "\r\n"
-                                . JText::_('COM_TKDCLUB_EVENT_SUBSCRIBED') . $parts . "\r\n"
-                                . JText::_('COM_TKDCLUB_EVENT_PLACES_FREE'). ($event_data['max_parts'] - $parts);
-                                
-		// Get users in the group out of the ACL
-		$to = $access->getUsersByGroup($grp);
+        $field_text .= JText::_('COM_TKDCLUB_PARTICIPANT_FIRSTNAME') . ': ' . $data['firstname'] . "\r\n";
+        $field_text .= JText::_('COM_TKDCLUB_PARTICIPANT_LASTNAME') . ': ' . $data['lastname'] . "\r\n";
+        $data['email'] ? $field_text .= JText::_('COM_TKDCLUB_PARTICIPANT_EMAIL') . ': ' . $data['email'] . "\r\n" : null;
+        $data['clubname'] ? $field_text .= JText::_('COM_TKDCLUB_PARTICIPANT_CLUB') . ': ' . $data['clubname'] . "\r\n" : null;
+        $data['grade'] ? $field_text .= JText::_('COM_TKDCLUB_PARTICIPANT_GRADE_EMAIL') . ': ' . $data['grade'] . "\r\n" : null;
+        $data['age'] ? $field_text .= JText::_('COM_TKDCLUB_PARTICIPANT_AGE') . ': ' . $data['age'] . "\r\n" : null;
+        $data['registered'] ? $field_text .= JText::_('COM_TKDCLUB_PARTICIPANT_SUM') . ': ' . $data['registered'] . "\r\n" : null;
+        $data['user1'] ? $field_text .= $params->user1 . ': ' . $data['user1'] . "\r\n" : null;
+        $data['user2'] ? $field_text .= $params->user2 . ': ' . $data['user2'] . "\r\n" : null;
+        $data['user3'] ? $field_text .= $params->user3 . ': ' . $data['user3'] . "\r\n" : null;
+        $data['user4'] ? $field_text .= $params->user4 . ': ' . $data['user4'] . "\r\n" : null;
+        $field_text .= JText::_('COM_TKDCLUB_PARTICIPANT_PRIVACY_ACCEPTED_EMAIL') . ': ' . JText::_('JYES') . "\r\n";
+        $field_text .= JText::_('COM_TKDCLUB_PARTICIPANT_STOREDATA_ACCEPTED_EMAIL') . ': ' . $store_data . "\r\n";
+        $field_text .= "\r\n";
 
-		// Get all users email and group except for senders
-		$query = $db->getQuery(true)
-			->select('email')
-			->from('#__users');
+        return $field_text;
+    }      
 
-		if ($grp !== 0)
-		{
-			if (empty($to))
-			{
-				$query->where('0');
-			}
-			else
-			{
-				$query->where('id IN (' . implode(',', $to) . ')');
-			}
-		}
+    /**
+     * Get all the email adresses for the given user group
+     * 
+     * @param   integer   $group   the group id
+     * 
+     * @return  array   indexed array with email adresses for the group
+     * 
+     */
+    public function getOrganizerEmails($group)
+    {   
+        // If no group is given return
+        if ($group === 0)
+        {
+            return false;
+        }
 
-		$db->setQuery($query);
-		$rows = $db->loadColumn();
+        // Get users in the group out of the ACL
+        $access = new JAccess;
+		$users = $access->getUsersByGroup($group);
 
-		// Get the Mailer
+        // Get all email adesses for the user
+        $db    = JFactory::getDbo();
+        $query = $db->getQuery(true)
+                    ->select('email')->from('#__users')
+		            ->where('id IN (' . implode(',', $users) . ')');
+
+        $db->setQuery($query);
+        
+		return $db->loadColumn();
+    }
+
+    /**
+     * Send a confirmation email to the subscriber
+     * 
+     * @param   object  $mail   The data to form the email
+     * @param   mixed   $recipient  string or array of strings
+     * 
+     * @return  bool    true if succeded, false otherwise
+     */ 
+    public function sendConformationMail($mail, $recipient)
+    {   
+        $subject = JText::_('COM_TKDCLUB_SUBSCRIBE_SUCCESS_CONFIRMATION')
+                   . $mail->title
+                   . JText::_('COM_TKDCLUB_EVENT_ON')
+                   . $mail->date;
+
+        $message = JText::_('COM_TKDCLUB_HELLO') . ' ' . $mail->name . ','
+                   . "\r\n\r\n"
+                   . JText::_('COM_TKDCLUB_PARTICIPANT_MESSAGE_CONFIRMATION')
+                   . "\r\n"
+                   . JText::_('COM_TKDCLUB_PARTICIPANT_MESSAGE_DATA_WHERE')
+                   . "\r\n"
+                   . $mail->fields
+                   . JText::_('COM_TKDCLUB_PARTICIPANT_MESSAGE_THANK_YOU');
+        
+        return $this->mail($subject, $message, $recipient);           
+    }
+
+    /**
+     * Send an email to the users in the selected user group
+     * 
+     * @param   object  $mail   The data to form the email
+     * @param   mixed   $recipient  string or array of strings
+     * 
+     * @return  bool    true if succeded, false otherwise
+     */ 
+    public function sendUsergroupMail($mail, $recipient)
+    {   
+        $subject = JText::_('COM_TKDCLUB_SUBSCRIBE_SUCCESS')
+                   . $mail->title
+                   . JText::_('COM_TKDCLUB_EVENT_ON')
+                   . $mail->date
+                   . JText::_('COM_TKDCLUB_PARTICIPANT_INCOME');
+
+        $message = JText::_('COM_TKDCLUB_HELLO') . ','
+                   . "\r\n\r\n"
+                   . JText::_('COM_TKDCLUB_PARTICIPANT_MESSAGE_ADMIN')
+                   . "\r\n"
+                   . JText::_('COM_TKDCLUB_PARTICIPANT_MESSAGE_DATA_WHERE')
+                   . "\r\n"
+                   . $mail->fields
+                   . JText::_('COM_TKDCLUB_EVENT_SUBSCRIBED_PARTICIPANTS')
+                   . $mail->subscribed
+                   . "\r\n"
+                   . JText::_('COM_TKDCLUB_EVENT_PLACES_FREE')
+                   . $mail->free;
+        
+        return $this->mail($subject, $message, $recipient);           
+    }
+
+    /**
+     * Mail the E-Mail with JMailer
+     * 
+     * @param   string  $subject    the subject string
+     * @param   string  $message    the message sring
+     * @param   mixed   $recipient  string or array of strings
+     */
+    public function mail($subject, $message, $recipient)
+    {
+        $app = JFactory::getApplication();
 		$mailer = JFactory::getMailer();
 
 		// Build email message format.
 		$mailer->setSender(array($app->get('mailfrom'), $app->get('fromname')));
 		$mailer->setSubject(stripslashes($subject));
-		$mailer->setBody($message_body);
+		$mailer->setBody($message);
 		$mailer->IsHtml(false);
-        $mailer->addRecipient($rows);
+        $mailer->addRecipient($recipient);
 
 		// Send the Mail
 		$rs = $mailer->Send();
@@ -223,10 +316,11 @@ class TkdClubModelParticipant extends JModelForm
 			$this->setError(JText::_('COM_USERS_MAIL_THE_MAIL_COULD_NOT_BE_SENT'));
 
 			return false;
-		}
-		
-	}
-        
+        }
+
+        return true;
+    }
+
     public function setAttributes($names, $atts, $values)
     {
         $form->setFieldAttribute();
