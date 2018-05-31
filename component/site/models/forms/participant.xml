@@ -83,7 +83,7 @@
     <fieldset name="participant_data_multiple" addfieldpath="/administrator/components/com_tkdclub/models/fields">
         
         <field 
-            name="participants" type="text"
+            name="registered" type="text"
             class="required validate-numeric"
             label="COM_TKDCLUB_PARTICIPANT_SUM"
             description="COM_TKDCLUB_PARTICIPANT_SUM_DESC"

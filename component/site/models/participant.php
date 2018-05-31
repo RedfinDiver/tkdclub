@@ -151,7 +151,7 @@ class TkdClubModelParticipant extends JModelForm
         $mail->date       = JHtml::_('date', $event_data['date'], JText::_('DATE_FORMAT_LC4'));
         $mail->fields     = $this->prepareDataforEmail($data);
         $mail->subscribed = $this->getSubscribedParticipants($event_data['event_id']);
-        $mail->free       = $event_data['max'] - $subscribed;
+        $mail->free       = $event_data['max'] - $mail->subscribed;
         $mail->name       = $data['firstname'] . ' ' . $data['lastname'];
         
         $this->sendConformationMail($mail, $data['email']);                 
@@ -186,6 +186,7 @@ class TkdClubModelParticipant extends JModelForm
         $data['user4'] ? $field_text .= $params->user4 . ': ' . $data['user4'] . "\r\n" : null;
         $field_text .= JText::_('COM_TKDCLUB_PARTICIPANT_PRIVACY_ACCEPTED_EMAIL') . ': ' . JText::_('JYES') . "\r\n";
         $field_text .= JText::_('COM_TKDCLUB_PARTICIPANT_STOREDATA_ACCEPTED_EMAIL') . ': ' . $store_data . "\r\n";
+        $data['notes'] ? $field_text .= JText::_('COM_TKDCLUB_PARTICIPANT_NOTES') . ': ' . $data['notes'] . "\r\n" : null;
         $field_text .= "\r\n";
 
         return $field_text;
@@ -233,14 +234,14 @@ class TkdClubModelParticipant extends JModelForm
     public function sendConformationMail($mail, $recipient)
     {   
         $subject = JText::_('COM_TKDCLUB_SUBSCRIBE_SUCCESS_CONFIRMATION')
-                   . $mail->title
+                   . "\"" . $mail->title . "\""
                    . JText::_('COM_TKDCLUB_EVENT_ON')
                    . $mail->date;
 
         $message = JText::_('COM_TKDCLUB_HELLO') . ' ' . $mail->name . ','
                    . "\r\n\r\n"
                    . JText::_('COM_TKDCLUB_PARTICIPANT_MESSAGE_CONFIRMATION')
-                   . "\r\n"
+                   . "\r\n\r\n"
                    . JText::_('COM_TKDCLUB_PARTICIPANT_MESSAGE_DATA_WHERE')
                    . "\r\n"
                    . $mail->fields
@@ -260,15 +261,15 @@ class TkdClubModelParticipant extends JModelForm
     public function sendUsergroupMail($mail, $recipient)
     {   
         $subject = JText::_('COM_TKDCLUB_SUBSCRIBE_SUCCESS')
-                   . $mail->title
+                   . "\"" . $mail->title . "\""
                    . JText::_('COM_TKDCLUB_EVENT_ON')
-                   . $mail->date
+                   . $mail->date . " "
                    . JText::_('COM_TKDCLUB_PARTICIPANT_INCOME');
 
-        $message = JText::_('COM_TKDCLUB_HELLO') . ','
+        $message = JText::_('COM_TKDCLUB_HELLO') . ","
                    . "\r\n\r\n"
                    . JText::_('COM_TKDCLUB_PARTICIPANT_MESSAGE_ADMIN')
-                   . "\r\n"
+                   . "\r\n\r\n"
                    . JText::_('COM_TKDCLUB_PARTICIPANT_MESSAGE_DATA_WHERE')
                    . "\r\n"
                    . $mail->fields

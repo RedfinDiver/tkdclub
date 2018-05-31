@@ -16,7 +16,7 @@ $params = JComponentHelper::getParams('com_tkdclub');
 $item_params = JFactory::getApplication()->getUserState('com_tkdclub.participant.itemparams');
 
 $places_free = $this->event_data['max'] - $this->event_data['subscribed'];
-$subscribed = $this->event_data['subscribed'];
+$subscribed = $this->event_data['subscribed'] ? $subscribed = $this->event_data['subscribed'] : $subscribed = 0;
 $deadline = new DateTime($this->event_data['deadline']);
 $now = new DateTime();
 $stop_sub = $now->diff($deadline)->invert;
