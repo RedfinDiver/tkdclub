@@ -17,37 +17,12 @@ class TkdClubControllerParticipant extends JControllerForm
     }
     
     /**
-     *   JS method for inserting multiple field markup
+     * Subscription to an event
+     * 
+     * This method is triggered by the "subscribe" - Button in the
+     * participant site view
+     * 
      */
-    public function getMultipleFieldset()
-    {
-        $app = JFactory::getApplication();
-        $html = '';
-        $toRender = $app->input->get('selection', '', 'int');
-        $model = $this->getModel($name = 'participant', $prefix = 'TkdClubModel', $config = array());
-        $form = $model->getForm($data = array(), $loadData = true);
-        
-        if ($toRender == 1)
-        {
-            foreach($form->getFieldset('participant_data_multiple') as $field)
-            {
-                $html .= !$field->hidden ? $form->renderField($field->fieldname) : null;
-            }
-        }
-        elseif ($toRender == 0)
-        {
-            foreach($form->getFieldset('participant_data_single') as $field)
-            {
-                $html .= !$field->hidden ? $form->renderField($field->fieldname) : null;
-            }
-        }
-
-        $result = json_encode(array('response' => $html));
-
-        echo $result;
-        $app->close();
-    }
-    
     public function subscribe()
     {
         JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));       
@@ -122,7 +97,7 @@ class TkdClubControllerParticipant extends JControllerForm
         return true;
     }
 
-    /* Preprocess the data before saving to the database
+    /** Preprocess the data before saving to the database
      * 
      * The data is cleaned and the data for age and grade is preprocessed
      * 
@@ -214,7 +189,7 @@ class TkdClubControllerParticipant extends JControllerForm
         if($response[0] === false)
         {   
             // set the fail message
-            $this->setMessage('Fehler beim Captcha!', 'error');
+            $this->setMessage(JText::_('COM_TKDCLUB_PARTICIPANT_CAPTCHA_ERROR'), 'error');
 
             // save form data in session
             $app->setUserState('com_tkdclub.participant.data', $this->data);

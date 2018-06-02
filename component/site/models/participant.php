@@ -140,6 +140,11 @@ class TkdClubModelParticipant extends JModelForm
     /**
      * Send the emails to organizers and confirmation email to participant
      * 
+     * @param   array   $event_data     data for the event
+     * @param   object  $data           form data
+     * @param   integer $group          number of group to send notification email
+     * 
+     * @return  void
      * 
      */
     public function send($event_data, $data, $group)
