@@ -74,6 +74,11 @@ class TkdClubViewParticipants extends JViewLegacy
         $toolbar = JToolbar::getInstance('toolbar');
         $toolbar->addButtonPath(JPATH_COMPONENT.'/buttons');
 
+        if ($canDo->get('core.admin'))
+        {
+            $toolbar->appendButton('Delgdpr', 'COM_TKDKLUB_PARTICIPANT_GDPR_DELETE_MESSAGE', 'flash', 'COM_TKDKLUB_PARTICIPANT_GDPR_DELETE', 'participants.delete_gdpr');
+        }
+
         if ($this->togglestats)
         {
             JToolBarHelper::custom('participants.togglestats', 'eye-close', 'eye-close', 'COM_TKDCLUB_BUTTON_STATS', false);
@@ -89,7 +94,7 @@ class TkdClubViewParticipants extends JViewLegacy
         {
             JToolBarHelper::preferences('com_tkdclub');
         }
-        
+
         JHtmlSidebar::setAction('index.php?option=com_tkdclub&view=participants');
     }
 

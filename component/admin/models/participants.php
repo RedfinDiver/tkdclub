@@ -214,6 +214,6 @@ class TkdClubModelParticipants extends JModelList
 		$content	= array($headers);	//header with column names
 		$content	= array_merge( $content,  $rows);
 		return $content;
-	}
-
+    }
+    
  }

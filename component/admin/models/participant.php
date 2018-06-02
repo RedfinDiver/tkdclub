@@ -70,4 +70,30 @@ class TkdClubModelParticipant extends JModelAdmin
 
         return $data;
     }
+
+    /**
+     * Get all Ids and corresponding event-dates from the database
+     * 
+     * @return  array   array of fetched data
+     */
+    public function getIdsToDelete()
+    {
+        // Create a new query object.
+        $db = $this->getDbo();
+        $query = $db->getQuery(true);
+        $days = JComponentHelper::getParams('com_tkdclub')->get('days', 365);
+
+        // Select ids of table event_participants
+        $query->select('a.id')
+                ->from($db->quoteName('#__tkdclub_event_participants', 'a'));
+        
+        // Join over the event-table for the date difference
+        $query->join('LEFT', $db->quoteName('#__tkdclub_events', 'b') . ' ON a.event_id = b.event_id');
+        $query->where($db->quoteName('store_data') . '=0');
+        $query->where('DATEDIFF(NOW(), b.date) >=' . $days);
+        
+        $db->setQuery($query);
+        
+        return $db->loadColumn();
+    }
 }
