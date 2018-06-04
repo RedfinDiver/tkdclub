@@ -72,9 +72,9 @@ class TkdClubModelParticipant extends JModelAdmin
     }
 
     /**
-     * Get all Ids and corresponding event-dates from the database
+     * Get all Ids where data is to delete
      * 
-     * @return  array   array of fetched data
+     * @return  array   array of ids
      */
     public function getIdsToDelete()
     {
@@ -89,11 +89,87 @@ class TkdClubModelParticipant extends JModelAdmin
         
         // Join over the event-table for the date difference
         $query->join('LEFT', $db->quoteName('#__tkdclub_events', 'b') . ' ON a.event_id = b.event_id');
-        $query->where($db->quoteName('store_data') . '=0');
         $query->where('DATEDIFF(NOW(), b.date) >=' . $days);
         
         $db->setQuery($query);
         
         return $db->loadColumn();
+    }
+
+    /**
+     * Get data from entrys where data is allowed to store for newsletters
+     * 
+     * @return  array   array of objects with fetched data
+     */
+    public function getDataToStore()
+    {
+        // Create a new query object.
+        $db = $this->getDbo();
+        $query = $db->getQuery(true);
+        $days = JComponentHelper::getParams('com_tkdclub')->get('days', 365);
+
+        // Select ids of table event_participants
+        $query->select('a.firstname,a.lastname,a.email')
+                ->from($db->quoteName('#__tkdclub_event_participants', 'a'));
+        
+        // Join over the event-table for the date difference
+        $query->join('LEFT', $db->quoteName('#__tkdclub_events', 'b') . ' ON a.event_id = b.event_id');
+        $query->where($db->quoteName('store_data') . '=1');
+        $query->where('DATEDIFF(NOW(), b.date) >=' . $days);
+        
+        $db->setQuery($query);
+        
+        return $db->loadObjectList();
+    }
+
+    /**
+     * Store allowed data in the newsletter database
+     * 
+     * @param   array   $data   array of objects with the data to store
+     * 
+     * @return  integer number of saved datasets
+     */
+    public function storeAllowedData($data)
+    {
+        $all_emails = $this->getAllEmails();
+        $stored = 0;
+
+        foreach ($data as $row)
+        {   
+            // Check if email is there and already present
+            if ($row->email != '' && !in_array($row->email, $all_emails))
+            {
+                $table = JTable::getInstance($type = 'subscribers', $prefix= 'TkdclubTable', $config = array());
+                $table->save($row) ? $stored++ : null;
+            }
+        }
+
+        return $stored;
+    }
+
+    /**
+     * Get all unique email adresses in the component
+     * 
+     * @return  array   array with alle emails in it
+     */
+    public function getAllEmails()
+    {
+        // First all emails from members table
+        $db = $this->getDbo();
+        
+        $query = $db->getQuery(true);
+        $query->select('DISTINCT ' . $db->quoteName('email'))
+              ->from($db->quoteName('#__tkdclub_members'));
+        $db->setQuery($query);
+        $emails = $db->loadColumn();
+
+        // Now all from the subscribers table
+        $query = $db->getQuery(true);
+        $query->select('DISTINCT ' . $db->quoteName('email'))
+              ->from($db->quoteName('#__tkdclub_newsletter_subscribers'));
+        $db->setQuery($query);
+        $emails += $db->loadColumn();
+
+       return array_unique($emails);
     }
 }

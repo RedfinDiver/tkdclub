@@ -55,7 +55,7 @@ class TkdClubControllerParticipants extends JControllerAdmin
     /**
      * Delete participants for gdpr compliance
      * 
-     * This method is triggered by the "gdpr" button in admin paricipants list view
+     * This method is triggered by the "gdpr" button in admin participants list view
      */
     public function delete_gdpr()
     {   
@@ -64,19 +64,45 @@ class TkdClubControllerParticipants extends JControllerAdmin
 
         $model = $this->getModel();
 
-        // First get ids of participants and corresponding dates from the database
-        $ids_to_delete = $model->getIdsToDelete();
-
-        if (empty($ids_to_delete))
+        // First lets have a look if there is somthing to delete
+        if(!$ids_to_delete = $model->getIdsToDelete())
         {
+            $this->setMessage(JText::_('COM_TKDKLUB_PARTICIPANT_GDPR_NO_DATA'), 'notice');
             $this->setRedirect('index.php?option=com_tkdclub&view=participants');
-            $this->setMessage('COM_TKDKLUB_PARTICIPANT_GDPR_NO_DATA', 'notice');
-
+            
             return;
         }
+        
+        // Now look for data that is allowed to store
+        if (!$data_to_store = $model->getDataToStore())
+        {   
+            // nothing to store, just remove the data from the database
+            $this->removeData($ids_to_delete);
+            
+            return;
+        }
+        
+        // Well, we have some data to store, let' s do it
+        $stored = $model->storeAllowedData($data_to_store);
+        \JFactory::getApplication()->enqueueMessage(JText::plural($this->text_prefix . '_N_ITEMS_STORED', $stored), 'notice');
 
+        // And now finally remove the data
+        $this->removeData($ids_to_delete);
+
+    }
+
+    /**
+     * Remove data sets from the database
+     * 
+     * @param   array   $ids    array with ids to delete
+     * 
+     * @return  void
+     */
+    public function removeData($ids)
+    {
         // Make sure the item ids are integers
-        $cid = ArrayHelper::toInteger($ids_to_delete);
+        $cid = ArrayHelper::toInteger($ids);
+        $model = $this->getModel();
 
         // Remove the items.
         if ($model->delete($cid))
@@ -94,4 +120,5 @@ class TkdClubControllerParticipants extends JControllerAdmin
 
         $this->setRedirect('index.php?option=com_tkdclub&view=participants');
     }
-}   
+
+}
