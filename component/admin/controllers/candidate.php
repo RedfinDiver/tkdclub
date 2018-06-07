@@ -14,28 +14,28 @@ class TkdClubControllerCandidate extends JControllerForm
     protected $text_prefix = 'COM_TKDCLUB_CANDIDATE';
 
     /**
-     * the grades with a certain value, makes it easier to calculate
+     * The grades with a certain value, makes it easier to calculate
      * 
      * @var array
      */
     protected $grades;
     
     /**
-     * the waiting time in days for a certain grade
+     * The waiting time in days for a certain grade
      * 
      * @var integer
      */
     protected $waiting_time;
 
     /**
-     * the minimum age for a certain grade in years
+     * The minimum age for a certain grade in years
      * 
      * @var integer
      */
     protected $minimum_age;
 
     /**
-     * overriding constructor
+     * Overriding constructor
      */
     public function __construct($config = array())
     {
@@ -60,6 +60,12 @@ class TkdClubControllerCandidate extends JControllerForm
         parent::__construct($config = array());
     }
 
+    /**
+     * Add a new candidate
+     * 
+     * Overriding the add-method for checking if a promotion is published
+     * and message to the user if not
+     */
     public function add() 
     {
         // check for published promotions
@@ -87,10 +93,12 @@ class TkdClubControllerCandidate extends JControllerForm
     /**
      * Gets the right input data for adding a new candidate
      * 
+     * This method is triggered when a new candidate is selected in the form
+     * 
      * @return  json    the data for input or error-data
-     * @TODO    checks for age if candidate has poom and goes for dan
+     * @todo   checks for age if candidate has poom and goes for dan
      */
-    public function getAjaxData ()
+    public function getAjaxData()
     {
         $input = JFactory::getApplication()->input;
         $candidate_id = JFactory::getApplication()->input->get('candidate_id', '', 'int');
@@ -158,7 +166,18 @@ class TkdClubControllerCandidate extends JControllerForm
         $this->response($candidate_data);
     }
 
-    protected function checkIDs ($candidate_id, $promotion_id)
+    /**
+     * Checks if there are ids in the request
+     * 
+     * This method checks if there are ids in the request.
+     * If not, a array with error messages is created
+     * 
+     * @param   int     $candidate_id   integer value of member_id
+     * @param   int     $promotion_id   integer value of promotion_id
+     * 
+     * @return  array   an array wirh messages when there are no ids, otherwise empty array
+     */
+    protected function checkIDs($candidate_id, $promotion_id)
     {   
         $errors = array();
         
@@ -168,7 +187,18 @@ class TkdClubControllerCandidate extends JControllerForm
         return $errors;
     }
 
-    protected function checkData ($candidate_data)
+    /**
+     * Checks the data in the database of a candidate
+     * 
+     * This method checks the data in the database of a candidate for necassary data
+     * If some data is not present, appropriate error messages are created
+     * 
+     * @param   array   $candidate_data     array with the candidate data from database
+     * 
+     * @return  mixed   nothing if all data is there
+     *                  array of messages and edit link in member edit view
+     */
+    protected function checkData($candidate_data)
     {
         $errors = array();
 
@@ -247,7 +277,7 @@ class TkdClubControllerCandidate extends JControllerForm
     }
 
     /**
-     * change grades for candidates < 15 years
+     * Change grades for candidates < 15 years
      */
     protected function changeGrades()
     {
@@ -270,6 +300,15 @@ class TkdClubControllerCandidate extends JControllerForm
         }
     }
 
+    /**
+     * Check if minimum age and waiting time for a grade is reached
+     * 
+     * @param   int     $grade_achieve_value    integer value representing the grade to achieve
+     * @param   string  $grade_achieve          name of the grade to achieve
+     * 
+     * @return  mixed   nothing if minimum age and waiting time is ok
+     *                  array with error messages
+     */
     protected function checkAgeAndWaitingtime($grade_achieve_value, $grade_achieve)
     {
         $errors = array();
@@ -316,6 +355,16 @@ class TkdClubControllerCandidate extends JControllerForm
         return $errors;
     }
 
+    /**
+     * Check for the right promotion
+     * 
+     * This method checks if the subscription to dan or kup promotion test is ok
+     * 
+     * @param   int     $grade_achieve_value    integer value representing the grade
+     * 
+     * @return  mixed   nothing if grade and promtion type are matching
+     *                  array with error messages if not
+     */
     protected function checkType($grade_achieve_value)
     {
         $errors = array();
@@ -338,6 +387,12 @@ class TkdClubControllerCandidate extends JControllerForm
         return $errors;
     }
 
+    /**
+     * Echo out data to the browser
+     * 
+     * @param   array   array with data of the candidate
+     * @return  json    echo out data in json format
+     */
     protected function response($data)
     {
         echo json_encode($data);
