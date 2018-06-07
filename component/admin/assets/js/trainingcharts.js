@@ -1,8 +1,8 @@
 /**
-* @package    Taekwondo Club
-* @copyright  Copyright (C) 2017 Markus Moser. All rights reserved.
-* @license    GNU General Public License version 2 or later; see LICENSE.txt
-*/
+ * @package    Taekwondo Club
+ * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE.txt
+ */
 
 // define a bunch of colors for different training types
 var colorsTypes = ["#ff6666", "#4d4dff", "#00cc00", "#ffff4d", "#cc00cc"]
