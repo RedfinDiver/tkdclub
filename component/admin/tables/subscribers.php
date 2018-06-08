@@ -38,4 +38,3 @@ class TkdClubTableSubscribers extends JTable
         return parent::store($updateNulls = false);
     }
 }
-
