@@ -93,7 +93,7 @@ class TkdClubModelPromotions extends JModelList
         $query = $db->getQuery(true);
         $query->select('*')->from($db->quoteName('#__tkdclub_promotions') . ' as p');
 
-        $stateselect = $this->getState('filter.promotion_state'); // TODO
+        $stateselect = $this->getState('filter.promotion_state');
         if (is_numeric($stateselect))
         {   
             $query->where('p.promotion_state = ' . (int) $stateselect);
