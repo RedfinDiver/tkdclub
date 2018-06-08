@@ -45,7 +45,7 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
         </div>
         <?php if($this->togglestats) :  ?>
         <?php  
-            // @TODO for statistic: include_once(JPATH_COMPONENT . '/includes/eventsstats.php');
+            // @todo for statistic: include_once(JPATH_COMPONENT . '/includes/eventsstats.php');
         ?>
     <?php endif; ?>
         <table class="table table-striped table-condensed" id="eventList">

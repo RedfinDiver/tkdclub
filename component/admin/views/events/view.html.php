@@ -33,7 +33,7 @@ class TkdClubViewEvents extends JViewLegacy
         $this->togglestats = JFactory::getSession()->get('togglestats_events', null, 'tkdclub');
         if ($this->togglestats)
         {
-            // @TODO implement statistics
+            // @todo implement statistics
         }
 
         $this->addToolbar();
