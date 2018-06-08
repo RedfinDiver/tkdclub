@@ -17,7 +17,7 @@ class plgContentTkdclubgrade extends JPlugin
 {
     public function onContentChangeState ($context, $pks, $value)
     {
-       //first check if its the right context, otherwise exit the plugin
+       // First check if its the right context, otherwise exit the plugin
         if ($context != 'com_tkdclub.candidate' || $value == 0)
         {
             return;
@@ -35,8 +35,9 @@ class plgContentTkdclubgrade extends JPlugin
     /**
      * Gets the Data for the passed promotion: member_id, grade_achieve and date
      * 
-     * @param   type  integer $id_candidate
-     * @return  type  object
+     * @param   integer     $id_candidate
+     * 
+     * @return  object
      */
     protected function getMemberData($id_candidate)
     {
@@ -54,25 +55,20 @@ class plgContentTkdclubgrade extends JPlugin
     /**
      * Sets the new data in the members-table
      * 
-     * @param type integer $member_id
-     * @param type string  $grade_achieve
-     * @param type string  $date_exam
-     * @return boolean
+     * @param   integer     $member_id
+     * @param   string      $grade_achieve
+     * @param   string      $date_exam
+     * 
+     * @return  boolean     True on success
      */
     protected function setMemberData($member_id, $grade_achieve, $date_exam)
     {
-        $db = JFactory::getDbo();
-        $query = $db->getQuery(true);
-        $query->update('#__tkdclub_members')
-              ->set(array('grade = '. $db->quote($grade_achieve), 'lastpromotion = '.$db->quote($date_exam)))
-              ->where('member_id = ' . (int) $member_id);
-        $db->setQuery($query);
-        
-        if(!$db->query())
-        {
-            return false;
-        }
-        
-        return true;
-     }
+        JTable::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_tkdclub/tables');
+        $table = JTable::getInstance('Members', 'TkdclubTable');
+       
+        $table->load($member_id);
+        $table->lastpromotion = $date_exam;
+        $table->grade = $grade_achieve;
+        $table->store();
+    }
 }
