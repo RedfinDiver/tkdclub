@@ -9,7 +9,7 @@
         "**/.DS_Store": true,
         "**/.vscode": false,
         "**/nbproject": true,
-        "**/plugins": true,
+        "**/plugins": false,
         "**/modules": true,
         "**/docs": true,
         "**/zips": false,
@@ -30,5 +30,7 @@
     "php.suggest.basic": true,
 
     "livereload.exts": "html,htm,css,js,png,gif,jpg,php,xml,ini",
+    "todo-tree.flat": true,
+    "todo-tree.expanded": false,
 
 }
