@@ -202,28 +202,28 @@
     </fieldset>
     
     <fieldset
-        name="mail"
-        label="COM_TKDCLUB_CONFIG_MAIL"
-        description="COM_TKDCLUB_CONFIG_MAIL_DESC" >
+        name="email"
+        label="COM_TKDCLUB_CONFIG_EMAIL"
+        description="COM_TKDCLUB_CONFIG_EMAIL_DESC" >
     
         <field
             name="mail_prefix"
-            label="COM_TKDCLUB_CONFIG_MAIL_PREFIX"
-            description="COM_TKDCLUB_CONFIG_MAIL_PREFIX_DESC"
+            label="COM_TKDCLUB_CONFIG_EMAIL_PREFIX"
+            description="COM_TKDCLUB_CONFIG_EMAIL_PREFIX_DESC"
             type="text" default="" size="10" filter="safehtml" />
         
         <field
             name="mail_signature"
-            label="COM_TKDCLUB_CONFIG_MAIL_SIGNATURE"
-            description="COM_TKDCLUB_CONFIG_MAIL_SIGNATURE_DESC"
+            label="COM_TKDCLUB_CONFIG_EMAIL_SIGNATURE"
+            description="COM_TKDCLUB_CONFIG_EMAIL_SIGNATURE_DESC"
             type="textarea" default="" filter="safehtml"
             rows="8" />
         
         <field 
             name="email_test" type="email"
             class="inputbox"
-            label="COM_TKDCLUB_MAIL_TESTEMAIL"
-            description="COM_TKDCLUB_MAIL_TESTEMAIL_DESC"
+            label="COM_TKDCLUB_EMAIL_TEST_ADDRESS"
+            description="COM_TKDCLUB_EMAIL_TEST_ADDRESS_DESC"
             size="30" />
              
     </fieldset>

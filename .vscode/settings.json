@@ -10,7 +10,7 @@
         "**/.vscode": false,
         "**/nbproject": true,
         "**/plugins": false,
-        "**/modules": true,
+        "**/modules": false,
         "**/docs": true,
         "**/zips": false,
         "**/*.ant": false,
@@ -24,10 +24,10 @@
         "**/promotion*/**": false,
         "**/training*/**": false,
         "**/statistic*/**": false,
-        "**/.gitignore/**": true,
+        "**/.gitignore/**": false,
     },
 
-    "php.suggest.basic": true,
+    "php.suggest.basic": false,
 
     "livereload.exts": "html,htm,css,js,png,gif,jpg,php,xml,ini",
     "todo-tree.flat": true,

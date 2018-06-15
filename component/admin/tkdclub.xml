@@ -4,8 +4,8 @@
     <author>Markus Moser</author>
     <authorEmail>redfindiver@gmail.com</authorEmail>
     <authorUrl>http://www.taekwondo-uttendorf.at</authorUrl>
-    <creationDate>May 2017</creationDate>
-    <copyright>Copyright (C) 2017 Markus Moser</copyright>
+    <creationDate>September 2018</creationDate>
+    <copyright>Copyright (C) 2018 Markus Moser</copyright>
     <license>GNU/GPL http://www.gnu.org/licenses/gpl-2.0.html</license>
     <version>3.0.0</version>
     <description>COM_TKDCLUB_XML_DESCRIPTION</description>
@@ -49,6 +49,7 @@
            <menu link="option=com_tkdclub&amp;view=candidates"   img="class:icon-tkdclub">COM_TKDCLUB_SUBMENU_CANDIDATES</menu>
            <menu link="option=com_tkdclub&amp;view=events"   img="class:icon-tkdclub">COM_TKDCLUB_SUBMENU_EVENTS</menu>
            <menu link="option=com_tkdclub&amp;view=participants"   img="class:icon-tkdclub">COM_TKDCLUB_SUBMENU_PARTICIPANTS</menu>
+           <menu link="option=com_tkdclub&amp;view=email"   img="class:icon-tkdclub">COM_TKDCLUB_SUBMENU_EMAIL</menu>
            <menu link="option=com_tkdclub&amp;view=statistics"   img="class:icon-tkdclub">COM_TKDCLUB_SUBMENU_STATISTICS</menu>
         </submenu>
         

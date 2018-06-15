@@ -150,7 +150,7 @@ class TkdClubModelParticipant extends JModelAdmin
     /**
      * Get all unique email adresses in the component
      * 
-     * @return  array   array with alle emails in it
+     * @return  array   array with all emails in it
      */
     public function getAllEmails()
     {
