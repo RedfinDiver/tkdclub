@@ -20,11 +20,12 @@
 			label="COM_TKDCLUB_EMAIL_FIELD_INACTIVE_LABEL"
 			value="1" default="0" />
                 
+		<!-- TODO create newsletter subscriptions
 		<field
             name="newsletter" type="checkbox"
 			description="COM_TKDCLUB_EMAIL_FIELD_NEWSLETTER_SUBS_DESC"
 			label="COM_TKDCLUB_EMAIL_FIELD_NEWSLETTER_SUBS_LABEL"
-			value="1" default="0" />
+			value="1" default="0" /> -->
     
     </fieldset>
 
