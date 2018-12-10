@@ -225,6 +225,13 @@
             label="COM_TKDCLUB_EMAIL_TEST_ADDRESS"
             description="COM_TKDCLUB_EMAIL_TEST_ADDRESS_DESC"
             size="30" />
+
+        <field
+            name="allowed_extensions"
+            label="COM_TKDCLUB_CONFIG_EMAIL_ALLOWED_EXT"
+            description="COM_TKDCLUB_CONFIG_EMAIL_ALLOWED_EXT_DESC"
+            type="text" default="pdf,jpeg,jpg" filter="safehtml"
+            size="10" />
              
     </fieldset>
 
