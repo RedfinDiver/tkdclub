@@ -97,6 +97,13 @@
             size="30" />
 
         <field 
+            name="iban" type="text"
+            class="inputbox"
+            label="COM_TKDCLUB_MEMBER_IBAN"
+            description="COM_TKDCLUB_MEMBER_IBAN_DESC"
+            size="50" filter="safehtml" />
+
+        <field 
             name="notes_personel" type="textarea"
             rows="7"
             class="inputbox"

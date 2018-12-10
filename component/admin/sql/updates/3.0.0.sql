@@ -11,6 +11,7 @@ ALTER TABLE `#__tkdclub_members`
     ADD `country` varchar(50) NOT NULL AFTER `city`,
     CHANGE `phone` `phone` varchar(50) NOT NULL,
     CHANGE `email` `email` varchar(50) NOT NULL,
+    ADD `iban` varchar(50) NOT NULL AFTER `email`,
     CHANGE `note_p` `notes_personel` text NOT NULL,
     CHANGE `memberpass` `memberpass` int(10) NOT NULL,
     CHANGE `grade` `grade` varchar(30) NOT NULL,

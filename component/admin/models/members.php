@@ -325,7 +325,7 @@ class TkdClubModelMembers extends JModelList
 		$query	= $db->getQuery(true);
         $fields = array(
                         'member_id', 'firstname', 'lastname', 'birthdate', 'sex', 'citizenship', 'street', 'zip', 'city', 'country', 'phone', 'email',
-                        'memberpass', 'grade', 'lastpromotion', 'member_state', 'entry', 'leave', 'created', 'created_by', 'modified', 'modified_by');
+                        'iban', 'memberpass', 'grade', 'lastpromotion', 'member_state', 'entry', 'leave', 'created', 'created_by', 'modified', 'modified_by');
                         
 		$query-> select($db->quoteName($fields))
 			  -> from($db->quoteName('#__tkdclub_members'))
@@ -338,29 +338,29 @@ class TkdClubModelMembers extends JModelList
         foreach ($rows as &$row)
         {
             $row[4] == 'female' ? $row[4] = JText::_('COM_TKDCLUB_MEMBER_SEX_FEMALE') : $row[4] = JText::_('COM_TKDCLUB_MEMBER_SEX_MALE');
-            $row[12] == 0 ? $row[12] = JText::_('COM_TKDCLUB_MEMBER_NO_PASS') : null;
-            $row[13] == 0 ? $row[13] = JText::_('COM_TKDCLUB_NO_GRADE_LISTVIEW') : null;
-            switch ($row[15])
+            $row[12] == '' ? $row[12] = JText::_('COM_TKDCLUB_MEMBER_NO_IBAN') : null;
+            $row[13] == 0 ? $row[12] = JText::_('COM_TKDCLUB_MEMBER_NO_PASS') : null;
+            $row[14] == 0 ? $row[13] = JText::_('COM_TKDCLUB_NO_GRADE_LISTVIEW') : null;
+            switch ($row[16])
             {
                 case 'active':
-                    $row[15] = JText::_('COM_TKDCLUB_MEMBER_STATE_ACTIVE');
+                    $row[16] = JText::_('COM_TKDCLUB_MEMBER_STATE_ACTIVE');
                     break;
                 
                 case 'support':
-                    $row[15] = JText::_('COM_TKDCLUB_MEMBER_STATE_SUPPORTER');
+                    $row[16] = JText::_('COM_TKDCLUB_MEMBER_STATE_SUPPORTER');
                     break;
                 
                 case 'inactive':
-                    $row[15] = JText::_('COM_TKDCLUB_MEMBER_STATE_INACTIVE');
+                    $row[16] = JText::_('COM_TKDCLUB_MEMBER_STATE_INACTIVE');
                     break;
 
                 default:
-                    $row[15] = $row[15];
-
+                    $row[16] = $row[15];
             }
 
-            $row[19] ? $row[19] = JFactory::getUser($row[19])->name : null;
-            $row[21] ? $row[21] = JFactory::getUser($row[21])->name : null;
+            $row[20] ? $row[20] = JFactory::getUser($row[20])->name : null;
+            $row[22] ? $row[22] = JFactory::getUser($row[22])->name : null;
 
         }
 
@@ -377,6 +377,7 @@ class TkdClubModelMembers extends JModelList
             JText::_('COM_TKDCLUB_MEMBER_COUNTRY'),         // country
             JText::_('COM_TKDCLUB_MEMBER_PHONE'),           // phone
             JText::_('COM_TKDCLUB_MEMBER_EMAIL'),           // email
+            JText::_('COM_TKDCLUB_MEMBER_IBAN'),            // iban
             JText::_('COM_TKDCLUB_MEMBER_PASS'),            // memberpass
             JText::_('COM_TKDCLUB_MEMBER_GRADE'),           // grade
             JText::_('COM_TKDCLUB_MEMBER_LAST_PROMOTION'),  // lastexam
