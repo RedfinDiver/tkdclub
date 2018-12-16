@@ -89,7 +89,7 @@ if ($this->memberpicture) {
                                                 <?php $question_mb = JText::_('COM_TKDCLUB_MEMBER_PICTURE_DELETE_QUESTION');?>
                                                 onclick='return window.confirm("<?php echo $question_mb ?>");'
                                                 data-original-title="<?php echo JText::_('COM_TKDCLUB_MEMBER_PICTURE_DELETE'); ?>"
-                                                href="index.php?option=com_tkdclub&view=member&layout=edit&task=member.deletefile&picture=1<?php echo '&member_id=' . $this->item->member_id . '&' . JSession::getFormToken() .'=1'; ?>"
+                                                href="index.php?option=com_tkdclub&view=member&layout=edit&task=member.deletepicture&filename=<?php echo $this->memberpicture[0] . '&member_id=' . $this->item->member_id . '&' . JSession::getFormToken() .'=1'; ?>"
                                                 >
                                                 <span class="icon-unpublish"></span>
                                                 <?php echo JText::_('COM_TKDCLUB_DELETE'); ?>
