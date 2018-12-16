@@ -121,7 +121,7 @@ UPDATE `#__tkdclub_medals` SET `winner_ids` = CONCAT('[', `winner_ids`, ']');
 UPDATE `#__tkdclub_medals` SET `type` = 'Poomsae' WHERE `class` LIKE '%Pooms%' OR `championship` LIKE '%Pooms%';
 UPDATE `#__tkdclub_medals` SET `type` = 'Kyorugi' WHERE `type` = '';
 
-RENAME TABLE `#__tkdclub_exams` TO `#__tkdclub_promotions`
+RENAME TABLE `#__tkdclub_exams` TO `#__tkdclub_promotions`;
 
 ALTER TABLE `#__tkdclub_promotions`
     CHANGE `id` `promotion_id` int(10) NOT NULL AUTO_INCREMENT,
@@ -141,10 +141,10 @@ ALTER TABLE `#__tkdclub_promotions`
     CHANGE `checked_out_time` `checked_out_time` datetime NOT NULL,
     ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
-UPDATE `j_tkdclub_promotions` SET `type` = 'kup' WHERE `type` = '1';
-UPDATE `j_tkdclub_promotions` SET `type` = 'dan' WHERE `type` = '2';
+UPDATE `#__tkdclub_promotions` SET `type` = 'kup' WHERE `type` = '1';
+UPDATE `#__tkdclub_promotions` SET `type` = 'dan' WHERE `type` = '2';
 
-RENAME TABLE `#__tkdclub_examparts` TO `#__tkdclub_candidates`
+RENAME TABLE `#__tkdclub_examparts` TO `#__tkdclub_candidates`;
 
 ALTER TABLE `#__tkdclub_candidates`
     CHANGE `id` `id` int(10) NOT NULL AUTO_INCREMENT,
