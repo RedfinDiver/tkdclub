@@ -67,6 +67,44 @@ if ($this->memberpicture) {
                             <?php foreach ($this->form->getFieldset('taekwondo_data') as $field) : ?>
                                 <?php echo $field->renderField(); ?>
                             <?php endforeach; ?>
+                            <div>
+                            <h4><?php echo JText::_('COM_TKDCLUB_MEMBER_PICTURE');?></h4>
+                                <?php if (!$this->memberpicture) : ;?>
+                                    <?php echo $this->form->renderField('picture'); ?>
+                                        <div>
+                                            <div class="control-label"></div>
+                                            <div class="controls">
+                                                <button class="btn btn-large btn-success" onclick="Joomla.submitbutton('member.uploadpicture')">
+                                                    <span class="icon-upload icon-white"></span>
+                                                    <?php echo JText::_('COM_TKDCLUB_MEMBER_PICTURE_UPLOAD'); ?>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    <?php else : ?>
+                                        <div>
+                                            <img src="<?php echo $memberpicture_link ?>" width="150" height="225"/>
+                                        </div>
+                                        <div class="btn-group" style="margin-top: 20px">
+                                            <a  class="btn hasTooltip"
+                                                <?php $question_mb = JText::_('COM_TKDCLUB_MEMBER_PICTURE_DELETE_QUESTION');?>
+                                                onclick='return window.confirm("<?php echo $question_mb ?>");'
+                                                data-original-title="<?php echo JText::_('COM_TKDCLUB_MEMBER_PICTURE_DELETE'); ?>"
+                                                href="index.php?option=com_tkdclub&view=member&layout=edit&task=member.deletefile&picture=1<?php echo '&member_id=' . $this->item->member_id . '&' . JSession::getFormToken() .'=1'; ?>"
+                                                >
+                                                <span class="icon-unpublish"></span>
+                                                <?php echo JText::_('COM_TKDCLUB_DELETE'); ?>
+                                            </a>
+
+                                            <a class="btn hasTooltip" data-original-title="<?php echo JText::_('COM_TKDCLUB_MEMBER_PICTURE_DOWNLOAD'); ?>"
+                                                href="index.php?option=com_tkdclub&task=member.downloadfile&picture=1&filename=<?php echo $this->memberpicture[0] . '&member_id=' . $this->item->member_id . '&' . JSession::getFormToken() .'=1'; ?>"
+                                                target="_blank">
+                                                <span class="icon-download"></span>
+                                                <?php echo JText::_('COM_TKDCLUB_DOWNLOAD'); ?>
+                                            </a>
+                                        </div>
+                                        
+                                <?php endif; ?>
+                            </div>
                         </div>
                         <div class="span4">
                             <h4><?php echo JText::_('COM_TKDCLUB_CLUB_DATA');?></h4>
@@ -74,6 +112,7 @@ if ($this->memberpicture) {
                             <?php foreach ($this->form->getFieldset('club_data') as $field) : ?>
                                 <?php echo $field->renderField(); ?>
                             <?php endforeach; ?>
+                              
                         </div>
                     </div>
                 </div>
@@ -134,30 +173,7 @@ if ($this->memberpicture) {
                             </div>
                         </div>
                         <div class="span4">
-                            <?php if (!$this->memberpicture) : ;?>
-                                <?php echo $this->form->renderField('picture'); ?>
-                                    <div>
-                                        <div class="control-label"></div>
-                                        <div class="controls">
-                                            <button class="btn btn-large btn-success" onclick="Joomla.submitbutton('member.uploadpicture')">
-                                                <span class="icon-upload icon-white"></span>
-                                                <?php echo JText::_('COM_TKDCLUB_MEMBER_PICTURE_UPLOAD'); ?>
-                                            </button>
-                                        </div>
-                                    </div>
-                                <?php else : ?>
-                                    <div>
-                                        <img src="<?php echo $memberpicture_link ?>" width="100" height="225"/>
-                                        <a class="btn btn-large btn-danger hasTooltip"
-                                            data-original-title="<?php echo JText::_('COM_TKDCLUB_MEMBER_FILE_DELETE'); ?>"
-                                            href="index.php?option=com_tkdclub&view=member&layout=edit&task=member.deletepicture&filename=<?php echo $this->memberpicture[0] . '&member_id=' . $this->item->member_id . '&' . JSession::getFormToken() .'=1'; ?>"
-                                            <?php $question_mb = JText::_('COM_TKDCLUB_MEMBER_PICTURE_DELETE_QUESTION');?>
-                                            onclick='return window.confirm("<?php echo $question_mb ?>");'>
-                                            <span class="icon-remove icon-white"></span>
-                                            <?php echo JText::_('COM_TKDCLUB_MEMBER_PICTURE_DELETE'); ?>
-                                        </a>
-                                    </div>
-                            <?php endif; ?>
+                            <!-- this was the original place for the member picture -->
                         </div>
                     </div>
                 </div>

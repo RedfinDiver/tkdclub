@@ -266,10 +266,18 @@ class TkdClubModelMember extends JModelAdmin
         $input = $app->input;
         $id = $input->get('member_id');
         $filename = $input->getString('filename', '');
+        $picture = $input->getInt('picture', 0);
 
         //setting path to File
-        $path = JPATH_COMPONENT_ADMINISTRATOR . '/attachments/members/' . $id . '/' . $filename;
-
+        if($picture)
+        {
+            $path = JPATH_COMPONENT_ADMINISTRATOR . '/attachments/members/' . $id . '/memberpicture/' . $filename;
+        }
+        else
+        {
+            $path = JPATH_COMPONENT_ADMINISTRATOR . '/attachments/members/' . $id . '/' . $filename;
+        }
+        
         //preparing headers
         header("Content-Type: "); 
         header("Content-Disposition: inline; filename=\"$filename\"");
