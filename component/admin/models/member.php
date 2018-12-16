@@ -53,31 +53,36 @@ class TkdClubModelMember extends JModelAdmin
 
     /**
 	 * Method to upload a file to attachments folder
+     * 
+     * @param   boolean    $picture false for ordinary attachment file
+     *                     $picture true for member picture upload
 	 *
 	 * @return  boolean    TRUE on success, FALSE on fail
 	 */
-    public function uploadFile()
+    public function uploadFile($picture = false)
     {
         $app = JFactory::getApplication();
         $input = $app->input;
         $id = $input->getInt('member_id', 0);
         $data  = $input->post->get('jform', array(), 'array');
-        $file = $input->files->get('jform', '', '');
-        $possible_file_extensions = ['pdf', 'png', 'jpg'];
+        $files = $input->files->get('jform', '', '');
+        $file = $picture == true ? $files['picture'] : $files['file'];
+        $possible_file_extensions = $picture == true ? ['png', 'jpg', 'jpeg'] : ['pdf', 'png', 'jpg', 'jpeg'];
 
         // just processing the file if there is no error with it
-        if ($file['file']['error'] != 0)
+        if ($file['error'] != 0)
         {
             $app->enqueueMessage(JText::_('COM_TKDCLUB_MEMBER_FILEUPLOAD_FAILED'), 'error');
             return false;
         }
         
         // make the filename safe and get the file-extension
-        $filename = JFile::makeSafe($file['file']['name']);
+        $filename = JFile::makeSafe($file['name']);
         $ext = JFile::getExt($filename);
-        $file_size = $file['file']['size'];
+        $picture == true ? $filename = 'memberpicture' . '.' . $ext : null;
+        $file_size = $file['size'];
         
-        // only certain Files are allowed, give error otherwise
+        // only certain files are allowed, give error otherwise
         if (!in_array($ext, $possible_file_extensions))
         {
             $app->enqueueMessage(JText::_('COM_TKDCLUB_MEMBER_FILEUPLOAD_ONLY_CERTAIN_EXT'), 'error');
@@ -92,7 +97,15 @@ class TkdClubModelMember extends JModelAdmin
         }       
 
         // creating the upload directory and path
-        $upload_path = JPATH_COMPONENT_ADMINISTRATOR . '/attachments/members/' . $id . '/';
+        if ($picture)
+        {
+            $upload_path = JPATH_COMPONENT_ADMINISTRATOR . '/attachments/members/' . $id . '/memberpicture/';
+        }
+        else
+        {
+            $upload_path = JPATH_COMPONENT_ADMINISTRATOR . '/attachments/members/' . $id . '/';
+        }
+        
         JFolder::create($upload_path);
         $dest = $upload_path . $filename;
 
@@ -100,13 +113,21 @@ class TkdClubModelMember extends JModelAdmin
         in_array($filename, JFolder::files($upload_path)) ? $file_existed = true : $file_existed = false;
 
         // Upload the file create messages
-        if (!JFile::upload($file['file']['tmp_name'], $dest))
+        if (!JFile::upload($file['tmp_name'], $dest))
         {
             $app->enqueueMessage(JText::_('COM_TKDCLUB_MEMBER_FILEUPLOAD_FAILED'), 'error');
             return false;
         }
 
-        $this->setAttachmentsInDatabase($id, 1); // marking existing files in databasefield
+        // for memberpicture upload set different message
+        if ($picture)
+        {
+            $app->enqueueMessage(JText::_('COM_TKDCLUB_MEMBER_PICTUREUPLOAD_SUCCESS'), 'message');
+            return true; 
+        }
+
+        // marking existing files in databasefield for ordinary files only, not member picture
+        $this->setAttachmentsInDatabase($id, 1); 
 
         if ($file_existed == false)
         {
@@ -122,16 +143,26 @@ class TkdClubModelMember extends JModelAdmin
 	 * Method to get the already existing files in an array from folder structure
      * Used also in 'member' - view
      * 
+     * @param   bool     $picture true to search for memberpicture folder
+     *                   $picture false for searching in the attachments folder only
+     * 
 	 * @return  mixed    FALSE if there is no data
      *                   ARRAY $attachments with data otherwise
 	 */
-    public function getAttachments()
+    public function getAttachments($picture = false)
     {      
         $app = JFactory::getApplication();
         $member_id = $app->input->get('member_id', 0, 'INT' );
 
-        $folder = JPATH_COMPONENT_ADMINISTRATOR . '/attachments/members/' . $member_id;
-
+        if ($picture)
+        {
+            $folder = JPATH_COMPONENT_ADMINISTRATOR . '/attachments/members/' . $member_id . '/memberpicture';
+        }
+        else
+        {
+            $folder = JPATH_COMPONENT_ADMINISTRATOR . '/attachments/members/' . $member_id;
+        }
+        
         if (Jfolder::exists($folder))
         {
             return JFolder::files($folder);
@@ -146,7 +177,7 @@ class TkdClubModelMember extends JModelAdmin
      * @param   INT      $member_id integer for member_id
      * @param   BOOL     $bool true or false
      * 
-	 * @return  mixed    TRUE if everything workes
+	 * @return  mixed    TRUE if everything worked
      *                   FALSE if something went wrong
 	 */
     public function setAttachmentsInDatabase($member_id, $bool)
@@ -173,7 +204,7 @@ class TkdClubModelMember extends JModelAdmin
      * @return  mixed    FALSE if there is no data
      *                   ARRAY $attachments with data otherwise
      */
-    public function deleteFile()
+    public function deleteFile($picture = false)
     {
         $app = JFactory::getApplication();
         $input = $app->input;
@@ -181,8 +212,15 @@ class TkdClubModelMember extends JModelAdmin
         $filename = $input->getString('filename', '');
 
         // building file path and getting already existing attachment data
-        $file = JPATH_COMPONENT_ADMINISTRATOR . '/attachments/members/' . $id . '/' . $filename;
-
+        if ($picture)
+        {
+            $file = JPATH_COMPONENT_ADMINISTRATOR . '/attachments/members/' . $id . '/memberpicture/' . $filename;
+        }
+        else
+        {
+            $file = JPATH_COMPONENT_ADMINISTRATOR . '/attachments/members/' . $id . '/' . $filename;
+        }
+        
         // check if file exists then proceed
         if (!JFile::exists($file))
         {
@@ -203,8 +241,19 @@ class TkdClubModelMember extends JModelAdmin
             $this->setAttachmentsInDatabase($id, 0);
         }
 
-        $app->enqueueMessage(JText::_('COM_TKDCLUB_MEMBER_FILE_DELETED'). $filename);
+        // selecting the right message
+        if ($picture)
+        {
+            $app->enqueueMessage(JText::_('COM_TKDCLUB_MEMBER_PICTURE_DELETED'));
+        }
+        else
+        {
+            $app->enqueueMessage(JText::_('COM_TKDCLUB_MEMBER_FILE_DELETED'). $filename);
+            
+        }
+
         return true;
+        
     }
 
     /**

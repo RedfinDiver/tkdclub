@@ -22,6 +22,11 @@ JFactory::getDocument()->addScriptDeclaration("
 	};
 ");
 
+if ($this->memberpicture) {
+    $memberpicture_link = JURI::root() . 'administrator/components/com_tkdclub/attachments/members/' 
+                          . $this->item->member_id . '/memberpicture/' . $this->memberpicture[0];
+}
+
 ?>
 
 <form action="<?php echo JRoute::_('index.php?option=com_tkdclub&member_id=' . (int) $this->item->member_id); ?>"
@@ -73,57 +78,88 @@ JFactory::getDocument()->addScriptDeclaration("
                     </div>
                 </div>
             <?php echo JHtml::_('bootstrap.endTab'); ?>    
-                                                
+            <!-- TODO: Just reload the attachment and picture area with javascript. No ugly reloading necessary! -->                        
             <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'attachment', JText::_('COM_TKDCLUB_MEMBER_ATTACHMENTS', true)); ?>                         
-                <?php if (!$this->item->member_id) : ?>
-                    <div>   
-                        <?php echo JText::_('COM_TKDCLUB_MEMBER_SAVE_FIRST') ?>
-                    </div>
-                <?php else : ?>
-                    <?php echo $this->form->renderField('file'); ?>
-                    <div>
-                        <div class="control-label"></div>
-                        <div class="controls">
-                            <button class="btn btn-small btn-success" onclick="Joomla.submitbutton('member.uploadfile')">
-                                <span class="icon-apply icon-white"></span>
-                                <?php echo JText::_('COM_TKDCLUB_MEMBER_FILE_UPLOAD'); ?>
-                            </button>
-                        </div>
-                    </div>
-                <?php endif; ?> 
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="span4">
+                            <?php if (!$this->item->member_id) : ?>
+                                <div>   
+                                    <?php echo JText::_('COM_TKDCLUB_MEMBER_SAVE_FIRST') ?>
+                                </div>
+                            <?php else : ?>
+                                <?php echo $this->form->renderField('file'); ?>
+                                <div>
+                                    <div class="control-label"></div>
+                                    <div class="controls">
+                                        <button class="btn btn-large btn-success" onclick="Joomla.submitbutton('member.uploadfile')">
+                                            <span class="icon-upload icon-white"></span>
+                                            <?php echo JText::_('COM_TKDCLUB_MEMBER_FILE_UPLOAD'); ?>
+                                        </button>
+                                    </div>
+                                </div>
+                            <?php endif; ?> 
+                            <div class="attachments">  
+                                <?php if (empty($this->attachments)) : ?> 
+                                    <hr>
+                                    <div class="alert alert-no-items">
+                                        <?php echo JText::_('COM_TKDCLUB_MEMBER_NO_FILES'); ?>
+                                    </div>
+                                <?php else : ?>
+                                    <hr>
+                                    <?php foreach ($this->attachments as $filename) :?>                                                
+                                    <div>
+                                        <div class="btn-group">
+                                            <a  class="btn btn-small hasTooltip"
+                                                <?php $question = JText::_('COM_TKDCLUB_MEMBER_FILE_DELETE_QUESTION') . $filename; ?>
+                                                onclick='return window.confirm("<?php echo $question ?>");'
+                                                data-original-title="<?php echo JText::_('COM_TKDCLUB_MEMBER_FILE_DELETE'); ?>"
+                                                href="index.php?option=com_tkdclub&view=member&layout=edit&task=member.deletefile&filename=<?php echo $filename . '&member_id=' . $this->item->member_id . '&' . JSession::getFormToken() .'=1'; ?>"
+                                                >
+                                                <span class="icon-unpublish"></span>
+                                            </a>
 
-                <div class="attachments">  
-                    <?php if (empty($this->attachments)) : ?> 
-                        <hr></hr>
-                        <div class="alert alert-no-items">
-                            <?php echo JText::_('COM_TKDCLUB_MEMBER_NO_FILES'); ?>
-                        </div>
-                    <?php else : ?>
-                        <hr>
-                        <?php foreach ($this->attachments as $filename) :?>                                                
-                        <div>
-                            <div class="btn-group">
-                                <a  class="btn btn-micro hasTooltip"
-                                    <?php $question = JText::_('COM_TKDCLUB_MEMBER_FILE_DELETE_QUESTION') . $filename; ?>
-                                    onclick='return window.confirm("<?php echo $question ?>");'
-                                    data-original-title="<?php echo JText::_('COM_TKDCLUB_MEMBER_FILE_DELETE'); ?>"
-                                    href="index.php?option=com_tkdclub&view=member&layout=edit&task=member.deletefile&filename=<?php echo $filename . '&member_id=' . $this->item->member_id . '&' . JSession::getFormToken() .'=1'; ?>"
-                                    >
-                                    <span class="icon-unpublish"></span>
-                                </a>
+                                            <a class="btn btn-small hasTooltip" data-original-title="<?php echo JText::_('COM_TKDCLUB_MEMBER_FILE_DOWNLOAD'); ?>"
+                                                href="index.php?option=com_tkdclub&task=member.downloadfile&filename=<?php echo $filename . '&member_id=' . $this->item->member_id . '&' . JSession::getFormToken() .'=1'; ?>"
+                                                target="_blank">
+                                                <span class="icon-download"></span> 
+                                            </a>
+                                        </div>
+                                            <a target="_blank" href="index.php?option=com_tkdclub&task=member.downloadfile&filename=<?php echo $filename . '&member_id=' . $this->item->member_id . '&' . JSession::getFormToken() .'=1'; ?>">
+                                            <?php echo $filename; ?></a>
+                                    </div>
 
-                                <a class="btn btn-micro hasTooltip" data-original-title="<?php echo JText::_('COM_TKDCLUB_MEMBER_FILE_DOWNLOAD'); ?>"
-                                    href="index.php?option=com_tkdclub&task=member.downloadfile&filename=<?php echo $filename . '&member_id=' . $this->item->member_id . '&' . JSession::getFormToken() .'=1'; ?>"
-                                    target="_blank">
-                                    <span class="icon-download"></span> 
-                                </a>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
                             </div>
-                                <a target="_blank" href="index.php?option=com_tkdclub&task=member.downloadfile&filename=<?php echo $filename . '&member_id=' . $this->item->member_id . '&' . JSession::getFormToken() .'=1'; ?>">
-                                <?php echo $filename; ?></a>
                         </div>
-
-                        <?php endforeach; ?>
-                    <?php endif; ?>                           
+                        <div class="span4">
+                            <?php if (!$this->memberpicture) : ;?>
+                                <?php echo $this->form->renderField('picture'); ?>
+                                    <div>
+                                        <div class="control-label"></div>
+                                        <div class="controls">
+                                            <button class="btn btn-large btn-success" onclick="Joomla.submitbutton('member.uploadpicture')">
+                                                <span class="icon-upload icon-white"></span>
+                                                <?php echo JText::_('COM_TKDCLUB_MEMBER_PICTURE_UPLOAD'); ?>
+                                            </button>
+                                        </div>
+                                    </div>
+                                <?php else : ?>
+                                    <div>
+                                        <img src="<?php echo $memberpicture_link ?>" width="100" height="225"/>
+                                        <a class="btn btn-large btn-danger hasTooltip"
+                                            data-original-title="<?php echo JText::_('COM_TKDCLUB_MEMBER_FILE_DELETE'); ?>"
+                                            href="index.php?option=com_tkdclub&view=member&layout=edit&task=member.deletepicture&filename=<?php echo $this->memberpicture[0] . '&member_id=' . $this->item->member_id . '&' . JSession::getFormToken() .'=1'; ?>"
+                                            <?php $question_mb = JText::_('COM_TKDCLUB_MEMBER_PICTURE_DELETE_QUESTION');?>
+                                            onclick='return window.confirm("<?php echo $question_mb ?>");'>
+                                            <span class="icon-remove icon-white"></span>
+                                            <?php echo JText::_('COM_TKDCLUB_MEMBER_PICTURE_DELETE'); ?>
+                                        </a>
+                                    </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
                 </div>
             <?php echo JHtml::_('bootstrap.endTab'); ?>
             

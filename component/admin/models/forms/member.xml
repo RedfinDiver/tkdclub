@@ -197,6 +197,14 @@
             accept=".pdf,.jpg,.png" >
         </field>
 
+        <field 
+            name="picture"
+            type="file"
+            label="COM_TKDCLUB_MEMBER_PICTURE_APPEND"
+            description="COM_TKDCLUB_MEMBER_PICTURE_APPEND_DESC"
+            accept=".jpg,.png" >
+        </field>
+
     </fieldset>
 
     <fieldset name="item_data">       

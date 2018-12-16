@@ -18,6 +18,7 @@ class TkdClubViewMember extends JViewLegacy
     protected $item;
     protected $form;
     protected $attachments;
+    protected $memberpicture;
     protected $medals;
 
     /**
@@ -30,6 +31,7 @@ class TkdClubViewMember extends JViewLegacy
         $this->form = $this->get('Form');
         $this->item = $this->get('Item');
         $this->attachments = $this->get('Attachments');
+        $this->memberpicture = $this->getModel('member')->getAttachments($picture = true);
         $this->medals = $this->get('Medals');
 
         $this->addToolbar();
