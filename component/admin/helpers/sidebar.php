@@ -37,6 +37,9 @@ class TkdclubHelperSidebar
 
         JHtmlSidebar::addEntry(
             JText::_('COM_TKDCLUB_SIDEBAR_EMAIL'), 'index.php?option=com_tkdclub&view=email', $vName == 'email');
+        
+        JHtmlSidebar::addEntry(
+            JText::_('COM_TKDCLUB_SIDEBAR_SUBSCRIBERS'), 'index.php?option=com_tkdclub&view=subscribers', $vName == 'subscribers');
 
         JHtmlSidebar::addEntry(
             JText::_('COM_TKDCLUB_SIDEBAR_STATISTICS'), 'index.php?option=com_tkdclub&view=statistics', $vName == 'statistics');

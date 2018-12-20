@@ -228,12 +228,13 @@ ALTER TABLE `#__tkdclub_event_participants`
     ADD `modified_by` INT(10) unsigned NOT NULL DEFAULT '0' AFTER `modified`,
     ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
-/* prepared for future version */
-/* CREATE TABLE IF NOT EXISTS `#__tkdclub_newsletter_subscribers` (
+
+CREATE TABLE IF NOT EXISTS `#__tkdclub_newsletter_subscribers` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `firstname` varchar(50) NOT NULL,
   `lastname` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
+  `origin` tinyint(4) NOT NULL,
   `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` INT(10) unsigned NOT NULL DEFAULT '0',
   `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -241,4 +242,4 @@ ALTER TABLE `#__tkdclub_event_participants`
   `checked_out` int(10) NOT NULL,
   `checked_out_time` datetime NOT NULL,
   PRIMARY KEY (`id`)
- ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci; */
+ ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;

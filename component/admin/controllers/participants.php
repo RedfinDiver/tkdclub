@@ -107,7 +107,7 @@ class TkdClubControllerParticipants extends JControllerAdmin
         // Remove the items.
         if ($model->delete($cid))
         {
-            JFactory::getApplication()->enqueueMessage('COM_TKDKLUB_PARTICIPANT_GDPR_DATA_DELETED', 'notice');
+            JFactory::getApplication()->enqueueMessage(JText::_('COM_TKDKLUB_PARTICIPANT_GDPR_DATA_DELETED', 'notice'));
             $this->setMessage(\JText::plural($this->text_prefix . '_N_ITEMS_DELETED', count($cid)));
         }
         else

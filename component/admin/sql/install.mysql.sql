@@ -163,6 +163,7 @@ CREATE TABLE IF NOT EXISTS `#__tkdclub_newsletter_subscribers` (
   `firstname` varchar(50) NOT NULL,
   `lastname` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
+  `origin` varchar(10) NOT NULL,
   `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` INT(10) unsigned NOT NULL DEFAULT '0',
   `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
