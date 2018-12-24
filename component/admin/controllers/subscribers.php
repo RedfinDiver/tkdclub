@@ -7,11 +7,11 @@
 
 defined('_JEXEC') or die;
 
-class TkdClubControllerTrainings extends JControllerAdmin
+class TkdClubControllerSubscribers extends JControllerAdmin
 {
     protected $text_prefix = 'COM_TKDCLUB_SUBSCRIBERS';
 
-    public function getModel($name = 'subscribers', $prefix = 'TkdClubModel', $config = array())
+    public function getModel($name = 'subscriber', $prefix = 'TkdClubModel', $config = array())
     {
         $config['ignore_request'] = true;
         $model = parent::getModel($name, $prefix, $config);
