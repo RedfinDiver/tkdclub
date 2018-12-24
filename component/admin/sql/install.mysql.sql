@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS `#__tkdclub_members` (
   `memberpass` int(10) NOT NULL,
   `grade` varchar(30) NOT NULL,
   `lastpromotion` date NOT NULL DEFAULT '0000-00-00',
+  `licenses` text NOT NULL,
   `notes_taekwondo` text NOT NULL,
   `functions` text NOT NULL,
   `entry` date NOT NULL DEFAULT '0000-00-00',

@@ -35,6 +35,12 @@
             label="COM_TKDCLUB_CONFIG_FUNCTIONS"
             description="COM_TKDCLUB_CONFIG_FUNCTIONS_DESC"
             type="text" defautlt="" size="60" filter="safehtml"/>
+
+        <field
+            name="licenses"
+            label="COM_TKDCLUB_CONFIG_LICENSES"
+            description="COM_TKDCLUB_CONFIG_LICENSES_DESC"
+            type="text" defautlt="" size="60" filter="safehtml"/>
              
     </fieldset>
 

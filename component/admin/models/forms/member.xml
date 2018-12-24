@@ -137,6 +137,14 @@
             description="COM_TKDCLUB_MEMBER_LAST_PROMOTION_DESC"
             size="12" />
 
+        <field
+            name="licenses" type="licenses"
+            label="COM_TKDCLUB_MEMBER_LICENSES"
+            description="COM_TKDCLUB_MEMBER_LICENSES_DESC"
+            multiple="true" >
+            
+        </field>
+
         <field 
             name="notes_taekwondo" type="textarea"
             rows="7"
@@ -155,7 +163,7 @@
             description="COM_TKDCLUB_MEMBER_FUNCTIONS_DESC"
             multiple="true" >
             
-            </field>
+        </field>
 
         <field 
             name="leave" type="calendar"

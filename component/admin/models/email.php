@@ -132,8 +132,7 @@ class TkdclubModelEmail extends JModelAdmin
             $data['inactive']  = $inactive;  
  			$data['subject']   = $subject;
 			$data['message']   = $message_body;
-			// TODO prepared for future versions
-            // $data['newsletter'] = $newsletter;
+            $data['newsletter'] = $newsletter;
 
 			$app->setUserState('com_tkdclub.email.data', array());
 			$app->enqueueMessage(Text::plural('COM_TKDCLUB_MAIL_EMAIL_SENT_TO_N_USERS', count($recipients)), 'message');
@@ -164,9 +163,7 @@ class TkdclubModelEmail extends JModelAdmin
 		array_key_exists('active', $input) ? $member_recipients[] = 'active' : null;
 		array_key_exists('inactive', $input) ? $member_recipients[] = 'inactive' : null;
 		array_key_exists('supporter', $input) ? $member_recipients[] = 'support' : null;
-
-		// TODO Message to newsletter subscribers
-		// array_key_exists('newsletter', $input) ? $newsletter = 'newsletter' : null;
+		array_key_exists('newsletter', $input) ? $newsletter = 'newsletter' : null;
 
 		// Check for existing recipients
 		if (empty($member_recipients) && !$newsletter)
@@ -196,16 +193,13 @@ class TkdclubModelEmail extends JModelAdmin
 			$q_members->where('NOT ' . $db->quoteName('email') . ' = ' . $db->quote(''));
 		}
 
-		/* TODO Build query for newsletter subscribers table
 		if ($newsletter)
 		{
 			$q_subscribers = $db->getQuery(true);
 			$q_subscribers->select('DISTINCT' . $db->quoteName('email'))->from($db->quoteName('#__tkdclub_newsletter_subscribers'));
 			$q_subscribers->where('NOT ' . $db->quoteName('email') . ' = ' . $db->quote(''));
-		}
-		*/		
+		}	
 		
-		/* TODO Now determine what query has to run
 		if (!empty($member_recipients) && $newsletter)
 		{
 			$query = $q_members->union($q_subscribers);
@@ -220,7 +214,6 @@ class TkdclubModelEmail extends JModelAdmin
 		{
 			$query = $q_members;
 		}
-		*/
 
 		$query = $q_members;
 

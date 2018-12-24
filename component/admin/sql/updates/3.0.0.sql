@@ -29,6 +29,7 @@ ALTER TABLE `#__tkdclub_members`
     CHANGE `modified_by` `modified_by` INT(10) unsigned NOT NULL DEFAULT '0',
     CHANGE `checked_out` `checked_out` int(10) unsigned NOT NULL,
     CHANGE `checked_out_time` `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+    ADD `licenses` text NOT NULL AFTER `lastpromotion`,
 	DROP `fee`,
     DROP `delete_mb`,
     ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
