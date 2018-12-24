@@ -14,6 +14,9 @@ JHtml::_('formbehavior.chosen', 'select');
 JHtml::stylesheet('administrator/components/com_tkdclub/assets/css/tkdclub.css');
 JHtml::_('script', 'administrator/components/com_tkdclub/assets/js/rawsubmitbutton.js');
 
+$user      = JFactory::getUser();
+$userId    = $user->get('id');
+$columns = 10;
 ?>
 
 <form action="<?php echo JRoute::_('index.php?option=com_tkdclub&view=participants'); ?>"
@@ -45,7 +48,7 @@ JHtml::_('script', 'administrator/components/com_tkdclub/assets/js/rawsubmitbutt
         </div>
     <div class="clearfix"> </div>
     <!--start of table participants -->
-    <table class="table table-striped table-condensed">
+    <table class="table table-striped">
         <!-- table head -->
         <thead>
             <tr>
@@ -53,7 +56,7 @@ JHtml::_('script', 'administrator/components/com_tkdclub/assets/js/rawsubmitbutt
                     <?php echo JHtml::_('grid.checkall'); ?>
                 </th>
                 <th class="center" width="20"><?php echo JText::_('JSTATUS'); ?></th>
-                <th width="1%" style="" class="nowrap center">
+                <th width="" style="" class="nowrap center">
 		        <?php echo JHTML::_( 'searchtools.sort', 'COM_TKDCLUB_DATE', 'b.date', $this->sortDirection, $this->sortColumn); ?>
                 </th>  
                 <th width="" style="" class="nowrap left">
@@ -80,13 +83,21 @@ JHtml::_('script', 'administrator/components/com_tkdclub/assets/js/rawsubmitbutt
         </tfoot>
         <!-- table body -->
         <tbody>
-            <?php foreach ($this->items as $i => $item) : ?>
+            <?php foreach ($this->items as $i => $item) :
+                    $canEdit    = $user->authorise('core.edit',       'com_tkdclub.subscriber.' . $item->id);
+					$canCheckin = $user->authorise('core.manage',     'com_checkin') || $item->checked_out == $userId || $item->checked_out == 0;
+					$canEditOwn = $user->authorise('core.edit.own',   'com_tkdclub.subscriber.' . $item->id) && $item->created_by == $userId;
+					$canChange  = $user->authorise('core.edit.state', 'com_tkdclub.subscriber.' . $item->id) && $canCheckin;
+            ?>
                 <tr class="row<?php echo $i % 2; ?>">
                     <td><?php echo JHtml::_('grid.id', $i, $item->id); ?></td>
                     <td class="center">
                         <?php echo JHtml::_('jgrid.published', $item->published, $i, 'participants.', TRUE); ?>
                     </td>
                     <td class="left">
+                        <?php if ($item->checked_out) : ?>
+                            <?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'participants.', $canCheckin); ?>
+                        <?php endif; ?>
                         <a href="<?php echo JRoute::_('index.php?option=com_tkdclub&task=participant.edit&id=' . (int) $item->id); ?>">
                         <?php echo JHtml::_('date', $item->date, JText::_('DATE_FORMAT_LC4')); ?>
                     </td>

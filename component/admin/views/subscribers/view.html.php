@@ -18,8 +18,13 @@ class TkdClubViewSubscribers extends JViewLegacy
     public function display($tpl = null)
     {
         $this->items = $this->get('Items');
+        $this->pagination = $this->get('Pagination');
         $this->sidebar = JHtmlSidebar::render();
         $this->addToolbar();
+        $this->filterForm = $this->get('FilterForm');
+        $this->activeFilters = $this->get('ActiveFilters');
+        $this->total = $this->get('Total');
+        $this->allrows = $this->get('Allrows');
         
         /* if ($this->togglestats)
         {
@@ -53,7 +58,7 @@ class TkdClubViewSubscribers extends JViewLegacy
         {JToolBarHelper::editList('subscriber.edit', 'JTOOLBAR_EDIT');}
         
         if ($canDo->get('core.delete'))
-        {JToolBarHelper::deleteList('COM_TKDCLUB_TRAINING_DELETE_QUESTION', 'subscribers.delete','JTOOLBAR_DELETE');}
+        {JToolBarHelper::deleteList('COM_TKDCLUB_SUBSCRIBER_DELETE_QUESTION', 'subscribers.delete','JTOOLBAR_DELETE');}
 
         $toolbar = JToolbar::getInstance('toolbar');
         $toolbar->addButtonPath(JPATH_COMPONENT.'/buttons');
@@ -72,5 +77,12 @@ class TkdClubViewSubscribers extends JViewLegacy
         JToolBarHelper::divider();    
                         
     }
+
+    protected function getSortFields()
+	{
+		return array(
+			'date' => JText::_('COM_TKDCLUB_SUBSCRIBER_SUBSCRIBED'),
+		);
+	}
 
 }

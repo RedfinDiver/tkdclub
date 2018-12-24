@@ -8,16 +8,17 @@
 defined('_JEXEC') or die;
 
 JHtml::stylesheet('administrator/components/com_tkdclub/assets/css/tkdclub.css');
+JHtml::_('formbehavior.chosen', 'select');
 
 /**
  * initilise some variables
  */
 $user      = JFactory::getUser();
 $userId    = $user->get('id');
-
+$columns   = 10;
 ?>
 
-<form action="<?php echo JRoute::_('index.php?option=com_tkdclub&view=subscibers'); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo JRoute::_('index.php?option=com_tkdclub&view=subscribers'); ?>" method="post" name="adminForm" id="adminForm">
     <?php if (!empty( $this->sidebar)) : ?>
         <div id="j-sidebar-container" class="span2">
             <?php echo $this->sidebar; ?>
@@ -26,6 +27,20 @@ $userId    = $user->get('id');
     <?php else : ?>
         <div id="j-main-container">
     <?php endif;?>
+    <?php
+        echo JLayoutHelper::render('joomla.searchtools.default', array('view' => $this));
+    ?>
+    <?php if (empty($this->items)) : ?>
+        <div class="alert alert-no-items">
+            <?php echo JText::_('JGLOBAL_NO_MATCHING_RESULTS'); ?>
+        </div> 
+    <?php else : ?>
+        <div class="tkdclub-numbers">
+            <b><?php echo $this->total; ?></b> <?php echo JText::_('COM_TKDCLUB_FROM'); ?>
+                <b><?php echo $this->allrows; ?></b>
+            <?php echo JText::_('COM_TKDCLUB_ENTRIES'); ?>
+        </div>
+    <div class="clearfix"> </div>
     <!-- start of table with items --> 
     <table class="table table-condensed">
             <!-- table headings -->
@@ -42,8 +57,10 @@ $userId    = $user->get('id');
             </thead>
             <!--footer -->
             <tfoot>
-                <tr></tr>
-            </tfoot>
+                <tr>
+                    <td colspan="<?php echo $columns; ?>"></td>
+                </tr>
+			</tfoot>
             <!-- table body-->
             <tbody>
                 <?php foreach ($this->items as $i => $item) :
@@ -54,9 +71,9 @@ $userId    = $user->get('id');
                 ?>
                 <tr class="row<?php echo $i % 2; ?>">
                     <td class="center"><?php echo JHtml::_('grid.id', $i, $item->id); ?>
-                    <td width="150" class="title">
+                    <td width="200" class="title">
                         <?php if ($item->checked_out) : ?>
-                            <?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'trainings.', $canCheckin); ?>
+                            <?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'subscribers.', $canCheckin); ?>
                         <?php endif; ?>
                         <?php
                             $mylink = JRoute::_("index.php?option=com_tkdclub&task=subscriber.edit&id=".$item->id);
@@ -67,7 +84,7 @@ $userId    = $user->get('id');
                     <td><?php echo $this->escape($item->lastname) ?></td>
                     <td><?php echo JHtml::_('date', $item->created, JText::_('DATE_FORMAT_LC4')) ?></td>
                     <td>
-                        <?php if ($item->origin == 1)
+                        <?php if ($item->origin == 2)
                               {
                                   echo JText::_('COM_TKDCLUB_SUBSCRIBER_ORIGIN_FORM');
                               }
@@ -83,6 +100,8 @@ $userId    = $user->get('id');
             
             </tbody>
         </table>
+        <?php endif; ?>
+        <?php echo $this->pagination->getListFooter(); ?>
 <!--Joomla security tasks-->
 <div>
     <input type="hidden" name="task" value="" />

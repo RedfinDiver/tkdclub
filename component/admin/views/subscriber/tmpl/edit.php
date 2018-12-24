@@ -38,7 +38,13 @@ JFactory::getDocument()->addScriptDeclaration("
                 <?php echo JHtml::_('bootstrap.endTab'); ?>
 
                 <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'item_data', JText::_('COM_TKDCLUB_ITEM_DATA', true)); ?>
-                    <?php echo $this->form->renderFieldset('item_data')?>
+                    <?php if (empty($this->item->id)) : ?>
+                        <div class="alert alert-no-items">
+                            <?php echo JText::_('COM_TKDCLUB_NO_ITEM_DATA'); ?>
+                        </div>
+                    <?php else : ?> 
+                        <?php echo $this->form->renderFieldset('item_data')?>
+                    <?php endif; ?>
                 <?php echo JHtml::_('bootstrap.endTab'); ?>
 
             <?php echo JHtml::_('bootstrap.endTabset'); ?>

@@ -24,20 +24,11 @@
             size="30" required="true" filter="safehtml" />
         
         <field 
-            name="created" type="calendar"
-            class="inputbox"
-            label="COM_TKDCLUB_SUBSCRIBER_SUBSCRIBED"
-            description="COM_TKDCLUB_SUBSCRIBER_SUBSCRIBED_DESC"
-            size="12" />
-        
-        <field 
-            name="origin" type="list"
-            required="true"
+            name="origin" type="hidden"
+            required="true" default="1" readonly="true"
             label="COM_TKDCLUB_SUBSCRIBER_ORIGIN"
             description="COM_TKDCLUB_SUBSCRIBER_ORIGIN_DESC" >
-            <option value="">COM_TKDCLUB_SUBSCRIBER_ORIGIN_FILTER</option>
-            <option value="1">COM_TKDCLUB_SUBSCRIBER_ORIGIN_FORM</option>
-            <option value="0">COM_TKDCLUB_SUBSCRIBER_ORIGIN_MANUAL</option>
+
         </field>
          
     </fieldset>
