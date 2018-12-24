@@ -18,6 +18,7 @@ $user      = JFactory::getUser();
 $userId    = $user->get('id');
 $listOrder = $this->state->get('list.ordering');
 $listDirn  = $this->state->get('list.direction');
+$columns   = 10;
 
 ?>
 
@@ -79,9 +80,9 @@ $listDirn  = $this->state->get('list.direction');
         <!-- footer -->
         <tfoot>
             <tr>
-                <td colspan="18"><?php echo $this->pagination->getListFooter(); ?></td>
+                <td colspan="<?php echo $columns; ?>"></td>
             </tr>
-        </tfoot>
+		</tfoot>
         <!-- table body -->
         <tbody>
             <?php foreach ($this->items as $i => $item) : 
@@ -127,6 +128,9 @@ $listDirn  = $this->state->get('list.direction');
     </table>
     <?php endif; ?>
     </div>
+
+    <?php echo $this->pagination->getListFooter(); ?>
+
     <div>
         <input type="hidden" name="task" value="" />
         <input type="hidden" name="boxchecked" value="0" />
