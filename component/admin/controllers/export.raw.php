@@ -207,7 +207,31 @@ class TkdClubControllerExport extends JControllerForm
 			print implode(';', $row)."\n"; 
 		}
 
-		$this->setHeaders(JText::_('COM_TKDCLUB_SUBMENU_EVENTPARTS'));
+		$this->setHeaders(JText::_('COM_TKDCLUB_SIDEBAR_EVENTPARTS'));
+	}
+
+	/**
+	*	csv export function for newsletter subscripion-view
+	**/
+	public function subscribers()
+	{	
+		$content = $this->getContent('subscribers');
+		$origin = array("1" => 'COM_TKDCLUB_SUBSCRIBER_ORIGIN_MANUAL',
+						"2" => 'COM_TKDCLUB_SUBSCRIBER_ORIGIN_FORM');
+
+		foreach ($content as $key => &$row)
+		{ 	
+			// conversion of date in LC4-format
+			if ($key > 0)
+			{
+				$row[3] = JHtml::_('date', $row[3], JText::_('DATE_FORMAT_LC4'));
+				$row[4] = JText::_($origin[$row[4]]);
+			}
+			
+			print implode(';', $row)."\n"; 
+		}
+
+		$this->setHeaders(JText::_('COM_TKDCLUB_SIDEBAR_SUBSCRIBERS'));
 	}
 
 }

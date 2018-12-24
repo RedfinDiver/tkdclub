@@ -9,6 +9,7 @@ defined('_JEXEC') or die;
 
 JHtml::stylesheet('administrator/components/com_tkdclub/assets/css/tkdclub.css');
 JHtml::_('formbehavior.chosen', 'select');
+JHtml::_('script', 'administrator/components/com_tkdclub/assets/js/rawsubmitbutton.js');
 
 /**
  * initilise some variables

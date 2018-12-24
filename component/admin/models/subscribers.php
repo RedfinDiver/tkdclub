@@ -110,4 +110,43 @@ class TkdClubModelSubscribers extends JModelList
         return $allrows;
 
     }
+
+    /**
+	 * Method to get the data that should be exported.
+	 * @return  mixed  The data.
+	 */
+	public function getExportData($pks)
+	{
+		$pklist = implode(',', $pks);
+
+		$db	= JFactory::getDBO();
+		$query	= $db->getQuery(true);
+
+        // select fields from newsletter subscribers table
+        $query->select('a.email,a.firstname,a.lastname,a.created,a.origin,a.id');
+        $query->from($db->quoteName('#__tkdclub_newsletter_subscribers', 'a'));  
+
+        // only selected items in the list
+        $query->where('a.id IN ('.$pklist.')');
+
+        // ordering
+        $query->order('a.created DESC');
+
+		$db->setQuery((string)$query);
+		$rows = $db->loadRowList();
+
+        $headers = array(
+            JText::_('COM_TKDCLUB_SUBSCRIBER_EMAIL'),       // a.email
+            JText::_('COM_TKDCLUB_SUBSCRIBER_FIRSTNAME'),   // a.firstname
+            JText::_('COM_TKDCLUB_SUBSCRIBER_LASTNAME'),    // a.lastname
+            JText::_('COM_TKDCLUB_SUBSCRIBER_SUBSCRIBED'),  // a.created
+            JText::_('COM_TKDCLUB_SUBSCRIBER_ORIGIN'),      // a.origin
+            JText::_('COM_TKDCLUB_SUBSCRIBER_ID')           // a.id
+        );
+
+		// return the results as an array of items, each consisting of an array of fields
+		$content	= array($headers);	//header with column names
+		$content	= array_merge( $content,  $rows);
+		return $content;
+    }
 }
