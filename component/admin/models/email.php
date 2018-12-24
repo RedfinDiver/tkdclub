@@ -77,7 +77,6 @@ class TkdclubModelEmail extends JModelAdmin
 
 		$recipients   = $this->getRecipients();
 		$attachments  = $this->getAttachments();
-		
 
 		// Check for a message body and subject
 		if (!$message_body || !$subject)
@@ -214,8 +213,6 @@ class TkdclubModelEmail extends JModelAdmin
 		{
 			$query = $q_members;
 		}
-
-		$query = $q_members;
 
 		return $db->setQuery($query)->loadColumn();
 	}
