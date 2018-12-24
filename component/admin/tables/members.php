@@ -24,8 +24,15 @@ class TkdClubTableMembers extends JTable
         // Transform the functions field
 		if (is_array($this->functions))
 		{
-			$registry = new Registry($this->functions);
-			$this->functions = (string) $registry;
+			$functions = new Registry($this->functions);
+			$this->functions = (string) $functions;
+        }
+
+        // Transform the licenses field
+		if (is_array($this->licenses))
+		{
+			$licenses = new Registry($this->licenses);
+			$this->licenses = (string) $licenses;
         }
 
         $date   = JFactory::getDate()->toSql();
