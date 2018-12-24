@@ -140,7 +140,7 @@ class TkdClubModelParticipant extends JModelAdmin
             if ($row->email != '' && !in_array($row->email, $all_emails))
             {
                 $table = JTable::getInstance($type = 'subscribers', $prefix= 'TkdclubTable', $config = array());
-                $row->origin = 1; // set origin from form in database
+                $row->origin = 2; // set origin from form in database
                 $table->save($row) ? $stored++ : null;
             }
         }
