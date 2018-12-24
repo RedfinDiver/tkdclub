@@ -1,141 +1,210 @@
 {
-    "version": "0.1.0",
+    "version": "2.0.0",
     
     "tasks": [
         { 
-            "taskName": "Package: zip",
+            "label": "Package: zip",
             "command": "ant",
-            "isShellCommand": true,
-            "showOutput": "always",
-            "echoCommand": true,
-            "suppressTaskName": true,
+            "type": "shell",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
             "args": ["-f", "${workspaceRoot}/build.xml", "zip"]
         },
         { 
-            "taskName": "Package: clean",
+            "label": "Package: clean",
             "command": "ant",
-            "isShellCommand": true,     
-            "showOutput": "always",
-            "echoCommand": true,
-            "suppressTaskName": true,
+            "type": "shell",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },     
             "args": ["-f", "${workspaceRoot}/build.xml", "clean"]
         },
         { 
-            "taskName": "Component: symlink",
+            "label": "Component: symlink",
             "command": "ant",
-            "isShellCommand": true,     
-            "showOutput": "always",
-            "echoCommand": true,
-            "suppressTaskName": true,
+            "type": "shell",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
             "args": ["-f", "${workspaceRoot}/component/build.xml", "symlink"]
         },
         { 
-            "taskName": "Component: zip",
+            "label": "Component: zip",
             "command": "ant",
-            "isShellCommand": true,     
-            "showOutput": "always",
-            "echoCommand": true,
-            "suppressTaskName": true,
+            "type": "shell",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
             "args": ["-f", "${workspaceRoot}/component/build.xml", "zipComponent"]
         },
         { 
-            "taskName": "Component: clean",
+            "label": "Component: clean",
             "command": "ant",
-            "isShellCommand": true,     
-            "showOutput": "always",
-            "echoCommand": true,
-            "suppressTaskName": true,
+            "type": "shell",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
             "args": ["-f", "${workspaceRoot}/component/build.xml", "clean"]
         },
 
         {
-            "taskName": "Docs: make html",
+            "label": "Docs: make html",
             "command": "make",
-            "isShellCommand": true,     
-            "showOutput": "always",
-            "echoCommand": true,
-            "suppressTaskName": true,
+            "type": "shell",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
             "args": ["-C", "${workspaceRoot}/docs/", "html"]
         },
 
         {
-            "taskName": "Docs: clean",
+            "label": "Docs: clean",
             "command": "make",
-            "isShellCommand": true,     
-            "showOutput": "always",
-            "echoCommand": true,
-            "suppressTaskName": true,
+            "type": "shell",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
             "args": ["-C", "${workspaceRoot}/docs/", "clean"]
         },
 
-        /**{
-            "taskName": "start php language server",
+        {
+            "label": "start php language server",
             "command": "php",
-            "isShellCommand": true,     
-            "showOutput": "always",
-            "echoCommand": true,
-            "suppressTaskName": true,
+            "type": "shell",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
             "args": ["vendor/felixfbecker/language-server/bin/php-language-server.php"]
         },
-        */
         
         { 
-            "taskName": "Plugin tkdclubgrade: symlink",
+            "label": "Plugin tkdclubgrade: symlink",
             "command": "ant",
-            "isShellCommand": true,     
-            "showOutput": "always",
-            "echoCommand": true,
-            "suppressTaskName": true,
+            "type": "shell",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
             "args": ["-f", "${workspaceRoot}/plugins/tkdclubgrade/build.xml", "symlink"]
         },
 
         { 
-            "taskName": "Plugin tkdclubgrade: zipPlugin",
+            "label": "Plugin tkdclubgrade: zipPlugin",
             "command": "ant",
-            "isShellCommand": true,     
-            "showOutput": "always",
-            "echoCommand": true,
-            "suppressTaskName": true,
+            "type": "shell",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
             "args": ["-f", "${workspaceRoot}/plugins/tkdclubgrade/build.xml", "zipPlugin"]
         },
 
         { 
-            "taskName": "Plugin tkdclubgrade: clean",
+            "label": "Plugin tkdclubgrade: clean",
             "command": "ant",
-            "isShellCommand": true,     
-            "showOutput": "always",
-            "echoCommand": true,
-            "suppressTaskName": true,
+            "type": "shell",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
             "args": ["-f", "${workspaceRoot}/plugins/tkdclubgrade/build.xml", "clean"]
         },
 
         { 
-            "taskName": "Plugin tkdclublogo: symlink",
+            "label": "Plugin tkdclublogo: symlink",
             "command": "ant",
-            "isShellCommand": true,     
-            "showOutput": "always",
-            "echoCommand": true,
-            "suppressTaskName": true,
+            "type": "shell",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
             "args": ["-f", "${workspaceRoot}/plugins/tkdclublogo/build.xml", "symlink"]
         },
 
         { 
-            "taskName": "Plugin tkdclublogo: zipPlugin",
+            "label": "Plugin tkdclublogo: zipPlugin",
             "command": "ant",
-            "isShellCommand": true,     
-            "showOutput": "always",
-            "echoCommand": true,
-            "suppressTaskName": true,
+            "type": "shell",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
             "args": ["-f", "${workspaceRoot}/plugins/tkdclublogo/build.xml", "zipPlugin"]
         },
 
         { 
-            "taskName": "Plugin tkdclublogo: clean",
+            "label": "Plugin tkdclublogo: clean",
             "command": "ant",
-            "isShellCommand": true,     
-            "showOutput": "always",
-            "echoCommand": true,
-            "suppressTaskName": true,
+            "type": "shell",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
             "args": ["-f", "${workspaceRoot}/plugins/tkdclublogo/build.xml", "clean"]
         },
     ]
