@@ -16,7 +16,8 @@ JHtml::_('formbehavior.chosen', 'select');
 $user      = JFactory::getUser();
 $userId    = $user->get('id');
 $listOrder = $this->state->get('list.ordering');
-$listDirn = $this->state->get('list.direction');
+$listDirn  = $this->state->get('list.direction');
+$columns   = 10;
 $helper = new TkdClubHelperMembers;
 ?>
 
@@ -71,16 +72,13 @@ $helper = new TkdClubHelperMembers;
                 <th width=""><?php echo JText::_('COM_TKDCLUB_ATHLETS'); ?></th>
                 <th width=""><?php echo JText::_('COM_TKDCLUB_NOTES'); ?></th>
             </tr>
-        </thead>
-        <!-- end of table-head -->
-        
+        </thead>        
         <!-- beginn of table footer -->
-        <tfoot><tr><td colspan="18">
-                    <?php echo $this->pagination->getListFooter(); ?>
-                </td></tr>
-        </tfoot>
-        <!-- end of table footer -->
-        
+        <tfoot>
+            <tr>
+                <td colspan="<?php echo $columns; ?>"></td>
+            </tr>
+		</tfoot>        
         <!-- start of table body-->
         <tbody>
             <?php foreach ($this->items as $i => $item) : 
@@ -115,6 +113,9 @@ $helper = new TkdClubHelperMembers;
     </table>
     <!-- end of table -->
     <?php endif; ?>
+
+    <?php echo $this->pagination->getListFooter(); ?>
+    
     <div>
        <input type="hidden" name="task" value="" />
        <input type="hidden" name="boxchecked" value="0" />

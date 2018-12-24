@@ -19,6 +19,7 @@ $user      = JFactory::getUser();
 $userId    = $user->get('id');
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn  = $this->escape($this->state->get('list.direction'));
+$columns   = 10;
 ?>
 
 <form action="<?php echo JRoute::_('index.php?option=com_tkdclub&view=events'); ?>" method="post" name="adminForm" id="adminForm">
@@ -45,7 +46,7 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
         </div>
         <?php if($this->togglestats) :  ?>
         <?php  
-            // @todo for statistic: include_once(JPATH_COMPONENT . '/includes/eventsstats.php');
+            // TODO for statistic: include_once(JPATH_COMPONENT . '/includes/eventsstats.php');
         ?>
     <?php endif; ?>
         <table class="table table-striped table-condensed" id="eventList">
@@ -85,9 +86,7 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
             </thead>
             <tfoot>
                 <tr>
-                    <td colspan="18">
-                        <?php echo $this->pagination->getListFooter(); ?>
-                    </td>
+                    <td colspan="<?php echo $columns; ?>"></td>
                 </tr>
             </tfoot>
             <tbody>
@@ -139,6 +138,9 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
             </tbody>
         </table>
     <?php endif; ?>
+
+    <?php echo $this->pagination->getListFooter(); ?>
+    
     <input type="hidden" name="task" value="" />
     <input type="hidden" name="boxchecked" value="0" />
     <?php echo JHtml::_('form.token'); ?>

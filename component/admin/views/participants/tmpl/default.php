@@ -75,7 +75,7 @@ JHtml::_('script', 'administrator/components/com_tkdclub/assets/js/rawsubmitbutt
         <!-- table footer -->
         <tfoot>
             <tr>
-                <td colspan="18"><?php echo $this->pagination->getListFooter(); ?></td>
+                <td colspan="<?php echo $columns; ?>"></td>
             </tr>
         </tfoot>
         <!-- table body -->
@@ -122,6 +122,9 @@ JHtml::_('script', 'administrator/components/com_tkdclub/assets/js/rawsubmitbutt
     </table>
     <?php endif; ?>
     </div>
+
+    <?php echo $this->pagination->getListFooter(); ?>
+
     <div>
         <input type="hidden" name="task" value="" />
         <input type="hidden" name="boxchecked" value="0" />

@@ -20,6 +20,7 @@ $user      = JFactory::getUser();
 $userId    = $user->get('id');
 $listOrder = $this->state->get('list.ordering');
 $listDirn  = $this->state->get('list.direction');
+$columns   = 10;
 
 ?>
 
@@ -93,15 +94,11 @@ $listDirn  = $this->state->get('list.direction');
 
                 </tr>
             </thead>
-
             <tfoot>
-                <tr>
-                    <td colspan="18">
-                        <?php echo $this->pagination->getListFooter(); ?>
-                    </td>
-                </tr>
-            </tfoot>
-
+				<tr>
+					<td colspan="<?php echo $columns; ?>"></td>
+				</tr>
+			</tfoot>
             <tbody>
                 <?php foreach ($this->items as $i => $item) : 
 					$canEdit    = $user->authorise('core.edit',       'com_tkdclub.member.' . $item->member_id);
@@ -194,7 +191,9 @@ $listDirn  = $this->state->get('list.direction');
             </tbody>
         </table>
             
-    <?php endif; ?>  
+    <?php endif; ?>
+
+    <?php echo $this->pagination->getListFooter(); ?>
 
     <div>
         <input type="hidden" name="task" value="" />

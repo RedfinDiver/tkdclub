@@ -26,6 +26,7 @@ $togglestats = $this->togglestats;
 $listOrder = $this->state->get('list.ordering');
 $listDirn = $this->state->get('list.direction');
 $listLimit = $this->state->get('list.limit');
+$columns = 10;
 
 $filter_trainer = $this->state->get('filter.trainer');
 
@@ -92,10 +93,11 @@ $filter_payment_state  = $this->state->get('filter.payment_state');
                 </tr>
             </thead>
             <!--footer -->
-            <tfoot><tr><td colspan="18">
-                        <?php echo $this->pagination->getListFooter(); ?>
-                    </td></tr>
-            </tfoot>
+            <tfoot>
+				<tr>
+					<td colspan="<?php echo $columns; ?>"></td>
+				</tr>
+			</tfoot>
             <!-- table body-->
             <tbody>
                 <?php foreach ($this->items as $i => $item) :
@@ -143,6 +145,8 @@ $filter_payment_state  = $this->state->get('filter.payment_state');
             </tbody>
         </table>
     <?php endif; ?>
+
+    <?php echo $this->pagination->getListFooter(); ?>
 
 <!--Joomla security tasks-->
     <div>
