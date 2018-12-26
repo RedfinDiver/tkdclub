@@ -19,8 +19,8 @@ Einstellungen
 .. image:: img/options.jpg
    :align: right
 
-In der Konfiguration der Komponente können für die "Mitglieder" Liste folgende
-Einstellungen getroffen werden:
+In der Konfiguration der Komponente können für die Mitgliederverwaltung Liste
+folgende Einstellungen getroffen werden:
 
 .. image:: img/members_options.jpg
 
@@ -35,6 +35,12 @@ Funktionen im Verein
     einem Mitglied zugeordnet werden können. Die als Standard vorhandenen
     Funktionen sind: Präsident, Vizepräsident, Kassier, Schriftführer und
     Trainer.
+
+Lizenzen
+    Hier können eigene Lizentypen (mit Komma getrennt) eingeben werden. Einige
+    Lizenzen stehen standardmässig zur Verfügung, so z.B. Trainerlizenzen und
+    auch Refereelizenzen. Diese Lizenzen können einem Mitglied in der
+    Detailansicht zugeordnet werden.
 
 Mitglied hinzufügen
 -------------------
@@ -63,8 +69,8 @@ Jedes Mitglied kann durch Aktivieren der Tick-Box und klicken der Buttons
 "Löschen" und "Bearbeiten" gelöscht bzw. editiert werden. Ein alternativer Weg
 der Bearbeitung besteht im Anklicken des Nachnamens in der Listansicht. Auch
 hier öffnet sich das Formular zum Bearbeiten des Teilnehmers. Gelöscht können
-mehrere Mitglieder zur gleichen Zeit werden, editiert kann immer nur ein
-Datensatz zur gleichen  Zeit.
+mehrere Mitglieder zur gleichen Zeit werden, editieren kann man immer nur einen
+Datensatz zur gleichen Zeit.
 
 Dateien anhängen
 ----------------------------
@@ -74,7 +80,7 @@ Nach dem Speichern des Mitglieds ist es im Tab "Anhänge" möglich .pdf, .jpg un
 können Anmeldeformulare, Urkunden usw. angehängt werden.
 
 Es ist außerdem möglich für jedes Mitglied ein Foto zu hinterlegen. Dieses
-wird dann in Detailansicht des Bearbeitungsmodus angezeigt.
+wird dann in Detailansicht angezeigt.
 
 Statistiken aktivieren
 ----------------------
