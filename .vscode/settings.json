@@ -17,7 +17,7 @@
         "**/pkg_tkdclub.xml": true,
         "**/site": false,
         "**/admin": false,
-        "**/README.rst": true,
+        "**/README.rst": false,
         "**/build.xml": true,
         "**/candidate*/**": false,
         "**/medal*/**": false,
@@ -32,5 +32,7 @@
     "livereload.exts": "html,htm,css,js,png,gif,jpg,php,xml,ini",
     "todo-tree.flat": true,
     "todo-tree.expanded": false,
+    "restructuredtext.confPath": "${workspaceFolder}/docs",
+    "editor.rulers": [79]
 
 }
