@@ -1,11 +1,17 @@
 Was ist TKDClub?
 ----------------
 
-TKDClub ist eine Joomla! Komponente für Taekwondo-Vereine. Sie unterstützt
-bei der Vereinverwaltung mit typischen Funktionalitäten zugeschnitten auf
+TKDClub ist eine Joomla! Komponente für Taekwondo-Vereine. Sie unterstützt bei
+der Vereinverwaltung mit typischen Funktionalitäten zugeschnitten auf
 Taekwondo-Vereine. Der Quelltext befindet sich auf Github_.
 
 .. _Github: https://github.com/RedfinDiver/tkdclub
+
+Online steht unter readthedocs.io_ eine Dokumentation zur Verfügung. Offline
+gibt es ein pdf-Dokument_ zum Download.
+
+.. _readthedocs.io: https://tkdclub.readthedocs.io
+.. _pdf-Dokument: https://readthedocs.org/projects/tkdclub/downloads/pdf/latest/
 
 Features
 ~~~~~~~~
