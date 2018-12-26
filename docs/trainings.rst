@@ -28,14 +28,13 @@ Datum und Trainer ausgefüllt werden. Das neue Training wird automatisch als
 "unbezahlt" zur Datenbank hinzugfügt.
 
 .. hint::
-
-    Jedes Mitglied kann als Trainer markiert werden. Dazu in der
-    "Mitglieder"-Liste die entsprechende Person bearbeiten und unter
-    "Funktionen" die Funktion als Trainer hinzufügen.
+    Jedes Mitglied kann als Trainer markiert werden. Dazu in der "Mitglieder"-
+    Liste die entsprechende Person bearbeiten und unter "Funktionen" die
+    Funktion als Trainer hinzufügen.
 
     Um einen Trainingstyp auswählen zu können, sind die gewünschten Typen in
-    der Konfiguration der Konfiguration hinzuzufügen. Sie bekommen eine
-    Information, falls diese beiden Parameter nicht gepflegt sind.
+    der Konfiguration hinzuzufügen. Sie bekommen einen Hinweis, falls diese
+    beiden Parameter nicht gepflegt sind.
 
 Für jedes Training können außerdem noch bis zu 3 weitere Assistenten/-innen
 hinzufügt werden. Damit die Berechnung der Trainerentschädigung funktioniert,
