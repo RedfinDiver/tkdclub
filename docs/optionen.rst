@@ -1,9 +1,10 @@
-Einstellungen / Optionen
-========================
+Einstellungen
+=============
 
 Die TKDClub- Erweiterung besitzt zahlreiche Einstellmöglichkeiten. Durch diese
 kann das Verhalten der Komponente bzw. verschiedene allgemeine Vorgaben
-(Währungszeichen, Kilometergeld, Trainerentschädigung) eingestellt werden.
+(Währungszeichen, Kilometergeld, Trainerentschädigungen etc.) eingestellt
+werden.
 
 .. image:: img/options.jpg
    :align: right
