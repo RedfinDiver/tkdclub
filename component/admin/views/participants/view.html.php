@@ -96,6 +96,9 @@ class TkdClubViewParticipants extends JViewLegacy
         }
 
         JHtmlSidebar::setAction('index.php?option=com_tkdclub&view=participants');
+
+        $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/teilnehmer.html';
+        JToolbarHelper::help( '', false, $help_url );
     }
 
     protected function getSortFields()

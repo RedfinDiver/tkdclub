@@ -76,7 +76,10 @@ class TkdClubViewMedals extends JViewLegacy
             JToolBarHelper::preferences('com_tkdclub');}
             
         JHtmlSidebar::setAction('index.php?option=com_tkdclub&view=medals');
-        JToolBarHelper::divider();    
+        JToolBarHelper::divider();
+        
+        $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/erfolge.html';
+        JToolbarHelper::help( '', false, $help_url );
         
     }
 

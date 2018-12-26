@@ -57,7 +57,8 @@ class TkdClubViewSubscriber extends JViewLegacy
         
         JToolBarHelper::cancel('subscriber.cancel', 'JTOOLBAR_CANCEL');
         
-        JToolbarHelper::help('', '', 'http://tkdclub.readthedocs.io/de/latest/pruefungen.html');
+        $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/newsletterabos.html';
+        JToolbarHelper::help( '', false, $help_url );
     }
 
 }

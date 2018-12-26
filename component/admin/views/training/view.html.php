@@ -54,5 +54,8 @@ class TkdClubViewTraining extends JViewLegacy
         {JToolBarHelper::save2new('training.save2new');}
         
         JToolBarHelper::cancel('training.cancel', 'JTOOLBAR_CANCEL');
+
+        $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/mitglieder.html';
+        JToolbarHelper::help( '', false, $help_url );
     }
 }

@@ -104,7 +104,8 @@ class TkdClubViewCandidates extends JViewLegacy
         
         JHtmlSidebar::setAction('index.php?option=com_tkdclub&view=candidates');   
         
-        JToolbarHelper::help('', '', 'http://tkdclub.readthedocs.io/de/latest/pruefungsteilnehmer.html');
+        $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/pruefungsteilnehmer.html';
+        JToolbarHelper::help( '', false, $help_url );
 
     }
 

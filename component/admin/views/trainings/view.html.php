@@ -89,7 +89,10 @@ class TkdClubViewTrainings extends JViewLegacy
             JToolBarHelper::preferences('com_tkdclub');}
             
         JHtmlSidebar::setAction('index.php?option=com_tkdclub&view=trainings');
-        JToolBarHelper::divider();    
+        JToolBarHelper::divider();
+        
+        $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/trainings.html';
+        JToolbarHelper::help( '', false, $help_url );
                         
     }
 

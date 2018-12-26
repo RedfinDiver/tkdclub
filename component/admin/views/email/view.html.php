@@ -41,7 +41,10 @@ class TkdClubViewEmail extends JViewLegacy
 
         JToolbarHelper::custom('email.send', 'envelope.png', 'send_f2.png', 'COM_TKDCLUB_EMAIL_TOOLBAR_SEND', false);
 		JToolbarHelper::divider();
-		JToolbarHelper::preferences('com_tkdclub');       
+        JToolbarHelper::preferences('com_tkdclub');
+        
+        $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/email.html';
+        JToolbarHelper::help( '', false, $help_url );
     }
     
     protected function getTestmail()

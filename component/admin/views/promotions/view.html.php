@@ -91,7 +91,8 @@ class TkdClubViewPromotions extends JViewLegacy
 
         $toolbar->appendButton('RawFormat',  'download', 'COM_TKDCLUB_BUTTON_EXPORT', 'export.promotions');
         
-        JToolbarHelper::help('', '', 'http://tkdclub.readthedocs.io/de/latest/pruefungen.html');
+        $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/pruefungen.html';
+        JToolbarHelper::help( '', false, $help_url );
     }
 
     protected function getSortFields()

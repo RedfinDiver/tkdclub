@@ -61,5 +61,8 @@ class TkdClubViewPromotion extends JViewLegacy
         JToolBarHelper::cancel('promotion.cancel', 'JTOOLBAR_CANCEL');
         
         JToolbarHelper::help('', '', 'http://tkdclub.readthedocs.io/de/latest/pruefungen.html');
+
+        $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/pruefungen.html';
+        JToolbarHelper::help( '', false, $help_url );
     }
 }

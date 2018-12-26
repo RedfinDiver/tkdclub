@@ -90,6 +90,9 @@ class TkdClubViewEvents extends JViewLegacy
         }
         
         JHtmlSidebar::setAction('index.php?option=com_tkdclub&view=events');
+
+        $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/veranstaltungen.html';
+        JToolbarHelper::help( '', false, $help_url );
     }
 
     protected function getSortFields()

@@ -60,5 +60,8 @@ class TkdClubViewEvent extends JViewLegacy
         }
         
         JToolBarHelper::cancel('event.cancel', 'JTOOLBAR_CANCEL');
+
+        $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/veranstaltungen.html';
+        JToolbarHelper::help( '', false, $help_url );
     }
 }

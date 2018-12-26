@@ -44,5 +44,8 @@ class TkdClubViewStatistics extends JViewLegacy
         $clubname = JComponentHelper::getParams('com_tkdclub')->get('club_name', JText::_('COM_TKDCLUB'));
 
         JToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_STATISTIC_ADMIN_VIEW'), 'tkdclub');
+
+        $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/statistik.html';
+        JToolbarHelper::help( '', false, $help_url );
     }
 }

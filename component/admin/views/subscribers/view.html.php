@@ -74,7 +74,10 @@ class TkdClubViewSubscribers extends JViewLegacy
             JToolBarHelper::preferences('com_tkdclub');}
             
         JHtmlSidebar::setAction('index.php?option=com_tkdclub&view=subscribers');
-        JToolBarHelper::divider();    
+        JToolBarHelper::divider();
+
+        $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/newsletterabos.html';
+        JToolbarHelper::help( '', false, $help_url );
                         
     }
 

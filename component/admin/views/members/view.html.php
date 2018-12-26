@@ -91,6 +91,9 @@ class TkdClubViewMembers extends JViewLegacy
 
         JHtmlSidebar::setAction('index.php?option=com_tkdclub&view=members');
         JToolBarHelper::divider();
+
+        $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/mitglieder.html';
+        JToolbarHelper::help( '', false, $help_url );
     }
 
     protected function getSortFields()

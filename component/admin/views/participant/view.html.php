@@ -61,5 +61,8 @@ class TkdClubViewParticipant extends JViewLegacy
         }
         
         JToolBarHelper::cancel('participant.cancel', 'JTOOLBAR_CANCEL');
+
+        $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/teilnehmer.html';
+        JToolbarHelper::help( '', false, $help_url );
     }
 }

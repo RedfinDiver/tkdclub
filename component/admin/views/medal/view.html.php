@@ -55,5 +55,8 @@ class TkdClubViewMedal extends JViewLegacy
         {JToolBarHelper::save2new('medal.save2new');}
         
         JToolBarHelper::cancel('medal.cancel', 'JTOOLBAR_CANCEL');
+
+        $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/erfolge.html';
+        JToolbarHelper::help( '', false, $help_url );
     }
 }
