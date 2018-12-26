@@ -1,10 +1,12 @@
 TKDClub Dokumentation
 =====================
 
+.. include:: ../README.rst
+
 .. toctree::
    :maxdepth: 2
 
-   einleitung
+   allgemeines
    optionen
    mitglieder
    trainings
