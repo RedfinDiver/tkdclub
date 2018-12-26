@@ -36,6 +36,7 @@
         <folder>language</folder>
         <file>controller.php</file>
         <file>tkdclub.php</file>
+        <filename>router.php</filename>
     </files>
     
     <administration>
