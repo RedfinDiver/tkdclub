@@ -11,7 +11,7 @@
         "**/nbproject": true,
         "**/plugins": false,
         "**/modules": false,
-        "**/docs": true,
+        "**/docs": false,
         "**/zips": false,
         "**/*.ant": false,
         "**/pkg_tkdclub.xml": true,
