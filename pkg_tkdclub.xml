@@ -13,7 +13,7 @@
     <update></update>
     <files folder="packages">
       <file type="component" id="com_tkdclub">com_tkdclub.zip</file>
-      <file type="plugin" id="plg_quickicon_tkdclublogo" group="quickicon">plg_quickicon_tkdclublogo.zip</file>
-      <file type="plugin" id="plg_content_tkdclubgrade" group="content">plg_content_tkdclubgrade.zip</file>
+      <file type="plugin" id="tkdclublogo" group="quickicon">plg_quickicon_tkdclublogo.zip</file>
+      <file type="plugin" id="tkdclubgrade" group="content">plg_content_tkdclubgrade.zip</file>
     </files>
   </extension>
