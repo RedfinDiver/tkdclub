@@ -2,65 +2,113 @@
 
 <project name="build-tkdclub-package" default="init" basedir=".">
     
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+        <classpath>
+            <pathelement location="/usr/share/java/apache-ant/ant-contrib-1.0b3.jar"/>
+        </classpath>
+    </taskdef>
+
+    <taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask">
+        <classpath>
+            <pathelement location="/usr/share/java/apache-ant/xmltask.jar"/>
+        </classpath>
+    </taskdef>
     
     <property name="name" value="tkdclub"/>
     <property name="src" location="${basedir}"/>
-    <property name="build" location="${basedir}/zips"/>
+    <property name="build" location="${basedir}/zips/"/>
+    <property name="packdir" location="${basedir}/zips/packages/"/>
+    <property name="plgdir" location="${src}/plugins/"/>
     <property name="manifest" value="${src}/pkg_${name}.xml" />
     
     <target name="init">
+        <delete dir="${build}"/>
         <mkdir dir="${build}"/>
-        <echo message="Creating ${build} directory"/>
-        <echo message="Name ${name} "/>
-        <echo message="Build ${build} "/>
-        <echo message="Manifest: ${manifest} "/>
         <antcall target="clean"></antcall>
     </target>
  
-    <target name="zip" description="zips all files and copies them in ./package" depends="init">
+    <target name="zip" description="creates package" depends="init">
+        
         <!-- component zipping -->
-        <echo message="Running package build..." />
-        <echo message="Ziping ${name}-component directories..." />
-        <zip destfile="${build}/com_${name}.zip">
-            <zipfileset dir="${src}/component/admin" excludes="**/.svn/,**/nbproject/**,**/zip/**,*.ant,${name}.xml" prefix="admin" />
-            <zipfileset dir="${src}/component/site" excludes="**/.svn/,**/nbproject/**,**/zip/**,*.ant" prefix="site"/>
-            <zipfileset dir="${src}/component" excludes="**/.svn/,**/nbproject/**,**/zip/**,*.ant,**/admin/**,**/site/**" />
+        <copy todir="${packdir}">
+            <fileset dir="${basedir}/component/"/>
+        </copy>
+
+        <xmlproperty file="${packdir}/admin/${name}.xml" keepRoot="false"
+                     semanticAttributes="true"/>
+        <propertyregex property="version_c"
+               input="${version}"
+               regexp="\."
+               replace=""
+               global="true" />
+
+        <move file="${packdir}/admin/${name}.xml" todir="${build}/packages/"/>
+        <delete file="${packdir}/build.xml"/>
+
+        <zip destfile="${packdir}/com_${name}_v${version_c}.zip">
+            <zipfileset dir="${packdir}/admin/" prefix="admin" />
+            <zipfileset dir="${packdir}/site/" prefix="site"/>
+            <zipfileset dir="${packdir}/"/>
         </zip>
-        <echo message="Ziping ${name}-modules directories..." />
-        <echo message="Ziping ${name} plugins..." />
-        <echo message="Ziping ${name}-quickicon-plugin ..." />
-        <zip destfile="${build}/plg_quickicon_${name}logo.zip">
-            <zipfileset dir="${src}/plugins/${name}logo" excludes="**/.svn/,**/nbproject/**,**/zip/**,*.ant"/>
+        <delete file="${packdir}/${name}.xml"/>
+        <delete dir="${packdir}/admin/"/>
+        <delete dir="${packdir}/site/"/>
+        
+        <!-- plugin zipping -->
+        <xmlproperty file="$${plgdir}/${name}logo.xml" keepRoot="false"
+                     semanticAttributes="true"/>
+        <propertyregex property="version_p1"
+               input="${version}"
+               regexp="\."
+               replace=""
+               global="true" />
+        <zip destfile="${packdir}/plg_quickicon_${name}logo_v${version_p1}.zip">
+            <zipfileset dir="${plgdir}/${name}logo" excludes="build.xml"/>
         </zip>
-        <echo message="Ziping tkdclub-grade-plugin ..." />
-        <zip destfile="${build}/plg_content_tkdclubgrade.zip">
-            <zipfileset dir="${src}/plugins/${name}grade" excludes="**/.svn/,**/nbproject/**,**/zip/**,*.ant"/>
+
+        <xmlproperty file="$${plgdir}/${name}grade.xml" keepRoot="false"
+                     semanticAttributes="true"/>
+        <propertyregex property="version_p2"
+               input="${version}"
+               regexp="\."
+               replace=""
+               global="true" />
+        <zip destfile="${packdir}/plg_content_${name}grade_v${version_p2}.zip">
+            <zipfileset dir="${plgdir}/${name}grade" excludes="build.xml"/>
         </zip>
+        
+        <!-- moving manifest file and package zipping -->
         <copy file="${manifest}" todir="${build}"/>
-        
-        <!-- now ziping all the contents in {build} -->
-        <echo message="Ziping tkdclub-package ..." />
+        <xmltask source="${build}/pkg_tkdclub.xml" dest="${build}/pkg_tkdclub.xml">
+            
+            <replace path="/extension/files/file[@id='com_tkdclub']/text()"
+                    withText="com_${name}_v${version_c}.zip" />
+            
+            <replace path="/extension/files/file[@id='tkdclublogo']/text()"
+                    withText="plg_quickicon_${name}logo_v${version_p1}.zip" />
+
+            <replace path="/extension/files/file[@id='tkdclubgrade']/text()"
+                    withText="plg_content_${name}grade_v${version_p2}.zip" />
+        </xmltask>
         <zip destfile="${build}/pkg_tkdclub.zip">
-            <zipfileset dir="${src}/zips" excludes="**/.svn/,**/nbproject/**,**/zip/**,*.ant"/>
+            <zipfileset dir="${src}/zips"/>
         </zip>
         
-        <!-- deleting all created zips in {build}, except pkg_tkdclub.zip -->
-        <echo message="Deleting unnecessary files ..." />
+        <!-- delete all other files -->
         <delete includeemptydirs="true">
             <filelist
-                dir="${src}/zips"
-                files="com_tkdclub.zip
-                       plg_quickicon_tkdclublogo.zip
-                       plg_content_tkdclubgrade.zip
-                       pkg_tkdclub.xml"/>
+                dir="${packdir}"
+                files="com_${name}.zip
+                       plg_quickicon_${name}logo.zip
+                       plg_content_${name}grade.zip" />
         </delete>
-        
+        <delete file="${build}/pkg_tkdclub.xml" />
+        <delete dir="${build}/packages"/>
         <echo message="Package created!" />
-        
     </target>
   
     <target name="clean" description="deletes the pkg_${name}.zip">
-        <delete file="${build}/pkg_${name}.zip" />
+        <delete dir="${build}" />
         <echo message="pkg_${name}.zip deleted!" />
     </target>
    
