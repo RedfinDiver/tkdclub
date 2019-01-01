@@ -22,11 +22,6 @@ JFactory::getDocument()->addScriptDeclaration("
 	};
 ");
 
-if ($this->memberpicture) {
-    $memberpicture_link = JURI::root() . 'administrator/components/com_tkdclub/attachments/members/' 
-                          . $this->item->member_id . '/memberpicture/' . $this->memberpicture[0];
-}
-
 ?>
 
 <form action="<?php echo JRoute::_('index.php?option=com_tkdclub&member_id=' . (int) $this->item->member_id); ?>"
@@ -82,7 +77,9 @@ if ($this->memberpicture) {
                                         </div>
                                     <?php else : ?>
                                         <div>
-                                            <img src="<?php echo $memberpicture_link ?>" width="150" height="225"/>
+                                            <?php $picture_link =  'index.php?option=com_tkdclub&task=member.downloadfile&picture=1&filename='
+                                                                   . $this->memberpicture[0] . '&member_id=' . $this->item->member_id . '&' . JSession::getFormToken() .'=1';?>
+                                            <img src="<?php echo $picture_link ?>" width="150" height="225"/>
                                         </div>
                                         <div class="btn-group" style="margin-top: 20px">
                                             <a  class="btn hasTooltip"
@@ -96,7 +93,7 @@ if ($this->memberpicture) {
                                             </a>
 
                                             <a class="btn hasTooltip" data-original-title="<?php echo JText::_('COM_TKDCLUB_MEMBER_PICTURE_DOWNLOAD'); ?>"
-                                                href="index.php?option=com_tkdclub&task=member.downloadfile&picture=1&filename=<?php echo $this->memberpicture[0] . '&member_id=' . $this->item->member_id . '&' . JSession::getFormToken() .'=1'; ?>"
+                                                href="<?php echo $picture_link ?>"
                                                 target="_blank">
                                                 <span class="icon-download"></span>
                                                 <?php echo JText::_('COM_TKDCLUB_DOWNLOAD'); ?>
