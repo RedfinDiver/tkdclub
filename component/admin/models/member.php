@@ -278,15 +278,17 @@ class TkdClubModelMember extends JModelAdmin
             $path = JPATH_COMPONENT_ADMINISTRATOR . '/attachments/members/' . $id . '/' . $filename;
         }
         
-        //preparing headers
-        header("Content-Type: "); 
-        header("Content-Disposition: inline; filename=\"$filename\"");
+        $mime = mime_content_type($path);
+
+        // preparing headers
+        header('Content-Type: ' . $mime); 
+        header('Content-Disposition: inline; filename="'.$filename.'"');
         
-        //clean the buffer, we don't want Joomla-data in the stream
+        // clean the buffer, we don't want Joomla-data in the stream
         ob_clean();
         flush();
         
-        //readfile and exit
+        // readfile and exit
         readfile($path); 
         jexit();
     }
