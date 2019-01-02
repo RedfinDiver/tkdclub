@@ -37,6 +37,8 @@ class JFormFieldMedalyears extends JFormFieldList
 
         $db->setQuery($query);
         $years = $db->loadColumn();
+
+        $options = array();
                     
         foreach($years as $year)
         {
