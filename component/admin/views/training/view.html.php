@@ -48,9 +48,6 @@ class TkdClubViewTraining extends JViewLegacy
         JToolBarHelper::save('training.save', 'JTOOLBAR_SAVE');
         
         if ($canDo->get('core.create'))
-        {JToolBarHelper::save2copy('training.save2copy');}
-        
-        if ($canDo->get('core.create'))
         {JToolBarHelper::save2new('training.save2new');}
         
         JToolBarHelper::cancel('training.cancel', 'JTOOLBAR_CANCEL');
