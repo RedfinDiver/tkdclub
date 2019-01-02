@@ -68,7 +68,7 @@ $helper = new TkdClubHelperMembers;
                 <th width=""><?php echo JText::_('COM_TKDCLUB_MEDAL_CHAMPIONSSHIP'); ?></th>
                 <th width=""><?php echo JText::_('COM_TKDCLUB_MEDAL_CHAMPIONSSHIP_TYPE'); ?></th>
                 <th width=""><?php echo JText::_('COM_TKDCLUB_MEDAL_CLASS'); ?></th>
-                <th width=""><?php echo JText::_('COM_TKDCLUB_MEDAL_PLACING'); ?></th>
+                <th class="center" width=""><?php echo JText::_('COM_TKDCLUB_MEDAL_PLACING'); ?></th>
                 <th width=""><?php echo JText::_('COM_TKDCLUB_ATHLETS'); ?></th>
                 <th width=""><?php echo JText::_('COM_TKDCLUB_NOTES'); ?></th>
             </tr>
@@ -103,7 +103,12 @@ $helper = new TkdClubHelperMembers;
                 <td width=""><?php echo $this->escape($item->championship); ?></td>
                 <td width=""><?php echo $this->escape($item->type); ?></td>
                 <td width=""><?php echo $this->escape($item->class); ?></td>
-                <td class="center" width=""><?php echo $this->escape($item->placing); ?></td>
+                <?php $medalclass = array('1' => 'tkdclub-goldmedal', '2' => 'tkdclub-silbermedal', '3' => 'tkdclub-bronzemedal'); ?>
+                <td class="center">
+                    <span class="<?php echo $medalclass[(int) $item->placing] ?>">
+                        <?php echo $this->escape($item->placing); ?>
+                    </span>
+                </td>    
                 <td width=""><?php echo $helper->getMembersNames($item->winner_ids, $this->memberlist); ?></td>
                 <td><?php echo $this->escape($item->notes); ?></td>
             </tr>
