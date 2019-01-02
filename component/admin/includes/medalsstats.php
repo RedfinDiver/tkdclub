@@ -6,21 +6,26 @@
  */
 
 defined('_JEXEC') or die;
+
+$gold = isset($this->medaldata['placings']['1']) ? $this->medaldata['placings']['1'] : 0;
+$silver = isset($this->medaldata['placings']['2']) ? $this->medaldata['placings']['2'] : 0;
+$bronce = isset($this->medaldata['placings']['3']) ? $this->medaldata['placings']['3'] : 0;
+
 ?>
 
 <div class="container-fluid alert alert-info">
     <div class="span3">
         <h4 class="alert-heading"><?php echo JText::_('COM_TKDCLUB_MEDAL_DISTRIBUTION'); ?></h4>
         <span class="tkdclub-goldmedal">
-            <p><?php echo $this->medaldata['placings']['1']; ?></p>
+            <p><?php echo $gold; ?></p>
         </span>  <?php echo JText::_('COM_TKDCLUB_MEDAL_GOLD') ?>
         
         <span class="tkdclub-silbermedal">
-            <?php echo $this->medaldata['placings']['2']; ?>                    
+            <?php echo $silver; ?>                    
         </span>  <?php echo JText::_('COM_TKDCLUB_MEDAL_SILVER') ?>
         
         <span class="tkdclub-bronzemedal">
-            <?php echo $this->medaldata['placings']['1']; ?>
+            <?php echo $bronce; ?>
         </span>  <?php echo JText::_('COM_TKDCLUB_MEDAL_BRONCE') ?>
     </div>
 
