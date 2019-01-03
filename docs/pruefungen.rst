@@ -68,3 +68,12 @@ im Formular beim Hinzufügen eines Prüfungsteilnehmers im
 
 Ebenso werden nur freigegebene Prüfungen als
 Auswahl zur Filterung in der Listansicht der Prüfungsteilnehmer angezeigt.
+
+Prüfungen exportieren
+-------------------------
+
+.. image:: img/export.jpg
+   :align: right
+
+Mit einem Klick auf "Export" kann die gerade angezeigte Liste als Dokument
+(Excel, LibreOffice etc.) heruntergeladen werden.
