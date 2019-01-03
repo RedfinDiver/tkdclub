@@ -4,7 +4,7 @@ Erfolge
 .. image:: img/medals_list.jpg
    :align: right
 
-Mittels des Punktes "Erfolge" erhalten Sie eine Liste Erfolge des Vereins.
+Mittels des Punktes "Erfolge" erhalten Sie eine Liste mit Erfolgen des Vereins.
 
 Mit den Filtern kann die Erfolgsliste durchsucht und gefiltert werden.
 Die Volltextsuche ist nach Eintrags-ID, Datum, Bewerb und Klasse möglich.
@@ -23,7 +23,8 @@ oben in der Toolbar auf "Neu".
 Im erscheinenden Formular füllen Sie die Felder aus und klicken "Speichern &
 Schließen". Um ein neuen Erfolg hinzuzufügen, müssen mindestens die Felder
 Datum, Platzierung und Sportler ausgefüllt werden. Alle aktive Mitglieder
-stehen als Sportler zur Auswahl zur Verfügung.
+stehen als Sportler zur Auswahl zur Verfügung. Bei Teambewerben können mehrere
+Sportler hinzugefügt werden.
 
 Bei den Turniertypen stehen immer Kyorugie und Poomsae zur Verfügung. In den
 Einstellungen der Komponente können weitere Turniertypen hinzugefügt werden.
