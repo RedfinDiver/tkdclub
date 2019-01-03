@@ -25,7 +25,7 @@ class TkdClubTableMedals extends JTable
         if (is_array($this->winner_ids))
         {
             // take json_encode for array conversion
-            $this->winner_ids = json_encode($this->winner_ids);
+            $this->winner_ids = json_encode($this->winner_ids, JSON_NUMERIC_CHECK);
         }
 
         $date   = JFactory::getDate()->toSql();
