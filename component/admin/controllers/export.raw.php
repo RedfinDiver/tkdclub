@@ -135,7 +135,7 @@ class TkdClubControllerExport extends JControllerForm
 		{
 			if ($key > 0)
 			{
-				$row[3] == 'kup' ? $row[3] = JText::_('COM_TKDCLUB_PROMOTION_KUP') : $row[3] = JText::_('COM_TKDCLUB_PROMOTION_DAN');
+				$row[3] == 'kup' ? $row[3] = JText::_('COM_TKDCLUB_KUP') : $row[3] = JText::_('COM_TKDCLUB_DAN');
 				$row[7] == 1 ? $row[7] = JText::_('COM_TKDCLUB_PROMOTION_ACTIVE') : $row[7] = JText::_('COM_TKDCLUB_PROMOTION_INACTIVE');
 			}
 
