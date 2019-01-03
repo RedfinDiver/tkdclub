@@ -29,12 +29,14 @@ class TkdClubViewPromotions extends JViewLegacy
         $this->allrows = $this->get('Allrows');
         $this->filterForm    = $this->get('FilterForm');
         $this->activeFilters = $this->get('ActiveFilters');
+        
+        /* TODO mini statistics for promotions
         $this->togglestats = JFactory::getSession()->get('togglestats_promotions', null, 'tkdclub');
         
         if ($this->togglestats)
         {
-            $this->memberdata = $this->get('Promotionsdata');
-        }
+            $this->promotiondata = $this->get('Promotionsdata');
+        } */
         
         $this->addToolbar();
         $this->sidebar = JHtmlSidebar::render();
@@ -80,14 +82,15 @@ class TkdClubViewPromotions extends JViewLegacy
         $toolbar = JToolbar::getInstance('toolbar');
         $toolbar->addButtonPath(JPATH_COMPONENT.'/buttons');
 
-        if ($this->togglestats)
+        // TODO mini statistiks for promotions
+        /* if ($this->togglestats)
         {
             JToolBarHelper::custom('promotions.togglestats', 'eye-close', 'eye-close', 'COM_TKDCLUB_BUTTON_STATS', false);
         }
         else
         {
             JToolBarHelper::custom('promotions.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);
-        }
+        } */
 
         $toolbar->appendButton('RawFormat',  'download', 'COM_TKDCLUB_BUTTON_EXPORT', 'export.promotions');
         
