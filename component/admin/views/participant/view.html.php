@@ -52,11 +52,6 @@ class TkdClubViewParticipant extends JViewLegacy
         
         if ($canDo->get('core.create'))
         {
-            JToolBarHelper::save2copy('participant.save2copy');
-        }
-        
-        if ($canDo->get('core.create'))
-        {
             JToolBarHelper::save2new('participant.save2new');
         }
         
