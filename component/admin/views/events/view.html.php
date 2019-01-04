@@ -73,6 +73,7 @@ class TkdClubViewEvents extends JViewLegacy
         $toolbar = JToolbar::getInstance('toolbar');
         $toolbar->addButtonPath(JPATH_COMPONENT.'/buttons');
 
+        /* TODO statistics for events
         if ($this->togglestats)
         {
             JToolBarHelper::custom('events.togglestats', 'eye-close', 'eye-close', 'COM_TKDCLUB_BUTTON_STATS', false);
@@ -80,7 +81,7 @@ class TkdClubViewEvents extends JViewLegacy
         else 
         {
             JToolBarHelper::custom('events.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);
-        }
+        } */
 
         $toolbar->appendButton('RawFormat',  'download', 'COM_TKDCLUB_BUTTON_EXPORT', 'export.events');
         

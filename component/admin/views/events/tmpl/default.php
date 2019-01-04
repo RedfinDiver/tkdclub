@@ -44,10 +44,7 @@ $columns   = 10;
                 <b><?php echo $this->allrows; ?></b>
             <?php echo JText::_('COM_TKDCLUB_ENTRIES'); ?>
         </div>
-        <?php if($this->togglestats) :  ?>
-        <?php  
-            // TODO for statistic: include_once(JPATH_COMPONENT . '/includes/eventsstats.php');
-        ?>
+        <!-- TODO statistics for events -->
     <?php endif; ?>
         <table class="table table-striped table-condensed" id="eventList">
             <thead>
@@ -137,7 +134,6 @@ $columns   = 10;
                 <?php endforeach; ?>
             </tbody>
         </table>
-    <?php endif; ?>
 
     <?php echo $this->pagination->getListFooter(); ?>
     
