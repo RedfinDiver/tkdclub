@@ -96,7 +96,15 @@ class TkdClubModelCandidate extends JModelAdmin
             
             // Get the data and save to array
             $item2 = $db->setQuery($query)->loadAssoc();
-            $item2['lastpromotion'] = JHtml::_('date', $item2['lastpromotion'], JText::_('DATE_FORMAT_LC4'));
+            
+            if ($item2['lastpromotion'] == '0000-00-00')
+            {
+                $item2['lastpromotion'] = '';
+            }
+            else
+            {
+                $item2['lastpromotion'] = JHtml::_('date', $item2['lastpromotion'], JText::_('DATE_FORMAT_LC4'));
+            }
             
             // Append the array
             $item->setProperties($item2);
