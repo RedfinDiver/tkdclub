@@ -37,12 +37,15 @@ class TkdClubViewCandidates extends JViewLegacy
         $this->total = $this->get('Total');
         $this->allrows = $this->get('Allrows'); // Allrows in the database
         $this->allparticipants = $this->get('Allparticipantsnames'); //all candidates on a published promotions, used to build filter-list
+        
+        /* TODO statistics for candidates
+        
         $this->togglestats = JFactory::getSession()->get('togglestats_candidates', null, 'tkdclub');
         
         if ($this->togglestats)
         {
             $this->candidatedata = $this->get('Candidatedata');
-        }
+        } */
         
         //sorting and ordering
         $this->sortDirection = $this->state->get('list.direction');
@@ -89,9 +92,11 @@ class TkdClubViewCandidates extends JViewLegacy
             JToolBarHelper::deleteList('COM_TKDCLUB_CANDIDATE_DELETE_QUESTION', 'candidates.delete','JTOOLBAR_DELETE');
         }
 
+        /* TODO statistics for candidates
+        
         if ($this->togglestats)
         {JToolBarHelper::custom('candidates.togglestats', 'eye-close', 'eye-close', 'COM_TKDCLUB_BUTTON_STATS', false);}
-        else {JToolBarHelper::custom('candidates.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);}
+        else {JToolBarHelper::custom('candidates.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);} */
         
         $toolbar = JToolbar::getInstance('toolbar');
 		$toolbar->addButtonPath(JPATH_COMPONENT.'/buttons');

@@ -9,5 +9,5 @@ defined('_JEXEC') or die;
 ?>
 
 <div class="container-fluid alert alert-info">
-    Here it is!
+    <!-- TODO statistics for candidates -->
 </div>
