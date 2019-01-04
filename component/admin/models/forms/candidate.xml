@@ -8,7 +8,7 @@
             name="test_state" type="list"
             label="JSTATUS"
             description="COM_TKDCLUB_CANDIDATE_TEST_STATE_DESC"
-            default="2" >
+            default="2" readonly="true">
 
 			<option value="">COM_TKDCLUB_SELECT_CANDIDATE_STATE</option>
             <option value="1">COM_TKDCLUB_CANDIDATE_PASSED</option>
