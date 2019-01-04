@@ -29,7 +29,8 @@ class TkdClubViewParticipants extends JViewLegacy
         $this->pagination = $this->get('Pagination');
         $this->total = $this->get('Total');
         $this->allrows = $this->get('Allrows');
-        $this->togglestats = JFactory::getSession()->get('togglestats_participants', null, 'tkdclub');
+        // TODO statistics for participants
+        // $this->togglestats = JFactory::getSession()->get('togglestats_participants', null, 'tkdclub');
         //ordering and sorting
         $this->sortDirection = $this->state->get('list.direction');
         $this->sortColumn = $this->state->get('list.ordering');
@@ -79,6 +80,7 @@ class TkdClubViewParticipants extends JViewLegacy
             $toolbar->appendButton('Delgdpr', 'COM_TKDKLUB_PARTICIPANT_GDPR_DELETE_MESSAGE', 'flash', 'COM_TKDKLUB_PARTICIPANT_GDPR_DELETE', 'participants.delete_gdpr');
         }
 
+        /* // TODO statistics for participants
         if ($this->togglestats)
         {
             JToolBarHelper::custom('participants.togglestats', 'eye-close', 'eye-close', 'COM_TKDCLUB_BUTTON_STATS', false);
@@ -86,7 +88,7 @@ class TkdClubViewParticipants extends JViewLegacy
         else
         {
             JToolBarHelper::custom('participants.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);
-        }
+        } */
 
         $toolbar->appendButton('RawFormat',  'download', 'COM_TKDCLUB_BUTTON_EXPORT', 'export.participants');
         
