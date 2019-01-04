@@ -31,10 +31,12 @@ class TkdClubViewEvents extends JViewLegacy
         $this->filterForm = $this->get('FilterForm');
         $this->activeFilters = $this->get('ActiveFilters');
         $this->togglestats = JFactory::getSession()->get('togglestats_events', null, 'tkdclub');
-        if ($this->togglestats)
+        
+        // TODO statistics for events
+        /* if ($this->togglestats)
         {
             // @todo implement statistics
-        }
+        } */
 
         $this->addToolbar();
         $this->sidebar = JHtmlSidebar::render();
