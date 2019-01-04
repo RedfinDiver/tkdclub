@@ -18,7 +18,7 @@ class plgContentTkdclubgrade extends JPlugin
     public function onContentChangeState ($context, $pks, $value)
     {
        // First check if its the right context, otherwise exit the plugin
-        if ($context != 'com_tkdclub.candidate' || $value == 0)
+        if ($context != 'com_tkdclub.candidate' || $value == 0 || $value == 2)
         {
             return;
         }
