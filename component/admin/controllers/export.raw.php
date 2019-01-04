@@ -193,11 +193,11 @@ class TkdClubControllerExport extends JControllerForm
 	}
 
 	/**
-	*	csv export function for eventparts-view
+	*	csv export function for participants-view
 	**/
-	public function eventparts()
+	public function participants()
 	{	
-		$content = $this->getContent('eventparts');
+		$content = $this->getContent('participants');
 
 		foreach ($content as $key => &$row)
 		{ 	
@@ -207,7 +207,7 @@ class TkdClubControllerExport extends JControllerForm
 			print implode(';', $row)."\n"; 
 		}
 
-		$this->setHeaders(JText::_('COM_TKDCLUB_SIDEBAR_EVENTPARTS'));
+		$this->setHeaders(JText::_('COM_TKDCLUB_SIDEBAR_PARTICIPANTS'));
 	}
 
 	/**

@@ -185,8 +185,8 @@ class TkdClubModelParticipants extends JModelList
         $query->from($db->quoteName('#__tkdclub_events', 'a'));  
 
         // select fields from eventparts table
-        $query->select('b.firstname,b.lastname,b.clubname,b.email,b.participants,b.grade,b.age,b.user1,b.user2,b.user3,b.user4');
-        $query->join('LEFT', $db->quoteName('#__tkdclub_event_participants', 'b') . ' ON a.id = b.event_id');
+        $query->select('b.firstname,b.lastname,b.clubname,b.email,b.registered,b.grade,b.age,b.user1,b.user2,b.user3,b.user4');
+        $query->join('LEFT', $db->quoteName('#__tkdclub_event_participants', 'b') . ' ON a.event_id = b.event_id');
 
         // only selected items in the list
         $query->where('b.id IN ('.$pklist.')');
@@ -198,19 +198,19 @@ class TkdClubModelParticipants extends JModelList
 		$rows = $db->loadRowList();
 
         $headers = array(
-            JText::_('COM_TKDCLUB_EVENT_TITLE'),                // a.title
-            JText::_('COM_TKDCLUB_EVENT_DATE'),                 // a.date
-            JText::_('COM_TKDCLUB_EVENTPARTS_FIRSTNAME'),       // b.firstname
-            JText::_('COM_TKDCLUB_EVENTPARTS_LASTNAME'),        // b.lastname
-            JText::_('COM_TKDCLUB_EVENTPARTS_CLUB'),            // b.clubname
-            JText::_('COM_TKDCLUB_EVENTPARTS_EMAIL'),           // b.email
-            JText::_('COM_TKDCLUB_EVENTPARTS_PARTICIPANTS'),    // b.participants       
-            JText::_('COM_TKDCLUB_EVENTPARTS_GRADE'),           // b.grade  
-            JText::_('COM_TKDCLUB_EVENTPARTS_AGE'),             // b.age   
-            JText::_('COM_TKDCLUB_FIELD_USER1'),                // b.user1
-            JText::_('COM_TKDCLUB_FIELD_USER2'),                // b.user2 
-            JText::_('COM_TKDCLUB_FIELD_USER3'),                // b.user3 
-            JText::_('COM_TKDCLUB_FIELD_USER4')                 // b.user4
+            JText::_('COM_TKDCLUB_EVENT_TITLE'),                        // a.title
+            JText::_('COM_TKDCLUB_DATE'),                               // a.date
+            JText::_('COM_TKDCLUB_PARTICIPANT_FIRSTNAME'),              // b.firstname
+            JText::_('COM_TKDCLUB_PARTICIPANT_LASTNAME'),               // b.lastname
+            JText::_('COM_TKDCLUB_PARTICIPANT_CLUB'),                   // b.clubname
+            JText::_('COM_TKDCLUB_PARTICIPANT_EMAIL'),                  // b.email
+            JText::_('COM_TKDCLUB_PARTICIPANT_REGISTERED'),             // b.participants       
+            JText::_('COM_TKDCLUB_PARTICIPANT_GRADE'),                  // b.grade  
+            JText::_('COM_TKDCLUB_PARTICIPANT_AGE'),                    // b.age   
+            JText::_('COM_TKDCLUB_PARTICIPANT_MENUITEM_FIELD_USER1'),   // b.user1
+            JText::_('COM_TKDCLUB_PARTICIPANT_MENUITEM_FIELD_USER2'),   // b.user2 
+            JText::_('COM_TKDCLUB_PARTICIPANT_MENUITEM_FIELD_USER3'),   // b.user3 
+            JText::_('COM_TKDCLUB_PARTICIPANT_MENUITEM_FIELD_USER4')    // b.user4
         );
 
 		// return the results as an array of items, each consisting of an array of fields
