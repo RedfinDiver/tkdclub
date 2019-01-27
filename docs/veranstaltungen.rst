@@ -1,6 +1,9 @@
 Veranstaltungen
 ===============
 
+.. image:: img/events_menu.jpg
+    :align: right
+
 Unter diesem Menüpunkt können Veranstaltungen verwaltet werden. An hier
 angelegte Veranstaltungen können sich Besucher der Website über ein Formular
 anmelden. Die angemeldeten Teilnehmer finden sich dann unter dem Menüpunkt
