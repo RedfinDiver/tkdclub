@@ -39,7 +39,7 @@ window.onload = function () {
     writeMembers();
     writeTrainings();
 
-    // No show the container and remove loader
+    // Now show the container and remove loader
     chartcontainer = document.getElementById('tkdclub-chartcontainer');
     chartcontainer.classList.remove('hidden');
     loader = document.getElementById('tkdclub-loader');
