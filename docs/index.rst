@@ -4,7 +4,7 @@ TKDClub Dokumentation
 .. include:: ../README.rst
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
    allgemeines
    optionen
