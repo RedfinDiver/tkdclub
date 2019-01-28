@@ -16,9 +16,16 @@ class com_tkdclubInstallerScript
     public function update($parent)
     {
         $this->deleteUnexisting();
-        echo '<p>' . JText::sprintf('vom update', $parent->get('manifest')->version) . '</p>';
+       
+        if ($rows = $this->updateMenu())
+        {
+            echo '<p>' . Text::sprintf('Aktualisierte Menülinks: ') . $rows . '</p>';
+        };
     }
 
+    /**
+     * Deletes unexisting files and folders after update to 3.0.0
+     */
     public function deleteUnexisting()
     {
         $files = array(
@@ -184,6 +191,27 @@ class com_tkdclubInstallerScript
 			}
 		}
 
+    }
+
+    /**
+     * Updates the menu links of eventpart to participant
+     * 
+     * As of 3.0.0 the eventpart ist renamed in participant
+     * 
+     */
+    public function updateMenu()
+    {
+        $db = JFactory::getDbo();
+
+        $query = $db->getQuery(true);
+        $query->update($db->quoteName('#__menu'));
+        $query->set($db->quoteName('link') . ' = ' . $db->quote('index.php?option=com_tkdclub&view=participant'));
+        $query->where($db->quoteName('link') . ' = ' . $db->quote('index.php?option=com_tkdclub&view=eventpart'));
+
+        $db->setQuery($query);
+        $db->execute();
+
+        return (int) $db->getAffectedRows();
     }
 
 }
