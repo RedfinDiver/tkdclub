@@ -7,7 +7,7 @@
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<version>3.0.0</version>
 	<description>PLG_QUICKICON_TKDCLUBLOGO_XML_DESCRIPTION</description>
-	<scriptfile>install.php</scriptfile>
+	<scriptfile>script.php</scriptfile>
     <files>
         <folder>language</folder>
         <filename plugin="tkdclublogo">tkdclublogo.php</filename>
