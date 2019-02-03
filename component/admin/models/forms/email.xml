@@ -25,6 +25,13 @@
 			description="COM_TKDCLUB_EMAIL_FIELD_NEWSLETTER_SUBS_DESC"
 			label="COM_TKDCLUB_EMAIL_FIELD_NEWSLETTER_SUBS_LABEL"
 			value="1" default="0" />
+		
+		<field
+            name="events" type="events"
+			description="COM_TKDCLUB_EMAIL_FIELD_EVENT_DESC"
+			label="COM_TKDCLUB_EMAIL_FIELD_EVENT_LABEL">
+			<option value="">COM_TKDCLUB_SELECT_EVENT</option>
+		</field>
     
     </fieldset>
 

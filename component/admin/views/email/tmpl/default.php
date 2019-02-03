@@ -9,6 +9,7 @@ defined('_JEXEC') or die;
 
 JHtml::_('behavior.core');
 JHtml::_('behavior.formvalidator');
+JHtml::_('formbehavior.chosen', 'select');
 JHtml::stylesheet('administrator/components/com_tkdclub/assets/css/tkdclub.css');
 
 //test email active
@@ -71,7 +72,7 @@ if ($this->email_test)
             <?php if (!$this->email_test) : ?>
                 <div class="span4">
                     <h4><?php echo JText::_('COM_TKDCLUB_EMAIL_RECIPIENTS')?></h4>
-                    <fieldset class="form-inline">
+                    <fieldset class="form-vertical">
                         <div class="control-group checkbox">
                             <div class="controls"><?php echo $this->form->getInput('active'); ?> <?php echo $this->form->getLabel('active'); ?></div>
                         </div>
@@ -84,6 +85,8 @@ if ($this->email_test)
                         <div class="control-group checkbox">
                             <div class="control-label"><?php echo $this->form->getInput('newsletter'); ?> <?php echo $this->form->getLabel('newsletter'); ?></div>
                         </div>
+                        <div class="control-label"><?php echo $this->form->getLabel('events'); ?> </div>
+                        <div class="controls"><?php echo $this->form->getInput('events'); ?> </div>
                     </fieldset>
                 </div>
             <?php endif; ?>
