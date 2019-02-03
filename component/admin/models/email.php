@@ -159,6 +159,7 @@ class TkdclubModelEmail extends JModelAdmin
 	 * 
 	 * @return	mixed	array with unique addresses from database
 	 * 					array with test adress if given in configuration
+	 * 					boolean false when no recipient is selected
 	 */
 	public function getRecipients($data)
 	{	
