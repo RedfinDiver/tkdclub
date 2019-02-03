@@ -100,7 +100,7 @@ function writeTrainings() {
     }
 
     document.getElementById('tkdclub-unpaidtrainings').textContent += ' ' + unpaid;
-    document.getElementById('tkdclub-unpaidsum').textContent += ' ' + unpaid_sum + ' ' + currency;
+    document.getElementById('tkdclub-unpaidsum').textContent += ' ' + Math.round(unpaid_sum  * 100) / 100 + ' ' + currency;
     document.getElementById('tkdclub-alltrainings').textContent += ' ' + Tkdclub.trainingsdata.sums['trainings'];
     document.getElementById('tkdclub-averageparts').textContent += ' ' + Tkdclub.trainingsdata.sums['average'];
 }
