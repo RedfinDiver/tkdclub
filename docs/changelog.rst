@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Version 3.0.0 (Februar 2019)
+Version 3.0.0 (2019-02-03)
 ----------------------------
 
 Neue Version des TKDClub Packages. Der Code wurde komplett neu gestaltet und
