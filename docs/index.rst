@@ -18,6 +18,7 @@ TKDClub Dokumentation
    email
    newsletterabos
    statistik
+   changelog
 
 Indices and tables
 ==================
