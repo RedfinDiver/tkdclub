@@ -85,8 +85,8 @@ if ($this->email_test)
                         <div class="control-group checkbox">
                             <div class="control-label"><?php echo $this->form->getInput('newsletter'); ?> <?php echo $this->form->getLabel('newsletter'); ?></div>
                         </div>
-                        <div class="control-label"><?php echo $this->form->getLabel('events'); ?> </div>
-                        <div class="controls"><?php echo $this->form->getInput('events'); ?> </div>
+                        <div class="control-label"><?php echo $this->form->getLabel('event'); ?> </div>
+                        <div class="controls"><?php echo $this->form->getInput('event'); ?> </div>
                     </fieldset>
                 </div>
             <?php endif; ?>

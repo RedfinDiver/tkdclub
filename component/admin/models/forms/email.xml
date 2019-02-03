@@ -6,7 +6,7 @@
             name="active" type="checkbox"
 			description="COM_TKDCLUB_EMAIL_FIELD_ACTIVE_DESC"
 			label="COM_TKDCLUB_EMAIL_FIELD_ACTIVE_LABEL"
-			value="1" default="0" checked="true"/>
+			value="1" default="0" />
 
 		<field
             name="supporter" type="checkbox"
@@ -27,9 +27,10 @@
 			value="1" default="0" />
 		
 		<field
-            name="events" type="events"
+            name="event" type="events"
 			description="COM_TKDCLUB_EMAIL_FIELD_EVENT_DESC"
-			label="COM_TKDCLUB_EMAIL_FIELD_EVENT_LABEL">
+			label="COM_TKDCLUB_EMAIL_FIELD_EVENT_LABEL"
+			onlypublished="true">
 			<option value="">COM_TKDCLUB_SELECT_EVENT</option>
 		</field>
     
