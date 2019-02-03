@@ -90,6 +90,7 @@ $columns   = 10;
                     <th width=""><?php echo JText::_('COM_TKDCLUB_MEMBER_EMAIL'); ?></th>
                     <th width=""><?php echo JText::_('COM_TKDCLUB_MEMBER_PASS'); ?></th>
                     <th width=""><?php echo JText::_('COM_TKDCLUB_MEMBER_GRADE'); ?></th>
+                    <th width=""><?php echo JText::_('COM_TKDCLUB_MEMBER_LAST_PROMOTION'); ?></th>
                     <th width=""><?php echo JText::_('COM_TKDCLUB_MEMBER_IBAN'); ?></th>
 
                 </tr>
@@ -178,6 +179,13 @@ $columns   = 10;
 
                                 else  {echo $grade;}
                         ?>     
+                    </td>
+                    <td><?php
+                            if ($item->lastpromotion != '0000-00-00')
+                                { 
+                                echo JHtml::_('date', $item->lastpromotion, JText::_('DATE_FORMAT_LC4'));
+                                }
+                         ?>
                     </td>
                     <td><?php echo $item->iban; ?>
                     </td>
