@@ -14,7 +14,7 @@ defined('_JEXEC') or die;
         <h4 class="alert-heading"><?php echo JText::_('COM_TKDCLUB_CONFIG_MEMBERS'); ?></h4>
             <?php echo JText::_('COM_TKDCLUB_MEMBER_STATE_ACTIVE') . ': ' . $this->memberdata->active; ?><br>
             <?php echo JText::_('COM_TKDCLUB_MEMBER_STATE_SUPPORTER') . ': ' . $this->memberdata->support; ?><br>
-            <?php echo JText::_('COM_TKDCLUB_MEMBER_STATE_INACTIVE') . ': ' . $this->memberdata->support; ?><br> 
+            <?php echo JText::_('COM_TKDCLUB_MEMBER_STATE_INACTIVE') . ': ' . $this->memberdata->inactive; ?><br> 
             <?php echo JText::_('COM_TKDCLUB_IN_DATABASE') . ': ' . $this->memberdata->allrows;; ?>
     </div>
     <div class="span2">
