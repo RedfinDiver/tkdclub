@@ -196,7 +196,7 @@
             name="email_user" type="usergroup"
             label="COM_TKDCLUB_EVENTS_EMAILTO"
             description="COM_TKDCLUB_EVENTS_EMAILTO_DESC"
-            default="8" filter="unset" />
+            default="8" multiple="true" />
         
         <!-- Duration after event participant data is deleted  -->
         <field
