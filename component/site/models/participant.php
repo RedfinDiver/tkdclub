@@ -142,12 +142,12 @@ class TkdClubModelParticipant extends JModelForm
      * 
      * @param   array   $event_data     data for the event
      * @param   object  $data           form data
-     * @param   integer $group          number of group to send notification email
+     * @param   array   $groups         array of group numbers to send notification email to
      * 
      * @return  void
      * 
      */
-    public function send($event_data, $data, $group)
+    public function send($event_data, $data, $groups)
 	{   
         $mail = new stdClass;
 
@@ -161,7 +161,7 @@ class TkdClubModelParticipant extends JModelForm
         
         $this->sendConformationMail($mail, $data['email']);                 
         
-        $this->sendUsergroupMail($mail, $this->getOrganizerEmails($group));
+        $this->sendUsergroupMail($mail, $this->getOrganizerEmails($groups));
     }
 
     /**
@@ -200,32 +200,35 @@ class TkdClubModelParticipant extends JModelForm
     /**
      * Get all the email adresses for the given user group
      * 
-     * @param   integer   $group   the group id
+     * @param   array   $groups   the group ids
      * 
      * @return  array   indexed array with email adresses for the group
      * 
      */
-    public function getOrganizerEmails($group)
+    public function getOrganizerEmails($groups)
     {   
         // If no group is given return
-        if ($group === 0)
+        if (empty($groups))
         {
             return false;
         }
 
-        // Get users in the group out of the ACL
-        $access = new JAccess;
-		$users = $access->getUsersByGroup($group);
+        $emails = array();
 
-        // Get all email adesses for the user
-        $db    = JFactory::getDbo();
-        $query = $db->getQuery(true)
-                    ->select('email')->from('#__users')
-		            ->where('id IN (' . implode(',', $users) . ')');
-
-        $db->setQuery($query);
+        foreach ($groups as $group)
+        {
+            // Get all email adesses for the users
+            $db    = JFactory::getDbo();
+            $query = $db->getQuery(true)
+                    ->select($db->qn('a.email'))
+                    ->from($db->qn('#__users', 'a'))
+                    ->join('LEFT', $db->qn('#__user_usergroup_map', 'b') . ' ON a.id = b.user_id')
+		            ->where($db->qn('group_id') . ' = ' . (int) $group);
         
-		return $db->loadColumn();
+            $emails = array_merge($emails, $db->setQuery($query)->loadColumn());
+        }
+
+	    return array_unique($emails);
     }
 
     /**
@@ -263,7 +266,7 @@ class TkdClubModelParticipant extends JModelForm
      * 
      * @return  bool    true if succeded, false otherwise
      */ 
-    public function sendUsergroupMail($mail, $recipient)
+    public function sendUsergroupMail($mail, $recipients)
     {   
         $subject = JText::_('COM_TKDCLUB_SUBSCRIBE_SUCCESS')
                    . "\"" . $mail->title . "\""
@@ -284,7 +287,7 @@ class TkdClubModelParticipant extends JModelForm
                    . JText::_('COM_TKDCLUB_EVENT_PLACES_FREE')
                    . $mail->free;
         
-        return $this->mail($subject, $message, $recipient);           
+        return $this->mail($subject, $message, $recipients);           
     }
 
     /**
@@ -292,9 +295,9 @@ class TkdClubModelParticipant extends JModelForm
      * 
      * @param   string  $subject    the subject string
      * @param   string  $message    the message sring
-     * @param   mixed   $recipient  string or array of strings
+     * @param   mixed   $recipients string or array of strings
      */
-    public function mail($subject, $message, $recipient)
+    public function mail($subject, $message, $recipients)
     {
         $app = JFactory::getApplication();
 		$mailer = JFactory::getMailer();
@@ -304,7 +307,7 @@ class TkdClubModelParticipant extends JModelForm
 		$mailer->setSubject(stripslashes($subject));
 		$mailer->setBody($message);
 		$mailer->IsHtml(false);
-        $mailer->addRecipient($recipient);
+        $mailer->addRecipient($recipients);
 
 		// Send the Mail
 		$rs = $mailer->Send();
