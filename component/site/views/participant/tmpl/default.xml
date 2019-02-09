@@ -80,7 +80,7 @@
                 name="email_user_group" type="usergrouplist"
                 label="COM_TKDCLUB_PARTICIPANT_MENUITEM_EMAILTO"
                 description="COM_TKDCLUB_PARTICIPANT_MENUITEM_EMAILTO_DESC"
-                showon="send_email:1" />
+                showon="send_email:1" multiple="true" />
 
             <field type="spacer" name="spacer1" hr="true" />
 
