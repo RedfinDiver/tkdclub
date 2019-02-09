@@ -192,12 +192,6 @@
             <option value="0">JOPTION_DO_NOT_USE</option>
         </field>
         
-        <field 
-            name="email_user" type="usergroup"
-            label="COM_TKDCLUB_EVENTS_EMAILTO"
-            description="COM_TKDCLUB_EVENTS_EMAILTO_DESC"
-            default="8" multiple="true" />
-        
         <!-- Duration after event participant data is deleted  -->
         <field
             name="days" type="text"
