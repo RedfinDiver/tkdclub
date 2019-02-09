@@ -18,7 +18,7 @@
         "**/site": false,
         "**/admin": false,
         "**/README.rst": false,
-        "**/build.xml": true,
+        "**/build.xml": false,
         "**/candidate*/**": false,
         "**/medal*/**": false,
         "**/promotion*/**": false,
