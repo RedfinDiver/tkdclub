@@ -1,6 +1,16 @@
 Changelog
 =========
 
+Version 3.0.1 (2019-02-9)
+-------------------------
+
+Bugfix Release
+
+- Durch einen Fehler wurden die Benutzer der ausgewählten Gruppe bei einer
+  Neuanmeldung zu einer Veranstaltung nicht mehr per E-Mail informiert.
+- Der Fehler wurde behoben und zusätzlich die Möglichkeit geschaffen, mehrere
+  Benutzergruppen mit einer E-Mail über die Anmeldung zu informieren.
+
 Version 3.0.0 (2019-02-03)
 ----------------------------
 
