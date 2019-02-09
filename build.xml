@@ -13,103 +13,246 @@
             <pathelement location="/usr/share/java/apache-ant/xmltask.jar"/>
         </classpath>
     </taskdef>
-    
+    <!-- properties for package and zip creation -->
     <property name="name" value="tkdclub"/>
     <property name="src" location="${basedir}"/>
-    <property name="build" location="${basedir}/zips/"/>
-    <property name="packdir" location="${basedir}/zips/packages/"/>
+    <property name="zips" location="${basedir}/zips/"/>
+    <property name="build" location="${basedir}/zips/build/"/>
+    <property name="packdir" location="${build}/packages/"/>
     <property name="plgdir" location="${src}/plugins/"/>
+    <property name="clidir" location="${src}/cli/"/>
     <property name="manifest" value="${src}/pkg_${name}.xml" />
-    
+    <!-- properties for symlinking -->
+    <property name="web.root" value="/home/markus/Dokumente/webroot/dev_tkdclub/"/>
+
+    <target name="clean" description="deletes the pkg_${name}.zip">
+        <delete dir="${zips}" />
+        <echo message="pkg_${name}.zip deleted!" />
+    </target>
+
     <target name="init">
-        <delete dir="${build}"/>
-        <mkdir dir="${build}"/>
-        <antcall target="clean"></antcall>
+        <mkdir dir="${packdir}"/>
     </target>
  
-    <target name="zip" description="creates package" depends="init">
-        
-        <!-- component zipping -->
-        <copy todir="${packdir}">
-            <fileset dir="${basedir}/component/"/>
-        </copy>
+    <target name="createPackage" description="creates package" depends="init">
+        <!-- zipping all the extensions -->
+        <antcallback target="zipComponent" return="version_component"/>
+        <antcallback target="zipPlgTkdclublogo" return="version_plg_tkdclublogo"/>
+        <antcallback target="zipPlgTkdclubgrade" return="version_plg_tkdclubgrade"/>
+        <antcallback target="zipCli" return="version_cli_tkdclubfile"/>
 
-        <xmlproperty file="${packdir}/admin/${name}.xml" keepRoot="false"
-                     semanticAttributes="true"/>
-        <propertyregex property="version_c"
-               input="${version}"
-               regexp="\."
-               replace=""
-               global="true" />
-
-        <move file="${packdir}/admin/${name}.xml" todir="${build}/packages/"/>
-        <delete file="${packdir}/build.xml"/>
-
-        <zip destfile="${packdir}/com_${name}_v${version_c}.zip">
-            <zipfileset dir="${packdir}/admin/" prefix="admin" />
-            <zipfileset dir="${packdir}/site/" prefix="site"/>
-            <zipfileset dir="${packdir}/"/>
-        </zip>
-        <delete file="${packdir}/${name}.xml"/>
-        <delete dir="${packdir}/admin/"/>
-        <delete dir="${packdir}/site/"/>
-        
-        <!-- plugin zipping -->
-        <xmlproperty file="$${plgdir}/${name}logo.xml" keepRoot="false"
-                     semanticAttributes="true"/>
-        <propertyregex property="version_p1"
-               input="${version}"
-               regexp="\."
-               replace=""
-               global="true" />
-        <zip destfile="${packdir}/plg_quickicon_${name}logo_v${version_p1}.zip">
-            <zipfileset dir="${plgdir}/${name}logo" excludes="build.xml"/>
-        </zip>
-
-        <xmlproperty file="$${plgdir}/${name}grade.xml" keepRoot="false"
-                     semanticAttributes="true"/>
-        <propertyregex property="version_p2"
-               input="${version}"
-               regexp="\."
-               replace=""
-               global="true" />
-        <zip destfile="${packdir}/plg_content_${name}grade_v${version_p2}.zip">
-            <zipfileset dir="${plgdir}/${name}grade" excludes="build.xml"/>
-        </zip>
-        
-        <!-- moving manifest file and package zipping -->
+        <!-- moving manifest file and changing filenames according to version number -->
         <copy file="${manifest}" todir="${build}"/>
         <xmltask source="${build}/pkg_tkdclub.xml" dest="${build}/pkg_tkdclub.xml">
             
             <replace path="/extension/files/file[@id='com_tkdclub']/text()"
-                    withText="com_${name}_v${version_c}.zip" />
+                    withText="com_${name}_v${version_component}.zip" />
             
             <replace path="/extension/files/file[@id='tkdclublogo']/text()"
-                    withText="plg_quickicon_${name}logo_v${version_p1}.zip" />
+                    withText="plg_quickicon_${name}logo_v${version_plg_tkdclublogo}.zip" />
 
             <replace path="/extension/files/file[@id='tkdclubgrade']/text()"
-                    withText="plg_content_${name}grade_v${version_p2}.zip" />
+                    withText="plg_content_${name}grade_v${version_plg_tkdclubgrade}.zip" />
+            
+            <replace path="/extension/files/file[@id='tkdclubfile']/text()"
+                    withText="cli_${name}file_v${version_cli_tkdclubfile}.zip" />
         </xmltask>
-        <zip destfile="${build}/pkg_tkdclub.zip">
-            <zipfileset dir="${src}/zips"/>
+
+        <!-- zipping to package install file -->
+        <zip destfile="${zips}/pkg_tkdclub.zip">
+            <zipfileset dir="${build}"/>
         </zip>
         
         <!-- delete all other files -->
-        <delete includeemptydirs="true">
-            <filelist
-                dir="${packdir}"
-                files="com_${name}.zip
-                       plg_quickicon_${name}logo.zip
-                       plg_content_${name}grade.zip" />
-        </delete>
-        <delete file="${build}/pkg_tkdclub.xml" />
-        <delete dir="${build}/packages"/>
+        <delete dir="${build}"/>
         <echo message="Package created!" />
     </target>
-  
-    <target name="clean" description="deletes the pkg_${name}.zip">
-        <delete dir="${build}" />
-        <echo message="pkg_${name}.zip deleted!" />
+
+    <target name="zipComponent">
+        <!-- check for package creation -->
+        <if>
+            <available file="${packdir}" type="dir" />
+            <then>
+                <property name="builddir" location="${packdir}" />
+            </then>
+            <else>
+                <property name="builddir" location="${build}" />
+            </else>
+        </if>
+        <!-- copy all files to build directory-->
+        <copy todir="${builddir}">
+            <fileset dir="${basedir}/component/"/>
+        </copy>
+        <!-- get the version number from the manifest -->
+        <xmlproperty file="${builddir}/admin/${name}.xml" keepRoot="false"
+                     semanticAttributes="true"/>
+        <propertyregex property="version"
+               input="${version}"
+               regexp="\."
+               replace=""
+               global="true" />
+        <!-- move manifest file to build root and delete the ant file -->
+        <move file="${builddir}/admin/${name}.xml" todir="${builddir}"/>
+        <delete file="${builddir}/build.xml"/>
+        <!-- zip all files -->
+        <zip destfile="${builddir}/com_${name}_v${version}.zip">
+            <zipfileset dir="${builddir}/admin/" prefix="admin" />
+            <zipfileset dir="${builddir}/site/" prefix="site"/>
+            <zipfileset dir="${builddir}/"/>
+        </zip>
+        <!-- now delete all unnecessary files-->
+        <delete file="${builddir}/${name}.xml"/>
+        <delete file="${builddir}/script.php"/>
+        <delete dir="${builddir}/admin/"/>
+        <delete dir="${builddir}/site/"/>
+        <!-- When 'package' folder not present, move zip file to 'zips' directory
+             and delete 'build' directory. When it is present, we are going to create a package and
+             nothing is to do -->
+        <if>
+            <not>
+                <available file="${packdir}" type="dir" />
+            </not>
+            <then>
+                <move file="${builddir}/com_${name}_v${version}.zip" todir="${zips}"/>
+                <delete dir="${build}"/>
+            </then>
+        </if>
+        <!-- define version number for antcallback to use it in package creation -->
+        <property name="version_component" value="${version}" />
+    </target>
+
+    <target name="zipPlgTkdclublogo">
+        <!-- check for package creation -->
+        <if>
+            <available file="${packdir}" type="dir" />
+            <then>
+                <property name="builddir" location="${packdir}" />
+            </then>
+            <else>
+                <property name="builddir" location="${build}" />
+            </else>
+        </if>
+        <xmlproperty file="${plgdir}/tkdclublogo/${name}logo.xml" keepRoot="false"
+                     semanticAttributes="true"/>
+        <propertyregex property="version"
+               input="${version}"
+               regexp="\."
+               replace=""
+               global="true" />
+        <zip destfile="${builddir}/plg_quickicon_${name}logo_v${version}.zip">
+            <zipfileset dir="${plgdir}/${name}logo" excludes="build.xml"/>
+        </zip>
+        <!-- When 'package' folder not present, move zip file to 'zips' directory
+             and delete 'build' directory. When it is present, we are going to create a package and
+             nothing is to do -->
+        <if>
+            <not>
+                <available file="${packdir}" type="dir" />
+            </not>
+            <then>
+                <move file="${builddir}/plg_quickicon_${name}logo_v${version}.zip" todir="${zips}"/>
+                <delete dir="${build}"/>
+            </then>
+        </if>
+        <!-- define version number for antcallback to use it in package creation -->
+        <property name="version_plg_tkdclublogo" value="${version}" />
+    </target>
+
+    <target name="zipPlgTkdclubgrade">
+        <!-- check for package creation -->
+        <if>
+            <available file="${packdir}" type="dir" />
+            <then>
+                <property name="builddir" location="${packdir}" />
+            </then>
+            <else>
+                <property name="builddir" location="${build}" />
+            </else>
+        </if>
+         <xmlproperty file="${plgdir}/tkdclubgrade/${name}grade.xml" keepRoot="false"
+                     semanticAttributes="true"/>
+        <propertyregex property="version"
+               input="${version}"
+               regexp="\."
+               replace=""
+               global="true" />
+        <zip destfile="${builddir}/plg_content_${name}grade_v${version}.zip">
+            <zipfileset dir="${plgdir}/${name}grade" excludes="build.xml"/>
+        </zip>
+        <!-- When 'package' folder not present, move zip file to 'zips' directory
+             and delete 'build' directory. When it is present, we are going to create a package and
+             nothing is to do -->
+        <if>
+            <not>
+                <available file="${packdir}" type="dir" />
+            </not>
+            <then>
+                <move file="${builddir}/plg_content_${name}grade_v${version}.zip" todir="${zips}"/>
+                <delete dir="${build}"/>
+            </then>
+        </if>
+        <!-- define version number for antcallback to use it in package creation -->
+        <property name="version_plg_tkdclubgrade" value="${version}" />
+    </target>
+
+    <target name="zipCli">
+        <!-- check for package creation -->
+        <if>
+            <available file="${packdir}" type="dir" />
+            <then>
+                <property name="builddir" location="${packdir}" />
+            </then>
+            <else>
+                <property name="builddir" location="${build}" />
+            </else>
+        </if>
+        <xmlproperty file="${clidir}/${name}file.xml" keepRoot="false"
+                     semanticAttributes="true"/>
+        <propertyregex property="version"
+               input="${version}"
+               regexp="\."
+               replace=""
+               global="true" />
+        <zip destfile="${builddir}/cli_${name}file_v${version}.zip">
+            <zipfileset dir="${clidir}" excludes="build.xml"/>
+        </zip>
+        <!-- When 'package' folder not present, move zip file to 'zips' directory
+             and delete 'build' directory. When it is present, we are going to create a package and
+             nothing is to do -->
+        <if>
+            <not>
+                <available file="${packdir}" type="dir" />
+            </not>
+            <then>
+                <move file="${builddir}/cli_${name}file_v${version}.zip" todir="${zips}"/>
+                <delete dir="${build}"/>
+            </then>
+        </if>
+        <!-- define version number for antcallback to use it in package creation -->
+        <property name="version_cli_tkdclubfile" value="${version}" />
+    </target>
+
+    <target name="symlinkComponent">
+        <property name="sitetest" value="${web.root}components/com_${name}" />
+        <property name="admintest" value="${web.root}administrator/components/com_${name}" />
+
+        <symlink link="${admintest}" resource="${basedir}/component/admin" />
+        <symlink link="${sitetest}" resource="${basedir}/component/site" />
+    </target>
+
+    <target name="symlinkPlgTkdclubgrade">
+        <property name="test" value="${web.root}plugins/content/tkdclubgrade" />
+        <symlink link="${test}" resource="${basedir}/plugins/tkdclubgrade" />
+    </target>
+
+    <target name="symlinkPlgTkdclublogo">
+        <property name="test" value="${web.root}plugins/quickicon/tkdclublogo" />
+        <symlink link="${test}" resource="${basedir}/plugins/tkdclublogo" />
+    </target>
+
+    <target name="symlinkCli">
+        <property name="test" value="${web.root}cli/${name}_bd_reminder.php" />
+        <symlink link="${test}" resource="${basedir}/cli/${name}_bd_reminder.php" />
     </target>
    
 </project>
