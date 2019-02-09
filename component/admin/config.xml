@@ -236,6 +236,32 @@
     </fieldset>
 
     <fieldset
+        name="birthday_reminder"
+        label="COM_TKDCLUB_CONFIG_BIRTHDAY_REMINDER"
+        description="COM_TKDCLUB_CONFIG_BIRTHDAY_REMINDER_DESC">
+
+        <field 
+            name="reminder_to" type="usergrouplist"
+            label="COM_TKDCLUB_CONFIG_BIRTHDAY_REMINDER_EMAIL_TO"
+            description="COM_TKDCLUB_CONFIG_BIRTHDAY_REMINDER_EMAIL_TO_DESC"
+            multiple="true" />
+        
+        <field
+            name="reminder_subject"
+            label="COM_TKDCLUB_CONFIG_BIRTHDAY_REMINDER_SUBJECT"
+            description="COM_TKDCLUB_CONFIG_BIRTHDAY_REMINDER_SUBJECT_DESC"
+            type="text" default="" size="10" filter="safehtml" />
+
+        <field
+            name="reminder_message"
+            label="COM_TKDCLUB_CONFIG_BIRTHDAY_REMINDER_MESSAGE"
+            description="COM_TKDCLUB_CONFIG_BIRTHDAY_REMINDER_MESSAGE_DESC"
+            type="textarea" default="" filter="safehtml"
+            rows="8" />
+
+    </fieldset>
+
+    <fieldset
         name="permissions"
         label="JCONFIG_PERMISSIONS_LABEL"
         description="JCONFIG_PERMISSIONS_DESC" >
