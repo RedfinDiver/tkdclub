@@ -3,7 +3,7 @@
     
     "tasks": [
         { 
-            "label": "Package: zip",
+            "label": "Package: create",
             "command": "ant",
             "type": "shell",
             "presentation": {
@@ -14,10 +14,10 @@
                 "showReuseMessage": true,
                 "clear": false
             },
-            "args": ["-f", "${workspaceRoot}/build.xml", "zip"]
+            "args": ["-f", "${workspaceRoot}/build.xml", "createPackage"]
         },
         { 
-            "label": "Package: clean",
+            "label": "clean",
             "command": "ant",
             "type": "shell",
             "presentation": {
@@ -42,7 +42,7 @@
                 "showReuseMessage": true,
                 "clear": false
             },
-            "args": ["-f", "${workspaceRoot}/component/build.xml", "symlink"]
+            "args": ["-f", "${workspaceRoot}/build.xml", "symlinkComponent"]
         },
         { 
             "label": "Component: zip",
@@ -56,21 +56,7 @@
                 "showReuseMessage": true,
                 "clear": false
             },
-            "args": ["-f", "${workspaceRoot}/component/build.xml", "zipComponent"]
-        },
-        { 
-            "label": "Component: clean",
-            "command": "ant",
-            "type": "shell",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "args": ["-f", "${workspaceRoot}/component/build.xml", "clean"]
+            "args": ["-f", "${workspaceRoot}/build.xml", "zipComponent"]
         },
 
         {
@@ -130,7 +116,7 @@
                 "showReuseMessage": true,
                 "clear": false
             },
-            "args": ["-f", "${workspaceRoot}/plugins/tkdclubgrade/build.xml", "symlink"]
+            "args": ["-f", "${workspaceRoot}/build.xml", "symlinkPlgTkdclubgrade"]
         },
 
         { 
@@ -145,22 +131,7 @@
                 "showReuseMessage": true,
                 "clear": false
             },
-            "args": ["-f", "${workspaceRoot}/plugins/tkdclubgrade/build.xml", "zipPlugin"]
-        },
-
-        { 
-            "label": "Plugin tkdclubgrade: clean",
-            "command": "ant",
-            "type": "shell",
-            "presentation": {
-                "echo": true,
-                "reveal": "always",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": false
-            },
-            "args": ["-f", "${workspaceRoot}/plugins/tkdclubgrade/build.xml", "clean"]
+            "args": ["-f", "${workspaceRoot}/build.xml", "zipPlgTkdclubgrade"]
         },
 
         { 
@@ -175,7 +146,7 @@
                 "showReuseMessage": true,
                 "clear": false
             },
-            "args": ["-f", "${workspaceRoot}/plugins/tkdclublogo/build.xml", "symlink"]
+            "args": ["-f", "${workspaceRoot}/build.xml", "symlinkPlgTkdclublogo"]
         },
 
         { 
@@ -190,11 +161,11 @@
                 "showReuseMessage": true,
                 "clear": false
             },
-            "args": ["-f", "${workspaceRoot}/plugins/tkdclublogo/build.xml", "zipPlugin"]
+            "args": ["-f", "${workspaceRoot}/build.xml", "zipPlgTkdclublogo"]
         },
 
-        { 
-            "label": "Plugin tkdclublogo: clean",
+        {
+            "label": "Cli Files: zipCli",
             "command": "ant",
             "type": "shell",
             "presentation": {
@@ -205,7 +176,23 @@
                 "showReuseMessage": true,
                 "clear": false
             },
-            "args": ["-f", "${workspaceRoot}/plugins/tkdclublogo/build.xml", "clean"]
+            "args": ["-f", "${workspaceRoot}/cli/build.xml", "zipCli"]
         },
+
+        { 
+            "label": "Cli tkdclubfiles: symlink",
+            "command": "ant",
+            "type": "shell",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": false
+            },
+            "args": ["-f", "${workspaceRoot}/build.xml", "symlinkCli"]
+        },
+
     ]
 }
