@@ -23,9 +23,6 @@ define('JPATH_COMPONENT_ADMINISTRATOR', JPATH_ADMINISTRATOR . '/components/com_t
 require_once JPATH_LIBRARIES . '/import.legacy.php';
 require_once JPATH_LIBRARIES . '/cms.php';
 
-// Load the configuration
-require_once JPATH_CONFIGURATION . '/configuration.php';
-
 // Load Library language
 $lang = JFactory::getLanguage();
 
