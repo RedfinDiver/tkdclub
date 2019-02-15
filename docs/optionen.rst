@@ -15,8 +15,8 @@ Optionen sind wie in Joomla! üblich, über entweder
 selbst über den Button "Optionen".
 
 Die speziellen Einstellungen für jeden Menüpunkt bzw. jede Funktion werden dort
-genau beschrieben, an dieser Stelle wird nur auf die 2 allgemeinen
-Einstellungen eingegangen:
+genau beschrieben, an dieser Stelle wird nur auf 3 allgemeine Einstellungen
+eingegangen:
 
 Allgemein
 ---------
@@ -26,6 +26,25 @@ Allgemein
 Hier kann der Vereinsname und das Währungszeichen einstellt werden. Bleiben die
 Felder leer, so wird der Vereinsname mit "Taekwondo Club" angenommen und als
 Währungszeichen das "€" - Symbol verwendet.
+
+Geburtstag Erinnerungen
+-----------------------
+
+.. image:: img/bdreminder.jpg
+
+Mit der Installation des TKDClub - Packets liegt im Wurzelverzeichnis der
+Joomla! Installation im Ordner "Cli" die Datei "tkdclub_bd_reminder.php"
+bereit. Diese Datei muss mittels eines Cron-Jobs ausgeführt werden, am besten
+täglich am Morgen (Wenden Sie sich dafür an ihren Administrator!).
+
+Haben an diesem Tag Mitglieder Geburtstag, wird an alle Mitglieder der
+ausgewählten Benutzergruppen eine E-Mail zur Erinnerung an den Geburtstag des
+Mitglieds/der Mitglieder geschickt.
+
+Es kann darüber hinaus eingestellt werden, für welche Mitglieder (aktive,
+ausgetretene oder unterstützende) die Erinnerung geschickt werden soll.
+
+Das verschickte E-Mail enthält Namen, Alter und Kontaktdaten.
 
 Berechtigungen
 --------------

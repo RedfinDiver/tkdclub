@@ -1,8 +1,19 @@
 Changelog
 =========
 
-Version 3.0.1 (2019-02-9)
--------------------------
+Version 3.1.0 (2019-02-15)
+--------------------------
+
+Feature Release
+
+- Neues Cli-Script zur automatischen Geburtstagserinnerung wurde erstellt. Info
+  unter :doc:`optionen`.
+- Neues Build-System für das Packet. Mittel der "build.xml" kann nun das Packet
+  sowie alle Erweiterungen erstellt werden. Die anderen build-Dateien wurden
+  entfernt.
+
+Version 3.0.1 (2019-02-09)
+--------------------------
 
 Bugfix Release
 
@@ -78,3 +89,8 @@ entrümpelt. Folgende Features wurden hinzugefügt bzw. verbessert:
 - Übersicht über alle Trainings für jeden Trainer
 - Möglichkeit in dieser Sicht Trainings für jeden Trainer separat als bezahlt
   zu speichern
+
+**Geburtstagserinnerung**
+
+- mittels eines cli-Scipts durch einen Cron-Job werden Benutzer über
+  Geburtstage von Mitgliedern informiert
