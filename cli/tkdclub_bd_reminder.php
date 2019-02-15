@@ -132,12 +132,8 @@ class TkdclubBirthdayreminder extends JApplicationCli
 		. 'MONTH(CURDATE())');
 
 		// now building the where with or clause
-		$orwhere = array();
-		foreach ($states as $state)
-		{
-			$orwhere[] = $db->qn('member_state') . ' = ' . $db->q($state);
-		}
-		$query->orwhere($orwhere);
+		$memberstates = "'" . implode("','", $states) . "'";
+		$query->where($db->qn('member_state') . ' IN ('.$memberstates.')');
 		
 		$db->setQuery($query);
 
