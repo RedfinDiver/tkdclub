@@ -245,7 +245,20 @@
             label="COM_TKDCLUB_CONFIG_BIRTHDAY_REMINDER_EMAIL_TO"
             description="COM_TKDCLUB_CONFIG_BIRTHDAY_REMINDER_EMAIL_TO_DESC"
             multiple="true" />
+
+        <field
+            name="reminder_for_status" type="list"
+            label="COM_TKDCLUB_CONFIG_BIRTHDAY_REMINDER_MEMBERSTATE"
+            description="COM_TKDCLUB_CONFIG_BIRTHDAY_REMINDER_MEMBERSTATE_DESC"
+            multiple="true" default="active">
+            
+            <option value="active">COM_TKDCLUB_SELECT_ACTIVE</option>
+            <option value="inactive">COM_TKDCLUB_SELECT_INACTIVE</option>
+            <option value="support">COM_TKDCLUB_SELECT_SUPPORTER</option>
+
+        </field>
         
+        <!-- TODO implement email directly to the user from the website
         <field
             name="reminder_subject"
             label="COM_TKDCLUB_CONFIG_BIRTHDAY_REMINDER_SUBJECT"
@@ -258,6 +271,7 @@
             description="COM_TKDCLUB_CONFIG_BIRTHDAY_REMINDER_MESSAGE_DESC"
             type="textarea" default="" filter="safehtml"
             rows="8" />
+        -->
 
     </fieldset>
 

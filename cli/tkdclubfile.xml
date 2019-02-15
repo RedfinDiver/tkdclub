@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="3.9.0" type="file" method="upgrade">
-    <name>tkdclub_cli</name>
+    <name>cli_tkdclub</name>
     <author>Markus Moser</author>
     <authorEmail>redfindiver@gmail.com</authorEmail>
     <authorUrl>https://www.taekwondo-uttendorf.at</authorUrl>
     <copyright>Copyright (c)2019 Markus Moser</copyright>
     <license>GNU GPL v2 or later</license>
     <version>1.0.0</version>
-    <creationDate>2019-02-09</creationDate>
+    <creationDate>February 2019</creationDate>
     <description>TKDClub CLI scripts</description>
 
     <fileset>
