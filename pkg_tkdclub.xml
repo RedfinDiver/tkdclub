@@ -3,7 +3,7 @@
   <extension type="package" version="3.0" method="upgrade">
     <name>Taekwondo Club</name>
     <author>Markus Moser</author>
-    <creationDate>January 2019</creationDate>
+    <creationDate>February 2019</creationDate>
     <packagename>tkdclub</packagename>
     <version>3.1.0</version>
     <url>http://www.taekwondo-uttendorf.at</url>
