@@ -10,7 +10,9 @@
     <packager>Markus Moser</packager>
     <packagerurl>http://www.taekwondo-uttendorf.at</packagerurl>
     <description>Package for tkdclub extension</description>
-    <update></update>
+    <updateservers>
+		  <server type="extension" name="TKD Club" priority="2">https://raw.githubusercontent.com/RedfinDiver/tkdclub/master/update.xml</server>
+	  </updateservers>
     <files folder="packages">
       <file type="component" id="com_tkdclub">com_tkdclub.zip</file>
       <file type="plugin" id="tkdclublogo" group="quickicon">plg_quickicon_tkdclublogo.zip</file>
