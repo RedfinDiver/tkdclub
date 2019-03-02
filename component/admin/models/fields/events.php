@@ -31,6 +31,7 @@ class JFormFieldEvents extends JFormFieldList
     {   
         $db = JFactory::getDbo();
         $query = $db->getQuery(true);
+        $options = array();
 
         // Add fields from the events-table
         $query->select('*');
