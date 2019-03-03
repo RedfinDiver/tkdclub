@@ -92,6 +92,24 @@
             label="COM_TKDCLUB_CONFIG_CHAMPIONSHIP_TYPES"
             description="COM_TKDCLUB_CONFIG_CHAMPIONSHIP_TYPES_DESC"
             type="text" defautlt="" size="60" filter="safehtml" />
+
+        <field
+				name="medal_email"
+				type="radio"
+				label="COM_TKDCLUB_CONFIG_SEND_MEDAL_EMAIL"
+				description="COM_TKDCLUB_CONFIG_SEND_MEDAL_EMAIL_DESC"
+				class="btn-group btn-group-yesno"
+				default="0"
+        >
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+        <field 
+            name="medal_info_to" type="usergrouplist"
+            label="COM_TKDCLUB_CONFIG_NEWMEDAL_EMAIL_TO"
+            description="COM_TKDCLUB_CONFIG_NEWMEDAL_EMAIL_TO_DESC"
+            multiple="true" showon="medal_email:1" />
     
     </fieldset>
     

@@ -46,6 +46,7 @@ class JFormFieldMembers extends JFormFieldList
         $query->order('member_id ASC');
         $db->setQuery($query);
         $members = $db->loadObjectList();
+        $options = array();
 
         foreach($members as $member)
         {

@@ -1,6 +1,15 @@
 Changelog
 =========
 
+Version 3.2.0 (2019-03-03)
+--------------------------
+
+Feature Release
+
+- Hinzufügen eines Erfolgs über das Frontend möglich
+- Mehr Filter und Optionen in der Erfolge-Verwaltung im Backend
+- Updateserver hinzugefügt
+
 Version 3.1.0 (2019-02-15)
 --------------------------
 

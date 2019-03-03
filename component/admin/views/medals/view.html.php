@@ -59,6 +59,12 @@ class TkdClubViewMedals extends JViewLegacy
         
         if ($canDo->get('core.edit'))
         {JToolBarHelper::editList('medal.edit', 'JTOOLBAR_EDIT');}
+
+        if ($canDo->get('core.edit.state'))
+        {
+            JToolBarHelper::publish('medals.publish', 'JTOOLBAR_PUBLISH', true);
+            JToolBarHelper::unpublish('medals.unpublish', 'JTOOLBAR_UNPUBLISH', true);
+        }
         
         if ($canDo->get('core.delete'))
         {JToolBarHelper::deleteList('COM_TKDCLUB_MEDAL_DELETE_QUESTION', 'medals.delete','JTOOLBAR_DELETE');}

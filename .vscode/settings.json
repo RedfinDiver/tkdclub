@@ -3,28 +3,7 @@
     
     "files.exclude":
     {
-        "**/.git*": false,
-        "**/.svn": true,
-        "**/.hg": true,
-        "**/.DS_Store": true,
-        "**/.vscode": false,
-        "**/nbproject": true,
-        "**/plugins": false,
-        "**/modules": false,
-        "**/docs": false,
-        "**/zips": false,
-        "**/*.ant": false,
-        "**/pkg_tkdclub.xml": false,
-        "**/site": false,
-        "**/admin": false,
-        "**/README.rst": false,
-        "**/build.xml": false,
-        "**/candidate*/**": false,
-        "**/medal*/**": false,
-        "**/promotion*/**": false,
-        "**/training*/**": false,
-        "**/statistic*/**": false,
-        "**/.gitignore/**": false,
+
     },
 
     "php.suggest.basic": false,

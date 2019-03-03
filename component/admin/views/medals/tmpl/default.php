@@ -62,7 +62,7 @@ $helper = new TkdClubHelperMembers;
                     <?php echo JHtml::_('grid.checkall'); ?>
                 </th>
                 <th width="1%">
-                    <?php echo JText::_('COM_TKDCLUB_MEDAL_ID'); ?>
+                    <?php echo JText::_('JSTATUS'); ?>
                 </th>
                 <th class="center" width="100"><?php echo JText::_('COM_TKDCLUB_DATE'); ?></th>
                 <th width=""><?php echo JText::_('COM_TKDCLUB_MEDAL_CHAMPIONSSHIP'); ?></th>
@@ -71,6 +71,9 @@ $helper = new TkdClubHelperMembers;
                 <th class="center" width=""><?php echo JText::_('COM_TKDCLUB_MEDAL_PLACING'); ?></th>
                 <th width=""><?php echo JText::_('COM_TKDCLUB_ATHLETS'); ?></th>
                 <th width=""><?php echo JText::_('COM_TKDCLUB_NOTES'); ?></th>
+                <th width="1%">
+                    <?php echo JText::_('COM_TKDCLUB_MEDAL_ID'); ?>
+                </th>
             </tr>
         </thead>        
         <!-- beginn of table footer -->
@@ -90,7 +93,9 @@ $helper = new TkdClubHelperMembers;
             
             <tr class="row<?php echo $i % 2; ?>">
                 <td class="center"><?php echo JHtml::_('grid.id', $i, $item->medal_id); ?>
-                <td class="center" width="10"><?php echo (int) $item->medal_id; ?></td>
+                <td>
+                    <?php echo JHtml::_('jgrid.published', $item->state, $i, 'medals.', TRUE); ?>
+                </td>
                 <td class="title" width="60">
                 <?php if ($item->checked_out) : ?>
 						<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'medals.', $canCheckin); ?>
@@ -111,6 +116,7 @@ $helper = new TkdClubHelperMembers;
                 </td>    
                 <td width=""><?php echo $helper->getMembersNames($item->winner_ids, $this->memberlist); ?></td>
                 <td><?php echo $this->escape($item->notes); ?></td>
+                <td class="center" width="10"><?php echo (int) $item->medal_id; ?></td>
             </tr>
             <?php endforeach; ?>
         </tbody>

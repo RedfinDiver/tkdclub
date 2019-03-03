@@ -25,7 +25,7 @@ class TkdClubModelMedals extends JModelList
         if (empty($config['filter_fields']))
         {
             $config['filter_fields'] = 
-            array('medal_id', 'date', 'championship', 'type', 'class', 'placing', 'winner_ids', 'winner', 'medalyear');
+            array('medal_id', 'date', 'championship', 'type', 'class', 'placing', 'winner_ids', 'winner', 'medalyear', 'state');
         }
         
         parent::__construct($config);
@@ -62,8 +62,11 @@ class TkdClubModelMedals extends JModelList
         $medalyear = $this->getUserStateFromRequest($this->context.'.filter.medalyear', 'filter_medalyear', '', 'integer');
         $this->setState('filter.medalyear', $medalyear);
 
-        $search = $this->getUserStateFromRequest($this->context.'.filter.type', 'filter_type', '', 'string');
-        $this->setState('filter.type', $search);
+        $type = $this->getUserStateFromRequest($this->context.'.filter.type', 'filter_type', '', 'string');
+        $this->setState('filter.type', $type);
+
+        $state = $this->getUserStateFromRequest($this->context.'.filter.state', 'filter_state', '', 'integer');
+        $this->setState('filter.state', $state);
 
         parent::populateState($ordering, $direction);
     }
@@ -87,6 +90,7 @@ class TkdClubModelMedals extends JModelList
         $id	.= ':'.$this->getState('filter.winner');
         $id	.= ':'.$this->getState('filter.medalyear');
         $id	.= ':'.$this->getState('filter.type');
+        $id	.= ':'.$this->getState('filter.state');
 
         return parent::getStoreId($id);
     }
@@ -102,6 +106,12 @@ class TkdClubModelMedals extends JModelList
         $db = $this->getDbo();
         $query = $db->getQuery(true);
         $query->select('*')->from('#__tkdclub_medals');
+
+        $state = $this->getState('filter.state');
+        if (is_numeric($state))
+        {
+            $query->where($db->qn('state') . ' = ' . (int) $state);
+        }
 
         $placing = $this->getState('filter.placing');
         if ($placing >= 1)

@@ -16,6 +16,7 @@ class TkdClubTableMedals extends JTable
 {
     public function __construct(&$db)      
     {
+        $this->setColumnAlias('published', 'state'); // needed for autoworking of publish-method
         parent::__construct('#__tkdclub_medals', 'medal_id', $db);
     }
 

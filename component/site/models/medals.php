@@ -23,8 +23,9 @@ class TkdClubModelMedals extends JModelList
     {
         $db = JFactory::getDbo();
         $query = $db->getQuery(true);
-        $query->select('placing')->from('#__tkdclub_medals');
-        $query->where('placing =' .$placing);
+        $query->select($db->qn('placing'))->from($db->qn('#__tkdclub_medals'));
+        $query->where($db->qn('placing') . ' = ' . $db->q($placing));
+        $query->where($db->qn('state') . ' = ' . (int) 1);
 
         $db->setQuery($query);
         

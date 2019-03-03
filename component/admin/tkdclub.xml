@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<extension type="component" version="3.1" method="upgrade">
+<extension type="component" version="3.9" method="upgrade">
     <name>com_tkdclub</name>
     <author>Markus Moser</author>
     <authorEmail>redfindiver@gmail.com</authorEmail>
@@ -7,7 +7,7 @@
     <creationDate>September 2018</creationDate>
     <copyright>Copyright (C) 2018 Markus Moser</copyright>
     <license>GNU/GPL http://www.gnu.org/licenses/gpl-2.0.html</license>
-    <version>3.0.1</version>
+    <version>3.1.0</version>
     <description>COM_TKDCLUB_XML_DESCRIPTION</description>
 
     <scriptfile>script.php</scriptfile>

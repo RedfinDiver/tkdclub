@@ -22,7 +22,7 @@
     <property name="plgdir" location="${basedir}/plugins/"/>
 
     <!-- properties for symlinking -->
-    <property name="web.root" value="/home/markus/Dokumente/webroot/dev_tkdclub/"/>
+    <property name="web.root" value="/home/markus/Dokumente/webroot/joomla-cms/"/>
 
     <target name="clean" description="deletes the pkg_${name}.zip">
         <delete dir="${zips}" />
