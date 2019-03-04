@@ -20,7 +20,10 @@
             class="inputbox"
             label="COM_TKDCLUB_DATE"
             description="COM_TKDCLUB_TRAINING_DATE_DESC"
-            size="12" required="true" filter="safehtml" />
+            translateformat="true"
+		    showtime="false"
+            filter="server_utc"
+            size="12" required="true" />
         
         <field 
             name="trainer" type="trainers"
