@@ -41,6 +41,11 @@ class TkdClubModelSubscriber extends JModelAdmin
             $data = $this->getItem();
         }
         
+        $text = array("1" => 'COM_TKDCLUB_SUBSCRIBER_ORIGIN_MANUAL',
+                      "0" => 'COM_TKDCLUB_SUBSCRIBER_ORIGIN_FORM');
+        
+        $data->origin = JText::_($text[$data->origin]);
+        
         return $data;
     }
 }
