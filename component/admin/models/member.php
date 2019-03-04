@@ -30,6 +30,9 @@ class TkdClubModelMember extends JModelAdmin
             return false;
         }
 
+        $bd = JHtml::date($form->getValue('birthdate'), 'DATE_FORMAT_LC4');
+        $form->setValue('birthdate', $bd);
+
         return $form;
     }
         

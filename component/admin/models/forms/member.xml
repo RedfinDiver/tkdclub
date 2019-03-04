@@ -34,6 +34,9 @@
             required="true"
             label="COM_TKDCLUB_MEMBER_ENTRY"
             description="COM_TKDCLUB_MEMBER_ENTRY_DESC"
+            translateformat="true"
+		    showtime="false"
+            filter="server_utc"
             size="12" />               
 
     </fieldset>
@@ -45,6 +48,9 @@
             class="inputbox"
             label="COM_TKDCLUB_MEMBER_BIRTHDATE"
             description="COM_TKDCLUB_MEMBER_BIRTHDATE_DESC"
+            translateformat="true"
+		    showtime="false"
+            filter="server_utc"
             size="12" />
 
         <field 
@@ -135,6 +141,9 @@
             class="inputbox"
             label="COM_TKDCLUB_MEMBER_LAST_PROMOTION"
             description="COM_TKDCLUB_MEMBER_LAST_PROMOTION_DESC"
+            translateformat="true"
+		    showtime="false"
+            filter="server_utc"
             size="12" />
 
         <field
@@ -170,6 +179,9 @@
             class="inputbox"
             label="COM_TKDCLUB_MEMBER_LEAVE"
             description="COM_TKDCLUB_MEMBER_LEAVE_DESC"
+            translateformat="true"
+		    showtime="false"
+            filter="server_utc"
             size="12"  />
 
         <field 
