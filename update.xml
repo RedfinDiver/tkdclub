@@ -7,11 +7,7 @@
         <client>0</client>
         <client_id>0</client_id>
         <version>3.2.1</version>
-<<<<<<< HEAD
         <infourl title="TKD Club 3.2.1 released">https://github.com/RedfinDiver/tkdclub/releases/tag/v3.2.1</infourl>
-=======
-        <infourl title="TKD Club 3.2.0 released">https://github.com/RedfinDiver/tkdclub/releases/tag/v3.2.1</infourl>
->>>>>>> a34b9440635956c7f34e5416f1455e1f82e52678
         <downloads>
             <downloadurl type="full" format="zip">https://github.com/RedfinDiver/tkdclub/releases/download/v3.2.1/pkg_tkdclub.zip</downloadurl>
         </downloads>
