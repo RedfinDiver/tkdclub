@@ -14,27 +14,16 @@ use Joomla\Registry\Registry;
 */
 class TkdClubTableMembers extends JTable
 {
+	protected $_jsonEncode = array();
+
     public function __construct(&$db)      
     {
+		$this->_jsonEncode = array('functions', 'licenses');
         parent::__construct('#__tkdclub_members', 'member_id', $db);
     }
 
-    public function store($updateNulls = false) {
-
-        // Transform the functions field
-		if (is_array($this->functions))
-		{
-			$functions = new Registry($this->functions);
-			$this->functions = (string) $functions;
-        }
-
-        // Transform the licenses field
-		if (is_array($this->licenses))
-		{
-			$licenses = new Registry($this->licenses);
-			$this->licenses = (string) $licenses;
-        }
-
+	public function store($updateNulls = false)
+	{
         $date   = JFactory::getDate()->toSql();
 		$userId = JFactory::getUser()->id;
 
