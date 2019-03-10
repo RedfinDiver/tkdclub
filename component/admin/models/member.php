@@ -26,13 +26,11 @@ class TkdClubModelMember extends JModelAdmin
         $options = array('control' => 'jform', 'load_data' => $loadData);
         $form = $this->loadForm('tkdclub', 'member',  $options);
 
-        if (empty($form)) {
+        if (empty($form))
+        {
             return false;
         }
-
-        $bd = JHtml::date($form->getValue('birthdate'), 'DATE_FORMAT_LC4');
-        $form->setValue('birthdate', $bd);
-
+        
         return $form;
     }
         
@@ -317,19 +315,5 @@ class TkdClubModelMember extends JModelAdmin
         $db->setQuery($query);
 
         return $db->loadObjectList();
-    }
-
-    /**
-    * Overrload getItem method for multiple club functions
-    */
-    public function getItem($pk = null)
-    {   
-        $items = parent::getItem($pk);
-        $registry = new JRegistry;
-        $registry->loadString($items->get('functions'));
-        $items->set('functions', $registry->toArray());
-
-        return $items;
-    }
-              
+    }    
 }
