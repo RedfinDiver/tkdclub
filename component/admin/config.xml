@@ -80,6 +80,30 @@
             description="COM_TKDCLUB_CONFIG_DISTANCE_SALARY_DESC"
             type="text" default="" size="10" filter="float" />
 
+        <field
+			name="integration_newsfeeds"
+			type="note"
+			label="COM_TKDCLUB_CONFIG_EMAIL_NOTE"
+		/>
+
+        <field
+				name="training_email"
+				type="radio"
+				label="COM_TKDCLUB_CONFIG_SEND_TRAINING_EMAIL"
+				description="COM_TKDCLUB_CONFIG_SEND_TRAINING_EMAIL_DESC"
+				class="btn-group btn-group-yesno"
+				default="0"
+        >
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+        <field 
+            name="training_info_to" type="usergrouplist"
+            label="COM_TKDCLUB_CONFIG_NEWTRAINING_EMAIL_TO"
+            description="COM_TKDCLUB_CONFIG_NEWTRAINING_EMAIL_TO_DESC"
+            multiple="true" showon="medal_email:1" />
+
     </fieldset>
 
     <fieldset
@@ -92,6 +116,12 @@
             label="COM_TKDCLUB_CONFIG_CHAMPIONSHIP_TYPES"
             description="COM_TKDCLUB_CONFIG_CHAMPIONSHIP_TYPES_DESC"
             type="text" defautlt="" size="60" filter="safehtml" />
+
+        <field
+			name="integration_newsfeeds"
+			type="note"
+			label="COM_TKDCLUB_CONFIG_EMAIL_NOTE"
+		/>
 
         <field
 				name="medal_email"

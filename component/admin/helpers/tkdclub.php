@@ -48,17 +48,30 @@ class TkdclubHelper
     /**
      * Method get the name of a member by id
      * 
-     * @param   mixed   array with integers which are the ids of members in db
-     *                  json string
+     * @param   mixed   array   with integers which are the ids of members in db
+     *                  json    valid json string with integers
+     *                  integer id of member
      *
-     * @return  mixed   FALSE if there is no data
-     *                  STRING string with names, diveded with " / "
+     * @return  mixed   FALSE   if there is no data
+     *                  STRING  'firstname lastname' for 1 member
+     *                  STRING   names, diveded with "/" for 2 or more members
      */
     public static function getMembersNames($ids, $memberlist)
-    {           
-        if (gettype($ids) != 'array')
+    {   
+        $type = gettype($ids);
+
+        switch ($type)
         {
-            $ids = json_decode($ids);
+            case 'integer':
+                return $memberlist[$ids];
+                break;
+
+            case 'string';
+                $ids = json_decode($ids);
+                break;
+
+            case 'array':
+                break;
         }
         
         $i = count($ids);

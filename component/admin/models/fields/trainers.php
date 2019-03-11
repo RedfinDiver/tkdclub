@@ -7,7 +7,10 @@
 
 defined('_JEXEC') or die;
 
-JFormHelper::loadFieldClass('list');
+use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\Factory;
+
+FormHelper::loadFieldClass('list');
 JLoader::register('TkdclubHelperTrainer', JPATH_COMPONENT_ADMINISTRATOR. '/helpers/trainer.php');
 
 class JFormFieldTrainers extends JFormFieldList
@@ -23,6 +26,7 @@ class JFormFieldTrainers extends JFormFieldList
     public function getOptions()
     {   
         $options = array();
+        $app = Factory::getApplication();
 
         // For filter use add trainers from the existing training table
         if ($this->element['isFilter'] == 'true')
@@ -46,8 +50,8 @@ class JFormFieldTrainers extends JFormFieldList
             $trainers = TkdclubHelperTrainer::getTrainer($fromTrainingsTable = false);
     
             if (!$trainers)
-            {
-                JFactory::getApplication()->enqueueMessage(JText::_('COM_TKDCLUB_TRAINING_NO_TRAINERS_DEFINED'), 'warning');
+            {   
+                $app->enqueueMessage(JText::_('COM_TKDCLUB_TRAINING_NO_TRAINERS_DEFINED'), 'warning');
             }
 
         }
@@ -61,7 +65,7 @@ class JFormFieldTrainers extends JFormFieldList
         {
             $options = array_merge(parent::getOptions(), $options); 
         }
-
+        
         return $options;    
     }
         

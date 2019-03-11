@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `#__tkdclub_members` (
   `city` varchar(50) NOT NULL,
   `country` varchar(50) NOT NULL,
   `phone` varchar(50) NOT NULL,
-  `email` varchar(50) NOT NULL,
+  `email` varchar(100) NOT NULL,
   `iban` varchar(50) NOT NULL,
   `notes_personel` text NOT NULL,
   `memberpass` int(10) NOT NULL,
