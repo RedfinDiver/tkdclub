@@ -7,6 +7,9 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Form\Form;
+use Joomla\CMS\Factory;
+
 /**
  * An example custom profile plugin.
  *
@@ -14,6 +17,14 @@ defined('_JEXEC') or die;
  */
 class PlgUserTkdclubmember extends JPlugin
 {
+	/**
+    * Load the language file on instantiation.
+    *
+    * @var    boolean
+    * @since  3.1
+    */
+	protected $autoloadLanguage = true;
+	
 	/**
 	 * Adds additional fields to the user editing form
 	 *
@@ -24,19 +35,66 @@ class PlgUserTkdclubmember extends JPlugin
 	 *
 	 * @since   1.6
 	 */
-	public function onContentPrepareForm($form, $data)
+	public function onContentPrepareForm(Form $form, $data)
 	{
 		// Check we are manipulating a valid form.
 		$name = $form->getName();
 
-		if (!in_array($name, array('com_admin.profile', 'com_users.user', 'com_users.profile', 'com_users.registration')))
+		if (!in_array($name, array('com_users.registration', 'com_users.user')))
 		{
 			return true;
 		}
 
-        $form->setFieldAttribute('email1', 'unique', 'false');
+		// Check whether this is frontend or admin
+		if (Factory::getApplication()->isAdmin())
+		{
+			return true;
+		}
 
-        return true;
-    }
+		// Remove the original fields
+		foreach ($form->getFieldset('default') as $field)
+		{
+			$form->removeField($field->getAttribute('name'));
+		}
 
+		// Add the custom registration fields to the form.
+		Form::addFormPath(__DIR__ . '/member');
+		$form->loadFile('member');
+
+		// Hide the name field, we create the name later
+		// We need this because of some JS validation clientside in Joomla
+		$form->setFieldAttribute('name', 'type', 'hidden');
+    	$form->setValue('name', null, 'placeholder');
+
+		foreach ($form->getFieldset('default') as $field)
+		{
+			$form->removeField($field->getAttribute('name'));
+		}
+
+		return true;
+	}
+
+	function onUserBeforeDataValidation($form, &$user)
+	{
+		if ($form->getName() != 'com_users.registration')
+		{
+			return true;
+		}
+	
+		// setting the name
+		if (!$user['name'] or $user['name'] === 'placeholder')
+		{
+			$user['name'] = $user['firstname'] . ' ' . $user['lastname'];
+		}
+
+		// setting the username when nothing is set in the form
+		if (!$user['username'])
+		{
+			$user['username'] = $user['firstname'] . ' ' . $user['lastname'];
+		}
+
+		// setting the email and the password as we don`t ask for 2 times
+		$user['password2'] = $user['password1'];
+		$user['email2'] = $user['email1'];
+	}
 }
