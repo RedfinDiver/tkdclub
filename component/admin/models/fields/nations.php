@@ -8,7 +8,7 @@
 defined('_JEXEC') or die;
 
 JFormHelper::loadFieldClass('list');
-JLoader::register('TkdClubHelperList', JPATH_COMPONENT_ADMINISTRATOR. '/helpers/list.php');
+JLoader::register('TkdClubHelperList', JPATH_ROOT . '/administrator/components/com_tkdclub/helpers/list.php');
 
 /**
  * Supports the options-markup from parameters
