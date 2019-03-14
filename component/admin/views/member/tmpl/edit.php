@@ -40,6 +40,7 @@ JFactory::getDocument()->addScriptDeclaration("
             <?php echo $this->form->renderField('firstname'); ?>
             <?php echo $this->form->renderField('sex'); ?>
             <?php echo $this->form->renderField('entry'); ?>
+            <?php echo $this->form->renderField('user_id'); ?>
     </div>
 
     <!-- start of tabs -->

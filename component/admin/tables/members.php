@@ -34,6 +34,11 @@ class TkdClubTableMembers extends JTable
 			// Existing item
 			$this->modified_by = $userId;
 		}
+		elseif(!$this->member_id && $this->created_by)
+		{
+			// new item from member registration
+			$this->created = $date;
+		}
 		else
 		{
             $this->created = $date;
