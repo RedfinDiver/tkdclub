@@ -37,7 +37,12 @@
             translateformat="true"
 		    showtime="false"
             filter="server_utc"
-            size="12" />               
+            size="12" />
+
+        <field
+            name="user_id" type="user"
+            label="COM_TKDCLUB_MEMBER_LINKED_USER" description="COM_TKDCLUB_MEMBER_LINKED_USER_DESC" />
+              
 
     </fieldset>
 
