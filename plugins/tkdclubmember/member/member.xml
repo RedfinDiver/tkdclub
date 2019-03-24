@@ -48,6 +48,20 @@
 			required="true"
 		/>
 
+        <field
+			name="password2"
+			type="password"
+			label="COM_USERS_PROFILE_PASSWORD2_LABEL"
+			description="COM_USERS_PROFILE_PASSWORD2_DESC"
+			autocomplete="off"
+			class="validate-password"
+			field="password1"
+			filter="raw"
+			message="COM_USERS_PROFILE_PASSWORD1_MESSAGE"
+			size="30"
+			validate="equals"
+			required="true"
+		/>
 
 		<field
 			name="email1"
@@ -64,90 +78,131 @@
 			autocomplete="email"
 		/>
 
+        <field
+			name="email2"
+			type="email"
+			label="COM_USERS_REGISTER_EMAIL2_LABEL"
+			description="COM_USERS_REGISTER_EMAIL2_DESC"
+			field="email1"
+			filter="string"
+			message="COM_USERS_REGISTER_EMAIL2_MESSAGE"
+			required="true"
+			size="30"
+			validate="equals"
+		/>
+
     </fieldset>
      
     <fieldset 
         
         name="personal_data"
-        label="persönliche Daten"
+        label="PLG_USER_TKDCLUBMEMBER_PERSONAL_DATA"
         addfieldpath="administrator/components/com_tkdclub/models/fields">
 
         <field 
-            name="firstname" type="text"
-            class="inputbox"
+            name="firstname"
+            type="text"
             label="PLG_USER_TKDCLUBMEMBER_FIRSTNAME"
             description="PLG_USER_TKDCLUBMEMBER_FIRSTNAME_DESC"
-            size="30" required="true" filter="safehtml" />
-
+            required="true"
+            filter="string"
+            size="30"
+        />
 
         <field 
-            name="lastname" type="text"
-            class="inputbox"
+            name="lastname"
+            type="text"
             label="PLG_USER_TKDCLUBMEMBER_LASTNAME"
             description="PLG_USER_TKDCLUBMEMBER_LASTNAME_DESC"
-            size="30" required="true" filter="safehtml" />
+            required="true"
+            filter="string"
+            size="30"
+        />
 
          <field 
-            name="sex" type="list"
-            required="true"
+            name="sex"
+            type="list"
             label="PLG_USER_TKDCLUBMEMBER_SEX"
-            description="PLG_USER_TKDCLUBMEMBER_SEX_DESC" >
+            description="PLG_USER_TKDCLUBMEMBER_SEX_DESC"
+            required="true"
+            filter="string">
+
             <option value="">PLG_USER_TKDCLUBMEMBER_SEX_FILTER</option>
             <option value="female">PLG_USER_TKDCLUBMEMBER_SEX_FEMALE</option>
             <option value="male">PLG_USER_TKDCLUBMEMBER_SEX_MALE</option>
+        
         </field>
 
         <field 
-            name="birthdate" type="calendar"
-            class="inputbox" required="true"
+            name="birthdate"
+            type="calendar"
             label="PLG_USER_TKDCLUBMEMBER_BIRTHDATE"
             description="PLG_USER_TKDCLUBMEMBER_BIRTHDATE_DESC"
             translateformat="true"
 		    showtime="false"
+            required="true"
             filter="server_utc"
-            size="12" />
+            size="30"
+        />
 
         <field 
-            name="citizenship" type="nations"
-            class="inputbox" required="true"
+            name="citizenship"
+            type="nations" 
             label="PLG_USER_TKDCLUBMEMBER_CITIZENSHIP"
             description="PLG_USER_TKDCLUBMEMBER_CITIZENSHIP_DESC"
-            filter="safehtml" />
+            required="true"
+            filter="string"
+        />
 
         <field 
-            name="street" type="text"
-            class="inputbox" required="true"
+            name="street"
+            type="text" 
             label="PLG_USER_TKDCLUBMEMBER_STREET"
             description="PLG_USER_TKDCLUBMEMBER_STREET_DESC"
-            size="30" filter="safehtml" />
+            required="true"
+            filter="string" 
+            size="30"
+        />
 
         <field 
-            name="zip" type="text"
-            class="inputbox" required="true"
+            name="zip"
+            type="text"
             label="PLG_USER_TKDCLUBMEMBER_ZIP"
             description="PLG_USER_TKDCLUBMEMBER_ZIP_DESC"
-            size="20" filter="safehtml" />
+            required="true"
+            filter="string"
+            size="30"
+        />
 
         <field 
-            name="city" type="text"
-            class="inputbox" required="true"
+            name="city"
+            type="text" 
             label="PLG_USER_TKDCLUBMEMBER_CITY"
             description="PLG_USER_TKDCLUBMEMBER_CITY_DESC"
-            size="30" filter="safehtml" />
+            required="true"
+            filter="string"
+            size="30"
+        />
 
         <field 
-            name="country" type="text"
-            class="inputbox" required="true"
+            name="country"
+            type="text"
             label="PLG_USER_TKDCLUBMEMBER_COUNTRY"
             description="PLG_USER_TKDCLUBMEMBER_COUNTRY_DESC"
-            size="30" filter="safehtml" />
+            required="true"
+            filter="string" 
+            size="30"
+        />
         
         <field 
-            name="phone" type="text"
-            class="inputbox" required="true"
+            name="phone"
+            type="text"
             label="PLG_USER_TKDCLUBMEMBER_PHONE"
             description="PLG_USER_TKDCLUBMEMBER_PHONE_DESC"
-            size="15" filter="safehtml" />
+            required="true"
+            filter="string"
+            size="30"
+        />
     
     </fieldset>
 

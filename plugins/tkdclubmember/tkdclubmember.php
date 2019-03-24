@@ -8,9 +8,11 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Form\Form;
+use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Table\Table;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\Registry\Format\Json;
 
 Table::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_tkdclub/tables');
 
@@ -30,14 +32,73 @@ class PlgUserTkdclubmember extends JPlugin
 	protected $autoloadLanguage = true;
 
 	/**
-	 * Which fields to update in the memberstable
+	 * Layout from the active menuitem
+	 * 
+	 * @var	 string
+	 */
+	protected $layout = '';
+
+	/**
+	 * All the fields in the members table
 	 * 
 	 * @var   array
 	 */
-	protected $updateFields = array(
-		'street', 'zip', 'city', 'country', 'phone', 'email'
-	);
+	protected $allFields = array();
+
+	/**
+	 * Which fields to update in the memberstable, all others are not allowed
+	 * to update by the user him-/herself
+	 * 
+	 * @var   array
+	 */
+	protected $updateFields = array();
+
+	/**
+	 * Which fields to ignore during update from the user in the memberstable
+	 * 
+	 * @var	  array
+	 */
+	protected $ignoreFields = array();
+
+	/**
+	 * JTable instance of members table
+	 */
+	protected $row = '';
 	
+	/**
+	 * Constructor
+	 *
+	 * @param   object  &$subject  The object to observe
+	 * @param   array   $config    An optional associative array of configuration settings.
+	 *                             Recognized key values include 'name', 'group', 'params', 'language'
+	 *                             (this list is not meant to be comprehensive).
+	 *
+	 * @since   1.5
+	 */
+	public function __construct(&$subject, $config = array())
+	{
+		// add the JTable instance
+		$this->row = Table::getInstance('members', 'TkdclubTable', array());
+		
+		// set the update- and ignore-fields
+		$this->allFields = array_keys($this->row->getFields());
+
+		$this->updateFields = array(
+			'street', 'zip', 'city', 'country', 'phone', 'email',
+			'modified', 'modified_by', 'checked_out', 'checked_out_time'
+		);
+		
+		$this->ignoreFields = array_diff($this->allFields, $this->updateFields);
+		
+		// get the layout from active menu item
+		$query = Factory::getApplication()->getMenu()->getActive()->query;
+		isset($query['layout']) ? $this->layout = $query['layout'] : $this->layout = '';
+
+		FormHelper::addFieldPath(JPATH_ADMINISTRATOR . '/component/com_tkdclub/models/fields');
+
+		parent::__construct($subject, $config);
+	}
+
 	/**
 	 * Adds additional fields to the user editing form
 	 *
@@ -53,7 +114,7 @@ class PlgUserTkdclubmember extends JPlugin
 		// Check we are manipulating a valid form.
 		$name = $form->getName();
 
-		if (!in_array($name, array('com_users.registration', 'com_users.user')))
+		if (!in_array($name, array('com_users.registration', 'com_users.profile')))
 		{
 			return true;
 		}
@@ -70,22 +131,80 @@ class PlgUserTkdclubmember extends JPlugin
 			$form->removeField($field->getAttribute('name'));
 		}
 
-		// Add the custom registration fields to the form.
+		// Add the custom registration fields to the form
 		Form::addFormPath(__DIR__ . '/member');
-		$form->loadFile('member');
 
-		// Hide the name field, we create the name later
-		// We need this because of some JS validation clientside in Joomla
-		$form->setFieldAttribute('name', 'type', 'hidden');
-    	$form->setValue('name', null, 'placeholder');
-
-		foreach ($form->getFieldset('default') as $field)
+		// which form file is to load?
+		if($name == 'com_users.registration')
 		{
-			$form->removeField($field->getAttribute('name'));
+			$form->loadFile('member');
+
+			// We need the name-field because of Joomlas JS validation
+			$form->setFieldAttribute('name', 'type', 'hidden');
+    		$form->setValue('name', null, 'placeholder');
+
+		}
+		elseif($name == 'com_users.profile' && $this->layout == '')
+		{
+			$form->loadFile('profile');
+			$form->removeField('name');
+		}
+		elseif($name == 'com_users.profile' && $this->layout == 'edit')
+		{
+			$form->loadFile('edit');
+			$form->removeField('name');
 		}
 
 		return true;
 	}
+
+	/**
+	 * Runs on content preparation
+	 *
+	 * @param   string  $context  The context for the data
+	 * @param   object  $data     An object containing the data for the form.
+	 *
+	 * @return  boolean
+	 *
+	 * @since   1.6
+	 */
+	public function onContentPrepareData($context, $data)
+	{
+		// Check we are manipulating a valid form.
+		if (!in_array($context, array('com_users.profile', 'com_users.registration')))
+		{
+			return true;
+		}
+
+		if (is_object($data))
+		{
+			$userId = isset($data->id) ? $data->id : 0;
+
+			if ($userId > 0)
+			{
+				// load the data from members table
+				$memberId = $this->getMemberId((int) $userId);
+				$this->row->load($memberId);
+
+				// add the data to the form
+				foreach($this->allFields as $field)
+				{
+					$data->$field = $this->row->$field;
+				}
+			}
+		}			
+		
+		return true;
+	}
+
+	/**
+	 * Runs before data validation
+	 * 
+	 * @param	object	$form	the form object
+	 * @param	array	$user	the data for the user
+	 * 
+	 * @return	boolean
+	 */
 
 	public function onUserBeforeDataValidation($form, &$user)
 	{
@@ -99,18 +218,31 @@ class PlgUserTkdclubmember extends JPlugin
 		{
 			$user['name'] = $user['firstname'] . ' ' . $user['lastname'];
 		}
-
-		// setting the email and the password as we don`t ask for 2 times
-		$user['password2'] = $user['password1'];
-		$user['email2'] = $user['email1'];
 	}
 
+	/**
+	 * Saves member data to the members table
+	 *
+	 * @param   array    $data    entered user data
+	 * @param   boolean  $isNew   true if this is a new user
+	 * @param   boolean  $result  true if saving the user worked
+	 * @param   string   $error   error message
+	 *
+	 * @return  boolean
+	 */
 	public function onUserAfterSave($data, $isNew, $result, $error)
 	{
-		$userId = ArrayHelper::getValue($data, 'id', 0, 'int');
-		$row = Table::getInstance('members', 'TkdclubTable', array());
+		// first check for succeded store
+		if($result === false)
+		{
+			return false;
 
-		if($isNew)
+		}
+
+		// get the Joomla! user-id
+		$userId = ArrayHelper::getValue($data, 'id', 0, 'int');
+
+		if($isNew) // new user
 		{
 			$memberdata = array(
 				
@@ -125,31 +257,28 @@ class PlgUserTkdclubmember extends JPlugin
 				'country'	   => $data['country'],
 				'phone'		   => $data['phone'],
 				'email'		   => $data['email'],
-				'user_id'	   => $userId,
+				'user_id'	   => $userId, // links joomla user with member
 				'member_state' => 'active',
 				'entry'		   => Factory::getDate()->toSql(),
 				'created_by'   => $userId	
 			);
 	
-			$row->save($memberdata);
+			$this->row->save($memberdata);
 		}
 
-		if(!$isNew)
+		if(!$isNew) // user editing data
 		{
-			$memberId = $this->getMemberdata($userId);
-
-			$update = new stdClass();
-			$update->member_id = $memberId;
+			$update = array();
 			
+			// create update array only for allowed fields to update
 			foreach($this->updateFields as $field)
 			{
-				!empty($data[$field]) ? $update->$field = $data[$field] : null;
+				!empty($data[$field]) ? $update[$field] = $data[$field] : null;
 			}
-			$update->modified_by = $userId;
-			$update->modified = Factory::getDate()->toSql();
 
-			$result = Factory::getDbo()->updateObject('#__tkdclub_members', $update, 'member_id');
-
+			// save the data
+			$this->row->member_id = $this->getMemberId($userId);
+			$this->row->save($update, '', $this->ignoreFields);
 		}
 		
 		return true;
@@ -158,7 +287,7 @@ class PlgUserTkdclubmember extends JPlugin
 	/**
 	 * Get the data from the members table by user_id
 	 */
-	public function getMemberdata($user_id)
+	public function getMemberId($user_id)
 	{
 		$db = Factory::getDbo();
 		
