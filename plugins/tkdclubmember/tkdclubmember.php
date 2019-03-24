@@ -12,7 +12,8 @@ use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Table\Table;
 use Joomla\Utilities\ArrayHelper;
-use Joomla\Registry\Format\Json;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 Table::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_tkdclub/tables');
 
@@ -89,12 +90,6 @@ class PlgUserTkdclubmember extends JPlugin
 		);
 		
 		$this->ignoreFields = array_diff($this->allFields, $this->updateFields);
-		
-		// get the layout from active menu item
-		$query = Factory::getApplication()->getMenu()->getActive()->query;
-		isset($query['layout']) ? $this->layout = $query['layout'] : $this->layout = '';
-
-		FormHelper::addFieldPath(JPATH_ADMINISTRATOR . '/component/com_tkdclub/models/fields');
 
 		parent::__construct($subject, $config);
 	}
@@ -134,25 +129,32 @@ class PlgUserTkdclubmember extends JPlugin
 		// Add the custom registration fields to the form
 		Form::addFormPath(__DIR__ . '/member');
 
-		// which form file is to load?
 		if($name == 'com_users.registration')
 		{
-			$form->loadFile('member');
+			$form->loadFile('register');
 
 			// We need the name-field because of Joomlas JS validation
 			$form->setFieldAttribute('name', 'type', 'hidden');
     		$form->setValue('name', null, 'placeholder');
 
 		}
-		elseif($name == 'com_users.profile' && $this->layout == '')
+		elseif($name == 'com_users.profile')
 		{
 			$form->loadFile('profile');
+
+			// we don`t show the name field
 			$form->removeField('name');
-		}
-		elseif($name == 'com_users.profile' && $this->layout == 'edit')
-		{
-			$form->loadFile('edit');
-			$form->removeField('name');
+
+			// when in edit mode, show only fields possible to change
+			$layout = Factory::getApplication()->input->getCmd('layout', '');
+
+			if($layout == 'edit')
+			{
+				foreach($this->ignoreFields as $field)
+				{
+					$form->removeField($field);
+				}
+			}
 		}
 
 		return true;
@@ -189,10 +191,43 @@ class PlgUserTkdclubmember extends JPlugin
 				// add the data to the form
 				foreach($this->allFields as $field)
 				{
-					$data->$field = $this->row->$field;
+					// a null date or no data from database is changed to empty string
+					if($this->row->$field === '0000-00-00' || !$this->row->$field)
+					{
+						$data->$field = '';
+					}
+					else
+					{
+						$data->$field = $this->row->$field;
+					}
 				}
 			}
-		}			
+		}
+		
+		if (!HTMLHelper::isRegistered('users.calendar'))
+		{
+			HTMLHelper::register('users.calendar', array(__CLASS__, 'calendar'));
+		}
+
+		if (!HTMLHelper::isRegistered('users.sex'))
+		{
+			HTMLHelper::register('users.sex', array(__CLASS__, 'sex'));
+		}
+
+		if (!HTMLHelper::isRegistered('users.member_state'))
+		{
+			HTMLHelper::register('users.member_state', array(__CLASS__, 'member_state'));
+		}
+
+		if (!HTMLHelper::isRegistered('users.functions'))
+		{
+			HTMLHelper::register('users.functions', array(__CLASS__, 'functions'));
+		}
+
+		if (!HTMLHelper::isRegistered('users.licenses'))
+		{
+			HTMLHelper::register('users.licenses', array(__CLASS__, 'licenses'));
+		}
 		
 		return true;
 	}
@@ -299,5 +334,150 @@ class PlgUserTkdclubmember extends JPlugin
 		$db->setQuery($query);
 
 		return $db->loadResult();
+	}
+
+	/**
+	 * Returns html markup showing a date picker
+	 *
+	 * @param   string  $value  valid date string
+	 *
+	 * @return  mixed
+	 */
+	public static function calendar($value)
+	{
+		if (empty($value))
+		{
+			return HTMLHelper::_('users.value', $value);
+		}
+		else
+		{
+			return HTMLHelper::_('date', $value, 'DATE_FORMAT_LC4', null);
+		}
+	}
+
+	/**
+	 * Returns html markup for sex field
+	 *
+	 * @param   string  $value  valid date string
+	 *
+	 * @return  mixed
+	 */
+	public static function sex($value)
+	{
+		$sex = array('female' => 'PLG_USER_TKDCLUBMEMBER_SEX_FEMALE',
+					  'male'  => 'PLG_USER_TKDCLUBMEMBER_SEX_MALE');
+		
+		if (empty($value))
+		{
+			return HTMLHelper::_('users.value', $value);
+		}
+		else
+		{
+			return Text::_($sex[$value]);
+		}
+	}
+
+	/**
+	 * Returns html markup for member state field
+	 *
+	 * @param   string  $value  valid date string
+	 *
+	 * @return  mixed
+	 */
+	public static function member_state($value)
+	{
+		$state = array(
+			'active'    => 'PLG_USER_TKDCLUBMEMBER_STATE_ACTIVE',
+			'inactive'	=> 'PLG_USER_TKDCLUBMEMBER_STATE_INACTIVE',
+			'support' 	=> 'PLG_USER_TKDCLUBMEMBER_STATE_SUPPORT'
+		);
+		
+		if (empty($value))
+		{
+			return HTMLHelper::_('users.value', $value);
+		}
+		else
+		{
+			return Text::_($state[$value]);
+		}
+	}
+
+	/**
+	 * Returns html markup for functions field
+	 *
+	 * @param   string  $value  valid date string
+	 *
+	 * @return  mixed
+	 */
+	public static function functions($value)
+	{
+		if (empty($value))
+		{
+			return HTMLHelper::_('users.value', $value);
+		}
+		
+		$string = '';
+		$it = 0;
+		$i = count($value);
+
+		$functions = array(
+			'president'     => Text::_('PLG_USER_TKDCLUBMEMBER_PRESIDENT'),
+			'vpresident'	=> Text::_('PLG_USER_TKDCLUBMEMBER_VPRESIDENT'),
+			'treasurer' 	=> Text::_('PLG_USER_TKDCLUBMEMBER_TRAESURER'),
+			'secratary'		=> Text::_('PLG_USER_TKDCLUBMEMBER_SECRATARY'),
+			'trainer'		=> Text::_('PLG_USER_TKDCLUBMEMBER_TRAINER')
+		);
+
+		foreach($value as $func)
+		{
+			$it += 1;
+			array_key_exists($func, $functions) ? $string .= $functions[$func] : $string .= $func;
+			$it < $i ? $string .= ', ' : null;
+		}
+
+		return $string;
+	}
+
+	/**
+	 * Returns html markup for licenses field
+	 *
+	 * @param   string  $value  valid date string
+	 *
+	 * @return  mixed
+	 */
+	public static function licenses($value)
+	{
+		if (empty($value))
+		{
+			return HTMLHelper::_('users.value', $value);
+		}
+		
+		$string = '';
+		$it = 0;
+		$i = count($value);
+
+		$licenses = array(
+			'trainer_d'     => Text::_('PLG_USER_TKDCLUBMEMBER_TRAINER_D'),
+			'trainer_c'		=> Text::_('PLG_USER_TKDCLUBMEMBER_TRAINER_C'),
+			'trainer_b' 	=> Text::_('PLG_USER_TKDCLUBMEMBER_TRAINER_B'),
+			'trainer_a'		=> Text::_('PLG_USER_TKDCLUBMEMBER_TRAINER_A'),
+
+			'referee_r_ky'	=> Text::_('PLG_USER_TKDCLUBMEMBER_REFEREE_R_KY'),
+			'referee_s_ky'	=> Text::_('PLG_USER_TKDCLUBMEMBER_REFEREE_S_KY'),
+			'referee_i_ky'	=> Text::_('PLG_USER_TKDCLUBMEMBER_REFEREE_I_KY'),
+
+			'referee_r_po'	=> Text::_('PLG_USER_TKDCLUBMEMBER_REFEREE_R_PO'),
+			'referee_s_po'	=> Text::_('PLG_USER_TKDCLUBMEMBER_REFEREE_S_PO'),
+			'referee_i_po'	=> Text::_('PLG_USER_TKDCLUBMEMBER_REFEREE_I_PO')
+		);
+
+		foreach($value as $license)
+		{
+			$it += 1;
+			array_key_exists($license, $licenses) ? $string .= $licenses[$license] : $string .= $license;
+			$it < $i ? $string .= ', ' : null;
+		}
+
+		return $string;
 	}
 }
