@@ -111,6 +111,17 @@
             size="15"
         />
 
+        <field 
+            name="iban"
+            type="text"
+            label="PLG_USER_TKDCLUBMEMBER_IBAN"
+            description="PLG_USER_TKDCLUBMEMBER_IBAN_DESC"
+            required="true"
+            filter="string"
+            class="validate-iban"
+            size="30"
+        />
+
     </fieldset>
 
     <fieldset name="taekwondo_data" label="PLG_USER_TKDCLUBMEMBER_TAEKWONDO_DATA">

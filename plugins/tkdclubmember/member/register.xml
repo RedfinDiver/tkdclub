@@ -101,7 +101,8 @@
         
         name="personal_data"
         label="PLG_USER_TKDCLUBMEMBER_PERSONAL_DATA"
-        addfieldpath="administrator/components/com_tkdclub/models/fields">
+        addfieldpath="administrator/components/com_tkdclub/models/fields"
+    >
 
         <field 
             name="firstname"
@@ -205,6 +206,17 @@
             description="PLG_USER_TKDCLUBMEMBER_PHONE_DESC"
             required="true"
             filter="string"
+            size="30"
+        />
+
+        <field 
+            name="iban"
+            type="text"
+            label="PLG_USER_TKDCLUBMEMBER_IBAN"
+            description="PLG_USER_TKDCLUBMEMBER_IBAN_DESC"
+            required="true"
+            filter="string"
+            class="validate-iban"
             size="30"
         />
 

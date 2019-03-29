@@ -43,7 +43,9 @@ class TkdClubTableMembers extends JTable
 		{
             $this->created = $date;
             $this->created_by = $userId;
-        }
+		}
+		
+		$this->iban = str_replace(' ', '', $this->iban);
         
         return parent::store($updateNulls = false);
     }
