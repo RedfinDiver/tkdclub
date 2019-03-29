@@ -22,6 +22,22 @@ JFactory::getDocument()->addScriptDeclaration("
 	};
 ");
 
+// bring in IBAN validation and masking
+JFactory::getDocument()->addScript( JUri::base() . 'components/com_tkdclub/assets/js/lib/iban.mini.js');
+JFactory::getDocument()->addScript( JUri::base() . 'components/com_tkdclub/assets/js/lib/imask.mini.js');
+
+JFactory::getDocument()->addScriptDeclaration(
+    "document.addEventListener('DOMContentLoaded', function(){
+        document.formvalidator.setHandler('iban', function(value) {
+            return IBAN.isValid(value);
+        });
+
+        var patternmask = new IMask(document.querySelector('.validate-iban'), {
+            mask: 'aa00 0000 0000 0000 0000 0000 0000',
+            placeholderchar: '_'
+        });
+    });"
+);
 ?>
 
 <form action="<?php echo JRoute::_('index.php?option=com_tkdclub&member_id=' . (int) $this->item->member_id); ?>"

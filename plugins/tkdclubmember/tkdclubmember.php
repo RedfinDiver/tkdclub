@@ -8,12 +8,12 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Form\Form;
-use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Table\Table;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Uri\Uri;
 
 Table::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_tkdclub/tables');
 
@@ -85,7 +85,7 @@ class PlgUserTkdclubmember extends JPlugin
 		$this->allFields = array_keys($this->row->getFields());
 
 		$this->updateFields = array(
-			'street', 'zip', 'city', 'country', 'phone', 'email',
+			'street', 'zip', 'city', 'country', 'phone', 'email', 'iban',
 			'modified', 'modified_by', 'checked_out', 'checked_out_time'
 		);
 		
@@ -135,7 +135,7 @@ class PlgUserTkdclubmember extends JPlugin
 
 			// We need the name-field because of Joomlas JS validation
 			$form->setFieldAttribute('name', 'type', 'hidden');
-    		$form->setValue('name', null, 'placeholder');
+			$form->setValue('name', null, 'placeholder');
 
 		}
 		elseif($name == 'com_users.profile')
@@ -156,6 +156,29 @@ class PlgUserTkdclubmember extends JPlugin
 				}
 			}
 		}
+
+		// bring in IBAN formating, masking and validation
+		Factory::getDocument()->addStyleDeclaration('.validate-iban {text-transform:uppercase;}');
+		Factory::getDocument()->addScript( Uri::base() . 'administrator/components/com_tkdclub/assets/js/lib/iban.mini.js');
+		Factory::getDocument()->addScript( Uri::base() . 'administrator/components/com_tkdclub/assets/js/lib/imask.mini.js');
+
+		Factory::getDocument()->addScriptDeclaration(
+			"document.addEventListener('DOMContentLoaded', function() {
+				var formvalidator = document.formvalidator;
+				if(formvalidator) {
+					document.formvalidator.setHandler('iban', function(value) {
+						return IBAN.isValid(value);
+					});
+				};
+				var ibanInput = document.querySelector('.validate-iban');
+				if(ibanInput) {
+					var patternmask = new IMask(ibanInput, {
+						mask: 'aa00 0000 0000 0000 0000 0000 0000',
+						placeholderchar: '_'
+					});
+				};
+			});"
+		);
 
 		return true;
 	}
