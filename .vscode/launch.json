@@ -5,7 +5,10 @@
             "name": "Listen for XDebug",
             "type": "php",
             "request": "launch",
-            "port": 9000
+            "port": 9000,
+            "pathMappings": {
+                "/shared/httpd/entwicklung/tkdclub": "/home/markus/Projekte/websites/entwicklung/tkdclub"
+            }
         },
         {
             "name": "Launch currently open script",
