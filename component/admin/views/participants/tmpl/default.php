@@ -132,7 +132,6 @@ $columns = 10;
         </tbody>
     </table>
     <?php endif; ?>
-    </div>
 
     <?php echo $this->pagination->getListFooter(); ?>
 
