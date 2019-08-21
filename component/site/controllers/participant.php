@@ -111,8 +111,8 @@ class TkdClubControllerParticipant extends JControllerForm
         $uncleaned_data = $input->getArray(array(
             'jform' => array(
                 'group' => 'int',
-                'lastname' => 'word',
-                'firstname' => 'word',
+                'lastname' => 'string',
+                'firstname' => 'string',
                 'age' => 'string',
                 'age_dist' => 'string',
                 'clubname' => 'string',
