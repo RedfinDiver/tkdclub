@@ -12,6 +12,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * View class for a edit screen for one member.
@@ -47,7 +48,7 @@ class TkdClubViewMember extends JViewLegacy
      */
     protected function addToolbar()
     {
-        $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', JText::_('COM_TKDCLUB'));
+        $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
 
         if ($this->item->member_id == NULL) {
             ToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_MEMBER_NEW_TITLE'), 'tkdclub');

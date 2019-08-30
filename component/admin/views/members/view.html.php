@@ -13,7 +13,7 @@ use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Text;
+use Joomla\CMS\Language\Text;
 
 /**
  * View class for a list of members.
@@ -58,7 +58,7 @@ class TkdClubViewMembers extends JViewLegacy
      */
     protected function addToolbar()
     {
-        $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', JText::_('COM_TKDCLUB'));
+        $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
 
         ToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_MEMBER_ADMIN_VIEW'), 'tkdclub');
 
