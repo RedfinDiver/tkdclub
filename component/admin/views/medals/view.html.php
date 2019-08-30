@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package    Taekwondo Club
  * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
@@ -7,8 +8,15 @@
 
 defined('_JEXEC') or die;
 
-JLoader::register('TkdclubHelperActions', JPATH_COMPONENT_ADMINISTRATOR. '/helpers/actions.php');
-JLoader::register('TkdclubHelperMembers', JPATH_COMPONENT_ADMINISTRATOR. '/helpers/members.php');
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Toolbar\Toolbar;
+use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\Helper\ContentHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Redfindiver\Tkdclub\Administrator\Helper;
+
+//JLoader::register('TkdclubHelperMembers', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/members.php');
 
 /**
  * view-class for list view medals
@@ -32,67 +40,70 @@ class TkdClubViewMedals extends JViewLegacy
         $this->activeFilters = $this->get('ActiveFilters');
         $this->total = $this->get('Total');
         $this->allrows = $this->get('Allrows');
-        $this->memberlist = TkdClubHelperMembers::getMemberlist();
+        $this->memberlist = Helper::getMemberlist();
 
-        $this->togglestats = JFactory::getSession()->get('togglestats_medals', null, 'tkdclub');
-        
-        if ($this->togglestats)
-        {
+        $this->togglestats = Factory::getSession()->get('togglestats_medals', null, 'tkdclub');
+
+        if ($this->togglestats) {
             $this->medaldata = $this->get('Medaldata');
         }
-        
+
         $this->addToolbar();
         $this->sidebar = JHtmlSidebar::render();
         parent::display($tpl);
     }
-    
+
     protected function addToolbar()
     {
-        $clubname = JComponentHelper::getParams('com_tkdclub')->get('club_name', JText::_('COM_TKDCLUB'));
+        $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
 
-        JToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_MEDAL_ADMIN_VIEW'), 'tkdclub');
-        
-        $canDo = TkdClubHelperActions::getActions();
-        
-        if ($canDo->get('core.create'))
-        {JToolBarHelper::addNew('medal.add', 'JTOOLBAR_NEW');}
-        
-        if ($canDo->get('core.edit'))
-        {JToolBarHelper::editList('medal.edit', 'JTOOLBAR_EDIT');}
+        ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_MEDAL_ADMIN_VIEW'), 'tkdclub');
 
-        if ($canDo->get('core.edit.state'))
-        {
-            JToolBarHelper::publish('medals.publish', 'JTOOLBAR_PUBLISH', true);
-            JToolBarHelper::unpublish('medals.unpublish', 'JTOOLBAR_UNPUBLISH', true);
+        $canDo = ContentHelper::getActions('com_tkdclub');
+
+        if ($canDo->get('core.create')) {
+            ToolBarHelper::addNew('medal.add', 'JTOOLBAR_NEW');
         }
-        
-        if ($canDo->get('core.delete'))
-        {JToolBarHelper::deleteList('COM_TKDCLUB_MEDAL_DELETE_QUESTION', 'medals.delete','JTOOLBAR_DELETE');}
 
-        if ($this->togglestats)
-        {JToolBarHelper::custom('medals.togglestats', 'eye-close', 'eye-close', 'COM_TKDCLUB_BUTTON_STATS', false);}
-        else {JToolBarHelper::custom('medals.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);}
-        
-        $toolbar = JToolbar::getInstance('toolbar');
-		$toolbar->addButtonPath(JPATH_COMPONENT.'/buttons');
-		$toolbar->appendButton('RawFormat',  'download', 'COM_TKDCLUB_BUTTON_EXPORT', 'export.medals');
-        
-        if ($canDo->get('core.admin'))
-        {   JToolBarHelper::divider();
-            JToolBarHelper::preferences('com_tkdclub');}
-            
+        if ($canDo->get('core.edit')) {
+            ToolBarHelper::editList('medal.edit', 'JTOOLBAR_EDIT');
+        }
+
+        if ($canDo->get('core.edit.state')) {
+            ToolBarHelper::publish('medals.publish', 'JTOOLBAR_PUBLISH', true);
+            ToolBarHelper::unpublish('medals.unpublish', 'JTOOLBAR_UNPUBLISH', true);
+        }
+
+        if ($canDo->get('core.delete')) {
+            ToolBarHelper::deleteList('COM_TKDCLUB_MEDAL_DELETE_QUESTION', 'medals.delete', 'JTOOLBAR_DELETE');
+        }
+
+        if ($this->togglestats) {
+            ToolBarHelper::custom('medals.togglestats', 'eye-close', 'eye-close', 'COM_TKDCLUB_BUTTON_STATS', false);
+        } else {
+            ToolBarHelper::custom('medals.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);
+        }
+
+        $toolbar = Toolbar::getInstance('toolbar');
+        $toolbar->addButtonPath(JPATH_COMPONENT . '/buttons');
+        $toolbar->appendButton('RawFormat',  'download', 'COM_TKDCLUB_BUTTON_EXPORT', 'export.medals');
+
+        if ($canDo->get('core.admin')) {
+            ToolBarHelper::divider();
+            ToolBarHelper::preferences('com_tkdclub');
+        }
+
         JHtmlSidebar::setAction('index.php?option=com_tkdclub&view=medals');
-        JToolBarHelper::divider();
-        
+        ToolBarHelper::divider();
+
         $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/erfolge.html';
-        JToolbarHelper::help( '', false, $help_url );
-        
+        ToolbarHelper::help('', false, $help_url);
     }
 
     protected function getSortFields()
-	{
-		return array(
-			'date' => JText::_('COM_TKDCLUB_MEDAL_DATEWIN'),
-		);
-	}
+    {
+        return array(
+            'date' => Text::_('COM_TKDCLUB_MEDAL_DATEWIN'),
+        );
+    }
 }
