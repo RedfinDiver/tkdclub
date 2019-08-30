@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package    Taekwondo Club
  * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
@@ -7,7 +8,11 @@
 
 defined('_JEXEC') or die;
 
-JLoader::register('TkdclubHelperActions', JPATH_COMPONENT_ADMINISTRATOR. '/helpers/actions.php');
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\Helper\ContentHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * view-class of edit-view 'training'
@@ -16,43 +21,41 @@ class TkdClubViewTraining extends JViewLegacy
 {
     protected $item;
     protected $form;
-    
+
     public function display($tpl = null)
     {
-        JFactory::getApplication()->input->set('hidemainmenu', true);
-        
+        Factory::getApplication()->input->set('hidemainmenu', true);
+
         $this->form = $this->get('Form');
         $this->item = $this->get('Item');
-        
+
         $this->addToolbar();
         parent::display($tpl);
     }
-    
+
     protected function addToolbar()
     {
-        $clubname = JComponentHelper::getParams('com_tkdclub')->get('club_name', JText::_('COM_TKDCLUB'));
-        
-        if ($this->item->training_id == NULL)
-        {
-            JToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_TRAINING_NEW'), 'tkdclub');
+        $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
+
+        if ($this->item->training_id == NULL) {
+            ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_TRAINING_NEW'), 'tkdclub');
+        } else {
+            ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_TRAINING_CHANGE'), 'tkdclub');
         }
-        else 
-        {
-            JToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_TRAINING_CHANGE'), 'tkdclub');
+
+        $canDo = ContentHelper::getActions('com_tkdclub');
+
+        ToolBarHelper::apply('training.apply', 'JTOOLBAR_APPLY');
+
+        ToolBarHelper::save('training.save', 'JTOOLBAR_SAVE');
+
+        if ($canDo->get('core.create')) {
+            ToolBarHelper::save2new('training.save2new');
         }
-      
-        $canDo = TkdClubHelperActions::getActions();
-        
-        JToolBarHelper::apply('training.apply', 'JTOOLBAR_APPLY');
-        
-        JToolBarHelper::save('training.save', 'JTOOLBAR_SAVE');
-        
-        if ($canDo->get('core.create'))
-        {JToolBarHelper::save2new('training.save2new');}
-        
-        JToolBarHelper::cancel('training.cancel', 'JTOOLBAR_CANCEL');
+
+        ToolBarHelper::cancel('training.cancel', 'JTOOLBAR_CANCEL');
 
         $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/mitglieder.html';
-        JToolbarHelper::help( '', false, $help_url );
+        ToolbarHelper::help('', false, $help_url);
     }
 }
