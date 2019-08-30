@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package    Taekwondo Club
  * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
@@ -7,7 +8,12 @@
 
 defined('_JEXEC') or die;
 
-JLoader::register('TkdclubHelperActions', JPATH_COMPONENT_ADMINISTRATOR. '/helpers/actions.php');
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Toolbar\Toolbar;
+use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\Helper\ContentHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Text;
 
 /**
  * View class for a list of members.
@@ -20,7 +26,7 @@ class TkdClubViewMembers extends JViewLegacy
     protected $pagination;
     protected $state;
     protected $total;
-    
+
     //allrows in the database
     protected $allrows;
 
@@ -36,10 +42,9 @@ class TkdClubViewMembers extends JViewLegacy
         $this->activeFilters = $this->get('ActiveFilters');
         $this->total = $this->get('Total');
         $this->allrows = $this->get('Allrows');
-        $this->togglestats = JFactory::getSession()->get('togglestats_members', null, 'tkdclub');
+        $this->togglestats = Factory::getSession()->get('togglestats_members', null, 'tkdclub');
 
-        if ($this->togglestats)
-        {
+        if ($this->togglestats) {
             $this->memberdata = $this->get('Memberdata');
         }
 
@@ -47,60 +52,57 @@ class TkdClubViewMembers extends JViewLegacy
         $this->sidebar = JHtmlSidebar::render();
         parent::display($tpl);
     }
-        
-	/**
-	 * Add the page title and toolbar.
-	 */        
+
+    /**
+     * Add the page title and toolbar.
+     */
     protected function addToolbar()
     {
-        $clubname = JComponentHelper::getParams('com_tkdclub')->get('club_name', JText::_('COM_TKDCLUB'));
-        
-        JToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_MEMBER_ADMIN_VIEW'), 'tkdclub');
+        $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', JText::_('COM_TKDCLUB'));
 
-        $canDo = TkdClubHelperActions::getActions();
+        ToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_MEMBER_ADMIN_VIEW'), 'tkdclub');
 
-        if ($canDo->get('core.create'))
-        {
-            JToolBarHelper::addNew('member.add', 'JTOOLBAR_NEW');
+        $canDo = ContentHelper::getActions('com_tkdclub');
+
+        if ($canDo->get('core.create')) {
+            ToolBarHelper::addNew('member.add', 'JTOOLBAR_NEW');
         }
 
-        if ($canDo->get('core.edit'))
-        {
-            JToolBarHelper::editList('member.edit', 'JTOOLBAR_EDIT');   
+        if ($canDo->get('core.edit')) {
+            ToolBarHelper::editList('member.edit', 'JTOOLBAR_EDIT');
         }
 
-        if ($canDo->get('core.delete'))
-        {
-            JToolBarHelper::deleteList('COM_TKDCLUB_MEMBER_DELETE_QUESTION', 'members.delete','JTOOLBAR_DELETE');
+        if ($canDo->get('core.delete')) {
+            ToolBarHelper::deleteList('COM_TKDCLUB_MEMBER_DELETE_QUESTION', 'members.delete', 'JTOOLBAR_DELETE');
         }
 
-        $toolbar = JToolbar::getInstance('toolbar');
-        $toolbar->addButtonPath(JPATH_COMPONENT.'/buttons');
+        $toolbar = Toolbar::getInstance('toolbar');
+        $toolbar->addButtonPath(JPATH_COMPONENT . '/buttons');
 
-        if ($this->togglestats)
-        {JToolBarHelper::custom('members.togglestats', 'eye-close', 'eye-close', 'COM_TKDCLUB_BUTTON_STATS', false);}
-        else {JToolBarHelper::custom('members.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);}
+        if ($this->togglestats) {
+            ToolBarHelper::custom('members.togglestats', 'eye-close', 'eye-close', 'COM_TKDCLUB_BUTTON_STATS', false);
+        } else {
+            ToolBarHelper::custom('members.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);
+        }
 
         $toolbar->appendButton('RawFormat',  'download', 'COM_TKDCLUB_BUTTON_EXPORT', 'export.members');
 
-        if ($canDo->get('core.admin'))
-        {
-            JToolBarHelper::divider();
-            JToolBarHelper::preferences('com_tkdclub');
+        if ($canDo->get('core.admin')) {
+            ToolBarHelper::divider();
+            ToolBarHelper::preferences('com_tkdclub');
         }
 
         JHtmlSidebar::setAction('index.php?option=com_tkdclub&view=members');
-        JToolBarHelper::divider();
+        ToolBarHelper::divider();
 
         $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/mitglieder.html';
-        JToolbarHelper::help( '', false, $help_url );
+        ToolbarHelper::help('', false, $help_url);
     }
 
     protected function getSortFields()
-	{
-		return array(
-			'member_id' => JText::_('COM_TKDCLUB_MEMBER_ID'),
-		);
-	}
-    
+    {
+        return array(
+            'member_id' => Text::_('COM_TKDCLUB_MEMBER_ID'),
+        );
+    }
 }

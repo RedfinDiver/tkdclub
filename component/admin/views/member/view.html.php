@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package    Taekwondo Club
  * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
@@ -7,7 +8,10 @@
 
 defined('_JEXEC') or die;
 
-JLoader::register('TkdclubHelperActions', JPATH_COMPONENT_ADMINISTRATOR. '/helpers/actions.php');
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\Helper\ContentHelper;
+use Joomla\CMS\Factory;
 
 /**
  * View class for a edit screen for one member.
@@ -22,11 +26,11 @@ class TkdClubViewMember extends JViewLegacy
     protected $medals;
 
     /**
-	 * Display the view
-	 */
+     * Display the view
+     */
     public function display($tpl = null)
     {
-        JFactory::getApplication()->input->set('hidemainmenu', true);
+        Factory::getApplication()->input->set('hidemainmenu', true);
 
         $this->form = $this->get('Form');
         $this->item = $this->get('Item');
@@ -38,37 +42,32 @@ class TkdClubViewMember extends JViewLegacy
         parent::display($tpl);
     }
     /**
-	 * Add the page title and toolbar.
-	 *
-	 */
+     * Add the page title and toolbar.
+     *
+     */
     protected function addToolbar()
     {
-        $clubname = JComponentHelper::getParams('com_tkdclub')->get('club_name', JText::_('COM_TKDCLUB'));
+        $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', JText::_('COM_TKDCLUB'));
 
-        if ($this->item->member_id == NULL)
-        {
-            JToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_MEMBER_NEW_TITLE'), 'tkdclub');
-            
-        }
-        else
-        {
-            JToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_MEMBER_EDIT_TITLE'), 'tkdclub');
+        if ($this->item->member_id == NULL) {
+            ToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_MEMBER_NEW_TITLE'), 'tkdclub');
+        } else {
+            ToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_MEMBER_EDIT_TITLE'), 'tkdclub');
         }
 
-        $canDo = TkdClubHelperActions::getActions();
+        $canDo = ContentHelper::getActions('com_tkdclub');
 
-        JToolBarHelper::apply('member.apply', 'JTOOLBAR_APPLY');
+        ToolBarHelper::apply('member.apply', 'JTOOLBAR_APPLY');
 
-        JToolBarHelper::save('member.save', 'JTOOLBAR_SAVE');
+        ToolBarHelper::save('member.save', 'JTOOLBAR_SAVE');
 
-        if ($canDo->get('core.create'))
-        {
-            JToolBarHelper::save2new('member.save2new');
+        if ($canDo->get('core.create')) {
+            ToolBarHelper::save2new('member.save2new');
         }
 
-        JToolBarHelper::cancel('member.cancel', 'JTOOLBAR_CANCEL');
+        ToolBarHelper::cancel('member.cancel', 'JTOOLBAR_CANCEL');
 
         $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/mitglieder.html';
-        JToolbarHelper::help( '', false, $help_url );
+        ToolbarHelper::help('', false, $help_url);
     }
 }
