@@ -1,15 +1,18 @@
 <?php
+
 /**
  * @package    Taekwondo Club
  * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+namespace Redfindiver\Tkdclub\Administrator;
+
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 
-class TkdclubHelper
+class Helper
 {
     /**
      * Get all the email adresses for the given user group
@@ -20,29 +23,27 @@ class TkdclubHelper
      * 
      */
     public static function getEmailFromUserGroups($groups)
-    {   
+    {
         // If no group is given return
-        if (empty($groups))
-        {
+        if (empty($groups)) {
             return false;
         }
 
         $emails = array();
 
-        foreach ($groups as $group)
-        {
+        foreach ($groups as $group) {
             // Get all email adesses for the users
             $db    = Factory::getDbo();
             $query = $db->getQuery(true)
-                    ->select($db->qn('a.email'))
-                    ->from($db->qn('#__users', 'a'))
-                    ->join('LEFT', $db->qn('#__user_usergroup_map', 'b') . ' ON a.id = b.user_id')
-		            ->where($db->qn('group_id') . ' = ' . (int) $group);
-        
+                ->select($db->qn('a.email'))
+                ->from($db->qn('#__users', 'a'))
+                ->join('LEFT', $db->qn('#__user_usergroup_map', 'b') . ' ON a.id = b.user_id')
+                ->where($db->qn('group_id') . ' = ' . (int) $group);
+
             $emails = array_merge($emails, $db->setQuery($query)->loadColumn());
         }
 
-	    return array_unique($emails);
+        return array_unique($emails);
     }
 
     /**
@@ -57,11 +58,10 @@ class TkdclubHelper
      *                  STRING   names, diveded with "/" for 2 or more members
      */
     public static function getMembersNames($ids, $memberlist)
-    {   
+    {
         $type = gettype($ids);
 
-        switch ($type)
-        {
+        switch ($type) {
             case 'integer':
                 return $memberlist[$ids];
                 break;
@@ -73,19 +73,20 @@ class TkdclubHelper
             case 'array':
                 break;
         }
-        
+
         $i = count($ids);
         $names = '';
         $it = 0;
 
-        foreach ($ids as $id)
-        {
+        foreach ($ids as $id) {
             $it += 1;
             $names .= $memberlist[$id];
-            if ($it < $i) {$names .= ' / ';}
+            if ($it < $i) {
+                $names .= ' / ';
+            }
         }
 
-        return $names; 
+        return $names;
     }
 
     /**
@@ -99,20 +100,44 @@ class TkdclubHelper
         $db = Factory::getDbo();
         $query = $db->getQuery(true);
         $fields = array('member_id', 'firstname', 'lastname');
-        
+
         $query->select($db->quoteName($fields))
-              ->from($db->quoteName('#__tkdclub_members'));
+            ->from($db->quoteName('#__tkdclub_members'));
         $db->setQuery($query);
         $items = $db->loadObjectList();
 
         // create arrays, $key = member_id, $value = 'firstname lastname'
         $memberlist = array();
 
-        foreach ($items as $i => $item)
-        {
-            $memberlist[$item->member_id] = $item->firstname.' '.$item->lastname;
+        foreach ($items as $i => $item) {
+            $memberlist[$item->member_id] = $item->firstname . ' ' . $item->lastname;
         }
 
         return $memberlist;
+    }
+
+    /**
+     * Checks the payment-state of a training
+     * 
+     * @param int $trainer_paid 0 for not paid, 1 for paid
+     */
+    public static function getpaystate($trainer_paid, $assist1, $assist2, $assist3, $assist1_paid, $assist2_paid, $assist3_paid)
+    {
+        // No trainer or assistent paid -> training is not paid at all
+        if (!$trainer_paid && !$assist1_paid && !$assist2_paid && !$assist3_paid) {
+            return 0;
+        } else {
+            !$assist1 || $assist1 && $assist1_paid ? $check1 = true : $check1 = false;
+            !$assist2 || $assist2 && $assist2_paid ? $check2 = true : $check1 = false;
+            !$assist3 || $assist3 && $assist3_paid ? $check3 = true : $check3 = false;
+
+            // All checks good --> training is entirly paid
+            if ($check1 && $check2 && $check3 && $trainer_paid) {
+                return 1;
+            } else // One or more checks not OK --> so return partly paid
+            {
+                return 2;
+            }
+        }
     }
 }
