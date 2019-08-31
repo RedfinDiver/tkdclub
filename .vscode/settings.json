@@ -1,17 +1,10 @@
 // Platzieren Sie Ihre Einstellungen in dieser Datei, um Standard- und Benutzereinstellungen zu überschreiben.
-{ 
-    
-    "files.exclude":
-    {
-
-    },
-
+{
+    "files.exclude": {},
     "php.suggest.basic": false,
-
     "livereload.exts": "html,htm,css,js,png,gif,jpg,php,xml,ini",
     "todo-tree.flat": true,
     "todo-tree.expanded": false,
     "restructuredtext.confPath": "${workspaceFolder}/docs",
-    "editor.rulers": [79]
-
+    "editor.rulers": []
 }
