@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package    Taekwondo Club
  * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
@@ -19,15 +20,14 @@ class TkdClubModelSubscriber extends JModelAdmin
     }
 
     public function getForm($data = array(), $loadData = true)
-    {   
+    {
         $options = array('control' => 'jform', 'load_data' => $loadData);
         $form = $this->loadForm('tkdclub', 'subscriber',  $options);
 
-        if (empty($form))
-        {
+        if (empty($form)) {
             return false;
         }
-        
+
         return $form;
     }
 
@@ -36,16 +36,17 @@ class TkdClubModelSubscriber extends JModelAdmin
         $app =  JFactory::getApplication();
         $data = $app->getUserState('com_tkdclub.edit.subscriber.data', array());
 
-        if(empty($data))
-        {
+        if (empty($data)) {
             $data = $this->getItem();
         }
-        
-        $text = array("1" => 'COM_TKDCLUB_SUBSCRIBER_ORIGIN_MANUAL',
-                      "0" => 'COM_TKDCLUB_SUBSCRIBER_ORIGIN_FORM');
-        
-        $data->origin = JText::_($text[$data->origin]);
-        
+
+        $text = array(
+            "1" => 'COM_TKDCLUB_SUBSCRIBER_ORIGIN_MANUAL',
+            "2" => 'COM_TKDCLUB_SUBSCRIBER_ORIGIN_FORM'
+        );
+
+        $data->origin = $data->origin ? JText::_($text[$data->origin]) : null;
+
         return $data;
     }
 }
