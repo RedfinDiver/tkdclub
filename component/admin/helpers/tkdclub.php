@@ -340,7 +340,7 @@ class Helper
 
             $db->setQuery($query);
 
-            return TkdclubHelperTrainer::prepareArray($db->loadObjectList());
+            return $this::prepareArray($db->loadObjectList());
         }
     }
 
