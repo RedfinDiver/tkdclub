@@ -8,12 +8,13 @@
 
 defined('_JEXEC') or die;
 
-use Redfindiver\Tkdclub\Administrator\Helper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Layout\LayoutHelper;
+
+JLoader::register('Helper', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/tkdclub.php');
 
 HTMLHelper::stylesheet('administrator/components/com_tkdclub/assets/css/tkdclub.css');
 HTMLHelper::_('bootstrap.tooltip');
