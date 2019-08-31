@@ -52,96 +52,96 @@ $columns   = 10;
                     <?php echo Text::_('COM_TKDCLUB_ENTRIES'); ?>
                 </div>
                 <!-- TODO statistics for events -->
-            <?php endif; ?>
-            <table class="table table-striped table-condensed" id="eventList">
-                <thead>
-                    <tr>
-                        <th width="1%" class="center">
-                            <?php echo HTMLHelper::_('grid.checkall'); ?>
-                        </th>
-                        <th width="1%">
-                            <?php echo Text::_('JSTATUS'); ?>
-                        </th>
-                        <th class="nowrap">
-                            <?php echo HTMLHelper::_('searchtools.sort', 'COM_TKDCLUB_DATE', 'date', $listDirn, $listOrder); ?>
-                        </th>
-                        <th>
-                            <?php echo Text::_('COM_TKDCLUB_EVENT_DEADLINE') ?>
-                        </th>
-                        <th>
-                            <?php echo Text::_('COM_TKDCLUB_EVENT_TITLE') ?>
-                        </th>
-                        <th>
-                            <?php echo Text::_('COM_TKDCLUB_EVENT_MINIMUM_PARTICIPANTS') ?>
-                        </th>
-                        <th>
-                            <?php echo Text::_('COM_TKDCLUB_EVENT_MAXIMUM_PARTICIPANTS') ?>
-                        </th>
-                        <th>
-                            <?php echo Text::_('COM_TKDCLUB_EVENT_SUBSCRIBED_PARTICIPANTS') ?>
-                        </th>
-                        <th>
-                            <?php echo Text::_('COM_TKDCLUB_NOTES') ?>
-                        </th>
-                        <th>
-                            <?php echo Text::_('COM_TKDCLUB_EVENT_ID') ?>
-                        </th>
-                    </tr>
-                </thead>
-                <tfoot>
-                    <tr>
-                        <td colspan="<?php echo $columns; ?>"></td>
-                    </tr>
-                </tfoot>
-                <tbody>
-                    <?php foreach ($this->items as $i => $item) :
-                        $canEdit    = $user->authorise('core.edit',       'com_tkdclub.event.' . $item->event_id);
-                        $canCheckin = $user->authorise('core.manage',     'com_checkin') || $item->checked_out == $userId || $item->checked_out == 0;
-                        $canEditOwn = $user->authorise('core.edit.own',   'com_tkdclub.event.' . $item->event_id) && $item->created_by == $userId;
-                        $canChange  = $user->authorise('core.edit.state', 'com_tkdclub.event.' . $item->event_id) && $canCheckin;
-                        ?>
-                        <tr class="row<?php echo $i % 2; ?>">
-                            <td class="center">
-                                <?php echo HTMLHelper::_('grid.id', $i, $item->event_id); ?>
-                            </td>
-                            <td>
-                                <?php echo HTMLHelper::_('jgrid.published', $item->published, $i, 'events.', TRUE); ?>
-                            </td>
-                            <td class="title">
-                                <?php if ($item->checked_out) : ?>
-                                    <?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'events.', $canCheckin); ?>
-                                <?php endif; ?>
-                                <?php
-                                    $mylink = Route::_("index.php?option=com_tkdclub&task=event.edit&event_id=" . $item->event_id);
-                                    echo '<a href="' . $mylink . '">' . HTMLHelper::_('date', $item->date, Text::_('DATE_FORMAT_LC4')) . '</a>';
-                                    ?>
-                            </td>
-                            <td>
-                                <?php echo HTMLHelper::_('date', $item->date, Text::_('DATE_FORMAT_LC4')); ?>
-                            </td>
-                            <td>
-                                <?php echo $this->escape($item->title) ?>
-                            </td>
-                            <td>
-                                <?php echo $this->escape($item->min) ?>
-                            </td>
-                            <td>
-                                <?php echo $this->escape($item->max) ?>
-                            </td>
-                            <td>
-                                <?php echo Helper::getEventparts($item->event_id); ?>
-                            </td>
-                            <td>
-                                <?php echo $this->escape($item->notes) ?>
-                            </td>
-                            <td>
-                                <?php echo $this->escape($item->event_id) ?>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
 
+                <table class="table table-striped table-condensed" id="eventList">
+                    <thead>
+                        <tr>
+                            <th width="1%" class="center">
+                                <?php echo HTMLHelper::_('grid.checkall'); ?>
+                            </th>
+                            <th width="1%">
+                                <?php echo Text::_('JSTATUS'); ?>
+                            </th>
+                            <th class="nowrap">
+                                <?php echo HTMLHelper::_('searchtools.sort', 'COM_TKDCLUB_DATE', 'date', $listDirn, $listOrder); ?>
+                            </th>
+                            <th>
+                                <?php echo Text::_('COM_TKDCLUB_EVENT_DEADLINE') ?>
+                            </th>
+                            <th>
+                                <?php echo Text::_('COM_TKDCLUB_EVENT_TITLE') ?>
+                            </th>
+                            <th>
+                                <?php echo Text::_('COM_TKDCLUB_EVENT_MINIMUM_PARTICIPANTS') ?>
+                            </th>
+                            <th>
+                                <?php echo Text::_('COM_TKDCLUB_EVENT_MAXIMUM_PARTICIPANTS') ?>
+                            </th>
+                            <th>
+                                <?php echo Text::_('COM_TKDCLUB_EVENT_SUBSCRIBED_PARTICIPANTS') ?>
+                            </th>
+                            <th>
+                                <?php echo Text::_('COM_TKDCLUB_NOTES') ?>
+                            </th>
+                            <th>
+                                <?php echo Text::_('COM_TKDCLUB_EVENT_ID') ?>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <td colspan="<?php echo $columns; ?>"></td>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <?php foreach ($this->items as $i => $item) :
+                                $canEdit    = $user->authorise('core.edit',       'com_tkdclub.event.' . $item->event_id);
+                                $canCheckin = $user->authorise('core.manage',     'com_checkin') || $item->checked_out == $userId || $item->checked_out == 0;
+                                $canEditOwn = $user->authorise('core.edit.own',   'com_tkdclub.event.' . $item->event_id) && $item->created_by == $userId;
+                                $canChange  = $user->authorise('core.edit.state', 'com_tkdclub.event.' . $item->event_id) && $canCheckin;
+                                ?>
+                            <tr class="row<?php echo $i % 2; ?>">
+                                <td class="center">
+                                    <?php echo HTMLHelper::_('grid.id', $i, $item->event_id); ?>
+                                </td>
+                                <td>
+                                    <?php echo HTMLHelper::_('jgrid.published', $item->published, $i, 'events.', TRUE); ?>
+                                </td>
+                                <td class="title">
+                                    <?php if ($item->checked_out) : ?>
+                                        <?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'events.', $canCheckin); ?>
+                                    <?php endif; ?>
+                                    <?php
+                                            $mylink = Route::_("index.php?option=com_tkdclub&task=event.edit&event_id=" . $item->event_id);
+                                            echo '<a href="' . $mylink . '">' . HTMLHelper::_('date', $item->date, Text::_('DATE_FORMAT_LC4')) . '</a>';
+                                            ?>
+                                </td>
+                                <td>
+                                    <?php echo HTMLHelper::_('date', $item->date, Text::_('DATE_FORMAT_LC4')); ?>
+                                </td>
+                                <td>
+                                    <?php echo $this->escape($item->title) ?>
+                                </td>
+                                <td>
+                                    <?php echo $this->escape($item->min) ?>
+                                </td>
+                                <td>
+                                    <?php echo $this->escape($item->max) ?>
+                                </td>
+                                <td>
+                                    <?php echo Helper::getEventparts($item->event_id); ?>
+                                </td>
+                                <td>
+                                    <?php echo $this->escape($item->notes) ?>
+                                </td>
+                                <td>
+                                    <?php echo $this->escape($item->event_id) ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php endif; ?>
             <?php echo $this->pagination->getListFooter(); ?>
 
             <input type="hidden" name="task" value="" />
