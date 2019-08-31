@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package    Taekwondo Club
  * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
@@ -7,7 +8,12 @@
 
 defined('_JEXEC') or die;
 
-JLoader::register('TkdclubHelperActions', JPATH_COMPONENT_ADMINISTRATOR. '/helpers/actions.php');
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Toolbar\Toolbar;
+use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\Helper\ContentHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Form\FormHelper;
 
 class TkdClubViewSubscribers extends JViewLegacy
 {
@@ -25,67 +31,69 @@ class TkdClubViewSubscribers extends JViewLegacy
         $this->activeFilters = $this->get('ActiveFilters');
         $this->total = $this->get('Total');
         $this->allrows = $this->get('Allrows');
-        
+
         /* if ($this->togglestats)
         {
             $this->trainerdata = $this->get('Trainerdata');
             $this->trainingsdata = $this->get('Trainingsdata');
         } */
-        
+
         parent::display($tpl);
     }
 
     /**
-	 * Add the page title and toolbar.
-	 */   
+     * Add the page title and toolbar.
+     */
     protected function addToolbar()
     {
         // Adding the fieldpath for the filters
-        JFormHelper::addFieldPath(JPATH_COMPONENT . '/models/fields');
+        FormHelper::addFieldPath(JPATH_COMPONENT . '/models/fields');
 
-        $clubname = JComponentHelper::getParams('com_tkdclub')->get('club_name', JText::_('COM_TKDCLUB'));
-        
-        JToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_SUBSCRIBER_ADMIN_VIEW'), 'tkdclub');
-        
-        $canDo = TkdClubHelperActions::getActions();
+        $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
 
-        JToolBarHelper::divider();
-        
-        if ($canDo->get('core.create'))
-        {JToolBarHelper::addNew('subscriber.add', 'JTOOLBAR_NEW');}
-        
-        if ($canDo->get('core.edit'))
-        {JToolBarHelper::editList('subscriber.edit', 'JTOOLBAR_EDIT');}
-        
-        if ($canDo->get('core.delete'))
-        {JToolBarHelper::deleteList('COM_TKDCLUB_SUBSCRIBER_DELETE_QUESTION', 'subscribers.delete','JTOOLBAR_DELETE');}
+        ToolbarHelper::title($clubname . Text::_('COM_TKDCLUB_SUBSCRIBER_ADMIN_VIEW'), 'tkdclub');
 
-        $toolbar = JToolbar::getInstance('toolbar');
-        $toolbar->addButtonPath(JPATH_COMPONENT.'/buttons');
+        $canDo = ContentHelper::getActions('com_tkdclub');
+
+        ToolbarHelper::divider();
+
+        if ($canDo->get('core.create')) {
+            ToolbarHelper::addNew('subscriber.add', 'JTOOLBAR_NEW');
+        }
+
+        if ($canDo->get('core.edit')) {
+            ToolbarHelper::editList('subscriber.edit', 'JTOOLBAR_EDIT');
+        }
+
+        if ($canDo->get('core.delete')) {
+            ToolbarHelper::deleteList('COM_TKDCLUB_SUBSCRIBER_DELETE_QUESTION', 'subscribers.delete', 'JTOOLBAR_DELETE');
+        }
+
+        $toolbar = Toolbar::getInstance('toolbar');
+        $toolbar->addButtonPath(JPATH_COMPONENT . '/buttons');
 
         /* if ($this->togglestats)
-        {JToolBarHelper::custom('subscribers.togglestats', 'eye-close', 'eye-close', 'COM_TKDCLUB_BUTTON_STATS', false);}
-        else {JToolBarHelper::custom('subscribers.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);} */
-        
+        {ToolbarHelper::custom('subscribers.togglestats', 'eye-close', 'eye-close', 'COM_TKDCLUB_BUTTON_STATS', false);}
+        else {ToolbarHelper::custom('subscribers.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);} */
+
         $toolbar->appendButton('RawFormat',  'download', 'COM_TKDCLUB_BUTTON_EXPORT', 'export.subscribers');
-        
-        if ($canDo->get('core.admin'))
-        {   JToolBarHelper::divider();
-            JToolBarHelper::preferences('com_tkdclub');}
-            
+
+        if ($canDo->get('core.admin')) {
+            ToolbarHelper::divider();
+            ToolbarHelper::preferences('com_tkdclub');
+        }
+
         JHtmlSidebar::setAction('index.php?option=com_tkdclub&view=subscribers');
-        JToolBarHelper::divider();
+        ToolbarHelper::divider();
 
         $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/newsletterabos.html';
-        JToolbarHelper::help( '', false, $help_url );
-                        
+        ToolbarHelper::help('', false, $help_url);
     }
 
     protected function getSortFields()
-	{
-		return array(
-			'date' => JText::_('COM_TKDCLUB_SUBSCRIBER_SUBSCRIBED'),
-		);
-	}
-
+    {
+        return array(
+            'date' => Text::_('COM_TKDCLUB_SUBSCRIBER_SUBSCRIBED'),
+        );
+    }
 }
