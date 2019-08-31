@@ -3,17 +3,17 @@
 // Set flag that this is a parent file.
 const _JEXEC = 1;
 
+use Redfindiver\Tkdclub\Administrator\Helper;
+
 error_reporting(E_ALL | E_NOTICE);
 ini_set('display_errors', 1);
 
 // Load system defines
-if (file_exists(dirname(__DIR__) . '/defines.php'))
-{
+if (file_exists(dirname(__DIR__) . '/defines.php')) {
 	require_once dirname(__DIR__) . '/defines.php';
 }
 
-if (!defined('_JDEFINES'))
-{
+if (!defined('_JDEFINES')) {
 	define('JPATH_BASE', dirname(__DIR__));
 	require_once JPATH_BASE . '/includes/defines.php';
 }
@@ -31,8 +31,8 @@ $admin_lang = JComponentHelper::getParams('com_languages')->get('administrator')
 
 // Try the cli_tkdclub file in the current language (without allowing the loading of the file in the default language)
 $lang->load('cli_tkdclub', JPATH_COMPONENT_ADMINISTRATOR, $admin_lang, false, false)
-// Fallback to the cli_tkdclub file in the default language
-|| $lang->load('cli_tkdclub', JPATH_COMPONENT_ADMINISTRATOR, null, true);
+	// Fallback to the cli_tkdclub file in the default language
+	|| $lang->load('cli_tkdclub', JPATH_COMPONENT_ADMINISTRATOR, null, true);
 
 class TkdclubBirthdayreminder extends JApplicationCli
 {
@@ -51,18 +51,16 @@ class TkdclubBirthdayreminder extends JApplicationCli
 		$birthdays = $this->getBirthdays($states);
 
 		// no birthdays, abort
-		if (!$birthdays)
-		{
+		if (!$birthdays) {
 			$this->out(JText::_('CLI_TKDCLUB_BDREMINDER_NO_BIRTHDAYS'));
 			return;
 		}
 
 		// check for usergroups to receive the reminder email
 		$groups = $params->get('reminder_to');
-		
+
 		// no usergroups set, abort
-		if (empty($groups))
-		{
+		if (empty($groups)) {
 			$this->out(JText::_('CLI_TKDCLUB_BDREMINDER_NO_RECIPIENTS'));
 			return;
 		}
@@ -78,8 +76,7 @@ class TkdclubBirthdayreminder extends JApplicationCli
 		$email_subject = $fromName . ': ' . JText::_('CLI_TKDCLUB_BDREMINDER_EMAIL_SUBJECT');
 		$email_body    = JText::_('CLI_TKDCLUB_BDREMINDER_EMAIL_BODY');
 
-		JLoader::register('TkdclubHelperAge', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/agecalc.php');
-		$helper = new TkdclubHelperAge;
+		JLoader::register('Helper', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/tkdclub.php');
 
 		$state_texts = array(
 			'active' => 'CLI_TKDCLUB_BDREMINDER_STATE_ACTIVE',
@@ -87,19 +84,17 @@ class TkdclubBirthdayreminder extends JApplicationCli
 			'support' => 'CLI_TKDCLUB_BDREMINDER_STATE_SUPPORT'
 		);
 
-		foreach ($birthdays as $member)
-		{	
+		foreach ($birthdays as $member) {
 			$email_body .= $nl . $nl;
 			$email_body .= $member->firstname . ' ' . $member->lastname . $nl;
-			$email_body .= JText::_('CLI_TKDCLUB_BDREMINDER_AGE') . $helper::getAge($member->birthdate) . $nl;
+			$email_body .= JText::_('CLI_TKDCLUB_BDREMINDER_AGE') . Helper::getAge($member->birthdate) . $nl;
 			$email_body .= JText::_('CLI_TKDCLUB_BDREMINDER_EMAIL') . $member->email . $nl;
 			$email_body .= JText::_('CLI_TKDCLUB_BDREMINDER_PHONE') . $member->phone . $nl;
 			$email_body .= JText::_('CLI_TKDCLUB_BDREMINDER_STATE') . JText::_($state_texts[$member->member_state]) . $nl;
 		}
-		
+
 		// Send the emails
-		foreach ($recipients as $recipient)
-		{
+		foreach ($recipients as $recipient) {
 			$mailer = JFactory::getMailer();
 			$mailer->setSender(array($mailFrom, $fromName));
 			$mailer->addRecipient($recipient);
@@ -122,19 +117,19 @@ class TkdclubBirthdayreminder extends JApplicationCli
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('*')->from($db->qn('#__tkdclub_members'));
-		$query->where('DAY(' . $db->qn('birthdate') . ')' . ' = ' 
-							 . 'DAY(CURDATE())');
+		$query->where('DAY(' . $db->qn('birthdate') . ')' . ' = '
+			. 'DAY(CURDATE())');
 
-		$query->where('MONTH(' . $db->qn('birthdate') . ')' . ' = ' 
-		. 'MONTH(CURDATE())');
+		$query->where('MONTH(' . $db->qn('birthdate') . ')' . ' = '
+			. 'MONTH(CURDATE())');
 
 		// now building the where with or clause
 		$memberstates = "'" . implode("','", $states) . "'";
-		$query->where($db->qn('member_state') . ' IN ('.$memberstates.')');
-		
+		$query->where($db->qn('member_state') . ' IN (' . $memberstates . ')');
+
 		$db->setQuery($query);
 
-		return $db->loadObjectList() ? $db->loadObjectList() : false ;
+		return $db->loadObjectList() ? $db->loadObjectList() : false;
 	}
 
 	/**
