@@ -21,6 +21,18 @@ HtmlHelper::_('behavior.multiselect');
 HtmlHelper::_('formbehavior.chosen', 'select');
 HtmlHelper::_('script', 'administrator/components/com_tkdclub/assets/js/rawsubmitbutton.js');
 
+// bring in IBAN formating
+Factory::getDocument()->addScript(JUri::base() . 'components/com_tkdclub/assets/js/lib/iban.mini.js');
+
+Factory::getDocument()->addScriptDeclaration(
+    "document.addEventListener('DOMContentLoaded', function(){
+        ibans = document.querySelectorAll('.iban');
+        ibans.forEach(function(iban) {
+            iban.innerText = IBAN.printFormat(iban.innerText);
+        }); 
+    });"
+);
+
 /**
  * Get some variables
  */
@@ -189,7 +201,7 @@ $columns   = 10;
                                             }
                                             ?>
                                 </td>
-                                <td><?php echo $item->iban; ?>
+                                <td class="iban"><?php echo $this->escape($item->iban); ?>
                                 </td>
 
                             </tr>

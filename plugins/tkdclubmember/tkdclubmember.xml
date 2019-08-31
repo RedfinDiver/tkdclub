@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<extension version="3.9.0" method="upgrade" type="plugin" group="user">
+	<name>plg_user_tkdclubmember</name>
+	<author>Markus Moser</author>
+	<authorEmail>Redfindiver@gmail.com</authorEmail>
+	<copyright>Copyright (c)2019 Markus Moser</copyright>
+	<license>GNU General Public License version 3, or later</license>
+	<creationDate>2019-03-10</creationDate>
+	<version>1.0.0</version>
+	<description>PLG_USER_TKDCLUBMEMBER_XML_DESCRIPTION</description>
+	<scriptfile>install.php</scriptfile>
+	<files>
+		<folder>language</folder> 
+		<filename plugin="tkdclubmember">tkdclubmember.php</filename>
+		<filename>index.html</filename>
+	</files>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field
+					name="register-require_address1"
+					type="list"
+					label="PLG_USER_PROFILE_FIELD_ADDRESS1_LABEL"
+					description="PLG_USER_PROFILE_FIELD_ADDRESS1_DESC"
+					default="1"
+					filter="integer"
+				>
+					<option value="2">JOPTION_REQUIRED</option>
+					<option value="1">JOPTION_OPTIONAL</option>
+					<option value="0">JDISABLED</option>
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+</extension>

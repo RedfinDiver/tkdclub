@@ -37,7 +37,12 @@
             translateformat="true"
 		    showtime="false"
             filter="server_utc"
-            size="12" />               
+            size="12" />
+
+        <field
+            name="user_id" type="user"
+            label="COM_TKDCLUB_MEMBER_LINKED_USER" description="COM_TKDCLUB_MEMBER_LINKED_USER_DESC" />
+              
 
     </fieldset>
 
@@ -104,7 +109,7 @@
 
         <field 
             name="iban" type="text"
-            class="inputbox"
+            class="validate-iban"
             label="COM_TKDCLUB_MEMBER_IBAN"
             description="COM_TKDCLUB_MEMBER_IBAN_DESC"
             size="50" filter="safehtml" />

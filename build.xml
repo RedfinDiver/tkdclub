@@ -201,6 +201,48 @@
         <property name="version_plg_tkdclubgrade" value="${_version}" />
     </target>
 
+    <target name="zipPlgTkdclubmember">
+        <!-- copy all files to build directory-->
+        <copy todir="${build}">
+            <fileset dir="${plgdir}/${name}member" />
+        </copy>
+        <!-- copy a index.html file in every directory-->
+        <for param="dir"> 
+            <dirset dir="${build}" /> 
+            <sequential> 
+                <copy todir="@{dir}" overwrite="true" verbose="true"> 
+                    <fileset dir="${basedir}" includes="index.html" /> 
+                </copy> 
+            </sequential> 
+        </for>
+        <!-- get the version number from the manifest -->
+        <xmlproperty file="${build}/${name}member.xml" keepRoot="false"
+                     semanticAttributes="true"/>
+        <propertyregex property="_version"
+               input="${version}"
+               regexp="\."
+               replace=""
+               global="true" />
+        <!-- zip all files -->
+        <property name="zipfile" value="${build}/plg_user_${name}member_v${_version}.zip"/>
+        <zip destfile="${zipfile}">
+            <zipfileset dir="${build}" />
+        </zip>
+        <!-- move zip to zips or package folder and delete build-directory -->
+        <if>
+            <available file="${packdir}" type="dir" />
+            <then>
+                <move file="${zipfile}" todir="${packdir}"/>
+            </then>
+            <else>
+                <move file="${zipfile}" todir="${zips}"/>
+            </else>
+        </if>
+        <delete dir="${build}"/>
+        <!-- define version number for antcallback to use it in package creation -->
+        <property name="version_plg_tkdclubmember" value="${_version}" />
+    </target>
+
     <target name="zipCli">
         <!-- copy all files to build directory-->
         <copy todir="${build}">

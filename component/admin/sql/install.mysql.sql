@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS `#__tkdclub_members` (
   `member_state` varchar(10) NOT NULL,
   `notes_clubdata` text NOT NULL,
   `attachments` TINYINT(1) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` INT(10) unsigned NOT NULL DEFAULT '0',
   `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
