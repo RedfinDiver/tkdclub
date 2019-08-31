@@ -14,9 +14,8 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Redfindiver\Tkdclub\Administrator\Helper;
 
-//JLoader::register('TkdclubHelperMembers', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/members.php');
+JLoader::register('Helper', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/tkdclub.php');
 
 /**
  * view-class for list view medals
