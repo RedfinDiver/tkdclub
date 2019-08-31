@@ -340,7 +340,7 @@ class Helper
 
             $db->setQuery($query);
 
-            return $this::prepareArray($db->loadObjectList());
+            return Helper::prepareArray($db->loadObjectList());
         }
     }
 
