@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package    Taekwondo Club
  * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
@@ -7,7 +8,13 @@
 
 defined('_JEXEC') or die;
 
-JLoader::register('TkdClubHelperActions', JPATH_COMPONENT_ADMINISTRATOR. '/helpers/actions.php');
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\Helper\ContentHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+
+JLoader::register('TkdClubHelperActions', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/actions.php');
 
 /**
  * view-class for edit-view: 'event'
@@ -16,47 +23,43 @@ class TkdClubViewEvent extends JViewLegacy
 {
     protected $item;
     protected $form;
-    
+
     public function display($tpl = null)
-            
+
     {
-        JFactory::getApplication()->input->set('hidemainmenu', true);
-        
+        Factory::getApplication()->input->set('hidemainmenu', true);
+
         $this->form = $this->get('Form');
         $this->item = $this->get('Item');
-        
+
         $this->addToolbar();
         parent::display($tpl);
     }
-    
-    protected function addToolbar()
-            
-    {
-        $clubname = JComponentHelper::getParams('com_tkdclub')->get('club_name', JText::_('COM_TKDCLUB'));
 
-        if ($this->item->event_id == NULL)
-        {
-            JToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_EVENT_NEW_TITLE'), 'tkdclub');
+    protected function addToolbar()
+
+    {
+        $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
+
+        if ($this->item->event_id == NULL) {
+            ToolbarHelper::title($clubname . Text::_('COM_TKDCLUB_EVENT_NEW_TITLE'), 'tkdclub');
+        } else {
+            ToolbarHelper::title($clubname . Text::_('COM_TKDCLUB_EVENT_EDIT_TITLE'), 'tkdclub');
         }
-        else
-        {
-            JToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_EVENT_EDIT_TITLE'), 'tkdclub');
+
+        $canDo = ContentHelper::getActions('com_tkdclub');
+
+        ToolbarHelper::apply('event.apply', 'JTOOLBAR_APPLY');
+
+        ToolbarHelper::save('event.save', 'JTOOLBAR_SAVE');
+
+        if ($canDo->get('core.create')) {
+            ToolbarHelper::save2new('event.save2new');
         }
-      
-        $canDo = TkdClubHelperActions::getActions();
- 
-        JToolBarHelper::apply('event.apply', 'JTOOLBAR_APPLY');
-        
-        JToolBarHelper::save('event.save', 'JTOOLBAR_SAVE');
-        
-        if ($canDo->get('core.create'))
-        {
-            JToolBarHelper::save2new('event.save2new');
-        }
-        
-        JToolBarHelper::cancel('event.cancel', 'JTOOLBAR_CANCEL');
+
+        ToolbarHelper::cancel('event.cancel', 'JTOOLBAR_CANCEL');
 
         $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/veranstaltungen.html';
-        JToolbarHelper::help( '', false, $help_url );
+        ToolbarHelper::help('', false, $help_url);
     }
 }
