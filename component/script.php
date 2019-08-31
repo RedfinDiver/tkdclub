@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package    Taekwondo Club
  * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
@@ -16,9 +17,8 @@ class com_tkdclubInstallerScript
     public function update($parent)
     {
         $this->deleteUnexisting();
-       
-        if ($rows = $this->updateMenu())
-        {
+
+        if ($rows = $this->updateMenu()) {
             echo '<p>' . Text::sprintf('Aktualisierte Menülinks: ') . $rows . '</p>';
         };
     }
@@ -134,6 +134,15 @@ class com_tkdclubInstallerScript
             '/administrator/components/com_tkdclub/tables/eventparts.php',
             '/administrator/components/com_tkdclub/tables/examparts.php',
             '/administrator/components/com_tkdclub/tables/exams.php',
+            '/administrator/components/com_tkdclub/helpers/actions.php',
+            '/administrator/components/com_tkdclub/helpers/agecalc.php',
+            '/administrator/components/com_tkdclub/helpers/geteventparts.php',
+            '/administrator/components/com_tkdclub/helpers/getpaystate.php',
+            '/administrator/components/com_tkdclub/helpers/list.php',
+            '/administrator/components/com_tkdclub/helpers/members.php',
+            '/administrator/components/com_tkdclub/helpers/sidebar.php',
+            '/administrator/components/com_tkdclub/helpers/trainer.php',
+
         );
 
         $folders = array(
@@ -154,22 +163,17 @@ class com_tkdclubInstallerScript
             '/administrator/components/com_tkdclub/views/stats',
         );
 
-        foreach ($files as $file)
-		{
-			if (File::exists(JPATH_ROOT . $file) && !File::delete(JPATH_ROOT . $file))
-			{
-				echo Text::sprintf('FILES_JOOMLA_ERROR_FILE_FOLDER', $file) . '<br />';
-			}
-		}
+        foreach ($files as $file) {
+            if (File::exists(JPATH_ROOT . $file) && !File::delete(JPATH_ROOT . $file)) {
+                echo Text::sprintf('FILES_JOOMLA_ERROR_FILE_FOLDER', $file) . '<br />';
+            }
+        }
 
-		foreach ($folders as $folder)
-		{
-			if (Folder::exists(JPATH_ROOT . $folder) && !Folder::delete(JPATH_ROOT . $folder))
-			{
-				echo Text::sprintf('FILES_JOOMLA_ERROR_FILE_FOLDER', $folder) . '<br />';
-			}
-		}
-
+        foreach ($folders as $folder) {
+            if (Folder::exists(JPATH_ROOT . $folder) && !Folder::delete(JPATH_ROOT . $folder)) {
+                echo Text::sprintf('FILES_JOOMLA_ERROR_FILE_FOLDER', $folder) . '<br />';
+            }
+        }
     }
 
     /**
@@ -192,5 +196,4 @@ class com_tkdclubInstallerScript
 
         return (int) $db->getAffectedRows();
     }
-
 }
