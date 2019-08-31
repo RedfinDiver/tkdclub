@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package    Taekwondo Club
  * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
@@ -8,7 +9,7 @@
 defined('_JEXEC') or die;
 
 JFormHelper::loadFieldClass('list');
-JLoader::register('TkdClubHelperList', JPATH_COMPONENT_ADMINISTRATOR. '/helpers/list.php');
+JLoader::register('Helper', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/list.php');
 
 /**
  * Supports the options-markup from component parameter
@@ -19,17 +20,16 @@ class JFormFieldTraintypes extends JFormFieldList
      * The form field type.
      */
     protected $type = 'traintypes';
-        
+
     /**
      * Method to get the field input markup for field 'traintypes'
-     */    
+     */
     public function getOptions()
-    {   
+    {
         $options = array();
 
         // check if field is used as filter, then get options from the database entries
-        if ($this->element['isFilter'] == 'true')
-        {
+        if ($this->element['isFilter'] == 'true') {
             $db = JFactory::getDbo();
             $query = $db->getQuery(true);
             $query->select('DISTINCT(type)');
@@ -37,28 +37,20 @@ class JFormFieldTraintypes extends JFormFieldList
             $query->order('type ASC');
             $db->setQuery($query);
 
-            if ($types = $db->loadColumn())
-            {
-                foreach($types as $type)
-                {
+            if ($types = $db->loadColumn()) {
+                foreach ($types as $type) {
                     // Just rendering existing types, not empty strings
                     $type != '' ? $options[] = JHtml::_('select.option', $type, $type) : null;
                 }
             }
-            
-        }
-        else // not used as filter field, so get the training types from the parameter
+        } else // not used as filter field, so get the training types from the parameter
         {
-            $types = TkdClubHelperList::getList(JComponentHelper::getParams('com_tkdclub')->get('training_types'));
+            $types = Helper::getList(JComponentHelper::getParams('com_tkdclub')->get('training_types'));
 
-            if (!$types)
-            {
+            if (!$types) {
                 JFactory::getApplication()->enqueueMessage(JText::_('COM_TKDCLUB_TRAINING_NO_TRAINTYPES_DEFINED'), 'warning');
-            }
-            else
-            {
-                foreach($types as $type)
-                {
+            } else {
+                foreach ($types as $type) {
                     $options[] = JHtml::_('select.option', $type, $type);
                 }
             }
@@ -66,10 +58,9 @@ class JFormFieldTraintypes extends JFormFieldList
 
         if ($this->form) // checking if we are in a form, then merge additional xml data
         {
-            $options = array_merge(parent::getOptions(), $options); 
+            $options = array_merge(parent::getOptions(), $options);
         }
 
         return $options;
     }
-    
 }

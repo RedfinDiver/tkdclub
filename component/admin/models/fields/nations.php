@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package    Taekwondo Club
  * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
@@ -8,7 +9,7 @@
 defined('_JEXEC') or die;
 
 JFormHelper::loadFieldClass('list');
-JLoader::register('TkdClubHelperList', JPATH_COMPONENT_ADMINISTRATOR. '/helpers/list.php');
+JLoader::register('Helper', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/tkdclub.php');
 
 /**
  * Supports the options-markup from parameters
@@ -16,7 +17,7 @@ JLoader::register('TkdClubHelperList', JPATH_COMPONENT_ADMINISTRATOR. '/helpers/
  * @since  1.0
  */
 class JFormFieldNations extends JFormFieldList
-{       
+{
     /**
      * The form field type.
      *
@@ -31,20 +32,18 @@ class JFormFieldNations extends JFormFieldList
      * @return  string	The field input markup.
      *
      * @since   1.0
-     */        
+     */
     public function getOptions()
     {
-        $nations = TkdClubHelperList::getList(JComponentHelper::getParams('com_tkdclub')
-                    ->get('nations', ',AUT,GER,SUI,ITA,CRO,BIH,SRB'));
+        $nations = Helper::getList(JComponentHelper::getParams('com_tkdclub')
+            ->get('nations', ',AUT,GER,SUI,ITA,CRO,BIH,SRB'));
 
-        foreach($nations as $nation)
-        {
+        foreach ($nations as $nation) {
             $options[] = JHtml::_('select.option', $nation, $nation);
         }
 
         $options = array_merge(parent::getOptions(), $options);
-        
-        return $options;  
+
+        return $options;
     }
-        
 }
