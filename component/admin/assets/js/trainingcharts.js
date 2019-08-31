@@ -5,32 +5,31 @@
  */
 
 // define a bunch of colors for different training types
-var colorsTypes = ["#ff6666", "#4d4dff", "#00cc00", "#ffff4d", "#cc00cc"]
+Tkdclub.colorsTypes = ["#ff6666", "#4d4dff", "#00cc00", "#ffff4d", "#cc00cc"];
 
 /**
- * Prepares and drawes the TRAININGS DISTRIBUTION chart
+ * TRAININGS DISTRIBUTION chart
  */
-google.charts.setOnLoadCallback(drawTrainingsDistChart);
-function drawTrainingsDistChart () {
+Tkdclub.drawTrainingsDistChart = function () {
     var preparedData = [];
     var types = Tkdclub.trainingsdata.sums.types;
     for (var type in types) {
 
-            preparedData.push([type, types[type]]);
+        preparedData.push([type, types[type]]);
 
     }
     var data = new google.visualization.arrayToDataTable(preparedData, true);
 
     var options = {
-        title : Joomla.JText._('COM_TKDCLUB_STATISTIC_TRAINTYPES_DIST'),
-        titleTextStyle : { fontSize : 10, color : '#333' },  
-        "colors": colorsTypes,
-        slices : { 2 : {offset: 0.1} },
-        chartArea :  {
-            left : 30,
-            top : 50
+        title: Joomla.JText._('COM_TKDCLUB_STATISTIC_TRAINTYPES_DIST'),
+        titleTextStyle: { fontSize: 10, color: '#333' },
+        "colors": Tkdclub.colorsTypes,
+        slices: { 2: { offset: 0.1 } },
+        chartArea: {
+            left: 30,
+            top: 50
         },
-        legend : {position : 'right', alignment : 'center'}
+        legend: { position: 'right', alignment: 'center' }
     };
 
     var chart = new google.visualization.PieChart(document.getElementById("chart_trainingstypes"));
@@ -38,23 +37,22 @@ function drawTrainingsDistChart () {
 }
 
 /**
- * Prepares and draws the TRAININGNUMBERS chart
+ * TRAININGNUMBERS chart
  */
-google.charts.setOnLoadCallback(drawTrainingYearsChart);
-function drawTrainingYearsChart() {
+Tkdclub.drawTrainingYearsChart = function () {
 
     var data = new google.visualization.arrayToDataTable(Tkdclub.trainingsdata.TrainingYearsChart, false);
 
     var options = {
-        isStacked:true,
+        isStacked: true,
         title: Joomla.JText._('COM_TKDCLUB_STATISTIC_TRAININGS_PER_YEAR'),
-        titleTextStyle : { fontSize : 10, color : '#333' },  
-        "colors": colorsTypes,
-        chartArea :  {
-            left : 40,
-            top : 50
+        titleTextStyle: { fontSize: 10, color: '#333' },
+        "colors": Tkdclub.colorsTypes,
+        chartArea: {
+            left: 40,
+            top: 50
         },
-        legend : {position : 'right', alignment : 'center'}
+        legend: { position: 'right', alignment: 'center' }
     };
 
     var chart = new google.visualization.ColumnChart(document.getElementById("chart_trainingyears"));
@@ -62,23 +60,22 @@ function drawTrainingYearsChart() {
 }
 
 /**
- * Prepares and draws the PARTICIPANTS PER TRAINING/YEAR chart
+ * PARTICIPANTS PER TRAINING/YEAR chart
  */
-google.charts.setOnLoadCallback(drawParticipantsChart);
-function drawParticipantsChart() {
+Tkdclub.drawParticipantsChart = function () {
 
     var data = new google.visualization.arrayToDataTable(Tkdclub.trainingsdata.ParticipantsYearChart, false);
 
     var options = {
-        isStacked:false,
+        isStacked: false,
         title: Joomla.JText._('COM_TKDCLUB_STATISTIC_AVERAGE_PARTICIPANTS'),
-        titleTextStyle : { fontSize : 10, color : '#333' },  
-        "colors": colorsTypes,
-        chartArea :  {
-            left : 40,
-            top : 50
+        titleTextStyle: { fontSize: 10, color: '#333' },
+        "colors": Tkdclub.colorsTypes,
+        chartArea: {
+            left: 40,
+            top: 50
         },
-        legend : {position : 'right', alignment : 'center'}
+        legend: { position: 'right', alignment: 'center' }
     };
 
     var chart = new google.visualization.LineChart(document.getElementById("chart_participants"));
@@ -88,19 +85,19 @@ function drawParticipantsChart() {
 /**
  * Write Trainingsdata to DOM
  */
-function writeTrainings() {
+Tkdclub.writeTrainings = function () {
     var unpaid = 0;
     var unpaid_sum = 0;
     var currency = Tkdclub.trainingsdata.currency;
     var trainerdata = Tkdclub.trainerdata;
     var l = trainerdata.length;
-    for (var i=0; i<l; i++) {
+    for (var i = 0; i < l; i++) {
         unpaid += trainerdata[i]['sums']['unpaid'];
         unpaid_sum += trainerdata[i]['sums']['unpaid_sum'];
     }
 
     document.getElementById('tkdclub-unpaidtrainings').textContent += ' ' + unpaid;
-    document.getElementById('tkdclub-unpaidsum').textContent += ' ' + Math.round(unpaid_sum  * 100) / 100 + ' ' + currency;
+    document.getElementById('tkdclub-unpaidsum').textContent += ' ' + Math.round(unpaid_sum * 100) / 100 + ' ' + currency;
     document.getElementById('tkdclub-alltrainings').textContent += ' ' + Tkdclub.trainingsdata.sums['trainings'];
     document.getElementById('tkdclub-averageparts').textContent += ' ' + Tkdclub.trainingsdata.sums['average'];
 }
@@ -108,25 +105,22 @@ function writeTrainings() {
 /**
  * Writes the trainings table to DOM
  */
-function writeTrainingsTable () {
-
-
-    var rows = Tkdclub.trainerdata.length;
-    createTable('tkdclub-trainingstable', 'trainings-table');
-    addDataToTable('tkdclub-trainingstable', Tkdclub.trainerdata);
+Tkdclub.writeTrainerTable = function () {
+    Tkdclub.createTable('tkdclub-trainingstable', 'trainings-table');
+    Tkdclub.addDataToTable('tkdclub-trainingstable', Tkdclub.trainerdata);
 }
 
 /**
  * Creates a table
  */
-function createTable(id, where) {
-    var table = '<table id="'+ id +'" class="table table-striped"><thead>';
+Tkdclub.createTable = function (id, where) {
+    var table = '<table id="' + id + '" class="table table-striped"><thead>';
     table += '<tr><th></th>';
     table += '<th>' + Joomla.JText._('COM_TKDCLUB_SIDEBAR_TRAININGS') + '</th>';
 
     var types = Object.keys(Tkdclub.trainingsdata.sums.types);
 
-    for (type of types){
+    for (type of types) {
         table += '<th>' + type + '</th>';
     }
 
@@ -141,15 +135,15 @@ function createTable(id, where) {
 /**
  * Adds Data to table
  */
-function addDataToTable(id, data) {
-    
+Tkdclub.addDataToTable = function (id, data) {
+
     // first get training types
     var types = Object.keys(Tkdclub.trainingsdata.sums.types);
 
     var rows = '';
 
     // Iterate through the data
-    for (var trainer of data){
+    for (var trainer of data) {
 
         var trainer_types = trainer.sums.types;
         if (trainer.sex == 'male') {
@@ -165,7 +159,7 @@ function addDataToTable(id, data) {
         rows += '<td><strong>' + trainer.trainer_name + '</strong></td>';
         rows += '<td><strong>' + trainer.sums.trainings + '</strong>';
         rows += '<div class="small">';
-        if (trainer.sums.trainer > 0){
+        if (trainer.sums.trainer > 0) {
             rows += trainer.sums.trainer + asTrainer;
             acomma = ', ';
         }
@@ -176,16 +170,16 @@ function addDataToTable(id, data) {
         rows += '</div>'
         rows += '</td>'
 
-        for (type of types){
+        for (type of types) {
             if (trainer_types[type]) {
                 var tcomma = '';
                 rows += '<td><strong>' + trainer_types[type]['trainings'] + '</strong>';
                 rows += '<div class="small">';
-                if (trainer_types[type]['trainer'] > 0){
+                if (trainer_types[type]['trainer'] > 0) {
                     rows += trainer_types[type]['trainer'] + asTrainer;
                     tcomma = ', '
                 }
-                if (trainer_types[type]['assistent'] > 0){
+                if (trainer_types[type]['assistent'] > 0) {
                     rows += tcomma;
                     rows += trainer_types[type]['assistent'] + asAssistent;
                 }
@@ -200,15 +194,15 @@ function addDataToTable(id, data) {
 
         rows += '<td><strong>' + trainer.sums.unpaid + '</strong></td>';
         rows += '<td><strong>' + trainer.sums.unpaid_sum + '</strong></td>';
-        
+
         if (trainer.sums.unpaid > 0) {
             var url_pay = 'index.php?option=com_tkdclub&view=statistics&task=trainings.paytrainings&member_id='
-                        + trainer.trainer_id
-                        + '&name=' + trainer.trainer_name
-                        + '&' + Joomla.optionsStorage['csrf.token'] + '=1';
+                + trainer.trainer_id
+                + '&name=' + trainer.trainer_name
+                + '&' + Joomla.optionsStorage['csrf.token'] + '=1';
 
-            rows += '<td><a href="'+url_pay+'" class="btn btn-small">';
-            rows += '<span class="icon-publish"></span>'+ Joomla.JText._('COM_TKDCLUB_TRAINING_PAY')+'</a></td>';
+            rows += '<td><a href="' + url_pay + '" class="btn btn-small">';
+            rows += '<span class="icon-publish"></span>' + Joomla.JText._('COM_TKDCLUB_TRAINING_PAY') + '</a></td>';
         } else {
             rows += '<td></td>';
         }

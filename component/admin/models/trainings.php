@@ -209,7 +209,7 @@ class TkdClubModelTrainings extends JModelList
     {
         // Return if there are no trainers, which basically means there are no datasets
         if (!$this->trainer_names) {
-            return null;
+            return false;
         }
 
         // Loop through the trainer names and get their data
@@ -259,7 +259,7 @@ class TkdClubModelTrainings extends JModelList
     {
         // Return if there are no training years, which basically means there are no datasets
         if (!$this->training_years) {
-            return null;
+            return false;
         }
 
         // Initialise the container and some variables

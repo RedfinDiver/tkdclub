@@ -5,26 +5,25 @@
  */
 
 /**
- * Prepares and drawes the MEMBERSTATE chart
+ * MEMBERSTATE chart
  */
-google.charts.setOnLoadCallback(drawStateChart);
-function drawStateChart () {
+Tkdclub.drawStateChart = function () {
     var data = new google.visualization.arrayToDataTable([
-            [Joomla.JText._('COM_TKDCLUB_MEMBER_STATE_ACTIVE'), Tkdclub.memberdata.active],
-            [Joomla.JText._('COM_TKDCLUB_MEMBER_STATE_INACTIVE'), Tkdclub.memberdata.inactive],
-            [Joomla.JText._('COM_TKDCLUB_MEMBER_STATE_SUPPORTER'), Tkdclub.memberdata.support]
-        ],
+        [Joomla.JText._('COM_TKDCLUB_MEMBER_STATE_ACTIVE'), Tkdclub.memberdata.active],
+        [Joomla.JText._('COM_TKDCLUB_MEMBER_STATE_INACTIVE'), Tkdclub.memberdata.inactive],
+        [Joomla.JText._('COM_TKDCLUB_MEMBER_STATE_SUPPORTER'), Tkdclub.memberdata.support]
+    ],
         true
     );
 
     var options = {
-        title : Joomla.JText._('COM_TKDCLUB_STATISTIC_STATE_ALL_MEMBERS_IN_DB'),
-        titleTextStyle : { fontSize : 12, color : '#333' },  
+        title: Joomla.JText._('COM_TKDCLUB_STATISTIC_STATE_ALL_MEMBERS_IN_DB'),
+        titleTextStyle: { fontSize: 12, color: '#333' },
         "colors": ["#3366CC", "#ec8f6e", "#F9A541"],
-        slices : { 1 : {offset: 0.15} },
-        chartArea :  {
-            left : 30,
-            top : 50
+        slices: { 1: { offset: 0.15 } },
+        chartArea: {
+            left: 30,
+            top: 50
         },
     };
 
@@ -33,36 +32,34 @@ function drawStateChart () {
 }
 
 /**
- * Prepares and draws the GENDER DISTRIBUTION chart
+ * GENDER DISTRIBUTION chart
  */
-google.charts.setOnLoadCallback(drawGenderChart);
-function drawGenderChart() {
+Tkdclub.drawGenderChart = function () {
     var data = new google.visualization.arrayToDataTable([
         [Joomla.JText._('COM_TKDCLUB_MEMBER_SEX_FEMALE'), Tkdclub.memberdata.genderdist.female],
         [Joomla.JText._('COM_TKDCLUB_MEMBER_SEX_MALE'), Tkdclub.memberdata.genderdist.male]
     ]
-    , true 
+        , true
     );
-    
-    var options = {  
-        title : Joomla.JText._('COM_TKDCLUB_STATISTIC_GENDER_DIST'),
-        titleTextStyle : { fontSize : 12, color : '#333' },
+
+    var options = {
+        title: Joomla.JText._('COM_TKDCLUB_STATISTIC_GENDER_DIST'),
+        titleTextStyle: { fontSize: 12, color: '#333' },
         "colors": ["#ec8f6e", "#3366CC"],
-        chartArea :  {
-            left : 30,
-            top : 50
+        chartArea: {
+            left: 30,
+            top: 50
         }
     };
-    
-        var chart = new google.visualization.PieChart(document.getElementById("chart_genderdist"));
-        chart.draw(data, options);
+
+    var chart = new google.visualization.PieChart(document.getElementById("chart_genderdist"));
+    chart.draw(data, options);
 }
 
 /**
- * Prepares and draws the AGE DISTRIBUTION chart
+ * AGE DISTRIBUTION chart
  */
-google.charts.setOnLoadCallback(drawAgeChart);
-function drawAgeChart() {
+Tkdclub.drawAgeChart = function () {
     var preparedData = [];
 
     for (var cat in Tkdclub.memberdata.agedist) {
@@ -74,13 +71,13 @@ function drawAgeChart() {
 
     var options = {
         title: Joomla.JText._('COM_TKDCLUB_STATISTIC_AGE_DIST'),
-        titleTextStyle : { fontSize : 12, color : '#333' },
-        chartArea :  {
-            left : 30,
-            top : 50
+        titleTextStyle: { fontSize: 12, color: '#333' },
+        chartArea: {
+            left: 30,
+            top: 50
         },
-        legend : {
-            position : 'none'
+        legend: {
+            position: 'none'
         }
     };
 
@@ -91,7 +88,7 @@ function drawAgeChart() {
 /**
  * Writes the memberdata to DOM
  */
-function writeMembers() {
+Tkdclub.writeMembers = function () {
 
     document.getElementById('tkdclub-members-allrows').textContent += ' ' + Tkdclub.memberdata.allrows;
     document.getElementById('tkdclub-members-active').textContent += ' ' + Tkdclub.memberdata.active;

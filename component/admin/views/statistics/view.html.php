@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package    Taekwondo Club
  * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
@@ -26,6 +27,7 @@ JText::script('COM_TKDCLUB_SIDEBAR_TRAININGS');
 JText::script('COM_TKDCLUB_TRAINING_NOT_PAID');
 JText::script('COM_TKDCLUB_SUM');
 JText::script('COM_TKDCLUB_TRAINING_PAY');
+JText::script('JGLOBAL_NO_MATCHING_RESULTS');
 
 /**
  * View class for statistics view
@@ -46,6 +48,6 @@ class TkdClubViewStatistics extends JViewLegacy
         JToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_STATISTIC_ADMIN_VIEW'), 'tkdclub');
 
         $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/statistik.html';
-        JToolbarHelper::help( '', false, $help_url );
+        JToolbarHelper::help('', false, $help_url);
     }
 }

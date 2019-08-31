@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package    Taekwondo Club
  * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
@@ -14,24 +15,26 @@ JHtml::_('behavior.tooltip');
 JHtml::_('script', 'administrator/components/com_tkdclub/assets/js/statistics.js');
 JHtml::_('script', 'administrator/components/com_tkdclub/assets/js/membercharts.js');
 JHtml::_('script', 'administrator/components/com_tkdclub/assets/js/trainingcharts.js');
+
 ?>
 
-<?php if (!empty( $this->sidebar)) : ?>
+<?php if (!empty($this->sidebar)) : ?>
     <div id="j-sidebar-container" class="span2">
         <?php echo $this->sidebar; ?>
     </div>
     <div id="j-main-container" class="span10">
-<?php else : ?>
-    <div id="j-main-container">
-<?php endif;?>
+    <?php else : ?>
+        <div id="j-main-container">
+        <?php endif; ?>
 
-<div id="tkdclub-loader" class="tkdclub-loader"></div>
+        <!-- <div id="tkdclub-loader" class="tkdclub-loader"></div> -->
 
-<form enctype="multipart/form-data" action="index.php" method="post" id="adminForm" class="form-horizontal">
-    <div id="tkdclub-chartcontainer" class="hidden">
-        <?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'memberstats')); ?>
+        <form enctype="multipart/form-data" action="index.php" method="post" id="adminForm" class="form-horizontal">
+
+            <?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'memberstats')); ?>
             <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'memberstats', JText::_('COM_TKDCLUB_SIDEBAR_MEMBERS', true)); ?>
-                
+            <div id="memberdata-loader" class="tkdclub-loader"></div>
+            <div id="memberdata" class="hidden">
                 <div class="row-fluid">
                     <div class="span4 tkd-club-chart">
                         <div id="chart_state"></div>
@@ -43,20 +46,20 @@ JHtml::_('script', 'administrator/components/com_tkdclub/assets/js/trainingchart
                         <div id="chart_agedist"></div>
                     </div>
                 </div>
-                
+
                 <div class="row-fluid">
                     <div class="span4">
                         <div id="tkdclub-members-active" class="tkdclub-statistics">
                             <?php echo JText::_('COM_TKDCLUB_MEMBER_STATE_ACTIVE') . ':'; ?>
                         </div>
                         <div id="tkdclub-members-support" class="tkdclub-statistics">
-                            <?php echo JText::_('COM_TKDCLUB_MEMBER_STATE_SUPPORTER') . ':';?>
+                            <?php echo JText::_('COM_TKDCLUB_MEMBER_STATE_SUPPORTER') . ':'; ?>
                         </div>
                         <div id="tkdclub-members-inactive" class="tkdclub-statistics">
-                            <?php echo JText::_('COM_TKDCLUB_MEMBER_STATE_INACTIVE') . ':';?>
+                            <?php echo JText::_('COM_TKDCLUB_MEMBER_STATE_INACTIVE') . ':'; ?>
                         </div>
                         <div id="tkdclub-members-allrows" class="tkdclub-statistics">
-                            <?php echo JText::_('COM_TKDCLUB_STATISTIC_ALL') . ':';?>
+                            <?php echo JText::_('COM_TKDCLUB_STATISTIC_ALL') . ':'; ?>
                         </div>
                     </div>
                     <div class="span4">
@@ -79,11 +82,13 @@ JHtml::_('script', 'administrator/components/com_tkdclub/assets/js/trainingchart
                         </div>
                     </div>
 
-                </div>                                  
+                </div>
+            </div>
             <?php echo JHtml::_('bootstrap.endTab'); ?>
-                
+
             <?php echo JHtml::_('bootstrap.addTab', 'myTab', 'trainingsstats', JText::_('COM_TKDCLUB_SIDEBAR_TRAININGS', true)); ?>
-                
+            <div id="trainingsdata-loader" class="tkdclub-loader"></div>
+            <div id="trainingsdata" class="hidden">
                 <div class="row-fluid">
                     <div class="span4 tkd-club-chart">
                         <div id="chart_trainingstypes"></div>
@@ -99,29 +104,30 @@ JHtml::_('script', 'administrator/components/com_tkdclub/assets/js/trainingchart
                 <div class="row-fluid">
                     <div class="span4">
                         <div id="tkdclub-unpaidtrainings" class="tkdclub-statistics">
-                            <?php echo JText::_('COM_TKDCLUB_STATISTIC_UNPAID_TRAININGS') . ':';?>
+                            <?php echo JText::_('COM_TKDCLUB_STATISTIC_UNPAID_TRAININGS') . ':'; ?>
                         </div>
                         <div id="tkdclub-unpaidsum" class="tkdclub-statistics">
-                            <?php echo JText::_('COM_TKDCLUB_STATISTIC_UNPAID_SUM') . ':';?>
+                            <?php echo JText::_('COM_TKDCLUB_STATISTIC_UNPAID_SUM') . ':'; ?>
                         </div>
                     </div>
                     <div class="span4">
                         <div id="tkdclub-alltrainings" class="tkdclub-statistics">
-                            <?php echo JText::_('COM_TKDCLUB_STATISTIC_ALL_TRAININGS') . ':';?>
+                            <?php echo JText::_('COM_TKDCLUB_STATISTIC_ALL_TRAININGS') . ':'; ?>
                         </div>
                     </div>
                     <div class="span4">
                         <div id="tkdclub-averageparts" class="tkdclub-statistics">
-                            <?php echo JText::_('COM_TKDCLUB_STATISTIC_AVERAGE_PARTS') . ':';?>
+                            <?php echo JText::_('COM_TKDCLUB_STATISTIC_AVERAGE_PARTS') . ':'; ?>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="row-fluid">
-                    <div class=span12" id="trainings-table">
-                </div>
-            
+            <div class="row-fluid">
+                <div class=span12" id="trainings-table"></div>
+            </div>
+
             <?php echo JHtml::_('bootstrap.endTab'); ?>
-        <?php echo JHtml::_('bootstrap.endTabSet'); ?>
-    </div>
-</form>
+            <?php echo JHtml::_('bootstrap.endTabSet'); ?>
+
+        </form>
