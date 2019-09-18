@@ -12,6 +12,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\View\HtmlView;
 
 Text::script('COM_TKDCLUB_EMAIL_PLEASE_FILL_IN_THE_SUBJECT');
 Text::script('COM_TKDCLUB_EMAIL_PLEASE_FILL_IN_THE_MESSAGE');
@@ -19,7 +20,7 @@ Text::script('COM_TKDCLUB_EMAIL_PLEASE_FILL_IN_THE_MESSAGE');
 /**
  * View class for email view
  */
-class TkdClubViewEmail extends JViewLegacy
+class TkdClubViewEmail extends HtmlView
 {
 
     protected $form;

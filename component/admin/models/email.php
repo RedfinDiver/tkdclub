@@ -7,6 +7,7 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Component\ComponentHelper;
@@ -16,7 +17,7 @@ use Joomla\CMS\Filesystem\File;
 /**
  * Model for email to members and newsletter subscribers
  */
-class TkdclubModelEmail extends JModelAdmin
+class TkdclubModelEmail extends AdminModel
 {
 	/**
 	 * Method to get the row form.

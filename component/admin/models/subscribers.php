@@ -7,10 +7,14 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+
 /**
  * Model class for list view 'subscribers'
  */
-class TkdClubModelSubscribers extends JModelList
+class TkdClubModelSubscribers extends ListModel
 {
     /**
      * Constructor.
@@ -119,7 +123,7 @@ class TkdClubModelSubscribers extends JModelList
 	{
 		$pklist = implode(',', $pks);
 
-		$db	= JFactory::getDBO();
+		$db	= Factory::getDBO();
 		$query	= $db->getQuery(true);
 
         // select fields from newsletter subscribers table
@@ -136,12 +140,12 @@ class TkdClubModelSubscribers extends JModelList
 		$rows = $db->loadRowList();
 
         $headers = array(
-            JText::_('COM_TKDCLUB_SUBSCRIBER_EMAIL'),       // a.email
-            JText::_('COM_TKDCLUB_SUBSCRIBER_FIRSTNAME'),   // a.firstname
-            JText::_('COM_TKDCLUB_SUBSCRIBER_LASTNAME'),    // a.lastname
-            JText::_('COM_TKDCLUB_SUBSCRIBER_SUBSCRIBED'),  // a.created
-            JText::_('COM_TKDCLUB_SUBSCRIBER_ORIGIN'),      // a.origin
-            JText::_('COM_TKDCLUB_SUBSCRIBER_ID')           // a.id
+            Text::_('COM_TKDCLUB_SUBSCRIBER_EMAIL'),       // a.email
+            Text::_('COM_TKDCLUB_SUBSCRIBER_FIRSTNAME'),   // a.firstname
+            Text::_('COM_TKDCLUB_SUBSCRIBER_LASTNAME'),    // a.lastname
+            Text::_('COM_TKDCLUB_SUBSCRIBER_SUBSCRIBED'),  // a.created
+            Text::_('COM_TKDCLUB_SUBSCRIBER_ORIGIN'),      // a.origin
+            Text::_('COM_TKDCLUB_SUBSCRIBER_ID')           // a.id
         );
 
 		// return the results as an array of items, each consisting of an array of fields

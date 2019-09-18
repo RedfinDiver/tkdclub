@@ -13,12 +13,13 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\View\HtmlView;
 
 /**
  * View class for a edit screen for one member.
  *
  */
-class TkdClubViewMember extends JViewLegacy
+class TkdClubViewMember extends HtmlView
 {
     protected $item;
     protected $form;

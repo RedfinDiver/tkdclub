@@ -7,10 +7,14 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\MVC\Model\AdminModel;
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Factory;
+
 /**
  * Model-class for edit view 'event'
  */
-class TkdClubModelEvent extends JModelAdmin
+class TkdClubModelEvent extends AdminModel
 {
     /**
      * Method to get a table object, load it if necessary.
@@ -26,7 +30,7 @@ class TkdClubModelEvent extends JModelAdmin
      */
     public function getTable($type = 'Events', $prefix = 'TkdClubTable', $config = array())
     {
-        return JTable::getInstance($type, $prefix, $config);
+        return Table::getInstance($type, $prefix, $config);
     }
         
     /**
@@ -61,7 +65,7 @@ class TkdClubModelEvent extends JModelAdmin
 	 */
     protected function loadFormData()
     {
-        $app =  JFactory::getApplication();
+        $app =  Factory::getApplication();
         $data = $app->getUserState('com_tkdclub.edit.event.data', array());
 
         if(empty($data))

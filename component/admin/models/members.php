@@ -8,12 +8,17 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Component\ComponentHelper;
+
 JLoader::register('Helper', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/tkdclub.php');
 
 /**
  * Model-class for list view 'members'
  */
-class TkdClubModelMembers extends JModelList
+class TkdClubModelMembers extends ListModel
 {
     /**
      * helper vars for grade filter
@@ -81,7 +86,7 @@ class TkdClubModelMembers extends JModelList
         }
 
         // Load the parameters.
-        $params = JComponentHelper::getParams('com_tkdclub');
+        $params = ComponentHelper::getParams('com_tkdclub');
         $this->setState('params', $params);
 
         parent::populateState($ordering, $direction);
@@ -312,7 +317,7 @@ class TkdClubModelMembers extends JModelList
     {
         $pklist = implode(',', $pks);
 
-        $db    = JFactory::getDBO();
+        $db    = Factory::getDBO();
         $query    = $db->getQuery(true);
         $fields = array(
             'member_id', 'firstname', 'lastname', 'birthdate', 'sex', 'citizenship', 'street', 'zip', 'city', 'country', 'phone', 'email',
@@ -349,34 +354,34 @@ class TkdClubModelMembers extends JModelList
                     $row[16] = $row[15];
             }
 
-            $row[20] ? $row[20] = JFactory::getUser($row[20])->name : null;
-            $row[22] ? $row[22] = JFactory::getUser($row[22])->name : null;
+            $row[20] ? $row[20] = Factory::getUser($row[20])->name : null;
+            $row[22] ? $row[22] = Factory::getUser($row[22])->name : null;
         }
 
         $headers = array(
-            JText::_('COM_TKDCLUB_MEMBER_ID'),              // member_id
-            JText::_('COM_TKDCLUB_MEMBER_FIRSTNAME'),       // firstname
-            JText::_('COM_TKDCLUB_MEMBER_LASTNAME'),        // lastname
-            JText::_('COM_TKDCLUB_MEMBER_BIRTHDATE'),       // birthdate
-            JText::_('COM_TKDCLUB_MEMBER_SEX'),             // sex
-            JText::_('COM_TKDCLUB_MEMBER_CITIZENSHIP'),     // citizenship       
-            JText::_('COM_TKDCLUB_MEMBER_STREET'),          // street
-            JText::_('COM_TKDCLUB_MEMBER_ZIP'),             // zip
-            JText::_('COM_TKDCLUB_MEMBER_CITY'),            // city
-            JText::_('COM_TKDCLUB_MEMBER_COUNTRY'),         // country
-            JText::_('COM_TKDCLUB_MEMBER_PHONE'),           // phone
-            JText::_('COM_TKDCLUB_MEMBER_EMAIL'),           // email
-            JText::_('COM_TKDCLUB_MEMBER_IBAN'),            // iban
-            JText::_('COM_TKDCLUB_MEMBER_PASS'),            // memberpass
-            JText::_('COM_TKDCLUB_MEMBER_GRADE'),           // grade
-            JText::_('COM_TKDCLUB_MEMBER_LAST_PROMOTION'),  // lastexam
-            JText::_('COM_TKDCLUB_MEMBER_STATE'),           // member_state
-            JText::_('COM_TKDCLUB_MEMBER_ENTRY'),           // entry
-            JText::_('COM_TKDCLUB_MEMBER_LEAVE'),           // leave
-            JText::_('COM_TKDCLUB_FIELD_CREATED'),          // created
-            JText::_('COM_TKDCLUB_FIELD_CREATED_BY'),       // created_by
-            JText::_('COM_TKDCLUB_FIELD_MODIFIED'),         // modified
-            JText::_('COM_TKDCLUB_FIELD_MODIFIED_BY')       // modified_by
+            Text::_('COM_TKDCLUB_MEMBER_ID'),              // member_id
+            Text::_('COM_TKDCLUB_MEMBER_FIRSTNAME'),       // firstname
+            Text::_('COM_TKDCLUB_MEMBER_LASTNAME'),        // lastname
+            Text::_('COM_TKDCLUB_MEMBER_BIRTHDATE'),       // birthdate
+            Text::_('COM_TKDCLUB_MEMBER_SEX'),             // sex
+            Text::_('COM_TKDCLUB_MEMBER_CITIZENSHIP'),     // citizenship       
+            Text::_('COM_TKDCLUB_MEMBER_STREET'),          // street
+            Text::_('COM_TKDCLUB_MEMBER_ZIP'),             // zip
+            Text::_('COM_TKDCLUB_MEMBER_CITY'),            // city
+            Text::_('COM_TKDCLUB_MEMBER_COUNTRY'),         // country
+            Text::_('COM_TKDCLUB_MEMBER_PHONE'),           // phone
+            Text::_('COM_TKDCLUB_MEMBER_EMAIL'),           // email
+            Text::_('COM_TKDCLUB_MEMBER_IBAN'),            // iban
+            Text::_('COM_TKDCLUB_MEMBER_PASS'),            // memberpass
+            Text::_('COM_TKDCLUB_MEMBER_GRADE'),           // grade
+            Text::_('COM_TKDCLUB_MEMBER_LAST_PROMOTION'),  // lastexam
+            Text::_('COM_TKDCLUB_MEMBER_STATE'),           // member_state
+            Text::_('COM_TKDCLUB_MEMBER_ENTRY'),           // entry
+            Text::_('COM_TKDCLUB_MEMBER_LEAVE'),           // leave
+            Text::_('COM_TKDCLUB_FIELD_CREATED'),          // created
+            Text::_('COM_TKDCLUB_FIELD_CREATED_BY'),       // created_by
+            Text::_('COM_TKDCLUB_FIELD_MODIFIED'),         // modified
+            Text::_('COM_TKDCLUB_FIELD_MODIFIED_BY')       // modified_by
 
         );
 

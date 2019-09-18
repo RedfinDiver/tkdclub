@@ -7,12 +7,13 @@
 
 defined('_JEXEC') or die;
 
-use Joomla\Registry\Registry;
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Factory;
 
 /**
 * Members table class
 */
-class TkdClubTableMembers extends JTable
+class TkdClubTableMembers extends Table
 {
 	protected $_jsonEncode = array();
 
@@ -24,8 +25,8 @@ class TkdClubTableMembers extends JTable
 
 	public function store($updateNulls = false)
 	{
-        $date   = JFactory::getDate()->toSql();
-		$userId = JFactory::getUser()->id;
+        $date   = Factory::getDate()->toSql();
+		$userId = Factory::getUser()->id;
 
 		$this->modified = $date;
 

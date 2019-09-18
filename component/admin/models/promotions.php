@@ -7,10 +7,14 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+
 /**
  * Model class for list view 'promotions'
  */
-class TkdClubModelPromotions extends JModelList
+class TkdClubModelPromotions extends ListModel
 {       
     /**
      * Constructor.
@@ -161,7 +165,7 @@ class TkdClubModelPromotions extends JModelList
 	{
 		$pklist = implode(',', $pks);
 
-		$db	= JFactory::getDBO();
+		$db	= Factory::getDBO();
 		$query	= $db->getQuery(true);
 		$query-> select('promotion_id, date, city, type, examiner_name, examiner_address, examiner_email, promotion_state, notes')
 			  -> from($db->quoteName('#__tkdclub_promotions'))
@@ -172,15 +176,15 @@ class TkdClubModelPromotions extends JModelList
 		$rows	= $db->loadRowList();
 
         $headers = array(
-            JText::_('COM_TKDCLUB_PROMOTION_ID'),               // promotion_id
-            JText::_('COM_TKDCLUB_DATE'),                       // date
-            JText::_('COM_TKDCLUB_PROMOTION_CITY'),             // city
-            JText::_('COM_TKDCLUB_PROMOTION_TYPE'),             // type
-            JText::_('COM_TKDCLUB_PROMOTION_EXAMINER'),         // examiner_name
-            JText::_('COM_TKDCLUB_PROMOTION_EXAMINER_ADDRESS'), // examiner_address      
-            JText::_('COM_TKDCLUB_PROMOTION_EXAMINER_EMAIL'),   // examiner_email  
-            JText::_('JSTATUS'),                                // promotion_state
-            JText::_('COM_TKDCLUB_NOTES')                       // notes
+            Text::_('COM_TKDCLUB_PROMOTION_ID'),               // promotion_id
+            Text::_('COM_TKDCLUB_DATE'),                       // date
+            Text::_('COM_TKDCLUB_PROMOTION_CITY'),             // city
+            Text::_('COM_TKDCLUB_PROMOTION_TYPE'),             // type
+            Text::_('COM_TKDCLUB_PROMOTION_EXAMINER'),         // examiner_name
+            Text::_('COM_TKDCLUB_PROMOTION_EXAMINER_ADDRESS'), // examiner_address      
+            Text::_('COM_TKDCLUB_PROMOTION_EXAMINER_EMAIL'),   // examiner_email  
+            Text::_('JSTATUS'),                                // promotion_state
+            Text::_('COM_TKDCLUB_NOTES')                       // notes
         );
 
 		// return the results as an array of items, each consisting of an array of fields

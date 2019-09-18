@@ -8,15 +8,19 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\MVC\Model\AdminModel;
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Factory;
+
 /**
  * Model-class for edit view 'subscriber'
  */
-class TkdClubModelSubscriber extends JModelAdmin
+class TkdClubModelSubscriber extends AdminModel
 {
 
     public function getTable($type = 'subscribers', $prefix = 'TkdClubTable', $config = array())
     {
-        return JTable::getInstance($type, $prefix, $config);
+        return Table::getInstance($type, $prefix, $config);
     }
 
     public function getForm($data = array(), $loadData = true)
@@ -33,7 +37,7 @@ class TkdClubModelSubscriber extends JModelAdmin
 
     protected function loadFormData()
     {
-        $app =  JFactory::getApplication();
+        $app =  Factory::getApplication();
         $data = $app->getUserState('com_tkdclub.edit.subscriber.data', array());
 
         if (empty($data)) {

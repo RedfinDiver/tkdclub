@@ -7,10 +7,14 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+
 /**
  * Model-class for list view 'medals'
  */
-class TkdClubModelMedals extends JModelList
+class TkdClubModelMedals extends ListModel
 {       
     /**
 	 * Constructor.
@@ -179,7 +183,7 @@ class TkdClubModelMedals extends JModelList
      */
     public static function getMedals ($placing)
     {
-            $db = JFactory::getDbo();
+            $db = Factory::getDbo();
             $query = $db->getQuery(true);
             $query->select('COUNT(*)')
                 ->from('#__tkdclub_medals');
@@ -199,7 +203,7 @@ class TkdClubModelMedals extends JModelList
     */
     public function getMedaldata($count = false)
     {
-        $db = JFactory::getDbo();
+        $db = Factory::getDbo();
         $query = $db->getQuery(true);
         $query->select('*')->from('#__tkdclub_medals');
 
@@ -227,7 +231,7 @@ class TkdClubModelMedals extends JModelList
 	{
 		$pklist = implode(',', $pks);
 
-		$db	= JFactory::getDBO();
+		$db	= Factory::getDBO();
 		$query	= $db->getQuery(true);
 		$query-> select('medal_id, date, championship, class, placing, winner_ids')
 			  -> from($db->quoteName('#__tkdclub_medals'))
@@ -238,13 +242,13 @@ class TkdClubModelMedals extends JModelList
 		$rows	= $db->loadRowList();
 
         $headers = array(
-            JText::_('COM_TKDCLUB_MEDAL_ID'),               // id
-            JText::_('COM_TKDCLUB_DATE'),                   // date_win
-            JText::_('COM_TKDCLUB_MEDAL_CHAMPIONSSHIP'),    // championship
-            JText::_('COM_TKDCLUB_MEDAL_CLASS'),            // class
-            JText::_('COM_TKDCLUB_MEDAL_PLACING'),          // placing
-            JText::_('COM_TKDCLUB_ATHLETS'),                // winner_ids       
-            JText::_('COM_TKDCLUB_ATHLETS')                 // id_win  
+            Text::_('COM_TKDCLUB_MEDAL_ID'),               // id
+            Text::_('COM_TKDCLUB_DATE'),                   // date_win
+            Text::_('COM_TKDCLUB_MEDAL_CHAMPIONSSHIP'),    // championship
+            Text::_('COM_TKDCLUB_MEDAL_CLASS'),            // class
+            Text::_('COM_TKDCLUB_MEDAL_PLACING'),          // placing
+            Text::_('COM_TKDCLUB_ATHLETS'),                // winner_ids       
+            Text::_('COM_TKDCLUB_ATHLETS')                 // id_win  
         );
 
 		// return the results as an array of items, each consisting of an array of fields

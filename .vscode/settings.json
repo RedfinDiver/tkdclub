@@ -6,5 +6,7 @@
     "todo-tree.flat": true,
     "todo-tree.expanded": false,
     "restructuredtext.confPath": "${workspaceFolder}/docs",
-    "editor.rulers": []
+    "editor.rulers": [],
+    "todo-tree.tree.expanded": false,
+    "todo-tree.tree.flat": true
 }

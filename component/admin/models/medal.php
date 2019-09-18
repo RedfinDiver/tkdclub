@@ -7,12 +7,16 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\MVC\Model\AdminModel;
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Factory;
+
 /**
  * Model-class for edit view 'medal'
  *
  * @since  1.0
  */
-class TkdClubModelMedal extends JModelAdmin
+class TkdClubModelMedal extends AdminModel
 {
     /**
      * Method to get a table object, load it if necessary.
@@ -28,7 +32,7 @@ class TkdClubModelMedal extends JModelAdmin
      */
     public function getTable($type = 'Medals', $prefix = 'TkdClubTable', $config = array())
     {
-        return JTable::getInstance($type, $prefix, $config);
+        return Table::getInstance($type, $prefix, $config);
     }
         
     /**
@@ -63,7 +67,7 @@ class TkdClubModelMedal extends JModelAdmin
 	 */
     protected function loadFormData()
     {
-        $app =  JFactory::getApplication();
+        $app =  Factory::getApplication();
         $data = $app->getUserState('com_tkdclub.edit.medal.data', array());
 
         if(empty($data))

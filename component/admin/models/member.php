@@ -7,18 +7,22 @@
 
 defined('_JEXEC') or die;
 
-jimport('joomla.filesystem.folder');
-jimport('joomla.filesystem.file');
+use Joomla\CMS\MVC\Model\AdminModel;
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Filesystem\File;
+use Joomla\CMS\Filesystem\Folder;
 
 /**
  * Model-class for edit view 'member'
  *
  */
-class TkdClubModelMember extends JModelAdmin
+class TkdClubModelMember extends AdminModel
 {
     public function getTable($type = 'Members', $prefix = 'TkdClubTable', $config = array())
     {
-        return JTable::getInstance($type, $prefix, $config);
+        return Table::getInstance($type, $prefix, $config);
     }
 
     public function getForm($data = array(), $loadData = true)
@@ -36,7 +40,7 @@ class TkdClubModelMember extends JModelAdmin
         
     protected function loadFormData()
     {
-        $app =  JFactory::getApplication();
+        $app =  Factory::getApplication();
         $data = $app->getUserState('com_tkdclub.edit.member.data', array());
 
         if(empty($data)) {
@@ -62,7 +66,7 @@ class TkdClubModelMember extends JModelAdmin
 	 */
     public function uploadFile($picture = false)
     {
-        $app = JFactory::getApplication();
+        $app = Factory::getApplication();
         $input = $app->input;
         $id = $input->getInt('member_id', 0);
         $data  = $input->post->get('jform', array(), 'array');
@@ -73,27 +77,27 @@ class TkdClubModelMember extends JModelAdmin
         // just processing the file if there is no error with it
         if ($file['error'] != 0)
         {
-            $app->enqueueMessage(JText::_('COM_TKDCLUB_MEMBER_FILEUPLOAD_FAILED'), 'error');
+            $app->enqueueMessage(Text::_('COM_TKDCLUB_MEMBER_FILEUPLOAD_FAILED'), 'error');
             return false;
         }
         
         // make the filename safe and get the file-extension
-        $filename = JFile::makeSafe($file['name']);
-        $ext = JFile::getExt($filename);
+        $filename = File::makeSafe($file['name']);
+        $ext = File::getExt($filename);
         $picture == true ? $filename = 'memberpicture' . '.' . $ext : null;
         $file_size = $file['size'];
         
         // only certain files are allowed, give error otherwise
         if (!in_array($ext, $possible_file_extensions))
         {
-            $app->enqueueMessage(JText::_('COM_TKDCLUB_MEMBER_FILEUPLOAD_ONLY_CERTAIN_EXT'), 'error');
+            $app->enqueueMessage(Text::_('COM_TKDCLUB_MEMBER_FILEUPLOAD_ONLY_CERTAIN_EXT'), 'error');
             return false;
         }
 
         // only files <500 kB are allowed
         if ($file_size > 500000)
         {
-            $app->enqueueMessage(JText::_('COM_TKDCLUB_MEMBER_FILEUPLOAD_FILESZIZE'), 'error');
+            $app->enqueueMessage(Text::_('COM_TKDCLUB_MEMBER_FILEUPLOAD_FILESZIZE'), 'error');
             return false;
         }       
 
@@ -107,23 +111,23 @@ class TkdClubModelMember extends JModelAdmin
             $upload_path = JPATH_COMPONENT_ADMINISTRATOR . '/attachments/members/' . $id . '/';
         }
         
-        JFolder::create($upload_path);
+        Folder::create($upload_path);
         $dest = $upload_path . $filename;
 
         // check for already existing files with same name
-        in_array($filename, JFolder::files($upload_path)) ? $file_existed = true : $file_existed = false;
+        in_array($filename, Folder::files($upload_path)) ? $file_existed = true : $file_existed = false;
 
         // Upload the file create messages
-        if (!JFile::upload($file['tmp_name'], $dest))
+        if (!File::upload($file['tmp_name'], $dest))
         {
-            $app->enqueueMessage(JText::_('COM_TKDCLUB_MEMBER_FILEUPLOAD_FAILED'), 'error');
+            $app->enqueueMessage(Text::_('COM_TKDCLUB_MEMBER_FILEUPLOAD_FAILED'), 'error');
             return false;
         }
 
         // for memberpicture upload set different message
         if ($picture)
         {
-            $app->enqueueMessage(JText::_('COM_TKDCLUB_MEMBER_PICTUREUPLOAD_SUCCESS'), 'message');
+            $app->enqueueMessage(Text::_('COM_TKDCLUB_MEMBER_PICTUREUPLOAD_SUCCESS'), 'message');
             return true; 
         }
 
@@ -132,11 +136,11 @@ class TkdClubModelMember extends JModelAdmin
 
         if ($file_existed == false)
         {
-            $app->enqueueMessage(JText::_('COM_TKDCLUB_MEMBER_FILEUPLOAD_SUCCESS') . $filename, 'message');
+            $app->enqueueMessage(Text::_('COM_TKDCLUB_MEMBER_FILEUPLOAD_SUCCESS') . $filename, 'message');
             return true;
         }
 
-        $app->enqueueMessage(JText::_('COM_TKDCLUB_MEMBER_FILE_OVERWRITE') . $filename, 'notice');
+        $app->enqueueMessage(Text::_('COM_TKDCLUB_MEMBER_FILE_OVERWRITE') . $filename, 'notice');
         return true;
     }
     
@@ -152,7 +156,7 @@ class TkdClubModelMember extends JModelAdmin
 	 */
     public function getAttachments($picture = false)
     {      
-        $app = JFactory::getApplication();
+        $app = Factory::getApplication();
         $member_id = $app->input->get('member_id', 0, 'INT' );
 
         if ($picture)
@@ -164,9 +168,9 @@ class TkdClubModelMember extends JModelAdmin
             $folder = JPATH_COMPONENT_ADMINISTRATOR . '/attachments/members/' . $member_id;
         }
         
-        if (Jfolder::exists($folder))
+        if (Folder::exists($folder))
         {
-            return JFolder::files($folder);
+            return Folder::files($folder);
         }
 
         return false;
@@ -183,7 +187,7 @@ class TkdClubModelMember extends JModelAdmin
 	 */
     public function setAttachmentsInDatabase($member_id, $bool)
     {      
-        $db = JFactory::getDBO();
+        $db = Factory::getDBO();
         $query = $db->getQuery(true);
         $query->update($db->quoteName('#__tkdclub_members'))
               ->set($db->quoteName('attachments') . ' = ' . $bool)
@@ -207,7 +211,7 @@ class TkdClubModelMember extends JModelAdmin
      */
     public function deleteFile($picture = false)
     {
-        $app = JFactory::getApplication();
+        $app = Factory::getApplication();
         $input = $app->input;
         $id = $input->getInt('member_id', 0);
         $filename = $input->getString('filename', '');
@@ -223,16 +227,16 @@ class TkdClubModelMember extends JModelAdmin
         }
         
         // check if file exists then proceed
-        if (!JFile::exists($file))
+        if (!File::exists($file))
         {
-            $app->enqueueMessage(JText::_('COM_TKDCLUB_MEMBER_FILE_NOT_EXISTS'), 'error');
+            $app->enqueueMessage(Text::_('COM_TKDCLUB_MEMBER_FILE_NOT_EXISTS'), 'error');
             return false;
         }
 
         // delete the file, throw error if it didn't work
-        if (!JFile::delete($file))
+        if (!File::delete($file))
         {
-            $app->enqueueMessage(JText::_('COM_TKDCLUB_MEMBER_FILE_DELETE_ERROR'), 'error');
+            $app->enqueueMessage(Text::_('COM_TKDCLUB_MEMBER_FILE_DELETE_ERROR'), 'error');
             return false;
         }
 
@@ -245,11 +249,11 @@ class TkdClubModelMember extends JModelAdmin
         // selecting the right message
         if ($picture)
         {
-            $app->enqueueMessage(JText::_('COM_TKDCLUB_MEMBER_PICTURE_DELETED'));
+            $app->enqueueMessage(Text::_('COM_TKDCLUB_MEMBER_PICTURE_DELETED'));
         }
         else
         {
-            $app->enqueueMessage(JText::_('COM_TKDCLUB_MEMBER_FILE_DELETED'). $filename);
+            $app->enqueueMessage(Text::_('COM_TKDCLUB_MEMBER_FILE_DELETED'). $filename);
             
         }
 
@@ -263,7 +267,7 @@ class TkdClubModelMember extends JModelAdmin
     */   
     public function downloadFile()
     {
-        $app = JFactory::getApplication();
+        $app = Factory::getApplication();
         $input = $app->input;
         $id = $input->get('member_id');
         $filename = $input->getString('filename', '');
@@ -302,9 +306,9 @@ class TkdClubModelMember extends JModelAdmin
 	 */
     public function getMedals()
     {
-        $id_win = JFactory::getApplication()->input->getInt('member_id');
+        $id_win = Factory::getApplication()->input->getInt('member_id');
 
-        $db = JFactory::getDbo();
+        $db = Factory::getDbo();
         $query = $db->getQuery(true);
 
         $query->select('*')

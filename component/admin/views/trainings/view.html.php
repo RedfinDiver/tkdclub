@@ -15,11 +15,12 @@ use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\MVC\View\HtmlView;
 
 /**
  * view-class for view: trainings
  */
-class TkdClubViewTrainings extends JViewLegacy
+class TkdClubViewTrainings extends HtmlView
 {
     protected $items;
     protected $pagination;

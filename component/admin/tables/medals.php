@@ -7,12 +7,13 @@
 
 defined('_JEXEC') or die;
 
-use Joomla\Registry\Registry;
+use Joomla\CMS\Table\Table;
+use \Joomla\CMS\Factory;
 
 /**
  * medals table class
  */
-class TkdClubTableMedals extends JTable
+class TkdClubTableMedals extends Table
 {
     public function __construct(&$db)      
     {
@@ -29,8 +30,8 @@ class TkdClubTableMedals extends JTable
             $this->winner_ids = json_encode($this->winner_ids, JSON_NUMERIC_CHECK);
         }
 
-        $date   = JFactory::getDate()->toSql();
-        $userId = JFactory::getUser()->id;
+        $date   = Factory::getDate()->toSql();
+        $userId = Factory::getUser()->id;
 
         $this->modified = $date;
 

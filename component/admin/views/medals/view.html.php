@@ -14,13 +14,14 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\View\HtmlView;
 
 JLoader::register('Helper', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/tkdclub.php');
 
 /**
  * view-class for list view medals
  */
-class TkdClubViewMedals extends JViewLegacy
+class TkdClubViewMedals extends HtmlView
 
 {
     protected $items;

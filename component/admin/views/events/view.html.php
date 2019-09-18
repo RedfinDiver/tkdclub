@@ -14,11 +14,12 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\View\HtmlView;
 
 /**
  * view-class for list-view 'events'
  */
-class TkdClubViewEvents extends JViewLegacy
+class TkdClubViewEvents extends HtmlView
 {
     protected $items;
     protected $state;

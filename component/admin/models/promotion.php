@@ -7,10 +7,14 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\MVC\Model\AdminModel;
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Factory;
+
 /**
  * Model-class for edit view 'exam'
  */
-class TkdClubModelPromotion extends JModelAdmin
+class TkdClubModelPromotion extends AdminModel
 {   
     protected $text_prefix = 'COM_TKDCLUB_PROMOTION';
 
@@ -28,7 +32,7 @@ class TkdClubModelPromotion extends JModelAdmin
      */
     public function getTable($type = 'Promotions', $prefix = 'TkdClubTable', $config = array())
     {
-        return JTable::getInstance($type, $prefix, $config);
+        return Table::getInstance($type, $prefix, $config);
     }
         
     /**
@@ -62,7 +66,7 @@ class TkdClubModelPromotion extends JModelAdmin
 	 */
     protected function loadFormData()
     {
-        $app =  JFactory::getApplication();
+        $app =  Factory::getApplication();
         $data = $app->getUserState('com_tkdclub.edit.promotion.data', array());
 
         if(empty($data))

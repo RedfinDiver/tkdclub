@@ -7,10 +7,15 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\MVC\Model\AdminModel;
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Component\ComponentHelper;
+
 /**
  * Model-class for edit view 'participant'
  */
-class TkdClubModelParticipant extends JModelAdmin
+class TkdClubModelParticipant extends AdminModel
 {       
     /**
      * Method to get a table object, load it if necessary.
@@ -26,7 +31,7 @@ class TkdClubModelParticipant extends JModelAdmin
      */
     public function getTable($type = 'Participants', $prefix = 'TkdClubTable', $config = array())
     {   
-        return JTable::getInstance($type, $prefix, $config);
+        return Table::getInstance($type, $prefix, $config);
     }
         
     /**
@@ -60,7 +65,7 @@ class TkdClubModelParticipant extends JModelAdmin
 	 */
     protected function loadFormData()
     {
-        $app =  JFactory::getApplication();
+        $app =  Factory::getApplication();
         $data = $app->getUserState('com_tkdclub.edit.participant.data', array());
 
         if(empty($data))
@@ -81,7 +86,7 @@ class TkdClubModelParticipant extends JModelAdmin
         // Create a new query object.
         $db = $this->getDbo();
         $query = $db->getQuery(true);
-        $days = JComponentHelper::getParams('com_tkdclub')->get('days', 365);
+        $days = ComponentHelper::getParams('com_tkdclub')->get('days', 365);
 
         // Select ids of table event_participants
         $query->select('a.id')
@@ -106,7 +111,7 @@ class TkdClubModelParticipant extends JModelAdmin
         // Create a new query object.
         $db = $this->getDbo();
         $query = $db->getQuery(true);
-        $days = JComponentHelper::getParams('com_tkdclub')->get('days', 365);
+        $days = ComponentHelper::getParams('com_tkdclub')->get('days', 365);
 
         // Select ids of table event_participants
         $query->select('a.firstname,a.lastname,a.email')
@@ -139,7 +144,7 @@ class TkdClubModelParticipant extends JModelAdmin
             // Check if email is there and already present
             if ($row->email != '' && !in_array($row->email, $all_emails))
             {
-                $table = JTable::getInstance($type = 'subscribers', $prefix= 'TkdclubTable', $config = array());
+                $table = Table::getInstance($type = 'subscribers', $prefix= 'TkdclubTable', $config = array());
                 $row->origin = 2; // set origin from form in database
                 $table->save($row) ? $stored++ : null;
             }

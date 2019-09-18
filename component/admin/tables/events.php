@@ -7,10 +7,12 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Table\Table;
+
 /**
 * Events table class
 */
-class TkdClubTableEvents extends JTable
+class TkdClubTableEvents extends Table
 {
     public function __construct(&$db)      
     {

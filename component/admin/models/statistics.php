@@ -7,7 +7,9 @@
 
 defined('_JEXEC') or die;
 
-class TkdclubModelStatistics extends JModelLegacy
+use Joomla\CMS\MVC\Model\BaseDatabaseModel;
+
+class TkdclubModelStatistics extends BaseDatabaseModel
 {
 
 }

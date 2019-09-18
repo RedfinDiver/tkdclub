@@ -7,11 +7,15 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+
 /**
  * Model-class for list view 'candidates'
  *
  */
-class TkdClubModelCandidates extends JModelList
+class TkdClubModelCandidates extends ListModel
 {   
     /**
      * Constructor.
@@ -196,7 +200,7 @@ class TkdClubModelCandidates extends JModelList
 	{
 		$pklist = implode(',', $pks);
 
-		$db	= JFactory::getDBO();
+		$db	= Factory::getDBO();
 		$query	= $db->getQuery(true);
 
         // select fields from members table
@@ -214,16 +218,16 @@ class TkdClubModelCandidates extends JModelList
 		$rows	= $db->loadRowList();
 
         $headers = array(
-            JText::_('COM_TKDCLUB_MEMBER_PASS'),                        // b.memberpass
-            JText::_('COM_TKDCLUB_MEMBER_FIRSTNAME'),                   // b.firstname
-            JText::_('COM_TKDCLUB_MEMBER_LASTNAME'),                    // b.lastname
-            JText::_('COM_TKDCLUB_MEMBER_BIRTHDATE'),                   // b.birthdate
-            JText::_('COM_TKDCLUB_MEMBER_SEX'),                         // b.sex
-            JText::_('COM_TKDCLUB_MEMBER_CITIZENSHIP'),                 // b.citizenship       
-            JText::_('COM_TKDCLUB_MEMBER_ZIP'),                         // b.zip  
-            JText::_('COM_TKDCLUB_MEMBER_CITY'),                        // b.city   
-            JText::_('COM_TKDCLUB_MEMBER_STREET'),                      // b.street 
-            JText::_('COM_TKDCLUB_CANDIDATE_PROMOTION_GRADE_ACHIEVE')   // a.grade_achive  
+            Text::_('COM_TKDCLUB_MEMBER_PASS'),                        // b.memberpass
+            Text::_('COM_TKDCLUB_MEMBER_FIRSTNAME'),                   // b.firstname
+            Text::_('COM_TKDCLUB_MEMBER_LASTNAME'),                    // b.lastname
+            Text::_('COM_TKDCLUB_MEMBER_BIRTHDATE'),                   // b.birthdate
+            Text::_('COM_TKDCLUB_MEMBER_SEX'),                         // b.sex
+            Text::_('COM_TKDCLUB_MEMBER_CITIZENSHIP'),                 // b.citizenship       
+            Text::_('COM_TKDCLUB_MEMBER_ZIP'),                         // b.zip  
+            Text::_('COM_TKDCLUB_MEMBER_CITY'),                        // b.city   
+            Text::_('COM_TKDCLUB_MEMBER_STREET'),                      // b.street 
+            Text::_('COM_TKDCLUB_CANDIDATE_PROMOTION_GRADE_ACHIEVE')   // a.grade_achive  
         );
 
 		// return the results as an array of items, each consisting of an array of fields

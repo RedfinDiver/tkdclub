@@ -7,10 +7,14 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+
 /**
  * Model-class for list view 'events'
  */
-class TkdClubModelEvents extends JModelList
+class TkdClubModelEvents extends ListModel
 {
     /**
 	 * Constructor.
@@ -151,7 +155,7 @@ class TkdClubModelEvents extends JModelList
         JLoader::register('TkdclubHelperGetEventParts', JPATH_COMPONENT_ADMINISTRATOR. '/helpers/geteventparts.php');
 		$pklist = implode(',', $pks);
 
-		$db	= JFactory::getDBO();
+		$db	= Factory::getDBO();
 		$query	= $db->getQuery(true);
 		$query-> select($db->quoteName(array('event_id', 'title', 'date', 'deadline', 'min', 'max', 'published', 'notes')))
 			  -> from($db->quoteName('#__tkdclub_events'))
@@ -170,15 +174,15 @@ class TkdClubModelEvents extends JModelList
         }
 
         $headers = array(
-            JText::_('COM_TKDCLUB_EVENT_ID'),                       // event_id
-            JText::_('COM_TKDCLUB_EVENT_TITLE'),                    // title
-            JText::_('COM_TKDCLUB_DATE'),                           // date
-            JText::_('COM_TKDCLUB_EVENT_DEADLINE'),                 // deadline
-            JText::_('COM_TKDCLUB_EVENT_MINIMUM_PARTICIPANTS'),     // min
-            JText::_('COM_TKDCLUB_EVENT_MAXIMUM_PARTICIPANTS'),     // max
-            JText::_('COM_TKDCLUB_EVENT_SUBSCRIBED_PARTICIPANTS'),  // subscribed
-            JText::_('JSTATUS'),                                    // published     
-            JText::_('COM_TKDCLUB_NOTES')                           // notes
+            Text::_('COM_TKDCLUB_EVENT_ID'),                       // event_id
+            Text::_('COM_TKDCLUB_EVENT_TITLE'),                    // title
+            Text::_('COM_TKDCLUB_DATE'),                           // date
+            Text::_('COM_TKDCLUB_EVENT_DEADLINE'),                 // deadline
+            Text::_('COM_TKDCLUB_EVENT_MINIMUM_PARTICIPANTS'),     // min
+            Text::_('COM_TKDCLUB_EVENT_MAXIMUM_PARTICIPANTS'),     // max
+            Text::_('COM_TKDCLUB_EVENT_SUBSCRIBED_PARTICIPANTS'),  // subscribed
+            Text::_('JSTATUS'),                                    // published     
+            Text::_('COM_TKDCLUB_NOTES')                           // notes
         );
 
 		// return the results as an array of items, each consisting of an array of fields

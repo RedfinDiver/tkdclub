@@ -14,11 +14,12 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\View\HtmlView;
 
 /**
  * view-class for view: 'participants'
  */
-class TkdClubViewParticipants extends JViewLegacy
+class TkdClubViewParticipants extends HtmlView
 {
     protected $items;
     protected $pagination;

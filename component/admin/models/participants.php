@@ -7,10 +7,15 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Component\ComponentHelper;
+
 /**
  * Model-class for list view 'participants'
  */
-class TkdClubModelParticipants extends JModelList
+class TkdClubModelParticipants extends ListModel
 {       
     /**
 	 * Constructor.
@@ -63,7 +68,7 @@ class TkdClubModelParticipants extends JModelList
         $this->setState('filter.published', $published);
 
         // Load the parameters.
-        $params = JComponentHelper::getParams('com_tkdclub');
+        $params = ComponentHelper::getParams('com_tkdclub');
         $this->setState('params', $params);
 
         parent::populateState($ordering, $direction);
@@ -177,7 +182,7 @@ class TkdClubModelParticipants extends JModelList
 	{
 		$pklist = implode(',', $pks);
 
-		$db	= JFactory::getDBO();
+		$db	= Factory::getDBO();
 		$query	= $db->getQuery(true);
 
         // select fields from events table
@@ -198,19 +203,19 @@ class TkdClubModelParticipants extends JModelList
 		$rows = $db->loadRowList();
 
         $headers = array(
-            JText::_('COM_TKDCLUB_EVENT_TITLE'),                        // a.title
-            JText::_('COM_TKDCLUB_DATE'),                               // a.date
-            JText::_('COM_TKDCLUB_PARTICIPANT_FIRSTNAME'),              // b.firstname
-            JText::_('COM_TKDCLUB_PARTICIPANT_LASTNAME'),               // b.lastname
-            JText::_('COM_TKDCLUB_PARTICIPANT_CLUB'),                   // b.clubname
-            JText::_('COM_TKDCLUB_PARTICIPANT_EMAIL'),                  // b.email
-            JText::_('COM_TKDCLUB_PARTICIPANT_REGISTERED'),             // b.participants       
-            JText::_('COM_TKDCLUB_PARTICIPANT_GRADE'),                  // b.grade  
-            JText::_('COM_TKDCLUB_PARTICIPANT_AGE'),                    // b.age   
-            JText::_('COM_TKDCLUB_PARTICIPANT_MENUITEM_FIELD_USER1'),   // b.user1
-            JText::_('COM_TKDCLUB_PARTICIPANT_MENUITEM_FIELD_USER2'),   // b.user2 
-            JText::_('COM_TKDCLUB_PARTICIPANT_MENUITEM_FIELD_USER3'),   // b.user3 
-            JText::_('COM_TKDCLUB_PARTICIPANT_MENUITEM_FIELD_USER4')    // b.user4
+            Text::_('COM_TKDCLUB_EVENT_TITLE'),                        // a.title
+            Text::_('COM_TKDCLUB_DATE'),                               // a.date
+            Text::_('COM_TKDCLUB_PARTICIPANT_FIRSTNAME'),              // b.firstname
+            Text::_('COM_TKDCLUB_PARTICIPANT_LASTNAME'),               // b.lastname
+            Text::_('COM_TKDCLUB_PARTICIPANT_CLUB'),                   // b.clubname
+            Text::_('COM_TKDCLUB_PARTICIPANT_EMAIL'),                  // b.email
+            Text::_('COM_TKDCLUB_PARTICIPANT_REGISTERED'),             // b.participants       
+            Text::_('COM_TKDCLUB_PARTICIPANT_GRADE'),                  // b.grade  
+            Text::_('COM_TKDCLUB_PARTICIPANT_AGE'),                    // b.age   
+            Text::_('COM_TKDCLUB_PARTICIPANT_MENUITEM_FIELD_USER1'),   // b.user1
+            Text::_('COM_TKDCLUB_PARTICIPANT_MENUITEM_FIELD_USER2'),   // b.user2 
+            Text::_('COM_TKDCLUB_PARTICIPANT_MENUITEM_FIELD_USER3'),   // b.user3 
+            Text::_('COM_TKDCLUB_PARTICIPANT_MENUITEM_FIELD_USER4')    // b.user4
         );
 
 		// return the results as an array of items, each consisting of an array of fields

@@ -14,8 +14,9 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\MVC\View\HtmlView;
 
-class TkdClubViewSubscribers extends JViewLegacy
+class TkdClubViewSubscribers extends HtmlView
 {
     protected $items;
     // public    $togglestats;

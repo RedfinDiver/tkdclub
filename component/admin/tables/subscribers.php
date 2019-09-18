@@ -7,10 +7,13 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Factory;
+
 /**
  * Newsletter subscriber table class
  */
-class TkdClubTableSubscribers extends JTable
+class TkdClubTableSubscribers extends Table
 {
     public function __construct(&$db)      
     {
@@ -19,8 +22,8 @@ class TkdClubTableSubscribers extends JTable
 
     public function store($updateNulls = false) {
         
-        $date   = JFactory::getDate()->toSql();
-        $userId = JFactory::getUser()->id;
+        $date   = Factory::getDate()->toSql();
+        $userId = Factory::getUser()->id;
 
         $this->modified = $date;
 

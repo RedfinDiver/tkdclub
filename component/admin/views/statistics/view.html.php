@@ -8,6 +8,11 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Toolbar\ToolbarHelper;
+
 JText::script('COM_TKDCLUB_MEMBER_STATE_ACTIVE');
 JText::script('COM_TKDCLUB_MEMBER_STATE_INACTIVE');
 JText::script('COM_TKDCLUB_MEMBER_STATE_SUPPORTER');
@@ -32,7 +37,7 @@ JText::script('JGLOBAL_NO_MATCHING_RESULTS');
 /**
  * View class for statistics view
  */
-class TkdClubViewStatistics extends JViewLegacy
+class TkdClubViewStatistics extends HtmlView
 {
     public function display($tpl = null)
     {
@@ -43,11 +48,11 @@ class TkdClubViewStatistics extends JViewLegacy
 
     public function addToolbar()
     {
-        $clubname = JComponentHelper::getParams('com_tkdclub')->get('club_name', JText::_('COM_TKDCLUB'));
+        $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
 
-        JToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_STATISTIC_ADMIN_VIEW'), 'tkdclub');
+        ToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_STATISTIC_ADMIN_VIEW'), 'tkdclub');
 
         $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/statistik.html';
-        JToolbarHelper::help('', false, $help_url);
+        ToolbarHelper::help('', false, $help_url);
     }
 }

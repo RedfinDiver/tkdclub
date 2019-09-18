@@ -13,13 +13,14 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\View\HtmlView;
 
 JHtml::stylesheet('administrator/components/com_tkdclub/assets/css/tkdclub.css');
 
 /**
  * view-class for edit-view: 'participant'
  */
-class TkdClubViewParticipant extends JViewLegacy
+class TkdClubViewParticipant extends HtmlView
 {
     protected $item;
     protected $form;

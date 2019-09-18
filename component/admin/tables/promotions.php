@@ -7,10 +7,13 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Factory;
+
 /**
  * promotions table class
  */
-class TkdClubTablePromotions extends JTable
+class TkdClubTablePromotions extends Table
 {
     public function __construct(&$db)      
     {
@@ -20,8 +23,8 @@ class TkdClubTablePromotions extends JTable
 
     public function store($updateNulls = false) {
         
-        $date   = JFactory::getDate()->toSql();
-        $userId = JFactory::getUser()->id;
+        $date   = Factory::getDate()->toSql();
+        $userId = Factory::getUser()->id;
 
         $this->modified = $date;
 

@@ -7,15 +7,19 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\MVC\Model\AdminModel;
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Factory;
+
 /**
  * Model-class for edit view 'training'
  */
-class TkdClubModelTraining extends JModelAdmin
+class TkdClubModelTraining extends AdminModel
 {
 
     public function getTable($type = 'Trainings', $prefix = 'TkdClubTable', $config = array())
     {
-        return JTable::getInstance($type, $prefix, $config);
+        return Table::getInstance($type, $prefix, $config);
     }
 
     public function getForm($data = array(), $loadData = true)
@@ -33,7 +37,7 @@ class TkdClubModelTraining extends JModelAdmin
 
     protected function loadFormData()
     {
-        $app =  JFactory::getApplication();
+        $app =  Factory::getApplication();
         $data = $app->getUserState('com_tkdclub.edit.training.data', array());
 
         if(empty($data))
@@ -68,7 +72,7 @@ class TkdClubModelTraining extends JModelAdmin
 
         foreach ($parameters as $parameter)
         {
-            $db = JFactory::getDbo();
+            $db = Factory::getDbo();
             $query = $db->getQuery(true);
 
             // Fields to update.

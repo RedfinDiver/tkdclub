@@ -7,10 +7,15 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\MVC\Model\AdminModel;
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+
 /**
  * Model-class for edit view 'candidate'
  */
-class TkdClubModelCandidate extends JModelAdmin
+class TkdClubModelCandidate extends AdminModel
 {   
     /**
      * Method to get a table object, load it if necessary.
@@ -25,7 +30,7 @@ class TkdClubModelCandidate extends JModelAdmin
      */
     public function getTable($type = 'Candidates', $prefix = 'TkdClubTable', $config = array())
     {
-        return JTable::getInstance($type, $prefix, $config);
+        return Table::getInstance($type, $prefix, $config);
     }
 
     /**
@@ -60,7 +65,7 @@ class TkdClubModelCandidate extends JModelAdmin
 	 */
     protected function loadFormData()
     {
-        $app =  JFactory::getApplication();
+        $app =  Factory::getApplication();
         $data = $app->getUserState('com_tkdclub.edit.candidate.data', array());
 
         if(empty($data))
@@ -85,7 +90,7 @@ class TkdClubModelCandidate extends JModelAdmin
 
         if ($item->id_candidate >= (int)1)
         {      
-            $db = JFactory::getDbo();
+            $db = Factory::getDbo();
             $query = $db->getQuery(TRUE);
 
             $query
@@ -103,7 +108,7 @@ class TkdClubModelCandidate extends JModelAdmin
             }
             else
             {
-                $item2['lastpromotion'] = JHtml::_('date', $item2['lastpromotion'], JText::_('DATE_FORMAT_LC4'));
+                $item2['lastpromotion'] = JHtml::_('date', $item2['lastpromotion'], Text::_('DATE_FORMAT_LC4'));
             }
             
             // Append the array
@@ -113,7 +118,7 @@ class TkdClubModelCandidate extends JModelAdmin
         if (!isset($item->id_promotion)) 
         {
             // Prefill the promotion field with prior selected value for convinience
-            $session = JFactory::getSession();
+            $session = Factory::getSession();
             $preselected_promotion = $session->get('preselected_promotion', '', 'tkdclub');
             $item->id_promotion = $preselected_promotion;
         }
@@ -124,7 +129,7 @@ class TkdClubModelCandidate extends JModelAdmin
     public function save($data)
     {
         // Store the selected promotion field in the session
-        $session = JFactory::getSession();
+        $session = Factory::getSession();
         $session->set('preselected_promotion', $data['id_promotion'], 'tkdclub');
 
         return parent::save($data);
@@ -139,7 +144,7 @@ class TkdClubModelCandidate extends JModelAdmin
      */
     public function checkPromotionsPublished()
     {
-        $db = JFactory::getDbo();
+        $db = Factory::getDbo();
         $query = $db->getQuery(TRUE);
         $query->select('COUNT(*)');
         $query->from($db->quoteName('#__tkdclub_promotions'))
@@ -154,7 +159,7 @@ class TkdClubModelCandidate extends JModelAdmin
      */
     public function getCandidateData($candidate_id, $promotion_id)
     {
-        $db = JFactory::getDbo();
+        $db = Factory::getDbo();
         $query = $db->getQuery(true);
         
         $query
@@ -198,7 +203,7 @@ class TkdClubModelCandidate extends JModelAdmin
      */
     private function getAlreadySubscribed($candidate_id, $promotion_id)
     {
-        $db = JFactory::getDbo();
+        $db = Factory::getDbo();
         $query = $db->getQuery(true);
         
         $query
