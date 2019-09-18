@@ -7,7 +7,10 @@
 
 defined('_JEXEC') or die;
 
-JFormHelper::loadFieldClass('list');
+use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\Factory;
+
+FormHelper::loadFieldClass('list');
 
 /**
  * Supports the options-markup for all candidates
@@ -30,7 +33,7 @@ class JFormFieldCandidates extends JFormFieldList
     public function getOptions()
     {
             // loading all member ids for candidates
-            $db = JFactory::getDbo();
+            $db = Factory::getDbo();
             $query = $db->getQuery(true);
 
             // select all necessary columns from candidates table

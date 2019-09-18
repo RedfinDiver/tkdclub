@@ -8,7 +8,11 @@
 
 defined('_JEXEC') or die;
 
-JFormHelper::loadFieldClass('list');
+use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Component\ComponentHelper;
+
+FormHelper::loadFieldClass('list');
 JLoader::register('Helper', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/tkdclub.php');
 
 /**
@@ -30,7 +34,7 @@ class JFormFieldChampionshiptypes extends JFormFieldList
 
         // check if field is used as filter, then get options from the database entries
         if ($this->element['isFilter'] == 'true') {
-            $db = JFactory::getDbo();
+            $db = Factory::getDbo();
             $query = $db->getQuery(true);
             $query->select('DISTINCT(type)');
             $query->from($db->quoteName('#__tkdclub_medals'));
@@ -45,7 +49,7 @@ class JFormFieldChampionshiptypes extends JFormFieldList
             }
         } else // not used as filter field, so get the options from the parameter
         {
-            $types = Helper::getList(JComponentHelper::getParams('com_tkdclub')->get('championship_types'));
+            $types = Helper::getList(ComponentHelper::getParams('com_tkdclub')->get('championship_types'));
 
             if ($types) {
                 foreach ($types as $type) {
