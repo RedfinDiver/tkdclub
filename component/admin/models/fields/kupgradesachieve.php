@@ -7,11 +7,15 @@
 
 defined('_JEXEC') or die;
 
-JFormHelper::loadFieldClass('list');
+use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\HTML\HTMLHelper;
+
+FormHelper::loadFieldClass('list');
 
 /**
  * Supports the options-markup for taekwondo-grades
- * used frontend for event subscription
+ * used in frontend for event subscription
  */
 class JFormFieldKupgradesachieve extends JFormFieldList
 {       
@@ -34,22 +38,22 @@ class JFormFieldKupgradesachieve extends JFormFieldList
         {
             $grades = array
 
-            (   '10. Kup' => '10. Kup' . JText::_('COM_TKDCLUB_10_KUP_DESC'),
-                '09. Kup' => '09. Kup' . JText::_('COM_TKDCLUB_9_KUP_DESC'),
-                '08. Kup' => '08. Kup' . JText::_('COM_TKDCLUB_8_KUP_DESC'),
-                '07. Kup' => '07. Kup' . JText::_('COM_TKDCLUB_7_KUP_DESC'),
-                '06. Kup' => '06. Kup' . JText::_('COM_TKDCLUB_6_KUP_DESC'),
-                '05. Kup' => '05. Kup' . JText::_('COM_TKDCLUB_5_KUP_DESC'),
-                '04. Kup' => '04. Kup' . JText::_('COM_TKDCLUB_4_KUP_DESC'),
-                '03. Kup' => '03. Kup' . JText::_('COM_TKDCLUB_3_KUP_DESC'),
-                '02. Kup' => '02. Kup' . JText::_('COM_TKDCLUB_2_KUP_DESC'),
-                '01. Kup' => '01. Kup' . JText::_('COM_TKDCLUB_1_KUP_DESC'),
+            (   '10. Kup' => '10. Kup' . Text::_('COM_TKDCLUB_10_KUP_DESC'),
+                '09. Kup' => '09. Kup' . Text::_('COM_TKDCLUB_9_KUP_DESC'),
+                '08. Kup' => '08. Kup' . Text::_('COM_TKDCLUB_8_KUP_DESC'),
+                '07. Kup' => '07. Kup' . Text::_('COM_TKDCLUB_7_KUP_DESC'),
+                '06. Kup' => '06. Kup' . Text::_('COM_TKDCLUB_6_KUP_DESC'),
+                '05. Kup' => '05. Kup' . Text::_('COM_TKDCLUB_5_KUP_DESC'),
+                '04. Kup' => '04. Kup' . Text::_('COM_TKDCLUB_4_KUP_DESC'),
+                '03. Kup' => '03. Kup' . Text::_('COM_TKDCLUB_3_KUP_DESC'),
+                '02. Kup' => '02. Kup' . Text::_('COM_TKDCLUB_2_KUP_DESC'),
+                '01. Kup' => '01. Kup' . Text::_('COM_TKDCLUB_1_KUP_DESC'),
             );
 
             foreach($grades as $key => $grade)
             {
 
-                $options[] = JHtml::_('select.option', $key, $grade);
+                $options[] = HTMLHelper::_('select.option', $key, $grade);
 
             }
 

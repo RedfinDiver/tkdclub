@@ -10,6 +10,8 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
 
 FormHelper::loadFieldClass('list');
 JLoader::register('Helper', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/tkdclub.php');
@@ -48,12 +50,12 @@ class JFormFieldTrainers extends JFormFieldList
             $trainers = Helper::getTrainer($fromTrainingsTable = false);
 
             if (!$trainers) {
-                $app->enqueueMessage(JText::_('COM_TKDCLUB_TRAINING_NO_TRAINERS_DEFINED'), 'warning');
+                $app->enqueueMessage(Text::_('COM_TKDCLUB_TRAINING_NO_TRAINERS_DEFINED'), 'warning');
             }
         }
 
         foreach ($trainers as $id => $name) {
-            $options[] = JHtml::_('select.option', $id, $name);
+            $options[] = HTMLHelper::_('select.option', $id, $name);
         }
 
         if ($this->form) //checking if we are in a form, then merge additional xml data

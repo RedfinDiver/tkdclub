@@ -8,7 +8,12 @@
 
 defined('_JEXEC') or die;
 
-JFormHelper::loadFieldClass('list');
+use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Component\ComponentHelper;
+
+FormHelper::loadFieldClass('list');
 JLoader::register('Helper', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/tkdclub.php');
 
 /**
@@ -31,38 +36,38 @@ class JFormFieldLicenses extends JFormFieldList
      */
     public function getOptions()
     {
-        $functions = Helper::getList(JComponentHelper::getParams('com_tkdclub')->get('licenses'));
+        $functions = Helper::getList(ComponentHelper::getParams('com_tkdclub')->get('licenses'));
         $options = array();
 
         if ($functions) {
             foreach ($functions as $function) {
-                $options[] = JHtml::_('select.option', $function, $function);
+                $options[] = HTMLHelper::_('select.option', $function, $function);
             }
         }
 
         // make sure to have always some common standard licenses to select from
         if ($this->form->getValue('sex') == 'male' || $this->form->getValue('sex') == '') {
-            $options[] = JHtml::_('select.option', 'trainer_d', JText::_('COM_TKDCLUB_SELECT_TRAINER_D'));
-            $options[] = JHtml::_('select.option', 'trainer_c', JText::_('COM_TKDCLUB_SELECT_TRAINER_C'));
-            $options[] = JHtml::_('select.option', 'trainer_b', JText::_('COM_TKDCLUB_SELECT_TRAINER_B'));
-            $options[] = JHtml::_('select.option', 'trainer_a', JText::_('COM_TKDCLUB_SELECT_TRAINER_A'));
-            $options[] = JHtml::_('select.option', 'referee_r_ky', JText::_('COM_TKDCLUB_SELECT_REFEREE_R_KY'));
-            $options[] = JHtml::_('select.option', 'referee_r_po', JText::_('COM_TKDCLUB_SELECT_REFEREE_R_PO'));
-            $options[] = JHtml::_('select.option', 'referee_s_ky', JText::_('COM_TKDCLUB_SELECT_REFEREE_S_KY'));
-            $options[] = JHtml::_('select.option', 'referee_s_po', JText::_('COM_TKDCLUB_SELECT_REFEREE_S_PO'));
-            $options[] = JHtml::_('select.option', 'referee_i_ky', JText::_('COM_TKDCLUB_SELECT_REFEREE_I_KY'));
-            $options[] = JHtml::_('select.option', 'referee_i_po', JText::_('COM_TKDCLUB_SELECT_REFEREE_I_PO'));
+            $options[] = HTMLHelper::_('select.option', 'trainer_d', Text::_('COM_TKDCLUB_SELECT_TRAINER_D'));
+            $options[] = HTMLHelper::_('select.option', 'trainer_c', Text::_('COM_TKDCLUB_SELECT_TRAINER_C'));
+            $options[] = HTMLHelper::_('select.option', 'trainer_b', Text::_('COM_TKDCLUB_SELECT_TRAINER_B'));
+            $options[] = HTMLHelper::_('select.option', 'trainer_a', Text::_('COM_TKDCLUB_SELECT_TRAINER_A'));
+            $options[] = HTMLHelper::_('select.option', 'referee_r_ky', Text::_('COM_TKDCLUB_SELECT_REFEREE_R_KY'));
+            $options[] = HTMLHelper::_('select.option', 'referee_r_po', Text::_('COM_TKDCLUB_SELECT_REFEREE_R_PO'));
+            $options[] = HTMLHelper::_('select.option', 'referee_s_ky', Text::_('COM_TKDCLUB_SELECT_REFEREE_S_KY'));
+            $options[] = HTMLHelper::_('select.option', 'referee_s_po', Text::_('COM_TKDCLUB_SELECT_REFEREE_S_PO'));
+            $options[] = HTMLHelper::_('select.option', 'referee_i_ky', Text::_('COM_TKDCLUB_SELECT_REFEREE_I_KY'));
+            $options[] = HTMLHelper::_('select.option', 'referee_i_po', Text::_('COM_TKDCLUB_SELECT_REFEREE_I_PO'));
         } elseif ($this->form->getValue('sex') == 'female') {
-            $options[] = JHtml::_('select.option', 'trainer_d', JText::_('COM_TKDCLUB_SELECT_TRAINER_D_FEMALE'));
-            $options[] = JHtml::_('select.option', 'trainer_c', JText::_('COM_TKDCLUB_SELECT_TRAINER_C_FEMALE'));
-            $options[] = JHtml::_('select.option', 'trainer_b', JText::_('COM_TKDCLUB_SELECT_TRAINER_B_FEMALE'));
-            $options[] = JHtml::_('select.option', 'trainer_a', JText::_('COM_TKDCLUB_SELECT_TRAINER_A_FEMALE'));
-            $options[] = JHtml::_('select.option', 'referee_r_ky', JText::_('COM_TKDCLUB_SELECT_REFEREE_R_KY_FEMALE'));
-            $options[] = JHtml::_('select.option', 'referee_r_po', JText::_('COM_TKDCLUB_SELECT_REFEREE_R_PO_FEMALE'));
-            $options[] = JHtml::_('select.option', 'referee_s_ky', JText::_('COM_TKDCLUB_SELECT_REFEREE_S_KY_FEMALE'));
-            $options[] = JHtml::_('select.option', 'referee_s_po', JText::_('COM_TKDCLUB_SELECT_REFEREE_S_PO_FEMALE'));
-            $options[] = JHtml::_('select.option', 'referee_i_ky', JText::_('COM_TKDCLUB_SELECT_REFEREE_I_KY_FEMALE'));
-            $options[] = JHtml::_('select.option', 'referee_i_po', JText::_('COM_TKDCLUB_SELECT_REFEREE_I_PO_FEMALE'));
+            $options[] = HTMLHelper::_('select.option', 'trainer_d', Text::_('COM_TKDCLUB_SELECT_TRAINER_D_FEMALE'));
+            $options[] = HTMLHelper::_('select.option', 'trainer_c', Text::_('COM_TKDCLUB_SELECT_TRAINER_C_FEMALE'));
+            $options[] = HTMLHelper::_('select.option', 'trainer_b', Text::_('COM_TKDCLUB_SELECT_TRAINER_B_FEMALE'));
+            $options[] = HTMLHelper::_('select.option', 'trainer_a', Text::_('COM_TKDCLUB_SELECT_TRAINER_A_FEMALE'));
+            $options[] = HTMLHelper::_('select.option', 'referee_r_ky', Text::_('COM_TKDCLUB_SELECT_REFEREE_R_KY_FEMALE'));
+            $options[] = HTMLHelper::_('select.option', 'referee_r_po', Text::_('COM_TKDCLUB_SELECT_REFEREE_R_PO_FEMALE'));
+            $options[] = HTMLHelper::_('select.option', 'referee_s_ky', Text::_('COM_TKDCLUB_SELECT_REFEREE_S_KY_FEMALE'));
+            $options[] = HTMLHelper::_('select.option', 'referee_s_po', Text::_('COM_TKDCLUB_SELECT_REFEREE_S_PO_FEMALE'));
+            $options[] = HTMLHelper::_('select.option', 'referee_i_ky', Text::_('COM_TKDCLUB_SELECT_REFEREE_I_KY_FEMALE'));
+            $options[] = HTMLHelper::_('select.option', 'referee_i_po', Text::_('COM_TKDCLUB_SELECT_REFEREE_I_PO_FEMALE'));
         }
 
         $options = array_merge(parent::getOptions(), $options);

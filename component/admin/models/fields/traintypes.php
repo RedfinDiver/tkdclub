@@ -8,7 +8,13 @@
 
 defined('_JEXEC') or die;
 
-JFormHelper::loadFieldClass('list');
+use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Component\ComponentHelper;
+
+FormHelper::loadFieldClass('list');
 JLoader::register('Helper', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/list.php');
 
 /**
@@ -30,7 +36,7 @@ class JFormFieldTraintypes extends JFormFieldList
 
         // check if field is used as filter, then get options from the database entries
         if ($this->element['isFilter'] == 'true') {
-            $db = JFactory::getDbo();
+            $db = Factory::getDbo();
             $query = $db->getQuery(true);
             $query->select('DISTINCT(type)');
             $query->from($db->quoteName('#__tkdclub_trainings'));
@@ -40,18 +46,18 @@ class JFormFieldTraintypes extends JFormFieldList
             if ($types = $db->loadColumn()) {
                 foreach ($types as $type) {
                     // Just rendering existing types, not empty strings
-                    $type != '' ? $options[] = JHtml::_('select.option', $type, $type) : null;
+                    $type != '' ? $options[] = HTMLHelper::_('select.option', $type, $type) : null;
                 }
             }
         } else // not used as filter field, so get the training types from the parameter
         {
-            $types = Helper::getList(JComponentHelper::getParams('com_tkdclub')->get('training_types'));
+            $types = Helper::getList(ComponentHelper::getParams('com_tkdclub')->get('training_types'));
 
             if (!$types) {
-                JFactory::getApplication()->enqueueMessage(JText::_('COM_TKDCLUB_TRAINING_NO_TRAINTYPES_DEFINED'), 'warning');
+                Factory::getApplication()->enqueueMessage(Text::_('COM_TKDCLUB_TRAINING_NO_TRAINTYPES_DEFINED'), 'warning');
             } else {
                 foreach ($types as $type) {
-                    $options[] = JHtml::_('select.option', $type, $type);
+                    $options[] = HTMLHelper::_('select.option', $type, $type);
                 }
             }
         }

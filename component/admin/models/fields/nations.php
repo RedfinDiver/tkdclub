@@ -8,7 +8,10 @@
 
 defined('_JEXEC') or die;
 
-JFormHelper::loadFieldClass('list');
+use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\HTML\HTMLHelper;
+
+FormHelper::loadFieldClass('list');
 JLoader::register('Helper', JPATH_ROOT . '/administrator/components/com_tkdclub/helpers/tkdclub.php');
 
 /**
@@ -39,7 +42,7 @@ class JFormFieldNations extends JFormFieldList
             ->get('nations', ',AUT,GER,SUI,ITA,CRO,BIH,SRB'));
 
         foreach ($nations as $nation) {
-            $options[] = JHtml::_('select.option', $nation, $nation);
+            $options[] = HTMLHelper::_('select.option', $nation, $nation);
         }
 
         $options = array_merge(parent::getOptions(), $options);

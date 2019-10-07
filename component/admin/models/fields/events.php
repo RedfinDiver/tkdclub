@@ -7,7 +7,12 @@
 
 defined('_JEXEC') or die;
 
-JFormHelper::loadFieldClass('list');
+use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\HTML\HTMLHelper;
+
+FormHelper::loadFieldClass('list');
 
 /**
  * Supports the options-markup for events
@@ -29,7 +34,7 @@ class JFormFieldEvents extends JFormFieldList
      */
     public function getOptions()
     {   
-        $db = JFactory::getDbo();
+        $db = Factory::getDbo();
         $query = $db->getQuery(true);
         $options = array();
 
@@ -49,7 +54,7 @@ class JFormFieldEvents extends JFormFieldList
         foreach ($events as $event)
         {
             $title = htmlspecialchars(substr($event->title, 0, 18));
-            $options[] = JHtml::_('select.option', $event->event_id, JHtml::_('date', $event->date, JText::_('DATE_FORMAT_LC4')) . ' ' . ' - ' . $title . '...');
+            $options[] = HTMLHelper::_('select.option', $event->event_id, HTMLHelper::_('date', $event->date, Text::_('DATE_FORMAT_LC4')) . ' ' . ' - ' . $title . '...');
         }
         
         if ($this->form) //checking if we are in a form, then merge additional xml data

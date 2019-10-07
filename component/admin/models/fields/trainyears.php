@@ -7,7 +7,12 @@
 
 defined('_JEXEC') or die;
 
-JFormHelper::loadFieldClass('list');
+use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Component\ComponentHelper;
+
+FormHelper::loadFieldClass('list');
 
 /**
  * Supports the options-markup for training years
@@ -31,7 +36,7 @@ class JFormFieldTrainyears extends JFormFieldList
      */
     public function getOptions()
     {   
-        $db = JFactory::getDbo();
+        $db = Factory::getDbo();
         $query = $db->getQuery(true);
 
         $query->select('DISTINCT YEAR(date)');
@@ -42,7 +47,7 @@ class JFormFieldTrainyears extends JFormFieldList
         if ($years = $db->loadColumn())
         {
             // maximum years to show as set in the configuration
-            $number_years = JComponentHelper::getParams('com_tkdclub')->get('training_years', 5);
+            $number_years = ComponentHelper::getParams('com_tkdclub')->get('training_years', 5);
             $min_year = max($years) - $number_years;
 
             foreach ($years as $key => $year)
@@ -55,11 +60,11 @@ class JFormFieldTrainyears extends JFormFieldList
             
             foreach($years as $year)
             {
-                $options[] = JHtml::_('select.option', $year, $year);
+                $options[] = HTMLHelper::_('select.option', $year, $year);
             }
             
 
-            if ($this->form) //checking if we are in a form, then merge additional xml data
+            if ($this->form) // if we are in a form merge additional xml data
             {
                 $options = array_merge(parent::getOptions(), $options); 
             }

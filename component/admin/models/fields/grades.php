@@ -7,7 +7,11 @@
 
 defined('_JEXEC') or die;
 
-JFormHelper::loadFieldClass('list');
+use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\HTML\HTMLHelper;
+
+FormHelper::loadFieldClass('list');
 
 /**
  * Supports the options-markup for taekwondo-grades
@@ -24,9 +28,9 @@ class JFormFieldGrades extends JFormFieldList
      */        
     public function getOptions()
     {
-        $list = JText::_('COM_TKDCLUB_NO_GRADE_LISTVIEW');
-        $sgrades = JText::_('COM_TKDCLUB_SELECT_STUDENTGRADE');
-        $mgrades = JText::_('COM_TKDCLUB_SELECT_MASTERGRADE');
+        $list = Text::_('COM_TKDCLUB_NO_GRADE_LISTVIEW');
+        $sgrades = Text::_('COM_TKDCLUB_SELECT_STUDENTGRADE');
+        $mgrades = Text::_('COM_TKDCLUB_SELECT_MASTERGRADE');
         $grades = array
 
         (       $list => '',
@@ -60,13 +64,13 @@ class JFormFieldGrades extends JFormFieldList
         foreach($grades as $key => $grade)
         {
 
-            $options[] = JHtml::_('select.option', $key, $grade);
+            $options[] = HTMLHelper::_('select.option', $key, $grade);
 
         }
 
         $options[0]->value = 0;
         $options[1]->value = 'students';
-        $options[12]->value ='masters';
+        $options[12]->value = 'masters';
 
         return array_merge(parent::getOptions(), $options);  
 

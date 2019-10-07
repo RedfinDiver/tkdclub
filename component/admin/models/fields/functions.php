@@ -8,7 +8,12 @@
 
 defined('_JEXEC') or die;
 
-JFormHelper::loadFieldClass('list');
+use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\HTML\HTMLHelper;
+
+FormHelper::loadFieldClass('list');
 JLoader::register('Helper', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/tkdclub.php');
 
 /**
@@ -31,28 +36,28 @@ class JFormFieldFunctions extends JFormFieldList
      */
     public function getOptions()
     {
-        $functions = Helper::getList(JComponentHelper::getParams('com_tkdclub')->get('functions'));
+        $functions = Helper::getList(ComponentHelper::getParams('com_tkdclub')->get('functions'));
         $options = array();
 
         if ($functions) {
             foreach ($functions as $function) {
-                $options[] = JHtml::_('select.option', $function, $function);
+                $options[] = HTMLHelper::_('select.option', $function, $function);
             }
         }
 
         // make sure to have always some common standard function to select from
         if ($this->form->getValue('sex') == 'male' || $this->form->getValue('sex') == '') {
-            $options[] = JHtml::_('select.option', 'president', JText::_('COM_TKDCLUB_SELECT_PRESIDENT'));
-            $options[] = JHtml::_('select.option', 'vpresident', JText::_('COM_TKDCLUB_SELECT_VICE_PRESIDENT'));
-            $options[] = JHtml::_('select.option', 'treasurer', JText::_('COM_TKDCLUB_SELECT_TREASURER'));
-            $options[] = JHtml::_('select.option', 'secratary', JText::_('COM_TKDCLUB_SELECT_SECRETARY'));
-            $options[] = JHtml::_('select.option', 'trainer', JText::_('COM_TKDCLUB_SELECT_TRAINER_IN_MEMBERFORM'));
+            $options[] = HTMLHelper::_('select.option', 'president', Text::_('COM_TKDCLUB_SELECT_PRESIDENT'));
+            $options[] = HTMLHelper::_('select.option', 'vpresident', Text::_('COM_TKDCLUB_SELECT_VICE_PRESIDENT'));
+            $options[] = HTMLHelper::_('select.option', 'treasurer', Text::_('COM_TKDCLUB_SELECT_TREASURER'));
+            $options[] = HTMLHelper::_('select.option', 'secratary', Text::_('COM_TKDCLUB_SELECT_SECRETARY'));
+            $options[] = HTMLHelper::_('select.option', 'trainer', Text::_('COM_TKDCLUB_SELECT_TRAINER_IN_MEMBERFORM'));
         } elseif ($this->form->getValue('sex') == 'female') {
-            $options[] = JHtml::_('select.option', 'president', JText::_('COM_TKDCLUB_SELECT_PRESIDENT_FEMALE'));
-            $options[] = JHtml::_('select.option', 'vpresident', JText::_('COM_TKDCLUB_SELECT_VICE_PRESIDENT_FEMALE'));
-            $options[] = JHtml::_('select.option', 'treasurer', JText::_('COM_TKDCLUB_SELECT_TREASURER_FEMALE'));
-            $options[] = JHtml::_('select.option', 'secratary', JText::_('COM_TKDCLUB_SELECT_SECRETARY_FEMALE'));
-            $options[] = JHtml::_('select.option', 'trainer', JText::_('COM_TKDCLUB_SELECT_TRAINER_IN_MEMBERFORM_FEMALE'));
+            $options[] = HTMLHelper::_('select.option', 'president', Text::_('COM_TKDCLUB_SELECT_PRESIDENT_FEMALE'));
+            $options[] = HTMLHelper::_('select.option', 'vpresident', Text::_('COM_TKDCLUB_SELECT_VICE_PRESIDENT_FEMALE'));
+            $options[] = HTMLHelper::_('select.option', 'treasurer', Text::_('COM_TKDCLUB_SELECT_TREASURER_FEMALE'));
+            $options[] = HTMLHelper::_('select.option', 'secratary', Text::_('COM_TKDCLUB_SELECT_SECRETARY_FEMALE'));
+            $options[] = HTMLHelper::_('select.option', 'trainer', Text::_('COM_TKDCLUB_SELECT_TRAINER_IN_MEMBERFORM_FEMALE'));
         }
 
         $options = array_merge(parent::getOptions(), $options);

@@ -7,7 +7,12 @@
 
 defined('_JEXEC') or die;
 
-JFormHelper::loadFieldClass('list');
+use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+
+FormHelper::loadFieldClass('list');
 
 /**
  * Supports the options-markup for promotions
@@ -30,7 +35,7 @@ class JFormFieldPromotions extends JFormFieldList
      */
     public function getOptions()
     {
-        $db = JFactory::getDbo();
+        $db = Factory::getDbo();
         $query = $db->getQuery(true);
 
         // add columns from promotions list
@@ -54,15 +59,15 @@ class JFormFieldPromotions extends JFormFieldList
 
             if ($this->element['isCandidateForm'] == 'true') // checking for candidate form, in select field in list view we don´t need promotion type in text
             {
-                $promotion->type == 'kup' ? $type = JText::_('COM_TKDCLUB_KUP') : $type = JText::_('COM_TKDCLUB_DAN');
-                $text = JHtml::_('date', $promotion->date, JText::_('DATE_FORMAT_LC4')) . ' ' . '(' . $promotion->city . ' / ' . $type .')';
+                $promotion->type == 'kup' ? $type = Text::_('COM_TKDCLUB_KUP') : $type = Text::_('COM_TKDCLUB_DAN');
+                $text = HTMLHelper::_('date', $promotion->date, Text::_('DATE_FORMAT_LC4')) . ' ' . '(' . $promotion->city . ' / ' . $type .')';
             }
             else
             {
-                $text = JHtml::_('date', $promotion->date, JText::_('DATE_FORMAT_LC4')) . ' ' . '(' . $promotion->city .')';
+                $text = HTMLHelper::_('date', $promotion->date, Text::_('DATE_FORMAT_LC4')) . ' ' . '(' . $promotion->city .')';
             }
 
-            $options[] = JHtml::_('select.option', $promotion->promotion_id, $text);
+            $options[] = HTMLHelper::_('select.option', $promotion->promotion_id, $text);
         }
 
         if ($this->form) //checking if we are in a form, then merge additional xml data

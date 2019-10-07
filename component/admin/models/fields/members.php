@@ -7,7 +7,11 @@
 
 defined('_JEXEC') or die;
 
-JFormHelper::loadFieldClass('list');
+use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+
+FormHelper::loadFieldClass('list');
 
 /**
  * Supports the options-markup from parameters
@@ -30,14 +34,14 @@ class JFormFieldMembers extends JFormFieldList
      */       
     public function getOptions()
     {
-        //add members from the members table
-        $db = JFactory::getDBO();
+        // add members from the members table
+        $db = Factory::getDBO();
         $query = $db->getQuery(true);
 
         $query->select($db->quoteName(array('member_id', 'firstname', 'lastname')));
         $query->from($db->quoteName('#__tkdclub_members'));
 
-        //only active members if it is set in the xml
+        // only active members if it is set in the xml
         if ($this->element['onlyactive'] == 'true')
         {
             $query->where('member_state = "active"');
@@ -50,10 +54,10 @@ class JFormFieldMembers extends JFormFieldList
 
         foreach($members as $member)
         {
-            $options[] = JHtml::_('select.option', $member->member_id, $member->firstname . ' ' . $member->lastname);
+            $options[] = HTMLHelper::_('select.option', $member->member_id, $member->firstname . ' ' . $member->lastname);
         }
 
-        if ($this->form) //checking if we are in a form, then merge additional xml data
+        if ($this->form) // if we are in a form merge additional xml data
         {
             $options = array_merge(parent::getOptions(), $options); 
         }
