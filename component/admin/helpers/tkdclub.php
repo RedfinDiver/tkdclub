@@ -105,7 +105,7 @@ class Helper
      */
     public static function getEventparts($event_id)
     {
-        $db = JFactory::getDbo();
+        $db = Factory::getDbo();
         $query = $db->getQuery(true);
 
         $query->select('sum(' . $db->quoteName('registered') . ')')
@@ -301,7 +301,7 @@ class Helper
     public static function getTrainer($fromTrainingsTable)
     {
         if ($fromTrainingsTable == true) {
-            $db = JFactory::getDBO();
+            $db = Factory::getDBO();
 
             $q1 = $db->getQuery(true)
                 ->select(array('a.member_id', 'a.firstname', 'a.lastname', 'a.sex'))->from($db->quoteName('#__tkdclub_members', 'a'))
@@ -330,7 +330,7 @@ class Helper
         }
 
         if ($fromTrainingsTable == false) {
-            $db = JFactory::getDBO();
+            $db = Factory::getDBO();
             $query = $db->getQuery(true);
 
             $query->select($db->quoteName(array('member_id', 'firstname', 'lastname')));
