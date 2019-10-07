@@ -7,10 +7,15 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\MVC\Controller\FormController;
+use Joomla\CMS\Session\Session;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Language\Text;
+
 /**
 * memberform controller
 */
-class TkdclubControllerMember extends JControllerForm
+class TkdclubControllerMember extends FormController
 {
     protected $text_prefix = 'COM_TKDCLUB_MEMBER';
 
@@ -31,7 +36,7 @@ class TkdclubControllerMember extends JControllerForm
     public function uploadfile($picture = false)
     {   
         // Check for request forgeries.
-        JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+        Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
         // saving the item id in variable for proper redirect later on
         $recordId = $this->input->get('member_id', null);
@@ -42,8 +47,7 @@ class TkdclubControllerMember extends JControllerForm
         // setting the redirect back to the edited item
         $this->setRedirect
         (
-                JRoute::_(
-                        'index.php?option=' . $this->option . '&view=' . $this->view_item
+                Route::_('index.php?option=' . $this->option . '&view=' . $this->view_item
                         . $this->getRedirectToItemAppend($recordId, $urlVar = 'member_id'), false
                 )
         );
@@ -77,7 +81,7 @@ class TkdclubControllerMember extends JControllerForm
     public function deleteFile($picture = false)
     {
         // Check for request forgeries.
-        JSession::checkToken('get') or jexit(JText::_('JINVALID_TOKEN'));
+        Session::checkToken('get') or jexit(Text::_('JINVALID_TOKEN'));
 
         $id = $this->input->get('member_id');
         
@@ -85,7 +89,7 @@ class TkdclubControllerMember extends JControllerForm
             
             $model = $this->getModel();
             $model->deleteFile($picture);
-            $this->setRedirect(JRoute::_('index.php?option=com_tkdclub&view=member&layout=edit&member_id='.$id, false));
+            $this->setRedirect(Route::_('index.php?option=com_tkdclub&view=member&layout=edit&member_id='.$id, false));
         }
     }   
     
@@ -95,7 +99,7 @@ class TkdclubControllerMember extends JControllerForm
     public function downloadFile()
     {
         // Check for request forgeries.
-        JSession::checkToken('get') or jexit(JText::_('JINVALID_TOKEN'));
+        Session::checkToken('get') or jexit(Text::_('JINVALID_TOKEN'));
 
         $model = $this->getModel();
         $model->downloadFile();

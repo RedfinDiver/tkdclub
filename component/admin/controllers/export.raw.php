@@ -7,10 +7,16 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\MVC\Controller\FormController;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\HTML\HTMLHelper;
+
 JLoader::register('TkdclubHelperMembers', JPATH_COMPONENT. '/helpers/members.php' );
+JLoader::register('Helper', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/tkdclub.php');
 
 
-class TkdClubControllerExport extends JControllerForm
+class TkdClubControllerExport extends FormController
 {	
 	/**
 	 * method to get the content for csv export
@@ -22,7 +28,7 @@ class TkdClubControllerExport extends JControllerForm
 	public function getContent($model = '')
 	{
 		// Get the input from the url / post
-		$app 	= JFactory::getApplication();
+		$app 	= Factory::getApplication();
 		$pks 	= $app->input->get('cid', array(), 'array');
 		$model  = $this->getModel($model);
 		$content = $model->getExportData($pks);
@@ -38,7 +44,7 @@ class TkdClubControllerExport extends JControllerForm
 	 **/
 	public function setHeaders($filename = 'download')
 	{
-		$app = JFactory::getApplication();
+		$app = Factory::getApplication();
 		$app->setHeader('Content-Type', 'application/csv; charset=utf-8', true);
 		$app->setHeader('Content-Disposition', 'attachment; filename="'.$filename.'.csv"', true);
 		$app->setHeader('Content-Transfer-Encoding', 'binary', true);
@@ -58,7 +64,7 @@ class TkdClubControllerExport extends JControllerForm
 			print implode(';', $row)."\n";
 		}
 
-		$this->setHeaders(JText::_('COM_TKDCLUB_SIDEBAR_MEMBERS'));
+		$this->setHeaders(Text::_('COM_TKDCLUB_SIDEBAR_MEMBERS'));
 	}
 
 	/**
@@ -66,8 +72,7 @@ class TkdClubControllerExport extends JControllerForm
 	**/
 	public function trainings()
 	{	
-		$helper = new TkdclubHelperMembers;
-		$memberlist = $helper->getMemberlist();
+		$memberlist = Helper::getMemberlist();
 		$content = $this->getContent('trainings');
 
 		foreach ($content as $key => &$row)
@@ -76,30 +81,30 @@ class TkdClubControllerExport extends JControllerForm
 			{
 				if ($row[2] > 0)
 				{
-					$row[2] = $helper->getMembersNames($row[2], $memberlist);
-					$row[4] == 1 ? $row[4] = JText::_('COM_TKDCLUB_TRAINING_PAID') : $row[4] = JText::_('COM_TKDCLUB_TRAINING_NOT_PAID');
+					$row[2] = Helper::getMembersNames($row[2], $memberlist);
+					$row[4] == 1 ? $row[4] = Text::_('COM_TKDCLUB_TRAINING_PAID') : $row[4] = Text::_('COM_TKDCLUB_TRAINING_NOT_PAID');
 				}
 				if ($row[5] > 0)
 				{
-					$row[5] = $helper->getMembersNames($row[5], $memberlist);
-					$row[7] == 1 ? $row[7] = JText::_('COM_TKDCLUB_TRAINING_PAID') : $row[7] = JText::_('COM_TKDCLUB_TRAINING_NOT_PAID');
+					$row[5] = Helper::getMembersNames($row[5], $memberlist);
+					$row[7] == 1 ? $row[7] = Text::_('COM_TKDCLUB_TRAINING_PAID') : $row[7] = Text::_('COM_TKDCLUB_TRAINING_NOT_PAID');
 				}
 				if ($row[8] > 0)
 				{
-					$row[8] = $helper->getMembersNames($row[8], $memberlist);
-					$row[10] == 1 ? $row[10] = JText::_('COM_TKDCLUB_TRAINING_PAID') : $row[10] = JText::_('COM_TKDCLUB_TRAINING_NOT_PAID');
+					$row[8] = Helper::getMembersNames($row[8], $memberlist);
+					$row[10] == 1 ? $row[10] = Text::_('COM_TKDCLUB_TRAINING_PAID') : $row[10] = Text::_('COM_TKDCLUB_TRAINING_NOT_PAID');
 				}
 				if ($row[11] > 0)
 				{
-					$row[11] = $helper->getMembersNames($row[11], $memberlist);
-					$row[13] == 1 ? $row[13] = JText::_('COM_TKDCLUB_TRAINING_PAID') : $row[13] = JText::_('COM_TKDCLUB_TRAINING_NOT_PAID');
+					$row[11] = Helper::getMembersNames($row[11], $memberlist);
+					$row[13] == 1 ? $row[13] = Text::_('COM_TKDCLUB_TRAINING_PAID') : $row[13] = Text::_('COM_TKDCLUB_TRAINING_NOT_PAID');
 				}
 			}
 
 			print implode(';', $row)."\n"; // write data to the browser
 		}
 
-		$this->setHeaders(JText::_('COM_TKDCLUB_SIDEBAR_TRAININGS'));
+		$this->setHeaders(Text::_('COM_TKDCLUB_SIDEBAR_TRAININGS'));
 	}
 
 	/**
@@ -107,21 +112,20 @@ class TkdClubControllerExport extends JControllerForm
 	 **/
     public function medals()
 	{	
-		$helper = new TkdclubHelperMembers;
-		$memberlist = $helper->getMemberlist();
+		$memberlist = Helper::getMemberlist();
 		$content = $this->getContent('medals');;
 
 		foreach ($content as $key => &$row)
 		{
 			if ($key > 0) // getting the names
 			{
-				$row[] = $helper->getMembersNames($row[5], $memberlist);
+				$row[] = Helper::getMembersNames($row[5], $memberlist);
 			}
 
 			print implode(';', $row)."\n"; 
 		}
 
-		$this->setHeaders(JText::_('COM_TKDCLUB_SIDEBAR_MEDALS'));
+		$this->setHeaders(Text::_('COM_TKDCLUB_SIDEBAR_MEDALS'));
 	}
 
 	/**
@@ -135,14 +139,14 @@ class TkdClubControllerExport extends JControllerForm
 		{
 			if ($key > 0)
 			{
-				$row[3] == 'kup' ? $row[3] = JText::_('COM_TKDCLUB_KUP') : $row[3] = JText::_('COM_TKDCLUB_DAN');
-				$row[7] == 1 ? $row[7] = JText::_('COM_TKDCLUB_PROMOTION_ACTIVE') : $row[7] = JText::_('COM_TKDCLUB_PROMOTION_INACTIVE');
+				$row[3] == 'kup' ? $row[3] = Text::_('COM_TKDCLUB_KUP') : $row[3] = Text::_('COM_TKDCLUB_DAN');
+				$row[7] == 1 ? $row[7] = Text::_('COM_TKDCLUB_PROMOTION_ACTIVE') : $row[7] = Text::_('COM_TKDCLUB_PROMOTION_INACTIVE');
 			}
 
 			print implode(';', $row)."\n";
 		}
 
-		$this->setHeaders(JText::_('COM_TKDCLUB_SIDEBAR_PROMOTIONS'));
+		$this->setHeaders(Text::_('COM_TKDCLUB_SIDEBAR_PROMOTIONS'));
 	}
 
 	/**
@@ -159,14 +163,14 @@ class TkdClubControllerExport extends JControllerForm
 			// conversion of date in LC4-format
 			if ($key > 0)
 			{
-				$row[3] = JHtml::_('date', $row[3], JText::_('DATE_FORMAT_LC4'));
-				$row[4] == 'male' ? $row[4] = JText::_('COM_TKDCLUB_MEMBER_SEX_MALE') : $row[4] = JText::_('COM_TKDCLUB_MEMBER_SEX_FEMALE');
+				$row[3] = HTMLHelper::_('date', $row[3], Text::_('DATE_FORMAT_LC4'));
+				$row[4] == 'male' ? $row[4] = Text::_('COM_TKDCLUB_MEMBER_SEX_MALE') : $row[4] = Text::_('COM_TKDCLUB_MEMBER_SEX_FEMALE');
 			}
 			
 			print implode(';', $row)."\n"; // write data to the browser
 		}
 
-		$this->setHeaders(JText::_('COM_TKDCLUB_SIDEBAR_CANDIDATES'));
+		$this->setHeaders(Text::_('COM_TKDCLUB_SIDEBAR_CANDIDATES'));
 	}
 
 	/**
@@ -181,15 +185,15 @@ class TkdClubControllerExport extends JControllerForm
 			// conversion of date in LC4-format
 			if ($key > 0)
 			{
-				$row[2] = JHtml::_('date', $row[2], JText::_('DATE_FORMAT_LC4'));
-				$row[3] = JHtml::_('date', $row[3], JText::_('DATE_FORMAT_LC4'));
-				$row[7] == 1 ? $row[7] = JText::_('JPUBLISHED') : $row[7] = JText::_('JUNPUBLISHED');
+				$row[2] = HTMLHelper::_('date', $row[2], Text::_('DATE_FORMAT_LC4'));
+				$row[3] = HTMLHelper::_('date', $row[3], Text::_('DATE_FORMAT_LC4'));
+				$row[7] == 1 ? $row[7] = Text::_('JPUBLISHED') : $row[7] = Text::_('JUNPUBLISHED');
 			}
 			
 			print implode(';', $row)."\n"; 
 		}
 
-		$this->setHeaders(JText::_('COM_TKDCLUB_SIDEBAR_EVENTS'));
+		$this->setHeaders(Text::_('COM_TKDCLUB_SIDEBAR_EVENTS'));
 	}
 
 	/**
@@ -202,12 +206,12 @@ class TkdClubControllerExport extends JControllerForm
 		foreach ($content as $key => &$row)
 		{ 	
 			// conversion of date in LC4-format
-			if ($key > 0) {$row[1] = JHtml::_('date', $row[1], JText::_('DATE_FORMAT_LC4')); }
+			if ($key > 0) {$row[1] = HTMLHelper::_('date', $row[1], Text::_('DATE_FORMAT_LC4')); }
 			
 			print implode(';', $row)."\n"; 
 		}
 
-		$this->setHeaders(JText::_('COM_TKDCLUB_SIDEBAR_PARTICIPANTS'));
+		$this->setHeaders(Text::_('COM_TKDCLUB_SIDEBAR_PARTICIPANTS'));
 	}
 
 	/**
@@ -224,14 +228,14 @@ class TkdClubControllerExport extends JControllerForm
 			// conversion of date in LC4-format
 			if ($key > 0)
 			{
-				$row[3] = JHtml::_('date', $row[3], JText::_('DATE_FORMAT_LC4'));
-				$row[4] = JText::_($origin[$row[4]]);
+				$row[3] = HTMLHelper::_('date', $row[3], Text::_('DATE_FORMAT_LC4'));
+				$row[4] = Text::_($origin[$row[4]]);
 			}
 			
 			print implode(';', $row)."\n"; 
 		}
 
-		$this->setHeaders(JText::_('COM_TKDCLUB_SIDEBAR_SUBSCRIBERS'));
+		$this->setHeaders(Text::_('COM_TKDCLUB_SIDEBAR_SUBSCRIBERS'));
 	}
 
 }

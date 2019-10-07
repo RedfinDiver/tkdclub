@@ -7,10 +7,15 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\MVC\Controller\AdminController;
+use Joomla\CMS\Session\Session;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+
 /**
  * Events list view controller
  */
-class TkdClubControllerEvents extends JControllerAdmin
+class TkdClubControllerEvents extends AdminController
 {
     protected $text_prefix = 'COM_TKDCLUB_EVENT';
 
@@ -32,9 +37,9 @@ class TkdClubControllerEvents extends JControllerAdmin
     public function togglestats()
     {
         // Check for request forgeries.
-        JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+        Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
         
-        $session = JFactory::getSession();
+        $session = Factory::getSession();
 
         if (!$session->get('togglestats_events', null, 'tkdclub'))
         {
@@ -47,6 +52,6 @@ class TkdClubControllerEvents extends JControllerAdmin
             $msg = 'COM_TKDCLUB_TOGGLE_STATS_OFF';  
         }
         
-        $this->setRedirect('index.php?option=com_tkdclub&view=events', JText::_($msg));
+        $this->setRedirect('index.php?option=com_tkdclub&view=events', Text::_($msg));
     }
 }

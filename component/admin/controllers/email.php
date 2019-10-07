@@ -7,10 +7,16 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\MVC\Controller\FormController;
+use Joomla\CMS\Session\Session;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+
 /**
  * Controller to send emails to members and newsletter subscribers
  */
-class TkdclubControllerEmail extends JControllerForm
+class TkdclubControllerEmail extends FormController
 {
 	/**
 	 * Send the mail
@@ -21,12 +27,12 @@ class TkdclubControllerEmail extends JControllerForm
 	public function send()
 	{
         // Check for request forgeries.
-		JSession::checkToken('request') or jexit(JText::_('JINVALID_TOKEN'));
+		Session::checkToken('request') or jexit(Text::_('JINVALID_TOKEN'));
 
 		// Redirect to admin index if mass mailer disabled in config
-		if (JFactory::getApplication()->get('massmailoff', 0) == 1)
+		if (Factory::getApplication()->get('massmailoff', 0) == 1)
 		{
-			JFactory::getApplication()->redirect(JRoute::_('index.php', false));
+			Factory::getApplication()->redirect(Route::_('index.php', false));
 		}
 
 		$model = $this->getModel('email');

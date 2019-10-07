@@ -7,7 +7,9 @@
 
 defined('_JEXEC') or die;
 
-class TkdClubControllerParticipant extends JControllerForm
+use Joomla\CMS\MVC\Controller\FormController;
+
+class TkdClubControllerParticipant extends FormController
 {
     
 }

@@ -7,7 +7,12 @@
 
 defined('_JEXEC') or die;
 
-class TkdClubControllerMedals extends JControllerAdmin
+use Joomla\CMS\MVC\Controller\AdminController;
+use Joomla\CMS\Session\Session;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+
+class TkdClubControllerMedals extends AdminController
 {
     protected $text_prefix = 'COM_TKDCLUB_MEDAL';
 
@@ -29,9 +34,9 @@ class TkdClubControllerMedals extends JControllerAdmin
     public function togglestats()
     {
         // Check for request forgeries.
-        JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+        Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
         
-        $session = JFactory::getSession();
+        $session = Factory::getSession();
 
         if (!$session->get('togglestats_medals', null, 'tkdclub'))
         {
@@ -44,6 +49,6 @@ class TkdClubControllerMedals extends JControllerAdmin
             $msg = 'COM_TKDCLUB_TOGGLE_STATS_OFF';  
         }
         
-        $this->setRedirect('index.php?option=com_tkdclub&view=medals', JText::_($msg));
+        $this->setRedirect('index.php?option=com_tkdclub&view=medals', Text::_($msg));
     }
 }

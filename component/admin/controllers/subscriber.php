@@ -7,7 +7,9 @@
 
 defined('_JEXEC') or die;
 
-class TkdClubControllerSubscriber extends JControllerForm
+use Joomla\CMS\MVC\Controller\FormController;
+
+class TkdClubControllerSubscriber extends FormController
 {
     protected $text_prefix = 'COM_TKDCLUB_SUBSCRIBER';
 }

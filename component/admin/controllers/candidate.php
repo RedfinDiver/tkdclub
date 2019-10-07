@@ -8,9 +8,14 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\MVC\Controller\FormController;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+
 JLoader::register('Helper', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/tkdclub.php');
 
-class TkdClubControllerCandidate extends JControllerForm
+class TkdClubControllerCandidate extends FormController
 {
     protected $text_prefix = 'COM_TKDCLUB_CANDIDATE';
 
@@ -29,9 +34,9 @@ class TkdClubControllerCandidate extends JControllerForm
     protected $waiting_time;
 
     /**
-     * The minimum age for a certain grade in years
+     * The minimum ages for a certain grade in years
      * 
-     * @var integer
+     * @var array
      */
     protected $minimum_age;
 
@@ -74,11 +79,11 @@ class TkdClubControllerCandidate extends JControllerForm
         $exams =  $model->checkPromotionsPublished();
 
         if (!$exams) {
-            $this->setError(JText::_('COM_TKDCLUB_CANDIDATE_NO_PUPLISHED_PROMOTIONS'));
+            $this->setError(Text::_('COM_TKDCLUB_CANDIDATE_NO_PUPLISHED_PROMOTIONS'));
             $this->setMessage($this->getError(), 'error');
 
             $this->setRedirect(
-                JRoute::_(
+                Route::_(
                     'index.php?option=' . $this->option . '&view=' . $this->view_list
                         . $this->getRedirectToListAppend(),
                     false
@@ -101,10 +106,10 @@ class TkdClubControllerCandidate extends JControllerForm
      */
     public function getAjaxData()
     {
-        $input = JFactory::getApplication()->input;
-        $candidate_id = JFactory::getApplication()->input->get('candidate_id', '', 'int');
-        $promotion_id = JFactory::getApplication()->input->get('promotion_id', '', 'int');
-        $this->app = JFactory::getApplication();
+        $input = Factory::getApplication()->input;
+        $candidate_id = Factory::getApplication()->input->get('candidate_id', '', 'int');
+        $promotion_id = Factory::getApplication()->input->get('promotion_id', '', 'int');
+        $this->app = Factory::getApplication();
 
         // check if there are Ids in the request
         $checkIDs = $this->checkIDs($candidate_id, $promotion_id);
@@ -148,13 +153,13 @@ class TkdClubControllerCandidate extends JControllerForm
 
         if ($candidate_data['lastpromotion'] == '0000-00-00') {
             $candidate_data['lastpromotion'] = '';
-            $candidate_data['grade'] = JText::_('COM_TKDCLUB_NO_GRADE_LISTVIEW');
+            $candidate_data['grade'] = Text::_('COM_TKDCLUB_NO_GRADE_LISTVIEW');
         } else {
-            $candidate_data['lastpromotion'] = JHtml::_('date', $candidate_data['lastpromotion'], JText::_('DATE_FORMAT_LC4'));
+            $candidate_data['lastpromotion'] = JHtml::_('date', $candidate_data['lastpromotion'], Text::_('DATE_FORMAT_LC4'));
         }
 
         if ($this->double) {
-            $candidate_data['notes'] = JText::_('COM_TKDCLUB_CANDIDATE_DOUBLE_PROMOTION');
+            $candidate_data['notes'] = Text::_('COM_TKDCLUB_CANDIDATE_DOUBLE_PROMOTION');
         }
 
         $candidate_data['no_error'] = true;
@@ -176,8 +181,8 @@ class TkdClubControllerCandidate extends JControllerForm
     {
         $errors = array();
 
-        $candidate_id == '' ? $errors['error_candidate_id'] = JText::_('COM_TKDCLUB_CANDIDATE_MISSING_CANDIDATE_ID') : null;
-        $promotion_id == '' ? $errors['error_promotion_id'] = JText::_('COM_TKDCLUB_CANDIDATE_MISSING_PROMOTION_ID') : null;
+        $candidate_id == '' ? $errors['error_candidate_id'] = Text::_('COM_TKDCLUB_CANDIDATE_MISSING_CANDIDATE_ID') : null;
+        $promotion_id == '' ? $errors['error_promotion_id'] = Text::_('COM_TKDCLUB_CANDIDATE_MISSING_PROMOTION_ID') : null;
 
         return $errors;
     }
@@ -210,32 +215,32 @@ class TkdClubControllerCandidate extends JControllerForm
         $this->second_promotion = isset($candidate_data['second_promotion']) ? $candidate_data['second_promotion'] : null;
 
         // missing birthdate
-        $this->birthdate == '0000-00-00' ? $errors['error_birthdate'] = '- ' . JText::_('COM_TKDCLUB_MEMBER_BIRTHDATE') : null;
+        $this->birthdate == '0000-00-00' ? $errors['error_birthdate'] = '- ' . Text::_('COM_TKDCLUB_MEMBER_BIRTHDATE') : null;
 
         // missing last promotion date when grade is set
         if ($this->lastpromotion == '0000-00-00' && $this->grade != '0') {
-            $errors['error_lastpromotion'] = '- ' . JText::_('COM_TKDCLUB_MEMBER_LAST_PROMOTION');
+            $errors['error_lastpromotion'] = '- ' . Text::_('COM_TKDCLUB_MEMBER_LAST_PROMOTION');
         }
 
         // missing grade when last promotion date is set
         if ($this->lastpromotion != '0000-00-00' && $this->grade == '0') {
-            $errors['error_grade'] = '- ' . JText::_('COM_TKDCLUB_MEMBER_GRADE');
+            $errors['error_grade'] = '- ' . Text::_('COM_TKDCLUB_MEMBER_GRADE');
         }
 
         // missing entry date when no grade is set
         if ($this->entry == '0000-00-00' && $this->grade == '0') {
-            $errors['error_entry'] = '- ' . JText::_('COM_TKDCLUB_MEMBER_ENTRY');
+            $errors['error_entry'] = '- ' . Text::_('COM_TKDCLUB_MEMBER_ENTRY');
         }
 
         // when there are errors, create a link for editing the missing data in member view
         if (!empty($errors)) {
-            $errors['error'] = '<b>' . JText::_('COM_TKDCLUB_CANDIDATE_ERROR') . $this->name . '</b>'
+            $errors['error'] = '<b>' . Text::_('COM_TKDCLUB_CANDIDATE_ERROR') . $this->name . '</b>'
                 . '<br>'
-                . JText::_('COM_TKDCLUB_CANDIDATE_MISSING_DATA');
-            $edit_link = JRoute::_("index.php?option=com_tkdclub&task=member.edit&member_id=" . $this->member_id);
+                . Text::_('COM_TKDCLUB_CANDIDATE_MISSING_DATA');
+            $edit_link = Route::_("index.php?option=com_tkdclub&task=member.edit&member_id=" . $this->member_id);
             $errors['edit_link'] = '<span class="icon-edit"> </span>'
                 . '<a href="' . $edit_link . '">'
-                . $this->name . JText::_('COM_TKDCLUB_CANDIDATE_EDITING_IN_DATABASE')
+                . $this->name . Text::_('COM_TKDCLUB_CANDIDATE_EDITING_IN_DATABASE')
                 . '</a>';
         }
 
@@ -250,15 +255,15 @@ class TkdClubControllerCandidate extends JControllerForm
         $errors = array();
 
         if ($this->double == 'error_already_double') {
-            $errors[$this->double] = '- ' . JText::_('COM_TKDCLUB_CANDIDATE_ALREADY_DOUBLE_PROMOTION');
+            $errors[$this->double] = '- ' . Text::_('COM_TKDCLUB_CANDIDATE_ALREADY_DOUBLE_PROMOTION');
         }
 
         if ($this->second_promotion) {
-            $errors['second_promotion'] = '- ' . JText::_('COM_TKDCLUB_CANDIDATE_ALREADY_PROMOTION_ASSIGNED');
+            $errors['second_promotion'] = '- ' . Text::_('COM_TKDCLUB_CANDIDATE_ALREADY_PROMOTION_ASSIGNED');
         }
 
         if (!empty($errors)) {
-            $errors['error'] = '<b>' . JText::_('COM_TKDCLUB_CANDIDATE_ERROR') .  $this->name . '</b>';
+            $errors['error'] = '<b>' . Text::_('COM_TKDCLUB_CANDIDATE_ERROR') .  $this->name . '</b>';
         }
 
         return $errors;
@@ -299,8 +304,9 @@ class TkdClubControllerCandidate extends JControllerForm
         $errors = array();
 
         // First check minimum age
-        if (array_key_exists($grade_achieve, $this->minimum_age)) {
-            $this->age < $this->minimum_age[$grade_achieve] ? $errors['error_minage'] = '- ' . JText::_('COM_TKDCLUB_CANDIDATE_MINIMUM_AGE_NOT_ACHIEVED') : null;
+        if (array_key_exists($grade_achieve, $this->minimum_age))
+        {
+            $this->age < $this->minimum_age[$grade_achieve] ? $errors['error_minage'] = '- ' . Text::_('COM_TKDCLUB_CANDIDATE_MINIMUM_AGE_NOT_ACHIEVED') : null;
         }
 
         // Now check the waiting time, for double promotion calculate as necessary
@@ -327,11 +333,11 @@ class TkdClubControllerCandidate extends JControllerForm
         $diff = date_diff($promotion, $last, true);
 
         if ($diff->days < $time) {
-            $errors['error_waitingtime'] = '- ' . JText::_('COM_TKDCLUB_CANDIDATE_WAITING_TIME_NOT_ACHIEVED');
+            $errors['error_waitingtime'] = '- ' . Text::_('COM_TKDCLUB_CANDIDATE_WAITING_TIME_NOT_ACHIEVED');
         }
 
         if (!empty($errors)) {
-            $errors['error'] = '<b>' . JText::_('COM_TKDCLUB_CANDIDATE_ERROR') . $this->name . '</b>';
+            $errors['error'] = '<b>' . Text::_('COM_TKDCLUB_CANDIDATE_ERROR') . $this->name . '</b>';
         }
 
         return $errors;
@@ -352,15 +358,15 @@ class TkdClubControllerCandidate extends JControllerForm
         $errors = array();
 
         if ($grade_achieve_value > 10 && $this->promotion_type == 'kup') {
-            $errors['error_type'] = JText::_('COM_TKDCLUB_CANDIDATE_SUBSCRIBE_TO_DAN');
+            $errors['error_type'] = Text::_('COM_TKDCLUB_CANDIDATE_SUBSCRIBE_TO_DAN');
         }
 
         if ($grade_achieve_value < 11 && $this->promotion_type == 'dan') {
-            $errors['error_type'] = JText::_('COM_TKDCLUB_CANDIDATE_SUBSCRIBE_TO_KUP');
+            $errors['error_type'] = Text::_('COM_TKDCLUB_CANDIDATE_SUBSCRIBE_TO_KUP');
         }
 
         if (!empty($errors)) {
-            $errors['error'] = '<b>' . JText::_('COM_TKDCLUB_CANDIDATE_ERROR') . $this->name . '</b>';
+            $errors['error'] = '<b>' . Text::_('COM_TKDCLUB_CANDIDATE_ERROR') . $this->name . '</b>';
         }
 
         return $errors;

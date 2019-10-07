@@ -7,10 +7,15 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\MVC\Controller\AdminController;
+use Joomla\CMS\Session\Session;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+
 /**
 * listview members controller
 */
-class TkdclubControllerMembers extends JControllerAdmin
+class TkdclubControllerMembers extends AdminController
 {
     protected $text_prefix = 'COM_TKDCLUB_MEMBER';
 
@@ -32,9 +37,9 @@ class TkdclubControllerMembers extends JControllerAdmin
     public function togglestats()
     {
         // Check for request forgeries.
-        JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+        Session::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
         
-        $session = JFactory::getSession();
+        $session = Factory::getSession();
 
         if (!$session->get('togglestats_members', null, 'tkdclub'))
         {
@@ -47,7 +52,7 @@ class TkdclubControllerMembers extends JControllerAdmin
             $msg = 'COM_TKDCLUB_TOGGLE_STATS_OFF';  
         }
         
-        $this->setRedirect('index.php?option=com_tkdclub&view=members', JText::_($msg));
+        $this->setRedirect('index.php?option=com_tkdclub&view=members', Text::_($msg));
     }
 
     /**
@@ -56,12 +61,12 @@ class TkdclubControllerMembers extends JControllerAdmin
     public function getmemberdata()
     {
         // Check for request forgeries.
-        JSession::checkToken('GET') or jexit(JText::_('JINVALID_TOKEN'));
+        Session::checkToken('GET') or jexit(Text::_('JINVALID_TOKEN'));
 
         $model = $this->getModel($name = 'members', $prefix = 'TkdClubModel', $config = array());
         $data = $model->getmemberdata();
         echo json_encode($data);
 
-        JFactory::getApplication()->close();
+        Factory::getApplication()->close();
     }
 }

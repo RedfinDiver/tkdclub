@@ -7,7 +7,9 @@
 
 defined('_JEXEC') or die;
 
-class TkdClubControllerMedal extends JControllerForm
+use Joomla\CMS\MVC\Controller\FormController;
+
+class TkdClubControllerMedal extends FormController
 {
     protected $text_prefix = 'COM_TKDCLUB_MEDAL';
 }

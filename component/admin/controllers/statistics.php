@@ -7,7 +7,9 @@
 
 defined('_JEXEC') or die;
 
-class TkdClubControllerStatistics extends JControllerLegacy
+use Joomla\CMS\MVC\Controller\BaseController;
+
+class TkdClubControllerStatistics extends BaseController
 {
     public function __construct($config = array())
     {

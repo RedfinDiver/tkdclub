@@ -7,12 +7,16 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\MVC\Controller\AdminController;
+use Joomla\CMS\Session\Session;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\Utilities\ArrayHelper;
 
 /**
  * Participants list view controller
  */
-class TkdClubControllerParticipants extends JControllerAdmin
+class TkdClubControllerParticipants extends AdminController
 {
     protected $text_prefix = 'COM_TKDCLUB_PARTICIPANT';
 
@@ -34,9 +38,9 @@ class TkdClubControllerParticipants extends JControllerAdmin
     public function togglestats()
     {
         // Check for request forgeries.
-        JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+        Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
         
-        $session = JFactory::getSession();
+        $session = Factory::getSession();
 
         if (!$session->get('togglestats_participants', null, 'tkdclub'))
         {
@@ -49,7 +53,7 @@ class TkdClubControllerParticipants extends JControllerAdmin
             $msg = 'COM_TKDCLUB_TOGGLE_STATS_OFF';  
         }
         
-        $this->setRedirect('index.php?option=com_tkdclub&view=participants', JText::_($msg));
+        $this->setRedirect('index.php?option=com_tkdclub&view=participants', Text::_($msg));
     }
 
     /**
@@ -60,14 +64,14 @@ class TkdClubControllerParticipants extends JControllerAdmin
     public function delete_gdpr()
     {   
         // Check for request forgeries.
-        JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+        Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
         $model = $this->getModel();
 
         // First lets have a look if there is somthing to delete
         if(!$ids_to_delete = $model->getIdsToDelete())
         {
-            $this->setMessage(JText::_('COM_TKDKLUB_PARTICIPANT_GDPR_NO_DATA'), 'notice');
+            $this->setMessage(Text::_('COM_TKDKLUB_PARTICIPANT_GDPR_NO_DATA'), 'notice');
             $this->setRedirect('index.php?option=com_tkdclub&view=participants');
             
             return;
@@ -84,7 +88,7 @@ class TkdClubControllerParticipants extends JControllerAdmin
         
         // Well, we have some data to store, let' s do it
         $stored = $model->storeAllowedData($data_to_store);
-        \JFactory::getApplication()->enqueueMessage(JText::plural($this->text_prefix . '_N_ITEMS_STORED', $stored), 'notice');
+        Factory::getApplication()->enqueueMessage(Text::plural($this->text_prefix . '_N_ITEMS_STORED', $stored), 'notice');
 
         // And now finally remove the data
         $this->removeData($ids_to_delete);
@@ -107,8 +111,8 @@ class TkdClubControllerParticipants extends JControllerAdmin
         // Remove the items.
         if ($model->delete($cid))
         {
-            JFactory::getApplication()->enqueueMessage(JText::_('COM_TKDKLUB_PARTICIPANT_GDPR_DATA_DELETED', 'notice'));
-            $this->setMessage(\JText::plural($this->text_prefix . '_N_ITEMS_DELETED', count($cid)));
+            Factory::getApplication()->enqueueMessage(Text::_('COM_TKDKLUB_PARTICIPANT_GDPR_DATA_DELETED', 'notice'));
+            $this->setMessage(Text::plural($this->text_prefix . '_N_ITEMS_DELETED', count($cid)));
         }
         else
         {

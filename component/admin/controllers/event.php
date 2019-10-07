@@ -7,7 +7,9 @@
 
 defined('_JEXEC') or die;
 
-class TkdClubControllerEvent extends JControllerForm
+use Joomla\CMS\MVC\Controller\FormController;
+
+class TkdClubControllerEvent extends FormController
 {
     protected $text_prefix = 'COM_TKDCLUB_EVENT';
 }
