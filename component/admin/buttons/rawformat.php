@@ -7,10 +7,12 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Toolbar\Button\StandardButton;
+
 /**
  * Renders a csv download button
  */
-class JToolbarButtonRawFormat extends JToolbarButtonStandard
+class JToolbarButtonRawFormat extends StandardButton
 {
 	protected $_name = 'RawFormat';
 

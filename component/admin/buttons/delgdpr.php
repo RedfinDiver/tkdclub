@@ -7,10 +7,12 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Toolbar\Button\ConfirmButton;
+
 /**
  * Renders a gdpr delete button
  */
-class JToolbarButtonDelgdpr extends JToolbarButtonConfirm
+class JToolbarButtonDelgdpr extends ConfirmButton
 {
 	protected $_name = 'Delgdpr';
 
