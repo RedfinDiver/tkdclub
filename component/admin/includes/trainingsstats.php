@@ -7,6 +7,10 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Language\Text;
+
+// TODO: Rework trainingsstats
+
 /********************************************************************************
  * Calculation of unpaid trainings and getting the data for the selected trainer
  ********************************************************************************/
@@ -23,11 +27,11 @@ if (!$filter_trainer && !$filter_type && !$filter_year)
     
     if ($salaryparams == true)
     {
-        echo JText::_('COM_TKDCLUB_TRAINING_NOT_PAID_TRAININGS').'<b>'. \number_format($sum, 2, ',', ' ') .' '. $currency .'</b>'. '</br>';
+        echo Text::_('COM_TKDCLUB_TRAINING_NOT_PAID_TRAININGS').'<b>'. \number_format($sum, 2, ',', ' ') .' '. $currency .'</b>'. '</br>';
     }
     else
     {
-        echo '<b>' . JText::_('COM_TKDCLUB_TRAINING_SALARY_CALC_NOT_POSSIBLE') . '</b>' . '</br>';
+        echo '<b>' . Text::_('COM_TKDCLUB_TRAINING_SALARY_CALC_NOT_POSSIBLE') . '</b>' . '</br>';
     }
 }
 
@@ -46,11 +50,11 @@ if ($filter_trainer)
     // Text is used later in the script
     if ($salaryparams == true)
     {
-        $sum_text_trainer = JText::_('COM_TKDCLUB_TRAINING_NOT_PAID_TRAININGS_TRAINER').$trainer_data->trainer_name.': '.'<b>'. $sum . ' ' . $currency . '</b>'. '</br>';
+        $sum_text_trainer = Text::_('COM_TKDCLUB_TRAINING_NOT_PAID_TRAININGS_TRAINER').$trainer_data->trainer_name.': '.'<b>'. $sum . ' ' . $currency . '</b>'. '</br>';
     }
     else
     {
-        $sum_text_trainer = '<b>' . JText::_('COM_TKDCLUB_TRAINING_SALARY_CALC_NOT_POSSIBLE') . '</b>';
+        $sum_text_trainer = '<b>' . Text::_('COM_TKDCLUB_TRAINING_SALARY_CALC_NOT_POSSIBLE') . '</b>';
     }
 }
          
