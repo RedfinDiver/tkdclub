@@ -13,6 +13,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Session\Session;
+use Joomla\CMS\Uri\Uri;
 
 HtmlHelper::stylesheet('administrator/components/com_tkdclub/assets/css/tkdclub.css');
 HtmlHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
@@ -30,10 +31,10 @@ Factory::getDocument()->addScriptDeclaration("
 ");
 
 // bring in IBAN validation and masking
-JFactory::getDocument()->addScript(JUri::base() . 'components/com_tkdclub/assets/js/lib/iban.mini.js');
-JFactory::getDocument()->addScript(JUri::base() . 'components/com_tkdclub/assets/js/lib/imask.mini.js');
+Factory::getDocument()->addScript(Uri::base() . 'components/com_tkdclub/assets/js/lib/iban.mini.js');
+Factory::getDocument()->addScript(Uri::base() . 'components/com_tkdclub/assets/js/lib/imask.mini.js');
 
-JFactory::getDocument()->addScriptDeclaration(
+Factory::getDocument()->addScriptDeclaration(
     "document.addEventListener('DOMContentLoaded', function(){
         document.formvalidator.setHandler('iban', function(value) {
             return IBAN.isValid(value);

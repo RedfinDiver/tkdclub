@@ -13,6 +13,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Layout\LayoutHelper;
+use Joomla\CMS\Uri\Uri;
 
 
 HtmlHelper::stylesheet('administrator/components/com_tkdclub/assets/css/tkdclub.css');
@@ -22,7 +23,7 @@ HtmlHelper::_('formbehavior.chosen', 'select');
 HtmlHelper::_('script', 'administrator/components/com_tkdclub/assets/js/rawsubmitbutton.js');
 
 // bring in IBAN formating
-Factory::getDocument()->addScript(JUri::base() . 'components/com_tkdclub/assets/js/lib/iban.mini.js');
+Factory::getDocument()->addScript(Uri::base() . 'components/com_tkdclub/assets/js/lib/iban.mini.js');
 
 Factory::getDocument()->addScriptDeclaration(
     "document.addEventListener('DOMContentLoaded', function(){
