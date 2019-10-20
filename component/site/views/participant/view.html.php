@@ -7,10 +7,12 @@
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\MVC\View\HtmlView;
+
 /**
  * view-class for edit-view: 'participant'
  */
-class TkdClubViewParticipant extends JViewLegacy
+class TkdClubViewParticipant extends HtmlView
 {
     protected $form;
     protected $event_data;

@@ -7,11 +7,17 @@
 
 defined('_JEXEC') or die;
 
-class TkdClubModelParticipant extends JModelForm
+use Joomla\CMS\MVC\Model\FormModel;
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\HTML\HTMLHelper;
+
+class TkdClubModelParticipant extends FormModel
 {
     public function getTable($type = 'Participants', $prefix = 'TkdClubTable', $config = array())
     {
-        return JTable::getInstance($type, $prefix, $config);
+        return Table::getInstance($type, $prefix, $config);
     }
 
     public function getForm($data = array(), $loadData = true)
@@ -20,7 +26,7 @@ class TkdClubModelParticipant extends JModelForm
         $form = $this->loadForm('tkdclub', 'participant',  $options);
         
         // Removing not displayed fields from the form and labeling of userfields
-        $params = JFactory::getApplication()->getUserState('com_tkdclub.participant.itemparams');
+        $params = Factory::getApplication()->getUserState('com_tkdclub.participant.itemparams');
         !$params->show_email ? $form->removeField('email') : null;
         !$params->show_age ? $form->removeField('age') && $form->removeField('age_dist') : null;
         !$params->show_grade ? $form->removeField('grade') && $form->removeField('grade_dist') : null;
@@ -82,7 +88,7 @@ class TkdClubModelParticipant extends JModelForm
 
     protected function loadFormData()
     {
-        $app =  JFactory::getApplication();
+        $app =  Factory::getApplication();
         $data = $app->getUserState('com_tkdclub.participant.data', array());
 
         return $data;
@@ -98,9 +104,9 @@ class TkdClubModelParticipant extends JModelForm
      */
     public function getEventData()
     {   
-        $event_id = JFactory::getApplication()->getParams()->toObject()->event_id;
+        $event_id = Factory::getApplication()->getParams()->toObject()->event_id;
 
-        $db = JFactory::getDbo();
+        $db = Factory::getDbo();
         $query = $db->getQuery(true);
 
         $query->select('title, date, deadline, event_id, min, max')
@@ -124,7 +130,7 @@ class TkdClubModelParticipant extends JModelForm
      */
     public function getSubscribedParticipants($event_id)
     {
-        $db = JFactory::getDbo();
+        $db = Factory::getDbo();
         $query = $db->getQuery(true);
 
         $query->select('sum('.$db->quoteName('registered').')')
@@ -153,7 +159,7 @@ class TkdClubModelParticipant extends JModelForm
 
         // Prepare the data for the email
         $mail->title      = $event_data['title'];
-        $mail->date       = JHtml::_('date', $event_data['date'], JText::_('DATE_FORMAT_LC4'));
+        $mail->date       = HTMLHelper::_('date', $event_data['date'], Text::_('DATE_FORMAT_LC4'));
         $mail->fields     = $this->prepareDataforEmail($data);
         $mail->subscribed = $this->getSubscribedParticipants($event_data['event_id']);
         $mail->free       = $event_data['max'] - $mail->subscribed;
@@ -174,24 +180,24 @@ class TkdClubModelParticipant extends JModelForm
      */
     public function prepareDataforEmail($data = array())
     {   
-        $params = JFactory::getApplication()->getUserState('com_tkdclub.participant.itemparams', '');
-        $store_data = $data['store_data'] === 1 ? $store_data = JText::_('JYES') : $store_data = JText::_('JNO');
+        $params = Factory::getApplication()->getUserState('com_tkdclub.participant.itemparams', '');
+        $store_data = $data['store_data'] === 1 ? $store_data = Text::_('JYES') : $store_data = Text::_('JNO');
         $field_text = '';
 
-        $field_text .= JText::_('COM_TKDCLUB_PARTICIPANT_FIRSTNAME') . ': ' . $data['firstname'] . "\r\n";
-        $field_text .= JText::_('COM_TKDCLUB_PARTICIPANT_LASTNAME') . ': ' . $data['lastname'] . "\r\n";
-        $data['email'] ? $field_text .= JText::_('COM_TKDCLUB_PARTICIPANT_EMAIL') . ': ' . $data['email'] . "\r\n" : null;
-        $data['clubname'] ? $field_text .= JText::_('COM_TKDCLUB_PARTICIPANT_CLUB') . ': ' . $data['clubname'] . "\r\n" : null;
-        $data['grade'] ? $field_text .= JText::_('COM_TKDCLUB_PARTICIPANT_GRADE_EMAIL') . ': ' . $data['grade'] . "\r\n" : null;
-        $data['age'] ? $field_text .= JText::_('COM_TKDCLUB_PARTICIPANT_AGE') . ': ' . $data['age'] . "\r\n" : null;
-        $data['registered'] ? $field_text .= JText::_('COM_TKDCLUB_PARTICIPANT_SUM') . ': ' . $data['registered'] . "\r\n" : null;
+        $field_text .= Text::_('COM_TKDCLUB_PARTICIPANT_FIRSTNAME') . ': ' . $data['firstname'] . "\r\n";
+        $field_text .= Text::_('COM_TKDCLUB_PARTICIPANT_LASTNAME') . ': ' . $data['lastname'] . "\r\n";
+        $data['email'] ? $field_text .= Text::_('COM_TKDCLUB_PARTICIPANT_EMAIL') . ': ' . $data['email'] . "\r\n" : null;
+        $data['clubname'] ? $field_text .= Text::_('COM_TKDCLUB_PARTICIPANT_CLUB') . ': ' . $data['clubname'] . "\r\n" : null;
+        $data['grade'] ? $field_text .= Text::_('COM_TKDCLUB_PARTICIPANT_GRADE_EMAIL') . ': ' . $data['grade'] . "\r\n" : null;
+        $data['age'] ? $field_text .= Text::_('COM_TKDCLUB_PARTICIPANT_AGE') . ': ' . $data['age'] . "\r\n" : null;
+        $data['registered'] ? $field_text .= Text::_('COM_TKDCLUB_PARTICIPANT_SUM') . ': ' . $data['registered'] . "\r\n" : null;
         $data['user1'] ? $field_text .= $params->user1 . ': ' . $data['user1'] . "\r\n" : null;
         $data['user2'] ? $field_text .= $params->user2 . ': ' . $data['user2'] . "\r\n" : null;
         $data['user3'] ? $field_text .= $params->user3 . ': ' . $data['user3'] . "\r\n" : null;
         $data['user4'] ? $field_text .= $params->user4 . ': ' . $data['user4'] . "\r\n" : null;
-        $field_text .= JText::_('COM_TKDCLUB_PARTICIPANT_PRIVACY_ACCEPTED_EMAIL') . ': ' . JText::_('JYES') . "\r\n";
-        $field_text .= JText::_('COM_TKDCLUB_PARTICIPANT_STOREDATA_ACCEPTED_EMAIL') . ': ' . $store_data . "\r\n";
-        $data['notes'] ? $field_text .= JText::_('COM_TKDCLUB_PARTICIPANT_NOTES') . ': ' . $data['notes'] . "\r\n" : null;
+        $field_text .= Text::_('COM_TKDCLUB_PARTICIPANT_PRIVACY_ACCEPTED_EMAIL') . ': ' . Text::_('JYES') . "\r\n";
+        $field_text .= Text::_('COM_TKDCLUB_PARTICIPANT_STOREDATA_ACCEPTED_EMAIL') . ': ' . $store_data . "\r\n";
+        $data['notes'] ? $field_text .= Text::_('COM_TKDCLUB_PARTICIPANT_NOTES') . ': ' . $data['notes'] . "\r\n" : null;
         $field_text .= "\r\n";
 
         return $field_text;
@@ -218,7 +224,7 @@ class TkdClubModelParticipant extends JModelForm
         foreach ($groups as $group)
         {
             // Get all email adesses for the users
-            $db    = JFactory::getDbo();
+            $db    = Factory::getDbo();
             $query = $db->getQuery(true)
                     ->select($db->qn('a.email'))
                     ->from($db->qn('#__users', 'a'))
@@ -241,19 +247,19 @@ class TkdClubModelParticipant extends JModelForm
      */ 
     public function sendConformationMail($mail, $recipient)
     {   
-        $subject = JText::_('COM_TKDCLUB_SUBSCRIBE_SUCCESS_CONFIRMATION')
+        $subject = Text::_('COM_TKDCLUB_SUBSCRIBE_SUCCESS_CONFIRMATION')
                    . "\"" . $mail->title . "\""
-                   . JText::_('COM_TKDCLUB_EVENT_ON')
+                   . Text::_('COM_TKDCLUB_EVENT_ON')
                    . $mail->date;
 
-        $message = JText::_('COM_TKDCLUB_HELLO') . ' ' . $mail->name . ','
+        $message = Text::_('COM_TKDCLUB_HELLO') . ' ' . $mail->name . ','
                    . "\r\n\r\n"
-                   . JText::_('COM_TKDCLUB_PARTICIPANT_MESSAGE_CONFIRMATION')
+                   . Text::_('COM_TKDCLUB_PARTICIPANT_MESSAGE_CONFIRMATION')
                    . "\r\n\r\n"
-                   . JText::_('COM_TKDCLUB_PARTICIPANT_MESSAGE_DATA_WHERE')
+                   . Text::_('COM_TKDCLUB_PARTICIPANT_MESSAGE_DATA_WHERE')
                    . "\r\n"
                    . $mail->fields
-                   . JText::_('COM_TKDCLUB_PARTICIPANT_MESSAGE_THANK_YOU');
+                   . Text::_('COM_TKDCLUB_PARTICIPANT_MESSAGE_THANK_YOU');
         
         return $this->mail($subject, $message, $recipient);           
     }
@@ -268,23 +274,23 @@ class TkdClubModelParticipant extends JModelForm
      */ 
     public function sendUsergroupMail($mail, $recipients)
     {   
-        $subject = JText::_('COM_TKDCLUB_SUBSCRIBE_SUCCESS')
+        $subject = Text::_('COM_TKDCLUB_SUBSCRIBE_SUCCESS')
                    . "\"" . $mail->title . "\""
-                   . JText::_('COM_TKDCLUB_EVENT_ON')
+                   . Text::_('COM_TKDCLUB_EVENT_ON')
                    . $mail->date . " "
-                   . JText::_('COM_TKDCLUB_PARTICIPANT_INCOME');
+                   . Text::_('COM_TKDCLUB_PARTICIPANT_INCOME');
 
-        $message = JText::_('COM_TKDCLUB_HELLO') . ","
+        $message = Text::_('COM_TKDCLUB_HELLO') . ","
                    . "\r\n\r\n"
-                   . JText::_('COM_TKDCLUB_PARTICIPANT_MESSAGE_ADMIN')
+                   . Text::_('COM_TKDCLUB_PARTICIPANT_MESSAGE_ADMIN')
                    . "\r\n\r\n"
-                   . JText::_('COM_TKDCLUB_PARTICIPANT_MESSAGE_DATA_WHERE')
+                   . Text::_('COM_TKDCLUB_PARTICIPANT_MESSAGE_DATA_WHERE')
                    . "\r\n"
                    . $mail->fields
-                   . JText::_('COM_TKDCLUB_EVENT_SUBSCRIBED_PARTICIPANTS')
+                   . Text::_('COM_TKDCLUB_EVENT_SUBSCRIBED_PARTICIPANTS')
                    . $mail->subscribed
                    . "\r\n"
-                   . JText::_('COM_TKDCLUB_EVENT_PLACES_FREE')
+                   . Text::_('COM_TKDCLUB_EVENT_PLACES_FREE')
                    . $mail->free;
         
         return $this->mail($subject, $message, $recipients);           
@@ -299,8 +305,8 @@ class TkdClubModelParticipant extends JModelForm
      */
     public function mail($subject, $message, $recipients)
     {
-        $app = JFactory::getApplication();
-		$mailer = JFactory::getMailer();
+        $app = Factory::getApplication();
+		$mailer = Factory::getMailer();
 
 		// Build email message format.
 		$mailer->setSender(array($app->get('mailfrom'), $app->get('fromname')));
@@ -322,16 +328,11 @@ class TkdClubModelParticipant extends JModelForm
 		elseif (empty($rs))
 		{
 			
-			$this->setError(JText::_('COM_USERS_MAIL_THE_MAIL_COULD_NOT_BE_SENT'));
+			$this->setError(Text::_('COM_USERS_MAIL_THE_MAIL_COULD_NOT_BE_SENT'));
 
 			return false;
         }
 
         return true;
-    }
-
-    public function setAttributes($names, $atts, $values)
-    {
-        $form->setFieldAttribute();
     }
 }

@@ -9,10 +9,10 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+JLoader::register('Helper', JPATH_COMPONENT_ADMINISTRATOR. '/helpers/tkdclub.php');
 
 HTMLHelper::stylesheet(JUri::base() . '/components/com_tkdclub/assets/css/tkdclub.css');
 
-$helper = new TkdClubHelperMembers;
 ?>
 
 <div class="tkdclub">
@@ -57,7 +57,7 @@ $helper = new TkdClubHelperMembers;
             <td><?php echo $this->escape($item->type); ?></td>
             <td><?php echo $this->escape($item->class); ?></td>
             <td style="text-align:center"><?php echo $this->escape($item->placing); ?></td>
-            <td class=""><?php echo $helper->getMembersNames($item->winner_ids, $this->memberlist); ?></td>             
+            <td class=""><?php echo Helper::getMembersNames($item->winner_ids, $this->memberlist); ?></td>             
         </tr>
         <?php endif; ?>
         <?php endforeach; ?>

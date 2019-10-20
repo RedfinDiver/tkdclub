@@ -7,13 +7,20 @@
 
 defined('_JEXEC') or die;
 
-JHtml::_('behavior.tooltip');
-JHtml::_('behavior.formvalidation');
-JHtml::_('formbehavior.chosen', 'select');
-JHtml::_('script', 'components/com_tkdclub/assets/js/reload_fields.js');
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
 
-$params = JComponentHelper::getParams('com_tkdclub');
-$item_params = JFactory::getApplication()->getUserState('com_tkdclub.participant.itemparams');
+HTMLHelper::_('behavior.tooltip');
+HTMLHelper::_('behavior.formvalidation');
+HTMLHelper::_('formbehavior.chosen', 'select');
+HTMLHelper::_('script', 'components/com_tkdclub/assets/js/reload_fields.js');
+
+$params = ComponentHelper::getParams('com_tkdclub');
+$item_params = Factory::getApplication()->getUserState('com_tkdclub.participant.itemparams');
 
 $places_free = $this->event_data['max'] - $this->event_data['subscribed'];
 $subscribed = $this->event_data['subscribed'] ? $subscribed = $this->event_data['subscribed'] : $subscribed = 0;
@@ -23,12 +30,13 @@ $stop_sub = $now->diff($deadline)->invert;
 
 if ($params->get('captcha') != '0')
 {
-    JPluginHelper::importPlugin('captcha');
-    $dispatcher = JDispatcher::getInstance();
+    // TODO: Handle Plugin with new joomla/event package
+    PluginHelper::importPlugin('captcha');
+    $dispatcher = JEventDispatcher::getInstance();
     $dispatcher->trigger('onInit',''); 
 }
 
-JFactory::getDocument()->addScriptDeclaration("
+Factory::getDocument()->addScriptDeclaration("
 	Joomla.submitbutton = function(task)
 	{
 		if (task == 'participant.cancel' || document.formvalidator.isValid(document.getElementById('participant-form'))) 
@@ -41,42 +49,42 @@ JFactory::getDocument()->addScriptDeclaration("
 
 <div class="tkdclub_subscribe">
     <h2>
-        <?php echo JText::_('COM_TKDCLUB_EVENT_SUBSCRIBE_TO') .'"'. $this->event_data['title'].'"'
-        . JText::_('COM_TKDCLUB_EVENT_ON') . JHtml::_('date', $this->event_data['date'], JText::_('DATE_FORMAT_LC4')); ?>
+        <?php echo Text::_('COM_TKDCLUB_EVENT_SUBSCRIBE_TO') .'"'. $this->event_data['title'].'"'
+        . Text::_('COM_TKDCLUB_EVENT_ON') . HTMLHelper::_('date', $this->event_data['date'], Text::_('DATE_FORMAT_LC4')); ?>
     </h2>
     <!-- blocking form if it is set in parameters -->   
     <?php if ($item_params->block_form_places && $places_free <= 0) : ?>
-        <h4><?php echo JText::_('COM_TKDCLUB_EVENT_SUBSCRIPTION_UNPOSSIBLE_PLACES'); ?></h4>
+        <h4><?php echo Text::_('COM_TKDCLUB_EVENT_SUBSCRIPTION_UNPOSSIBLE_PLACES'); ?></h4>
     <?php elseif ($item_params->block_form_deadline && $stop_sub == 1) : ?>
-        <h4><?php echo JText::_('COM_TKDCLUB_EVENT_SUBSCRIPTION_UNPOSSIBLE_DEADLINE'); ?></h4>
+        <h4><?php echo Text::_('COM_TKDCLUB_EVENT_SUBSCRIPTION_UNPOSSIBLE_DEADLINE'); ?></h4>
     <?php else : ?>
         <div>
             <?php if ($item_params->show_places) : ?>
                 <!-- Listing of subscribed participants -->
                 <?php if ($places_free > 0) : ?>
                     <p>    
-                        <strong><?php echo JText::_('COM_TKDCLUB_EVENT_PLACES_FREE'); ?><?php echo $places_free; ?></strong>
+                        <strong><?php echo Text::_('COM_TKDCLUB_EVENT_PLACES_FREE'); ?><?php echo $places_free; ?></strong>
                     <br/>
-                        <?php echo JText::_('COM_TKDCLUB_EVENT_SUBSCRIBED_PARTICIPANTS'); ?><?php echo $subscribed ?>
+                        <?php echo Text::_('COM_TKDCLUB_EVENT_SUBSCRIBED_PARTICIPANTS'); ?><?php echo $subscribed ?>
                     </p>
                 <?php endif; ?>
             
                 <?php if ($places_free <= 0) :?>
                     <p>    
-                        <strong><?php echo JText::_('COM_TKDCLUB_PARTICIPANT_SUBSCRIBE_WAITLIST'); ?></strong>
+                        <strong><?php echo Text::_('COM_TKDCLUB_PARTICIPANT_SUBSCRIBE_WAITLIST'); ?></strong>
                     <br/>
-                        <?php echo JText::_('COM_TKDCLUB_PARTICIPANT_WAITLIST'); ?><?php echo ($this->event_data['max'] - $subscribed) * -1; ?>
+                        <?php echo Text::_('COM_TKDCLUB_PARTICIPANT_WAITLIST'); ?><?php echo ($this->event_data['max'] - $subscribed) * -1; ?>
                     </p>
                 <?php endif;?>
             <?php endif;?>
         </div>   
     <?php endif;?>
 
-    <p><?php echo JText::_('COM_TKDCLUB_EVENT_SUBSCIPTION_PLEASE_FILL'); ?></p>
+    <p><?php echo Text::_('COM_TKDCLUB_EVENT_SUBSCIPTION_PLEASE_FILL'); ?></p>
 
     <hr>
 
-    <form action="<?php echo JRoute::_('index.php?option=com_tkdclub') ?>"
+    <form action="<?php echo Route::_('index.php?option=com_tkdclub') ?>"
         method="post"
         name="adminForm"
         id="participant-form"
@@ -127,7 +135,7 @@ JFactory::getDocument()->addScriptDeclaration("
                 <!-- render GDPR field -->
                 <?php 
                     $privacy_field = $this->form->getField('privacy_agreed');
-                    $privacy_message = $item_params->privacy_message ? $item_params->privacy_message : JText::_('COM_TKDCLUB_PARTICIPANT_MENUITEM_PRIVACY_MESSAGE_DEFAULT')
+                    $privacy_message = $item_params->privacy_message ? $item_params->privacy_message : Text::_('COM_TKDCLUB_PARTICIPANT_MENUITEM_PRIVACY_MESSAGE_DEFAULT')
                 ?>
                 <div class="control-group">
                     <div class="control-label"><?php echo $privacy_field->label; ?>
@@ -140,7 +148,7 @@ JFactory::getDocument()->addScriptDeclaration("
                 <!-- render store_email field -->
                 <?php
                     $store_mail_field = $this->form->getField('store_data');
-                    $store_mail_message = $item_params->store_email_message ? $item_params->store_email_message : JText::_('COM_TKDCLUB_PARTICIPANT_MENUITEM_STORE_EMAIL_MESSAGE_DEFAULT');
+                    $store_mail_message = $item_params->store_email_message ? $item_params->store_email_message : Text::_('COM_TKDCLUB_PARTICIPANT_MENUITEM_STORE_EMAIL_MESSAGE_DEFAULT');
                 ?>
                 <div class="control-group">
                     <div class="control-label"><?php echo $store_mail_field->label; ?>
@@ -155,14 +163,14 @@ JFactory::getDocument()->addScriptDeclaration("
             <div class="btn-toolbar">
                 <div class="btn-group">
                     <button type="button" class="btn btn-primary" onclick="Joomla.submitbutton('participant.subscribe')">
-                        <span class="icon-ok"></span> <?php echo JText::_('COM_TKDCLUB_SUBSCRIBE') ?>
+                        <span class="icon-ok"></span> <?php echo Text::_('COM_TKDCLUB_SUBSCRIBE') ?>
                     </button>
                 </div>
             </div>
                     
             <div>
                 <input type="hidden" name="task" value="" />
-                <?php echo JHtml::_('form.token'); ?>
+                <?php echo HTMLHelper::_('form.token'); ?>
             </div> 
         </div>
 

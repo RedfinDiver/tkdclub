@@ -8,12 +8,14 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Model\AdminModel;
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Factory;
 
 class TkdClubModelTraining extends AdminModel
 {
     public function getTable($type = 'Trainings', $prefix = 'TkdClubTable', $config = array())
     {
-        return JTable::getInstance($type, $prefix, $config);
+        return Table::getInstance($type, $prefix, $config);
     }
 
     public function getForm($data = array(), $loadData = true)
@@ -27,7 +29,7 @@ class TkdClubModelTraining extends AdminModel
     protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = JFactory::getApplication()->getUserState(
+		$data = Factory::getApplication()->getUserState(
 			'com_tkdclub.edit.training.data',
 			array()
 		);

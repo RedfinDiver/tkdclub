@@ -102,7 +102,7 @@
             name="training_info_to" type="usergrouplist"
             label="COM_TKDCLUB_CONFIG_NEWTRAINING_EMAIL_TO"
             description="COM_TKDCLUB_CONFIG_NEWTRAINING_EMAIL_TO_DESC"
-            multiple="true" showon="medal_email:1" />
+            multiple="true" showon="training_email:1" />
 
     </fieldset>
 

@@ -7,14 +7,18 @@
 
 defined('_JEXEC') or die;
 
-class TkdClubControllerParticipant extends JControllerLegacy
+use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Response\JsonResponse;
+
+class TkdClubControllerParticipant extends BaseController
 {
 
     public function execute($task = 'execute')
     {
         try
         {
-            $app = JFactory::getApplication();
+            $app = Factory::getApplication();
             $html = '';
             $toRender = $app->input->get('selection', '', 'int');
             $model = $this->getModel($name = 'participant', $prefix = 'TkdClubModel', $config = array());
@@ -37,11 +41,11 @@ class TkdClubControllerParticipant extends JControllerLegacy
 
             $result = array('response' => $html);
             
-            echo new JResponseJson($result);
+            echo new JsonResponse($result);
         }
         catch(Exception $e)
         {
-            echo new JResponseJson($e);
+            echo new JsonResponse($e);
         }
 
     }

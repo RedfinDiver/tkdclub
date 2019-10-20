@@ -8,6 +8,8 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 /**
  * view-class for edit-view: 'training'
@@ -18,8 +20,8 @@ class TkdClubViewTraining extends HtmlView
     
     public function display($tpl = null)
     {
-        $user = JFactory::getUser();
-        $app  = JFactory::getApplication();
+        $user = Factory::getUser();
+        $app  = Factory::getApplication();
         
         if (empty($this->item->training_id))
 		{
@@ -28,7 +30,7 @@ class TkdClubViewTraining extends HtmlView
         
         if ($authorised !== true)
 		{
-			$app->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'error');
+			$app->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'error');
 			$app->setHeader('status', 403, true);
 
 			return false;

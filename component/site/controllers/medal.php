@@ -15,7 +15,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 
-JLoader::register('TkdclubHelper', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/tkdclub.php');
+JLoader::register('Helper', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/tkdclub.php');
 
 class TkdClubControllerMedal extends FormController
 {   
@@ -164,7 +164,7 @@ class TkdClubControllerMedal extends FormController
         }
 
         $groups = $params->get('medal_info_to', array(8));
-        $recipients = TkdclubHelper::getEmailfromUsergroups($groups);
+        $recipients = Helper::getEmailfromUsergroups($groups);
         if (empty($recipients))
         {
             return false;
@@ -181,8 +181,8 @@ class TkdClubControllerMedal extends FormController
         $body .= Text::_('COM_TKDCLUB_MEDAL_CLASS') . " : " . $enteredData['class'] . $nl;
         $body .= Text::_('COM_TKDCLUB_MEDAL_PLACING') . " : " . $enteredData['placing'] . $nl;
     
-        $memberlist = TkdclubHelper::getMemberlist();
-        $winners = TkdclubHelper::getMembersNames($enteredData['winner_ids'], $memberlist);
+        $memberlist = Helper::getMemberlist();
+        $winners = Helper::getMembersNames($enteredData['winner_ids'], $memberlist);
 
         $body .= Text::_('COM_TKDCLUB_ATHLETS') . " : " . $winners . $nl;
         $body .= Text::_('COM_TKDCLUB_NOTES') . " : " . $enteredData['notes']. $nl;

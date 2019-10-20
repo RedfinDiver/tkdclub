@@ -7,13 +7,23 @@
 
 defined('_JEXEC') or die;
 
-class TkdClubControllerParticipant extends JControllerForm
+use Joomla\CMS\MVC\Controller\FormController;
+use Joomla\CMS\Table\Table;
+use Joomla\CMS\Session\Session;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Plugin\PluginHelper;
+
+class TkdClubControllerParticipant extends FormController
 {
     
     public function getTable($type = 'Participants', $prefix = 'TkdClubTable', $config = array())    
     {
-        JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR . '/tables');
-        return JTable::getInstance($type, $prefix, $config);
+        Table::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR . '/tables');
+        return Table::getInstance($type, $prefix, $config);
     }
     
     /**
@@ -25,14 +35,14 @@ class TkdClubControllerParticipant extends JControllerForm
      */
     public function subscribe()
     {
-        JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));       
+        Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));       
 
         // Getting some variables
-        $app = JFactory::getApplication();
+        $app = Factory::getApplication();
         $model = $this->getModel('participant');
 
-        $this->menu_params = JFactory::getApplication()->getUserState('com_tkdclub.participant.itemparams');
-        $test = JComponentHelper::getParams('com_tkdclub')->get('captcha');
+        $this->menu_params = Factory::getApplication()->getUserState('com_tkdclub.participant.itemparams');
+        $test = ComponentHelper::getParams('com_tkdclub')->get('captcha');
         $this->item_id = $app->getMenu()->getActive()->id;
         $event_data = $model->getEventData();
         
@@ -52,14 +62,14 @@ class TkdClubControllerParticipant extends JControllerForm
             
             if ($table->save($this->data))
             {
-                $this->message = JText::_('COM_TKDCLUB_SUBSCRIBE_SUCCESS') 
-                . '"' .$event_data['title'] . '" ' .  JText::_('COM_TKDCLUB_AT') . ' '
-                . JHtml::_('date', $event_data['date'], JText::_('DATE_FORMAT_LC4')) 
-                . JText::_('COM_TKDCLUB_SUBSCRIBE_THANK_YOU');
+                $this->message = Text::_('COM_TKDCLUB_SUBSCRIBE_SUCCESS') 
+                . '"' .$event_data['title'] . '" ' .  Text::_('COM_TKDCLUB_AT') . ' '
+                . HTMLHelper::_('date', $event_data['date'], Text::_('DATE_FORMAT_LC4')) 
+                . Text::_('COM_TKDCLUB_SUBSCRIBE_THANK_YOU');
 
                 if ($this->data['email'])
                 {
-                    $this->message .= JText::_('COM_TKDCLUB_EMAIL_CONFIRMATION');
+                    $this->message .= Text::_('COM_TKDCLUB_EMAIL_CONFIRMATION');
                 }
         
                 // Send the mail to organizer
@@ -83,7 +93,7 @@ class TkdClubControllerParticipant extends JControllerForm
             }
             else
             {
-                $this->message = JText::_($table->getError());
+                $this->message = Text::_($table->getError());
             }
             
         } 
@@ -92,7 +102,7 @@ class TkdClubControllerParticipant extends JControllerForm
             $this->message = $ex->getMessage();
         }
         
-        $this->setRedirect(JRoute::_('index.php?option=com_tkdclub&view=participant&Itemid='. $this->item_id, false));
+        $this->setRedirect(Route::_('index.php?option=com_tkdclub&view=participant&Itemid='. $this->item_id, false));
         
         return true;
     }
@@ -169,16 +179,17 @@ class TkdClubControllerParticipant extends JControllerForm
     
     protected function checkCaptcha()
     {   
-        $app = JFactory::getApplication();
+        $app = Factory::getApplication();
 
         // No captcha in configuration demanded
-        if (JComponentHelper::getParams('com_tkdclub')->get('captcha') == '0')
+        if (ComponentHelper::getParams('com_tkdclub')->get('captcha') == '0')
         {
             return true;
         }
 
         // Get the plugin
-        JPluginHelper::importPlugin('captcha');
+        // TODO: Handle Plugin with new joomla/event package
+        PluginHelper::importPlugin('captcha');
         $dispatcher = JEventDispatcher::getInstance();
         
         // Get the response
@@ -189,13 +200,13 @@ class TkdClubControllerParticipant extends JControllerForm
         if($response[0] === false)
         {   
             // set the fail message
-            $this->setMessage(JText::_('COM_TKDCLUB_PARTICIPANT_CAPTCHA_ERROR'), 'error');
+            $this->setMessage(Text::_('COM_TKDCLUB_PARTICIPANT_CAPTCHA_ERROR'), 'error');
 
             // save form data in session
             $app->setUserState('com_tkdclub.participant.data', $this->data);
 
             // Redirect back to the contact form.
-            $this->setRedirect(JRoute::_('index.php?option=com_tkdclub&view=participant&Itemid='. $this->item_id, false));
+            $this->setRedirect(Route::_('index.php?option=com_tkdclub&view=participant&Itemid='. $this->item_id, false));
             
             return false;
         }

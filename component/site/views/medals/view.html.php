@@ -7,9 +7,9 @@
 
 defined('_JEXEC') or die;
 
-JLoader::register('TkdclubHelperMembers', JPATH_COMPONENT_ADMINISTRATOR. '/helpers/members.php');
+use Joomla\CMS\MVC\View\HtmlView;
 
-class TkdClubViewMedals extends JViewLegacy
+class TkdClubViewMedals extends HtmlView
 {
     protected $items;
     protected $state;

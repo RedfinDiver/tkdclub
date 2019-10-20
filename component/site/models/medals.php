@@ -7,7 +7,10 @@
 
 defined('_JEXEC') or die;
 
-class TkdClubModelMedals extends JModelList
+use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\CMS\Factory;
+
+class TkdClubModelMedals extends ListModel
 {   
     protected function getListQuery()
     {
@@ -21,7 +24,7 @@ class TkdClubModelMedals extends JModelList
     
     public static function getMedals ($placing)
     {
-        $db = JFactory::getDbo();
+        $db = Factory::getDbo();
         $query = $db->getQuery(true);
         $query->select($db->qn('placing'))->from($db->qn('#__tkdclub_medals'));
         $query->where($db->qn('placing') . ' = ' . $db->q($placing));
