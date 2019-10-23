@@ -11,7 +11,8 @@
 	<description>PLG_USER_TKDCLUBMEMBER_XML_DESCRIPTION</description>
 	<scriptfile>install.php</scriptfile>
 	<files>
-		<folder>language</folder> 
+		<folder>language</folder>
+		<folder>member</folder>
 		<filename plugin="tkdclubmember">tkdclubmember.php</filename>
 		<filename>index.html</filename>
 	</files>

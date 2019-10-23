@@ -38,6 +38,7 @@
         <antcallback target="zipComponent" return="version_component"/>
         <antcallback target="zipPlgTkdclublogo" return="version_plg_tkdclublogo"/>
         <antcallback target="zipPlgTkdclubgrade" return="version_plg_tkdclubgrade"/>
+        <antcallback target="zipPlgTkdclubmember" return="version_plg_tkdclubmember"/>
         <antcallback target="zipCli" return="version_cli_tkdclubfile"/>
 
         <!-- copy manifest file and changing filenames according to version number -->
@@ -53,6 +54,9 @@
 
             <replace path="/extension/files/file[@id='tkdclubgrade']/text()"
                     withText="plg_content_${name}grade_v${version_plg_tkdclubgrade}.zip" />
+
+            <replace path="/extension/files/file[@id='tkdclubmember']/text()"
+                    withText="plg_content_${name}grade_v${version_plg_tkdclubmember}.zip" />                    
             
             <replace path="/extension/files/file[@id='tkdclubfile']/text()"
                     withText="cli_${name}file_v${version_cli_tkdclubfile}.zip" />
