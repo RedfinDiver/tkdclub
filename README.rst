@@ -17,55 +17,49 @@ Features
 ~~~~~~~~
 
 **Verwaltung von Mitgliederdaten**
-    Mitgliederdaten werden gespeichert und verwaltet. Neben den persönlichen
-    Daten können Taekwondo-spezifische Daten und Vereinsdaten gepflegt werden.
-    Darüberhinaus können für jedes Mitglied Dateien gespeichert werden. z.B.
-    Mitgliedsanträge oder Zustimmung zur Datenschutzrichtlinie. Für jedes
-    Mitglied können in der Detailsicht die für den Verein errungenen Erfolge
-    eingesehen werden. Mitgliederdaten können für eine Tabellenkalkulation
-    heruntergeladen werden.
+    - Persönliche Daten, Taekwondo- und Vereinsdaten werden gespeichert
+    - Dokumente (z.B. gespeicherte Mitgliedsanträge) können abgelegt werden
+    - Die Erfolge für das Mitglied werden angezeigt
+    - Daten können für eine Tabellenkalkulation exportiert werden
+    - Mitglieder können ihre Daten selbst bearbeiten und einsehen
 
 **Verwaltung von Trainings**
-    Trainings werden erfasst. Einem Training können Trainer und Assistenten
-    zugeordnet werden. Durch die Eingabe der anwesenden Sportler ist auch eine
-    Statistik über die durchschnittliche Anzahl der Sportler möglich. Für die
-    Trainer und Assistenten wird automatisch die auszuschüttende
-    Aufwandentschädigung berechnet. Der Kassier kann nach Überweisung der
-    Summen die Training als bezahlt speichern. Trainings können für eine
-    Tabellenkalkulation heruntergeladen werden.
+    - Trainings werden erfasst
+    - Einem Training können Trainer und Assistenten zugeordnet werden
+    - Eingabe der anwesenden Sportler ermöglicht statistische Auswertungen
+    - Berechnung der Aufwandentschädigung für Trainer und Assistenten
+    - Daten können für eine Tabellenkalkulation exportiert werden
 
 **Aufzeichnung von Erfolgen**
-    Medaillenerfolge können aufgezeichnet werden. Diese werden tabellarisch
-    im Frontend ausgegeben. Eine Statistik über die erreichten Medaillen wird
-    automatisch erzeugt. Erfolge können für eine Tabellenkalkulation
-    heruntergeladen werden.
+    - Medaillenerfolge können aufgezeichnet werden
+    - Erfolgslisten können im Frontend ausgegeben werden
+    - Statistiken über die erreichten Medaillen wird angezeigt
+    - Daten können für eine Tabellenkalkulation exportiert werden
 
 **Verwalten von Prüfungen und Prüfungskandidaten**
-    Kup- und Danprüfungen können angelegt werden. Zu Prüfungen können im
-    nächsten Schritt Prüfungkandidaten hinzugefügt werden. Die Angaben zur
-    Prüfung (Prüferdaten, Prüfungsort und -zeit) können in eine
-    Tabellenkalkulation exportiert werden.
-    Prüfungsteilnehmer können zu Prüfungen hinzugefügt werden. Die
-    Prüfungsgebühr wird automatisch errechnet und angezeigt. Beim Hinzufügen
-    der Teilnehmer wird geprüft ob der zu ereichende Grad entsprechend der
-    Prüfungsordnung (Doppelprüfungen etc.) geprüft werden kann. Nach
-    bestandender Prüfung wird beim Freigeben der Prüfung automatisch der Grad
-    in den Mitgliederdaten angepasst. Prüfungsteilnehmerdaten können für eine
-    Tabellenkalkulation exportiert werden.
+    - Kup- und Danprüfungen können angelegt werden
+    - Zu Prüfungen können Kandidaten hinzugefügt werden
+    - Prüfungskandidaten können zu Prüfungen hinzugefügt werden
+    - Die Prüfungsgebühr wird automatisch errechnet und angezeigt
+    - Automatische Prüfung der Wartezeit und des Alters
+    - Nach Bestehen der Prüfung automatisches Eintragen des Grades in der
+      Mitgliederdatenbank
+    - Daten können für eine Tabellenkalkulation exportiert werden
 
 **Veranstaltungen und Teilnehmer verwalten**
-    Veranstaltungen können angelegt werden und für diese ein Anmeldeformular
-    im Frontend angezeigt werden. Das Anmeldeformular kann bei erreichern einer
-    Frist oder bei erreichen eine maximalen Teilnehmerzahl gesperrt werden.
-    Angemeldete Teilnehmer werden in einer Liste verwaltet und können für eine
-    Tabellenkalkulation exportiert werden. Die Speicherung und Löschung
-    der Daten der angemeldeten Teilnehmer erfolgt DSGVO gerecht. Teilnehmer
-    haben die Möglichkeit sich in einen Vereinsnewsletter einzutragen.
+    - Veranstaltungen können angelegt werden
+    - Anmeldeformular zur Veranstaltung kann im Frontend angezeigt werden
+    - Automatisches sperren der Anmeldung nach Datum und/oder Anmeldungszahl
+    - Die Speicherung und Löschung der Daten der angemeldeten Teilnehmer
+      erfolgt DSGVO gerecht
+    - Teilnehmer haben die Möglichkeit, sich in einen Vereinsnewsletter
+      einzutragen
+    - Daten können für eine Tabellenkalkulation exportiert werden
 
 **E-Mails an Mitglieder senden**
-    An Mitglieder und Newsletter- Abonnenten können E-Mails mit Anhängen
-    gesendet werden.
+    - An Mitglieder, Newsletter- Abonnenten und Teilnehmer an Veranstaltungen
+      können E-Mails mit Anhängen gesendet werden
 
 **Statistiken ansehen**
-    Eine Reihe von Statistiken wird automatisch ermittelt und mittels Grafiken
-    visualisiert.
+    - Eine Reihe von Statistiken wird automatisch ermittelt und mittels
+      Grafiken visualisiert
