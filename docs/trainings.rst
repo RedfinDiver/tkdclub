@@ -1,6 +1,13 @@
 Trainings
 =========
 
+Die TKD-Club Komponente erlaubt es, Trainings die im Verein gehalten werden,
+aufzueichnen. Dafür gibt Verwaltungsmöglichkeiten im Backend und im Frontend.
+
+---------------------
+Verwaltung im Backend
+---------------------
+
 .. image:: img/trainings_list.jpg
    :align: right
 
@@ -175,3 +182,26 @@ Export als .cvs Datei
 
 In der Listansicht können alle per Tick-Box markierten Trainings in eine
 csv-Datei exportiert werden.
+
+----------------------
+Verwaltung im Frontend
+----------------------
+
+.. image:: img/menu_types.jpg
+
+Für das Frontend steht ein Menütyp für Trainings zur Verfügung:
+
+- Training hinzufügen
+
+Training hinzuzufügen
+---------------------
+
+Legen Sie einen Menüpunkt mit diesem Menütyp an und veröffentlichen Sie diesen.
+
+Im Frontend erscheint unter diesem Link ein Formular zum Hinzufügen eines neuen
+Trainings. Nur ein im Frontend eingeloggter Benutzer mit den erforderlichen
+Rechten kann ein Training hinzufügen.
+
+Wird ein neues Training über das Frontend hinzugefügt, so erhalten alle
+Benutzer der in der Konfiguration eingestellten Benutzergruppe per E-Mail eine
+Information über den neuen Eintrag.

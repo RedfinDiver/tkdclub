@@ -1,6 +1,22 @@
 Mitglieder
 ==========
 
+Eine der wichtigsten Funktionen der TKDClub- Komponente ist es,
+Vereinsmitglieder zu verwalten. Mittels des mitgelieferten Plugins ist es
+möglich, das Joomla! Registrierungsformular so zu erweitern, dass sich
+Personen beim Verein als Mitglied und gleichzeitig als Nutzer der Website
+registrieren können.
+
+Das Mitglied kann seine gespeicherten Daten einsehen und ausgewählte Daten
+(z.B. Adresse) jederzeit selbst ändern.
+
+Dem Administrator ist möglich, bereits auf der Website registrierte Nutzer
+mit einem Mitglied aus der Mitgliederliste zu verknüpfen.
+
+---------------------
+Verwaltung im Backend
+---------------------
+
 .. image:: img/members_list.jpg
    :align: right
 
@@ -72,8 +88,23 @@ hier öffnet sich das Formular zum Bearbeiten des Teilnehmers. Gelöscht können
 mehrere Mitglieder zur gleichen Zeit werden, editieren kann man immer nur einen
 Datensatz zur gleichen Zeit.
 
+Mitglied mit Website-Benutzer verknüpfen
+----------------------------------------
+
+Ein Mitglied kann mit einem bestehenden Website-Benutzer verknüpft werden.
+Dazu einfach in der Bearbeitungssicht des Mitglieds oben rechts den
+entsprechenden Benutzer nach Klick auf das User-Symbol auswählen und danach
+speichern:
+
+.. image:: img/members_link.jpg
+    :align: center
+
+Wenn das entsprechende Plugin aktiviert ist, wird bei der Registrierung eines
+neuen Benutzers auch ein neues Mitglied in der Liste angelegt. Benutzer und
+Mitlied sind dann automatisch verknüpft.
+
 Dateien anhängen
-----------------------------
+----------------
 
 Nach dem Speichern des Mitglieds ist es im Tab "Anhänge" möglich .pdf, .jpg und
 .png Dateien anzuhängen. Die maximale Dateigröße ist auf 500 Kb begrenzt. Hier
@@ -111,3 +142,19 @@ Export als .cvs Datei
 
 In der Listansicht können alle per Tick-Box markierten Mitglieder in eine
 csv-Datei exportiert werden.
+
+----------------------
+Verwaltung im Frontend
+----------------------
+
+Zur Zeit beschränkt sich die Verwaltung im Frontend die Möglichkeit, als
+auf der Website registrierter Nutzer mit bestehender Verknüpfung zum
+entsprechenden Mitglied aus der Mitgliederliste, die gespeicherten Daten im
+Frontend einzusehen und ausgewählte Daten selbst ändern zu können.
+
+Damit bei der Benutzerregistrierung die entprechenden Daten zur
+Mitgliedsanmeldung angezeigt werden, muss das Plugin "tkdclubmember" durch den
+Administrator aktiviert sein:
+
+.. image:: img/members_plugin.jpg
+    :align: center

@@ -29,7 +29,7 @@ Turniertypen
 Benachrichtigung
     Hier kann eingestellt werden, ob eine E-Mail Benachrichtigung beim
     Hinzufügen eines neuen Erfolgs über das Frontend an eine Benutzergruppe
-    gesendet werden soll. 
+    gesendet werden soll.
 
 E-Mail an Gruppe
     Dieses Feld ist nur sichtbar wenn das "Benachrichtigung" Feld auf "Ja"
@@ -133,7 +133,7 @@ Erfolg hinzuzufügen
 Legen Sie einen Menüpunkt mit diesem Menütyp an und veröffentlichen Sie diesen.
 
 Im Frontend erscheint unter diesem Link ein Formular zum Hinzufügen eines neuen
-Erfolgs. Nur ein im Frontend eingeloggter Benutzer mit den erfordelichen
+Erfolgs. Nur ein im Frontend eingeloggter Benutzer mit den erforderlichen
 Rechten kann einen Erfolg hinzufügen.
 
 Wird ein neuer Erfolg über das Frontend hinzugefügt, so erhalten alle Benutzer

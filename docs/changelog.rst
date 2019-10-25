@@ -1,6 +1,26 @@
 Changelog
 =========
 
+Version 3.3.0 (2019-11-03)
+--------------------------
+
+Feature Release
+
+- Hinzufügen eines Trainings über das Frontend möglich
+- Neues Plugin zur Erweiterung des Registrierungsformulars im Frontend zur
+  Mitgliederanmeldung
+- Das Verknüpfen eines Joomal!-Users mit einem Mitglied ist nun möglich. Somit
+  kann ein Mitglied seine gespeicherten Daten ansehen und einige auch selbst
+  ändern (z.B. Adresse)
+
+Version 3.2.1 (2019-03-06)
+--------------------------
+
+Minor improvement Release
+
+- Datumseingaben in allen Formularen nun formatiert nach
+  Spracheinstellungen (z.B. dd.mm.YYYY für Deutsch)
+
 Version 3.2.0 (2019-03-03)
 --------------------------
 
