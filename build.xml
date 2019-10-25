@@ -56,7 +56,7 @@
                     withText="plg_content_${name}grade_v${version_plg_tkdclubgrade}.zip" />
 
             <replace path="/extension/files/file[@id='tkdclubmember']/text()"
-                    withText="plg_content_${name}grade_v${version_plg_tkdclubmember}.zip" />                    
+                    withText="plg_user_${name}member_v${version_plg_tkdclubmember}.zip" />                    
             
             <replace path="/extension/files/file[@id='tkdclubfile']/text()"
                     withText="cli_${name}file_v${version_cli_tkdclubfile}.zip" />
