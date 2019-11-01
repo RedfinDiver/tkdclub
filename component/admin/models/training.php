@@ -58,9 +58,11 @@ class TkdClubModelTraining extends AdminModel
     {
         $this->updated_rows = 0;
         $result = true;
+        $userId = Factory::getUser()->id;
+        $date   = Factory::getDate()->toSql();
 
         /**
-         * First create array for query parameters
+         * Create array for query parameters
          * Each array has the form ['field_to_update', 'field_condition_1', 'field_condition_2']
          */
         $parameters = array(
@@ -77,7 +79,9 @@ class TkdClubModelTraining extends AdminModel
 
             // Fields to update.
             $fields = array(
-                $db->quoteName($parameter[0]) . ' = 1'
+                $db->quoteName($parameter[0]) . ' = 1',
+                $db->quoteName('modified') . ' = ' . $db->quote($date),
+                $db->quoteName('modified_by') . ' = ' . $db->quote($userId),
             );
 
             // Conditions for which records should be updated.
