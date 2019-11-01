@@ -8,7 +8,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Table\Table;
-use \Joomla\CMS\Factory;
+use Joomla\CMS\Factory;
 
 /**
  * medals table class
