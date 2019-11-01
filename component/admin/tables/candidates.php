@@ -8,6 +8,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Table\Table;
+use \Joomla\CMS\Factory;
 
 /**
 * candidates table class
@@ -30,8 +31,8 @@ class TkdClubTableCandidates extends Table
 	 */
 	public function store($updateNulls = false)
 	{
-		$date   = JFactory::getDate()->toSql();
-		$userId = JFactory::getUser()->id;
+		$date   = Factory::getDate()->toSql();
+		$userId = Factory::getUser()->id;
 
 		$this->modified = $date;
 
