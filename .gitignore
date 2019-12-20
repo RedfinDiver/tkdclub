@@ -6,3 +6,4 @@
 testing*
 coding-standards
 .vscode
+/component/admin/attachments/*
