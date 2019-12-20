@@ -12,6 +12,8 @@ Feature Release
 - Das Verknüpfen eines Joomal!-Users mit einem Mitglied ist nun möglich. Somit
   kann ein Mitglied seine gespeicherten Daten ansehen und einige auch selbst
   ändern (z.B. Adresse)
+- Formatierung und Kontrolle von IBANs in Formularen und Listansichten
+- Vorbereitung des Codes auf Joomla 4
 
 Version 3.2.1 (2019-03-06)
 --------------------------
