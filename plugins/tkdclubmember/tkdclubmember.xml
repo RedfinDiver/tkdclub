@@ -6,8 +6,8 @@
 	<authorEmail>Redfindiver@gmail.com</authorEmail>
 	<copyright>Copyright (c)2019 Markus Moser</copyright>
 	<license>GNU General Public License version 3, or later</license>
-	<creationDate>November 2019</creationDate>
-	<version>1.0.0</version>
+	<creationDate>March 2020</creationDate>
+	<version>1.0.1</version>
 	<description>PLG_USER_TKDCLUBMEMBER_XML_DESCRIPTION</description>
 	<scriptfile>install.php</scriptfile>
 	<files>
