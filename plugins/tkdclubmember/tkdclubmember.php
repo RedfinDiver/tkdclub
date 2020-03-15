@@ -201,6 +201,12 @@ class PlgUserTkdclubmember extends JPlugin
 			return true;
 		}
 
+		// Check whether this is frontend or admin
+		if (Factory::getApplication()->isAdmin())
+		{
+			return true;
+		}
+
 		if (is_object($data))
 		{
 			$userId = isset($data->id) ? $data->id : 0;
