@@ -17,6 +17,7 @@ HTMLHelper::_('behavior.formvalidation');
 HTMLHelper::_('formbehavior.chosen', 'select');
 
 HTMLHelper::stylesheet('administrator/components/com_tkdclub/assets/css/tkdclub.css');
+HTMLHelper::script('administrator/components/com_tkdclub/assets/js/trainerselect.js');
 
 Factory::getDocument()->addScriptDeclaration("
 Joomla.submitbutton = function(task)
