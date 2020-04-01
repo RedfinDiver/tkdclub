@@ -23,6 +23,12 @@
 
     <!-- properties for symlinking -->
     <property name="web.root" value="/home/markus/Projekte/websites/entwicklung/htdocs/"/>
+    <property name="componentAdmin" value="${web.root}administrator/components/com_${name}" />
+    <property name="componentSite" value="${web.root}components/com_${name}" />
+    <property name="plgTkdclubgrade" value="${web.root}plugins/content/tkdclubgrade" />
+    <property name="plgTkdclublogo" value="${web.root}plugins/quickicon/tkdclublogo" />
+    <property name="plgTkdclubmember" value="${web.root}plugins/user/tkdclubmember" />
+    <property name="cliBdReminder" value="${web.root}cli/${name}_bd_reminder.php" />
 
     <target name="clean" description="deletes the pkg_${name}.zip">
         <delete dir="${zips}" />
@@ -280,27 +286,23 @@
         <property name="version_cli_tkdclubfile" value="${_version}" />
     </target>
 
-    <target name="symlinkComponent">
-        <property name="sitetest" value="${web.root}components/com_${name}" />
-        <property name="admintest" value="${web.root}administrator/components/com_${name}" />
-
-        <symlink link="${admintest}" resource="${basedir}/component/admin" />
-        <symlink link="${sitetest}" resource="${basedir}/component/site" />
+    <target name="symlinkPackage">
+        <symlink link="${componentAdmin}" resource="${basedir}/component/admin" />
+        <symlink link="${componentSite}" resource="${basedir}/component/site" />
+        <symlink link="${plgTkdclubgrade}" resource="${basedir}/plugins/tkdclubgrade" />
+        <symlink link="${plgTkdclublogo}" resource="${basedir}/plugins/tkdclublogo" />
+        <symlink link="${plgTkdclubmember}" resource="${basedir}/plugins/tkdclubmember" />
+        <symlink link="${cliBdReminder}" resource="${basedir}/cli/${name}_bd_reminder.php" />
     </target>
 
-    <target name="symlinkPlgTkdclubgrade">
-        <property name="test" value="${web.root}plugins/content/tkdclubgrade" />
-        <symlink link="${test}" resource="${basedir}/plugins/tkdclubgrade" />
+    <target name="deleteSymlinks">
+        <symlink action="delete" link="${componentSite}" />
+        <symlink action="delete" link="${componentAdmin}" />
+        <symlink action="delete" link="${plgTkdclubgrade}" />
+        <symlink action="delete" link="${plgTkdclublogo}" />
+        <symlink action="delete" link="${plgTkdclubmember}" />
+        <symlink action="delete" link="${cliBdReminder}" />
     </target>
+    
 
-    <target name="symlinkPlgTkdclublogo">
-        <property name="test" value="${web.root}plugins/quickicon/tkdclublogo" />
-        <symlink link="${test}" resource="${basedir}/plugins/tkdclublogo" />
-    </target>
-
-    <target name="symlinkCli">
-        <property name="test" value="${web.root}cli/${name}_bd_reminder.php" />
-        <symlink link="${test}" resource="${basedir}/cli/${name}_bd_reminder.php" />
-    </target>
-   
 </project>
