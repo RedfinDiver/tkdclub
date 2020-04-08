@@ -70,6 +70,14 @@ class TkdclubModelEmail extends AdminModel
         $params = ComponentHelper::getParams('com_tkdclub');
 		$data  = $app->input->post->get('jform', array(), 'array');
 
+		// set sender email to site adress
+		$mailfrom = $app->get('mailfrom');
+		$fromname = $app->get('fromname');
+
+		// set reply to user that initiated the email 
+		$replyemail = $user->get('email');
+		$replyname  = $user->get('name');
+
 		// Check for a message body and subject
 		if (!array_key_exists('message', $data) || !array_key_exists('subject', $data))
 		{
@@ -100,9 +108,10 @@ class TkdclubModelEmail extends AdminModel
 		$mailer = Factory::getMailer();
 
 		// Build email message
-		$mailer->setSender(array($user->get('email'), $user->get('name')));
+		$mailer->setSender(array($mailfrom, $fromname));
 		$mailer->setSubject($params->get('mail_prefix') . stripslashes($data['subject']));
 		$mailer->setBody($data['message'] . $params->get('mail_signature'));
+		$mailer->addReplyTo($replyemail, $replyname);
 
 		// Add recipients
 		$mailer->addBcc($recipients);
