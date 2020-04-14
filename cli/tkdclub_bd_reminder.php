@@ -3,8 +3,6 @@
 // Set flag that this is a parent file.
 const _JEXEC = 1;
 
-use Redfindiver\Tkdclub\Administrator\Helper;
-
 error_reporting(E_ALL | E_NOTICE);
 ini_set('display_errors', 1);
 
