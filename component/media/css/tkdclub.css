@@ -1,0 +1,97 @@
+.icon-tkdclub {
+    background-image: url(../images/tkdclub-14-white.png)
+}
+
+.icon-tkdclub-grey {
+    background-image: url(../images/tkdclub-14-grey.png)
+}
+
+.tkdclub-goldmedal {
+    background-image: url("../images/medals.png");
+    background-repeat: no-repeat;
+    display: inline-block;
+    font-size: 12px;
+    height: 24px;
+    line-height: 24px;
+    margin: 3px auto auto;
+    text-align: center;
+    width: 24px;
+}
+
+.tkdclub-silbermedal {
+    background-image: url("../images/medals.png");
+    background-position: -24px 0;
+    background-repeat: no-repeat;
+    display: inline-block;
+    font-size: 12px;
+    height: 24px;
+    line-height: 24px;
+    margin: 3px auto auto;
+    text-align: center;
+    width: 24px;
+}
+
+.tkdclub-bronzemedal {
+    background-image: url("../images/medals.png");
+    background-position: -48px 0;
+    background-repeat: no-repeat;
+    display: inline-block;
+    font-size: 12px;
+    height: 24px;
+    line-height: 24px;
+    margin: 3px auto auto;
+    text-align: center;
+    width: 24px;
+}
+
+.loading {
+    background-image: url("../images/loading-24.gif");
+    background-repeat: no-repeat;
+    background-size: auto auto;
+    display: block;
+    height: 24px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    width: 24px;
+}
+
+.tkdclub-toolbar-hide {
+    display: none !important;
+}
+
+.tkdclub-statistics {
+    padding-left: 20px;
+    padding-bottom: 5px;
+}
+
+.tkd-club-chart {
+    width : 33%;
+    height: 200px;
+}
+
+.tkdclub-loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: tkdclub-spin 2s linear infinite;
+}
+
+div.tkdclub-loader {
+    margin-top: 50px;
+    margin-left: 50px;
+}
+
+@keyframes tkdclub-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.tkdclub-icon-orange {
+    color: #C67605 !important;
+}
+
+.tkdclub-icon-red {
+    color: #942A25 !important;
+}

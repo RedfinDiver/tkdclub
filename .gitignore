@@ -1,0 +1,9 @@
+/nbproject/*
+/zips/
+/releases/
+<<<<<<< HEAD
+/docs/_build/*
+testing*
+coding-standards
+.vscode
+/component/backend/attachments/*
