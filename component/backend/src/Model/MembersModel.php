@@ -224,9 +224,6 @@ class MembersModel extends ListModel
         // Add the list ordering clause.
         $sort = $this->getState('list.ordering');
         $order = $this->getState('list.direction');
-<<<<<<< HEAD
-
-=======
         
         $query->order($db->escape($sort) . ' ' . $db->escape($order));
 
