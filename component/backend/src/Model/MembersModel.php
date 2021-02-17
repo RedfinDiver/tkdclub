@@ -14,6 +14,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Component\ComponentHelper;
 use Redfindiver\Component\Tkdclub\Administrator\Helper\TkdclubHelper;
+use Joomla\Database\ParameterType;
 
 /**
  * Model-class for list view 'members'
@@ -23,12 +24,12 @@ class MembersModel extends ListModel
     /**
      * helper vars for grade filter
      */
-    public  $students_grade = array(
+    public  $student_grades = array(
         '10. Kup', '9. Kup', '8. Kup', '7. Kup', '6. Kup', '5. Kup', '4. Kup', '3. Kup', '2. Kup', '1. Kup'
     );
 
 
-    public $masters_grade = array(
+    public $master_grades = array(
         '1. Poom', '2. Poom', '3. Poom',
         '1. Dan', '2. Dan', '3. Dan', '4. Dan', '5. Dan', '6. Dan', '7. Dan', '8. Dan', '9. Dan', '10. Dan'
     );
@@ -125,60 +126,105 @@ class MembersModel extends ListModel
     {
         $db = $this->getDbo();
         $query = $db->getQuery(true);
-        $query->select('m.*')->from($db->quoteName('#__tkdclub_members') . ' as m');
-
+        $query->select(
+            [   
+                $db->quoteName('m.member_id'),
+                $db->quoteName('m.firstname'),
+                $db->quoteName('m.lastname'),
+                $db->quoteName('m.phone'),
+                $db->quoteName('m.email'),
+                $db->quoteName('m.memberpass'),
+                $db->quoteName('m.grade'),
+                $db->quoteName('m.lastpromotion'),
+                $db->quoteName('m.iban'),
+                $db->quoteName('m.member_state'),
+                $db->quoteName('m.functions'),
+                $db->quoteName('m.attachments'),
+                $db->quoteName('m.notes_personel'),
+                $db->quoteName('m.notes_taekwondo'),
+                $db->quoteName('m.notes_clubdata'),
+                $db->quoteName('m.created'),
+                $db->quoteName('m.created_by'),
+                $db->quoteName('m.modified'),
+                $db->quoteName('m.modified_by'),
+                $db->quoteName('m.checked_out'),
+                $db->quoteName('m.checked_out_time')
+            ]
+        )->from($db->quoteName('#__tkdclub_members', 'm'));
+        
+        // Filter by grade.
         $gradeselect = $this->getState('filter.grade');
+
         switch ($gradeselect) {
             case '':
                 break; // show all members
 
             case '0':
-                $query->where('m.grade = ' . (int) $gradeselect); // empty or null field
+                // Empty or null field
+                $query->where($db->quoteName('m.grade') . ' = :gradeselect') 
+                    ->bind(':gradeselect', $gradeselect, ParameterType::INTEGER); 
                 break;
 
-            case 'students': // show only students
-                $students_list = "'" . implode("','", $this->students_grade) . "'";
-                $query->where('m.grade IN (' . $students_list . ')');
+            case 'students':
+                // Show only students
+                $query->whereIn($db->quoteName('m.grade'), $this->student_grades, ParameterType::STRING);
                 break;
 
-            case 'masters': // show only masters
-                $masters_list = "'" . implode("','", $this->masters_grade) . "'";
-                $query->where('m.grade IN (' . $masters_list . ')');
+            case 'masters':
+                // Show only masters
+                $query->whereIn($db->quoteName('m.grade'), $this->master_grades, ParameterType::STRING);
                 break;
 
-            default: // default behavier for grades
-                $gs = $db->quote($db->escape($gradeselect, true));
-                $query->where('m.grade = ' . $gs);
+            default:
+                // Default behavier for grades
+                $query->where($db->quoteName('m.grade')  . ' = :gradeselect')
+                    ->bind(':gradeselect', $gradeselect);
         }
 
+        // Filter by state
         $stateselect = $this->getState('filter.member_state');
+
         if ($stateselect == 'active' || $stateselect == 'inactive' || $stateselect == 'support') {
-            $ss = $db->quote($db->escape($stateselect, true));
-            $query->where('m.member_state = ' . $ss);
+            $query->where($db->quoteName('m.member_state') . ' = :stateselect')
+                ->bind(':stateselect', $stateselect);
         }
 
+        // Filter by search in different fields.
         $search = $this->getState('filter.search');
-        if (!empty($search)) {
-            if (stripos($search, 'id:') === 0) {
-                $query->where('id = ' . (int) substr($search, 3));
-            } else {
-                $search = $db->quote('%' . $db->escape($search, true) . '%');
-                $query->where('m.member_id LIKE' . $search
-                    . 'OR m.lastname LIKE' . $search
-                    . 'OR m.firstname LIKE' . $search
-                    . 'OR m.street LIKE' . $search
-                    . 'OR m.zip LIKE' . $search
-                    . 'OR m.city LIKE' . $search
-                    . 'OR m.memberpass LIKE' . $search);
+
+        if (!empty($search))
+        {
+            if (stripos($search, 'id:') === 0) 
+            {
+                $search = (int) substr($search, 3);
+                $query->where($db->quoteName('m.member_id') . ' = :search')
+					->bind(':search', $search, ParameterType::INTEGER);
+            }
+            else
+            {
+                $search = '%' . str_replace(' ', '%', trim($search)) . '%';
+                $query->where(
+                    '(' . $db->quoteName('m.member_id') . ' LIKE :search1'
+                        . ' OR ' . $db->quoteName('m.lastname') . ' LIKE :search2'
+                        . ' OR ' . $db->quoteName('m.firstname') . ' LIKE :search3'
+                        . ' OR ' . $db->quoteName('m.street') . ' LIKE :search4'
+                        . ' OR ' . $db->quoteName('m.zip') . ' LIKE :search5'
+                        . ' OR ' . $db->quoteName('m.city') . ' LIKE :search6'
+                        . ' OR ' . $db->quoteName('m.memberpass') . ' LIKE :search7' .
+                    ')'
+                )
+                    ->bind([':search1', ':search2', ':search3', ':search4', ':search5', ':search6', ':search7'], $search);
             }
         }
 
         // Join over the users for the checked out user.
-        $query->select('u.name AS editor')
-            ->join('LEFT', '#__users AS u ON u.id=m.checked_out');
+        $query->select($db->quoteName('u.name') . ' AS  editor')
+                ->join('LEFT', $db->quoteName('#__users') . 'AS u ON u.id = m.checked_out');
 
+        // Add the list ordering clause.
         $sort = $this->getState('list.ordering');
         $order = $this->getState('list.direction');
+        
         $query->order($db->escape($sort) . ' ' . $db->escape($order));
 
         return $query;
