@@ -103,8 +103,9 @@ $wa->useScript('keepalive')->useScript('form.validate')
                             <div></div>
                         <?php else : ?>
                         <fieldset id="fieldset-club_data" class="options-form">
-                            <legend class="card-title"><?php echo Text::_('angehängte Dateien'); ?></legend>
-                            <?php if (!$this->item->attachments) :?>
+                            <legend class="card-title"><?php echo Text::_('COM_TKDCLUB_MEMBER_FILES_APPENDED'); ?></legend>
+                            <?php $attachments = (array) json_decode($this->item->attachments); ?>
+                            <?php if (empty($attachments)) :?>
                                 <?php echo Text::_('COM_TKDCLUB_MEMBER_NO_FILES'); ?>
                             <?php else : ?>
                             <table class="table table-striped table-sm">
@@ -116,11 +117,12 @@ $wa->useScript('keepalive')->useScript('form.validate')
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($this->attachments as $filename) : ?>
-                                        <?php $question = Text::_('COM_TKDCLUB_MEMBER_FILE_DELETE_QUESTION') . $filename; ?>
+                                    
+                                    <?php foreach ($attachments as $file_path => $file_name) : ?>
+                                        <?php $question = Text::_('COM_TKDCLUB_MEMBER_FILE_DELETE_QUESTION') . $file_name; ?>
                                         <tr>
                                             <td class="w-1">
-                                                <?php $deleteLink = Route::_("index.php?option=com_tkdclub&view=member&layout=edit&task=member.deletefile&filename=" . $filename . '&member_id=' . $this->item->member_id . '&' . Session::getFormToken() . '=1') ?>
+                                                <?php $deleteLink = Route::_("index.php?option=com_tkdclub&view=member&layout=edit&task=member.deletefile&file_path=" . $file_path . '&file_name=' . $file_name . '&member_id=' . $this->item->member_id .  '&' . Session::getFormToken() . '=1') ?>
                                                 <a class="btn btn-danger btn-sm" onclick='return window.confirm("<?php echo $question ?>")' 
                                                 title="<?php echo Text::_('COM_TKDCLUB_MEMBER_FILE_DELETE'); ?>" 
                                                 href="<?php echo $deleteLink; ?>">
@@ -128,14 +130,14 @@ $wa->useScript('keepalive')->useScript('form.validate')
                                                 </a>
                                             </td>
                                             <td class="w-1">
-                                                <?php $downloadLink = Route::_("index.php?option=com_tkdclub&task=member.downloadfile&filename=" . $filename . '&member_id=' . $this->item->member_id . '&' . Session::getFormToken() . '=1'); ?>
+                                                <?php $downloadLink = Route::_("index.php?option=com_tkdclub&task=member.downloadfile&file_path=" . $file_path . '&file_name=' . $file_name . '&member_id=' . $this->item->member_id . '&' . Session::getFormToken() . '=1'); ?>
                                                 <a class="btn btn-success btn-sm" target="blank"
                                                 title="<?php echo Text::_('COM_TKDCLUB_MEMBER_FILE_DOWNLOAD');?>"
                                                 href="<?php echo $downloadLink ?>">
                                                 <span class="icon-download"></span>
                                                 </a>
                                             </td>
-                                            <td><?php echo $filename; ?></td>
+                                            <td><?php echo $file_name; ?></td>
                                             <td></td>
                                         </tr>
                                     <?php endforeach; ?>

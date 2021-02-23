@@ -14,6 +14,8 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Filesystem\File;
 
 /**
 * memberform controller
@@ -53,7 +55,7 @@ class MemberController extends FormController
      * @param   boolean    $picture false for ordinary attachment file
      *                     $picture true for member picture upload
      */
-    public function uploadfile($picture = false)
+    public function uploadfile()
     {   
         // Check for request forgeries.
         Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
@@ -62,7 +64,7 @@ class MemberController extends FormController
         $recordId = $this->input->get('member_id', null);
         
         // calling the Model with upload functionality
-        $this->getModel()->uploadfile($picture);
+        $this->getModel()->uploadfile();
         
         // setting the redirect back to the edited item
         $this->setRedirect
@@ -74,43 +76,55 @@ class MemberController extends FormController
     }
 
     /**
-     * Upload the member picture
-     */
-    public function uploadpicture()
-    {   
-        // calling the Model with upload functionality
-        $this->uploadfile($picture = true);
-    }
-
-    /**
-     * Delete the memberpicture
-     */
-    public function deletePicture()
-    {
-        $this->deleteFile($picture = true);
-    }
-
-
-    /**
      * Delete the selected file
      * 
      * @param   boolean    $picture false to delete a ordinary attachment file
      *                     $picture true to delete the member picture
      * 
      */
-    public function deleteFile($picture = false)
+    public function deleteFile()
     {
         // Check for request forgeries.
         Session::checkToken('get') or jexit(Text::_('JINVALID_TOKEN'));
 
-        $id = $this->input->get('member_id');
-        
-        if ($id > 0) {
+        $app = Factory::getApplication();
+        $input = $app->input;
+        $file_path = $input->getString('file_path', '');
+        $file_name = $input->getString('file_name', '');
+        $member_id = $input->getInt('member_id', 0);
+
+        // Check for existing file
+        if (!$this->checkFile($file_path, $member_id))
+        {
+            // Inform the user and redirect
+            $app->enqueueMessage(Text::sprintf('COM_TKDCLUB_MEMBER_FILE_NOT_FOUND', $file_name,), 'error');
+            $this->setRedirect(Route::_('index.php?option=com_tkdclub&view=member&layout=edit&member_id='.$member_id, false));
             
-            $model = $this->getModel();
-            $model->deleteFile($picture);
-            $this->setRedirect(Route::_('index.php?option=com_tkdclub&view=member&layout=edit&member_id='.$id, false));
+            return false;
         }
+        
+        $model = $this->getModel();
+
+        if (!$model->deleteFile($file_path))
+        {
+            // Something went wrong, inform the user
+            $app->enqueueMessage(Text::_('COM_TKDCLUB_MEMBER_FILE_DELETE_ERROR'), 'error');
+
+            return false;
+        }
+
+        if (!$model->setAttachments($member_id, $file_path, false))
+        {
+            // Update of database field went wrong
+            $app->enqueueMessage(Text::sprintf('COM_TKDCLUB_MEMBER_FILE_NOT_DELETED_DBFIELD', $file_name,), 'error');
+
+            return false;
+        }
+
+        $app->enqueueMessage(Text::sprintf('COM_TKDCLUB_MEMBER_FILE_DELETED', $file_name,), 'notice');
+        $this->setRedirect(Route::_('index.php?option=com_tkdclub&view=member&layout=edit&member_id='.$member_id, false));
+
+        return true;
     }   
     
     /*
@@ -121,8 +135,43 @@ class MemberController extends FormController
         // Check for request forgeries.
         Session::checkToken('get') or jexit(Text::_('JINVALID_TOKEN'));
 
+        $app = Factory::getApplication();
+        $input = $app->input;
+        $file_path = $input->getString('file_path', '');
+        $file_name = $input->getString('file_name', '');
+        $member_id = $input->getInt('member_id', 0);
+
+        // Check for existing file
+        if (!$this->checkFile($file_path, $member_id))
+        {
+            $app->enqueueMessage(Text::sprintf('COM_TKDCLUB_MEMBER_FILE_NOT_FOUND', $file_name,), 'error');
+            $this->setRedirect(Route::_('index.php?option=com_tkdclub&view=member&layout=edit&member_id='.$member_id, false));
+            return false;
+        }
+
         $model = $this->getModel();
-        $model->downloadFile();
+        $model->downloadFile($file_path, $file_name);
+        $this->setRedirect(Route::_('index.php?option=com_tkdclub&view=member&layout=edit&member_id='.$member_id, false));
+
+        return true;
     }
 
+    /*
+     * Fix the Attachments field in database
+     * 
+     * 
+    */
+    public function checkFile($file_path, $member_id)
+    {
+        if (!File::exists($file_path))
+        {
+            // Get the existing attachments
+            $model = $this->getModel();
+            $model->setAttachments($member_id, $file_path);
+
+            return false;
+        }
+
+        return true;
+    }
 }

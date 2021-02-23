@@ -13,6 +13,7 @@ use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Filesystem\Folder;
 use Redfindiver\Component\Tkdclub\Administrator\Helper\TkdclubHelper;
 use Joomla\Database\ParameterType;
 
@@ -226,7 +227,7 @@ class MembersModel extends ListModel
         $order = $this->getState('list.direction');
         
         $query->order($db->escape($sort) . ' ' . $db->escape($order));
-
+        
         return $query;
     }
 

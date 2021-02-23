@@ -37,8 +37,6 @@ class HtmlView extends HtmlBaseView
 
         $this->form = $this->get('Form');
         $this->item = $this->get('Item');
-        $this->attachments = $this->get('Attachments');
-        $this->memberpicture = $this->getModel('member')->getAttachments($picture = true);
         //$this->medals = $this->get('Medals');
 
         $this->addToolbar();

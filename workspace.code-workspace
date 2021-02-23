@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../websites/joomla4/htdocs"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"livereload.exts": "html,htm,css,js,png,gif,jpg,php,php5,py,rb,erb,coffee,twig,xml"
+	}
+}

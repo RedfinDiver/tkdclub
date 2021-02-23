@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `#__tkdclub_members` (
   `leave` date DEFAULT NULL,
   `member_state` varchar(10) NOT NULL DEFAULT 'active',
   `notes_clubdata` text,
-  `attachments` tinyint(1) NOT NULL DEFAULT '0',
+  `attachments` text,
   `image` varchar(255)  DEFAULT NULL,
   `user_id` int(11) NOT NULL DEFAULT '0',
   `created` datetime DEFAULT NULL,

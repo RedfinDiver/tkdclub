@@ -1,6 +1,5 @@
 ALTER TABLE `#__tkdclub_members`
     ADD `image` varchar(255) DEFAULT NULL AFTER `attachments`,
-    ADD `notes` text AFTER `functions`,
     CHANGE `checked_out_time` `checked_out_time` datetime DEFAULT NULL,
     CHANGE `checked_out` `checked_out` int(10) UNSIGNED DEFAULT NULL,
     CHANGE `modified_by` `modified_by` int(10) UNSIGNED NOT NULL DEFAULT '0',
@@ -21,7 +20,7 @@ ALTER TABLE `#__tkdclub_members`
     CHANGE `grade` `grade` varchar(30) NOT NULL DEFAULT '',
     CHANGE `licenses` `licenses` text,
     CHANGE `functions` `functions` text,
-    CHANGE `attachments` `attachments` tinyint(1) NOT NULL DEFAULT '0',
+    CHANGE `attachments` `attachments` text,
     CHANGE `birthdate` `birthdate` date NOT NULL,
     CHANGE `leave` `leave` date DEFAULT NULL,
     CHANGE `entry` `entry` date DEFAULT NULL,
@@ -40,5 +39,5 @@ ALTER TABLE `#__tkdclub_members`
     `grade` = CASE WHEN `grade` = 0 OR '0' THEN '' ELSE `grade` END;
 
 UPDATE `#__tkdclub_members` SET
-	`notes`= CONCAT(`notes_personel`, ' ', `notes_taekwondo`, ' ', `notes_clubdata`)
+	`attachments` = NULL
 WHERE `member_id` > 0;

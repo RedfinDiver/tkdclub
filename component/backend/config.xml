@@ -41,6 +41,12 @@
             label="COM_TKDCLUB_CONFIG_LICENSES"
             description="COM_TKDCLUB_CONFIG_LICENSES_DESC"
             type="text" defautlt="" size="60" filter="safehtml"/>
+
+        <field
+            name="attachments_path"
+            label="COM_TKDCLUB_CONFIG_ATTACHMENT_FOLDER"
+            description="COM_TKDCLUB_CONFIG_ATTACHMENT_FOLDER_DESC"
+            type="text" default="" filter="safehtml" />
              
     </fieldset>
 

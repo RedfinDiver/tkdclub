@@ -48,9 +48,7 @@ $columns   = 10;
 					</div>
 				<?php else : ?>
                     <div class="m-2">
-                        <b><?php echo $this->total; ?></b> <?php echo Text::_('COM_TKDCLUB_FROM'); ?>
-                        <b><?php echo $this->allrows; ?></b>
-                        <?php echo Text::_('COM_TKDCLUB_ENTRIES'); ?>
+                        <?php echo Text::sprintf('COM_TKDCLUB_ENTRIES', $this->total, $this->allrows); ?>
                     </div>
                     <?php if ($this->togglestats) :  ?>
                         <?php
@@ -124,10 +122,11 @@ $columns   = 10;
                                         if (!empty($item->functions)) : ?>
                                             <span class="far fa-star" title="<?php echo Text::_("COM_TKDCLUB_MEMBER_FUNCTION_HINT")?>"></span>
                                         <?php endif; ?>
-                                        <?php if (!empty($item->notes_taekwondo)) : ?>
+                                        <?php if (!empty($item->notes_taekwondo) || !empty($item->notes_personel) || !empty($item->notes_clubdata)) : ?>
                                             <span class="far fa-clipboard" title="Notiz: <?php echo $this->escape($item->notes_taekwondo) ?>"></span>
                                         <?php endif; ?>
-                                        <?php if (!empty($item->attachments)) : ?>
+                                        <?php $attachments = json_decode($item->attachments, true); ?>
+                                        <?php if (!empty($attachments)) : ?>
                                             <span class="far fa-folder" title="<?php echo Text::_("COM_TKDCLUB_MEMBER_ATTACHMENTS_EXIST")?>"></span>
                                         <?php endif; ?>
                                         
