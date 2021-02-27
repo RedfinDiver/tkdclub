@@ -5,25 +5,27 @@
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+namespace Redfindiver\Component\Tkdclub\Administrator\Button;
+
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Toolbar\Button\StandardButton;
 
 /**
- * Renders a csv download button
+ * Renders a csv export button
  */
-class JToolbarButtonRawFormat extends StandardButton
+class ExportButton extends StandardButton
 {
-	protected $_name = 'RawFormat';
+	protected $_name = 'Export';
 
 	/**
 	 * Get the JavaScript command for the button
 	 * Refer to the script function RawFormatSubmitbutton in stead of the
 	 * standard Joomla.submitbutton
 	 */
-	protected function _getCommand($name, $task, $list)
+	protected function _getCommand()
 	{
-		return	str_replace("Joomla.submitbutton", "RawFormatSubmitbutton",
-			parent::_getCommand($name, $task, $list) );
+		return	str_replace("Joomla.submitbutton", "Tkdclub_exportbutton",
+			parent::_getCommand());
 	}
 }

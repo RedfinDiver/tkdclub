@@ -1,25 +1,26 @@
 <?php
 /**
  * @package    Taekwondo Club
- * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2021 Markus Moser. All rights reserved.
+ * @license    GNU General Public License version 2 or later
  */
 
-defined('_JEXEC') or die;
+namespace Redfindiver\Component\Tkdclub\Administrator\Controller;
+
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
+use Redfindiver\Component\Tkdclub\Administrator\Helper\TkdclubHelper as Helper;
+use Joomla\Utilities\ArrayHelper;
 
-JLoader::register('TkdclubHelperMembers', JPATH_COMPONENT. '/helpers/members.php' );
-JLoader::register('Helper', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/tkdclub.php');
 
-
-class TkdClubControllerExport extends FormController
+class ExportController extends FormController
 {	
 	/**
-	 * method to get the content for csv export
+	 * Method to get the content for csv export
 	 *
 	 * @param string $model the name of model to call
 	 *
@@ -28,8 +29,7 @@ class TkdClubControllerExport extends FormController
 	public function getContent($model = '')
 	{
 		// Get the input from the url / post
-		$app 	= Factory::getApplication();
-		$pks 	= $app->input->get('cid', array(), 'array');
+		$pks = $this->input->post->get('cid', array());
 		$model  = $this->getModel($model);
 		$content = $model->getExportData($pks);
 
@@ -44,12 +44,10 @@ class TkdClubControllerExport extends FormController
 	 **/
 	public function setHeaders($filename = 'download')
 	{
-		$app = Factory::getApplication();
-		$app->setHeader('Content-Type', 'application/csv; charset=utf-8', true);
-		$app->setHeader('Content-Disposition', 'attachment; filename="'.$filename.'.csv"', true);
-		$app->setHeader('Content-Transfer-Encoding', 'binary', true);
-		$app->setHeader('Expires', '0', true);
-		$app->setHeader('Pragma','no-cache',true);
+		$this->app->setHeader('Content-Type', 'application/csv', true)
+			->setHeader('Content-Disposition', 'attachment; filename="' . $filename . '.csv"', true)
+			->setHeader('Cache-Control', 'must-revalidate', true)
+			->sendHeaders();
 	}
 
 	/**
@@ -57,14 +55,22 @@ class TkdClubControllerExport extends FormController
 	**/
 	public function members()
 	{	
-		$content = $this->getContent('members');
+		// Check for request forgeries.
+		$this->checkToken();
 
-		foreach ($content as $row)
-		{
-			print implode(';', $row)."\n";
-		}
+		$rows = $this->getContent('members');
 
 		$this->setHeaders(Text::_('COM_TKDCLUB_SIDEBAR_MEMBERS'));
+
+		$output = fopen("php://output", "w");
+
+		foreach ($rows as $row)
+		{
+			fputcsv($output, $row, ',');
+		}
+
+		fclose($output);
+		$this->app->close();
 	}
 
 	/**

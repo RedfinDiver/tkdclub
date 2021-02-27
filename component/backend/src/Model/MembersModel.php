@@ -13,9 +13,9 @@ use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Filesystem\Folder;
 use Redfindiver\Component\Tkdclub\Administrator\Helper\TkdclubHelper;
 use Joomla\Database\ParameterType;
+use Joomla\Utilities\ArrayHelper;
 
 /**
  * Model-class for list view 'members'
@@ -309,9 +309,13 @@ class MembersModel extends ListModel
                 $agesum += $age; //cumulation age for average calculation
 
                 //oldest and youngest
-                if ($age_in_days < $youngest['age_d']) {
+                if ($age_in_days < $youngest['age_d'])
+                {
                     $youngest = array('age_y' => $age, 'name' => $member->firstname . ' ' . $member->lastname, 'age_d' => $age_in_days);
-                } elseif ($age_in_days > $oldest['age_d']) {
+                }
+
+                if ($age_in_days > $oldest['age_d'])
+                {
                     $oldest = array('age_y' => $age, 'name' => $member->firstname . ' ' . $member->lastname, 'age_d' => $age_in_days);
                 }
 
@@ -362,28 +366,56 @@ class MembersModel extends ListModel
      */
     public function getExportData($pks)
     {
-        $pklist = implode(',', $pks);
-
-        $db    = Factory::getDBO();
-        $query    = $db->getQuery(true);
+        $db    = $this->getDbo();
+        $query = $db->getQuery(true);
         $fields = array(
-            'member_id', 'firstname', 'lastname', 'birthdate', 'sex', 'citizenship', 'street', 'zip', 'city', 'country', 'phone', 'email',
-            'iban', 'memberpass', 'grade', 'lastpromotion', 'member_state', 'entry', 'leave', 'created', 'created_by', 'modified', 'modified_by'
+            'member_id',     // 0
+            'firstname',     // 1
+            'lastname',      // 2
+            'birthdate',     // 3
+            'sex',           // 4
+            'citizenship',   // 5
+            'street',        // 6
+            'zip',           // 7
+            'city',          // 8
+            'country',       // 9
+            'phone',         // 10
+            'email',         // 11
+            'iban',          // 12
+            'memberpass',    // 13
+            'grade',         // 14
+            'lastpromotion', // 15
+            'member_state',  // 16
+            'entry',         // 17
+            'leave',         // 18
+            'created',       // 19
+            'created_by',    // 20
+            'modified',      // 21
+            'modified_by'    // 22
         );
 
+        $pks = ArrayHelper::toInteger($pks);
         $query->select($db->quoteName($fields))
-            ->from($db->quoteName('#__tkdclub_members'))
-            ->where('member_id IN (' . $pklist . ')')
-            ->order('member_id ASC');
+            ->from($db->quoteName('#__tkdclub_members'));
 
-        $db->setQuery((string) $query);
-        $rows    = $db->loadRowList();
+        if (count($pks) > 0)
+        {
+            $query->whereIn($db->quoteName('member_id'), $pks);
+        }
+        else
+        {
+            $query->where($db->quoteName('member_id') . ' > 0');
+        }
+            
+        $query->order('member_id ASC');
 
-        foreach ($rows as &$row) {
-            $row[4] == 'female' ? $row[4] = Text::_('COM_TKDCLUB_MEMBER_SEX_FEMALE') : $row[4] = Text::_('COM_TKDCLUB_MEMBER_SEX_MALE');
-            $row[12] == '' ? $row[12] = Text::_('COM_TKDCLUB_MEMBER_NO_IBAN') : null;
-            $row[13] == 0 ? $row[12] = Text::_('COM_TKDCLUB_MEMBER_NO_PASS') : null;
-            $row[14] == 0 ? $row[13] = Text::_('COM_TKDCLUB_NO_GRADE_LISTVIEW') : null;
+        $db->setQuery($query);
+        $rows = $db->loadRowList();
+
+        foreach ($rows as &$row)
+        {
+            $row[4]  == 'female' ? $row[4] = Text::_('COM_TKDCLUB_MEMBER_SEX_FEMALE') : $row[4] = Text::_('COM_TKDCLUB_MEMBER_SEX_MALE');
+
             switch ($row[16]) {
                 case 'active':
                     $row[16] = Text::_('COM_TKDCLUB_MEMBER_STATE_ACTIVE');
@@ -398,11 +430,11 @@ class MembersModel extends ListModel
                     break;
 
                 default:
-                    $row[16] = $row[15];
+                    $row[16] = '';
             }
 
-            $row[20] ? $row[20] = Factory::getUser($row[20])->name : null;
-            $row[22] ? $row[22] = Factory::getUser($row[22])->name : null;
+            $row[20] ? $row[20] = Factory::getUser($row[20])->name : '';
+            $row[22] ? $row[22] = Factory::getUser($row[22])->name : '';
         }
 
         $headers = array(
@@ -432,8 +464,8 @@ class MembersModel extends ListModel
 
         );
 
-        // return the results as an array of items, each consisting of an array of fields
-        $content    = array($headers);    //header with column names
+        // Return the results as an array of items, each consisting of an array of fields
+        $content    = array($headers);
         $content    = array_merge($content,  $rows);
         return $content;
     }

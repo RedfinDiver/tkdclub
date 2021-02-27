@@ -15,7 +15,7 @@ use Joomla\CMS\Language\Text;
     <div class="col-4">
         <div class="card alert-info">
             <div class="card-body">
-                <h4><?php echo Text::_('COM_TKDCLUB_CONFIG_MEMBERS'); ?></h4>
+                <h4 class="card-title"><?php echo Text::_('COM_TKDCLUB_CONFIG_MEMBERS'); ?></h4>
                 <?php echo Text::_('COM_TKDCLUB_MEMBER_STATE_ACTIVE') . ': ' . $this->memberdata->active; ?><br>
                 <?php echo Text::_('COM_TKDCLUB_MEMBER_STATE_SUPPORTER') . ': ' . $this->memberdata->support; ?><br>
                 <?php echo Text::_('COM_TKDCLUB_MEMBER_STATE_INACTIVE') . ': ' . $this->memberdata->inactive; ?><br> 
@@ -33,17 +33,11 @@ use Joomla\CMS\Language\Text;
         </div>
     </div>
     <div class="col-4">
-        <div class="card">
-            <div class="card-body alert-info">
+        <div class="card alert-info">
+            <div class="card-body">
                 <h4><?php echo Text::_('COM_TKDCLUB_MEMBER_AGE_DISTRIBUTION'); ?></h4>
-                <?php echo Text::_('COM_TKDCLUB_MEMBER_OLDEST')
-                        . ': ' . $this->memberdata->oldest['name']
-                        . ', ' . $this->memberdata->oldest['age_y']
-                        . ' ' . Text::_('COM_TKDCLUB_YEARS') ; ?><br>
-                <?php echo Text::_('COM_TKDCLUB_MEMBER_YOUNGEST')
-                        . ': ' . $this->memberdata->youngest['name']
-                        . ', ' . $this->memberdata->youngest['age_y']
-                        . ' ' . Text::_('COM_TKDCLUB_YEARS') ; ?>
+                <?php echo Text::sprintf('COM_TKDCLUB_MEMBER_OLDEST', $this->memberdata->oldest['name'], $this->memberdata->oldest['age_y']) ?><br>
+                <?php echo Text::sprintf('COM_TKDCLUB_MEMBER_YOUNGEST', $this->memberdata->youngest['name'], $this->memberdata->youngest['age_y']) ?>
             </div>
         </div>
     </div>

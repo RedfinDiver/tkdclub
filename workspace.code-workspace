@@ -1,10 +1,10 @@
 {
 	"folders": [
 		{
-			"path": "../websites/joomla4/htdocs"
+			"path": "."
 		},
 		{
-			"path": "."
+			"path": "../websites/joomla4/htdocs"
 		}
 	],
 	"settings": {

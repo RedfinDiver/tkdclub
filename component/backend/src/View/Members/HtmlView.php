@@ -9,12 +9,11 @@ namespace Redfindiver\Component\Tkdclub\Administrator\View\Members;
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Toolbar\Toolbar;
-use Joomla\CMS\Toolbar\ToolbarHelper;
-use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Helper\ContentHelper;
+use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 
 /**
@@ -69,31 +68,26 @@ class HtmlView extends BaseHtmlView
             ToolBarHelper::addNew('member.add', 'JTOOLBAR_NEW');
         }
 
-        if ($canDo->get('core.edit')) {
-            ToolBarHelper::editList('member.edit', 'JTOOLBAR_EDIT');
-        }
-
         if ($canDo->get('core.delete')) {
             ToolBarHelper::deleteList('COM_TKDCLUB_MEMBER_DELETE_QUESTION', 'members.delete', 'JTOOLBAR_DELETE');
         }
 
-        $toolbar = Toolbar::getInstance('toolbar');
-        $toolbar->addButtonPath(JPATH_COMPONENT . '/buttons');
-
-        if ($this->togglestats) {
+        if ($this->togglestats)
+        {
             ToolBarHelper::custom('members.togglestats', 'eye-close', 'eye-close', 'COM_TKDCLUB_BUTTON_STATS', false);
-        } else {
+        }
+        else
+        {
             ToolBarHelper::custom('members.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);
         }
 
-        // @TODO button for download $toolbar->appendButton('RawFormat',  'download', 'COM_TKDCLUB_BUTTON_EXPORT', 'export.members');
-
-        if ($canDo->get('core.admin')) {
-            ToolBarHelper::divider();
+        ToolbarHelper::custom('export.members', 'download', '', 'COM_TKDCLUB_EXPORT_CSV', true);
+        ToolbarHelper::custom('export.members', 'download', '', 'COM_TKDCLUB_EXPORT_ALL_CSV', false);
+       
+        if ($canDo->get('core.admin'))
+        {
             ToolBarHelper::preferences('com_tkdclub');
         }
-
-        ToolBarHelper::divider();
 
         $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/mitglieder.html';
         ToolbarHelper::help('', false, $help_url);
