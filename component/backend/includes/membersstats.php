@@ -37,7 +37,8 @@ use Joomla\CMS\Language\Text;
             <div class="card-body">
                 <h4><?php echo Text::_('COM_TKDCLUB_MEMBER_AGE_DISTRIBUTION'); ?></h4>
                 <?php echo Text::sprintf('COM_TKDCLUB_MEMBER_OLDEST', $this->memberdata->oldest['name'], $this->memberdata->oldest['age_y']) ?><br>
-                <?php echo Text::sprintf('COM_TKDCLUB_MEMBER_YOUNGEST', $this->memberdata->youngest['name'], $this->memberdata->youngest['age_y']) ?>
+                <?php echo Text::sprintf('COM_TKDCLUB_MEMBER_YOUNGEST', $this->memberdata->youngest['name'], $this->memberdata->youngest['age_y']) ?><br>
+                <?php echo Text::_('COM_TKDCLUB_STATISTIC_AVERAGE_AGE') . ': ' . $this->memberdata->average_age?>
             </div>
         </div>
     </div>

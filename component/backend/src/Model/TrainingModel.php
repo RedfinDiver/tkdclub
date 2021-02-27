@@ -1,25 +1,26 @@
 <?php
 /**
  * @package    Taekwondo Club
- * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2021 Markus Moser. All rights reserved.
+ * @license    GNU General Public License version 2 or later
  */
+
+namespace Redfindiver\Component\Tkdclub\Administrator\Model;
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\MVC\Model\AdminModel;
-use Joomla\CMS\Table\Table;
 use Joomla\CMS\Factory;
+use Joomla\CMS\MVC\Model\AdminModel;
 
 /**
  * Model-class for edit view 'training'
  */
-class TkdClubModelTraining extends AdminModel
+class TrainingModel extends AdminModel
 {
 
-    public function getTable($type = 'Trainings', $prefix = 'TkdClubTable', $config = array())
+    public function getTable($type = 'Trainings', $prefix = 'Administrator', $config = array())
     {
-        return Table::getInstance($type, $prefix, $config);
+        return  parent::getTable($type, $prefix, $config);
     }
 
     public function getForm($data = array(), $loadData = true)

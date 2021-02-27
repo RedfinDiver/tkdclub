@@ -14,13 +14,13 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\View\HtmlView as HtmlBaseView;
+use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 
 /**
  * View class for a edit screen for one member.
  *
  */
-class HtmlView extends HtmlBaseView
+class HtmlView extends BaseHtmlView
 {
     protected $item;
     protected $form;

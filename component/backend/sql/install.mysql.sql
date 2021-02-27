@@ -35,34 +35,35 @@ CREATE TABLE IF NOT EXISTS `#__tkdclub_members` (
   PRIMARY KEY (`member_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-/* CREATE TABLE IF NOT EXISTS `#__tkdclub_trainings` (
+CREATE TABLE IF NOT EXISTS `#__tkdclub_trainings` (
   `training_id` int(11) NOT NULL AUTO_INCREMENT,
   `date` date NOT NULL,
   `trainer` int(5) NOT NULL,
   `km_trainer` int(4) NOT NULL,
   `trainer_paid` tinyint(3) NOT NULL DEFAULT 0,
-  `assist1` int(5) NOT NULL,
-  `km_assist1` int(4) NOT NULL, 
-  `assist1_paid` tinyint(3) NOT NULL DEFAULT 0,
-  `assist2` int(5) NOT NULL,
-  `km_assist2` int(4) NOT NULL,
-  `assist2_paid` tinyint(3) NOT NULL DEFAULT 0,
-  `assist3` int(5) NOT NULL,
-  `km_assist3` int(4) NOT NULL,
-  `assist3_paid` tinyint(3) NOT NULL DEFAULT 0,
+  `assist1` int(5) DEFAULT NULL,
+  `km_assist1` int(4) DEFAULT NULL, 
+  `assist1_paid` tinyint(3) DEFAULT NULL,
+  `assist2` int(5) DEFAULT NULL,
+  `km_assist2` int(4) DEFAULT NULL,
+  `assist2_paid` tinyint(3) DEFAULT NULL,
+  `assist3` int(5) DEFAULT NULL,
+  `km_assist3` int(4) DEFAULT NULL,
+  `assist3_paid` tinyint(3) DEFAULT NULL,
   `type` varchar(50) NOT NULL,
   `participants` int(5) NOT NULL,
-  `notes` text NOT NULL,
+  `notes` text,
   `payment_state` tinyint(3) NOT NULL DEFAULT 0,
-  `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `created_by` INT(10) unsigned NOT NULL DEFAULT '0',
-  `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created` DATETIME DEFAULT NULL,
+  `created_by` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `modified` datetime DEFAULT NULL,
   `modified_by` INT(10) unsigned NOT NULL DEFAULT '0',
-  `checked_out` int(10) NOT NULL,
-  `checked_out_time` datetime NOT NULL,
+  `checked_out` int(10) UNSIGNED DEFAULT NULL,
+  `checked_out_time` datetime DEFAULT NULL,
   PRIMARY KEY (`training_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
+/*
 CREATE TABLE IF NOT EXISTS `#__tkdclub_medals` (
   `medal_id` int(11) NOT NULL AUTO_INCREMENT,
   `date` date NOT NULL,

@@ -1,26 +1,24 @@
 <?php
-
 /**
  * @package    Taekwondo Club
- * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2021 Markus Moser. All rights reserved.
+ * @license    GNU General Public License version 2 or later
  */
 
-defined('_JEXEC') or die;
+namespace Redfindiver\Component\Tkdclub\Administrator\Model;
 
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Component\ComponentHelper;
-
-JLoader::register('Helper', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/tkdclub.php');
+use Redfindiver\Component\Tkdclub\Administrator\Helper\TkdclubHelper;
 
 /**
  * Model-class for list view 'trainings'
  *
  * @since  1.0
  */
-class TkdClubModelTrainings extends ListModel
+class TrainingsModel extends ListModel
 {
     public $trainer_names; // all trainers in database
     public $training_years; // all years in which a training was held
@@ -37,7 +35,7 @@ class TkdClubModelTrainings extends ListModel
         }
 
         // getting all trainer names from database
-        $this->trainer_names = Helper::getTrainer($fromTrainingsTable = true);
+        $this->trainer_names = TkdclubHelper::getTrainer($fromTrainingsTable = true);
 
         // getting all trainingyears from database
         $this->training_years = $this->get_all_training_years_from_database();

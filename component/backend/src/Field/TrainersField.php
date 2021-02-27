@@ -1,27 +1,26 @@
 <?php
-
 /**
  * @package    Taekwondo Club
- * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2021 Markus Moser. All rights reserved.
+ * @license    GNU General Public License version 2 or later
  */
 
-defined('_JEXEC') or die;
+namespace Redfindiver\Component\Tkdclub\Administrator\Field;
 
-use Joomla\CMS\Form\FormHelper;
+\defined('_JEXEC') or die;
+
 use Joomla\CMS\Factory;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Form\Field\ListField;
+use Redfindiver\Component\Tkdclub\Administrator\Helper\TkdclubHelper;
 
-FormHelper::loadFieldClass('list');
-JLoader::register('Helper', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/tkdclub.php');
-
-class JFormFieldTrainers extends JFormFieldList
+class TrainersField extends ListField
 {
     /**
      * The form field type.
      */
-    protected $type = 'trainers';
+    protected $type = 'Trainers';
 
     /**
      * Method to get the field input markup for field 'trainers'.
@@ -37,7 +36,7 @@ class JFormFieldTrainers extends JFormFieldList
              * Return of this function when called with $fromTrainingsTable = true is a object
              * So some more work is to do for rendering the correct field
              */
-            $names = Helper::getTrainer($fromTrainingsTable = true);
+            $names = TkdclubHelper::getTrainer($fromTrainingsTable = true);
             $trainers = array();
 
             foreach ($names as $name) {
@@ -47,7 +46,7 @@ class JFormFieldTrainers extends JFormFieldList
 
         // NO filter use, add trainers from the members table where in functions the member is defined as trainer
         if ($this->element['isFilter'] == 'false') {
-            $trainers = Helper::getTrainer($fromTrainingsTable = false);
+            $trainers = TkdclubHelper::getTrainer($fromTrainingsTable = false);
 
             if (!$trainers) {
                 $app->enqueueMessage(Text::_('COM_TKDCLUB_TRAINING_NO_TRAINERS_DEFINED'), 'warning');

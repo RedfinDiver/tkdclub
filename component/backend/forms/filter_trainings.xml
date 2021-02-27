@@ -2,7 +2,7 @@
 
 <form>
 
-    <fields name="filter">
+    <fields name="filter" addfieldprefix="Redfindiver\Component\Tkdclub\Administrator\Field" >
         <field
             name="search"
             type="text"

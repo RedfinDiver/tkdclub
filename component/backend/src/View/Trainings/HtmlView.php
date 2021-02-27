@@ -1,10 +1,11 @@
 <?php
-
 /**
  * @package    Taekwondo Club
- * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2021 Markus Moser. All rights reserved.
+ * @license    GNU General Public License version 2 or later
  */
+
+namespace Redfindiver\Component\Tkdclub\Administrator\View\Trainings;
 
 defined('_JEXEC') or die;
 
@@ -15,12 +16,12 @@ use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormHelper;
-use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 
 /**
  * view-class for view: trainings
  */
-class TkdClubViewTrainings extends HtmlView
+class HtmlView extends BaseHtmlView
 {
     protected $items;
     protected $pagination;
@@ -52,7 +53,6 @@ class TkdClubViewTrainings extends HtmlView
         }
 
         $this->addToolbar();
-        $this->sidebar = JHtmlSidebar::render();
         parent::display($tpl);
     }
 
@@ -61,9 +61,6 @@ class TkdClubViewTrainings extends HtmlView
      */
     protected function addToolbar()
     {
-        // Adding the fieldpath for the filters
-        FormHelper::addFieldPath(JPATH_COMPONENT . '/models/fields');
-
         $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
 
         ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_TRAINING_ADMIN_VIEW'), 'tkdclub');
@@ -84,24 +81,16 @@ class TkdClubViewTrainings extends HtmlView
             ToolBarHelper::deleteList('COM_TKDCLUB_TRAINING_DELETE_QUESTION', 'trainings.delete', 'JTOOLBAR_DELETE');
         }
 
-        $toolbar = Toolbar::getInstance('toolbar');
-        $toolbar->addButtonPath(JPATH_COMPONENT . '/buttons');
-
         if ($this->togglestats) {
             ToolBarHelper::custom('trainings.togglestats', 'eye-close', 'eye-close', 'COM_TKDCLUB_BUTTON_STATS', false);
         } else {
             ToolBarHelper::custom('trainings.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);
         }
 
-        $toolbar->appendButton('RawFormat',  'download', 'COM_TKDCLUB_BUTTON_EXPORT', 'export.trainings');
-
         if ($canDo->get('core.admin')) {
             ToolBarHelper::divider();
             ToolBarHelper::preferences('com_tkdclub');
         }
-
-        JHtmlSidebar::setAction('index.php?option=com_tkdclub&view=trainings');
-        ToolBarHelper::divider();
 
         $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/trainings.html';
         ToolbarHelper::help('', false, $help_url);

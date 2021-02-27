@@ -1,50 +1,4 @@
-<?php
-
-/**
- * @package    Taekwondo Club
- * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
- */
-
-defined('_JEXEC') or die;
-
-use Joomla\CMS\Factory;
-use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Router\Route;
-use Joomla\CMS\Layout\LayoutHelper;
-
-JLoader::register('Helper', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/tkdclub.php');
-
-HTMLHelper::stylesheet('administrator/components/com_tkdclub/assets/css/tkdclub.css');
-HTMLHelper::_('bootstrap.tooltip');
-HTMLHelper::_('behavior.multiselect');
-HTMLHelper::_('formbehavior.chosen', 'select');
-HTMLHelper::_('script', 'administrator/components/com_tkdclub/assets/js/rawsubmitbutton.js');
-
-/**
- * initilise some variables
- */
-$user      = Factory::getUser();
-$userId    = $user->get('id');
-$currency = ComponentHelper::getParams('com_tkdclub')->get('currency', '€');
-$salaryparams = $this->salaryparams;
-$togglestats = $this->togglestats;
-$listOrder = $this->state->get('list.ordering');
-$listDirn = $this->state->get('list.direction');
-$listLimit = $this->state->get('list.limit');
-$columns = 10;
-
-$filter_trainer = $this->state->get('filter.trainer');
-
-$filter_type   = $this->state->get('filter.type');
-$filter_year   = $this->state->get('filter.year');
-$filter_search = $this->state->get('filter.search');
-$filter_payment_state  = $this->state->get('filter.payment_state');
-?>
-
-<form action="<?php echo Route::_('index.php?option=com_tkdclub&view=trainings'); ?>" method="post" name="adminForm" id="adminForm">
-    <?php if (!empty($this->sidebar)) : ?>
+<?php if (!empty($this->sidebar)) : ?>
         <div id="j-sidebar-container" class="span2">
             <?php echo $this->sidebar; ?>
         </div>
@@ -54,7 +8,7 @@ $filter_payment_state  = $this->state->get('filter.payment_state');
             <?php endif; ?>
             <!-- filters and sorting tools -->
             <?php
-            echo LayoutHelper::render('joomla.searchtools.default', array('view' => $this));
+            echo LayoutHelper::render('joomla.searchtools.default', ['view' => $this]);
             ?>
             <?php if (empty($this->items)) : ?>
                 <div class="alert alert-no-items">
@@ -170,4 +124,3 @@ $filter_payment_state  = $this->state->get('filter.payment_state');
                 <?php echo HTMLHelper::_('form.token'); ?>
             </div>
             </div>
-</form>

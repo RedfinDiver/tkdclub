@@ -1,24 +1,24 @@
 <?php
 /**
  * @package    Taekwondo Club
- * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2021 Markus Moser. All rights reserved.
+ * @license    GNU General Public License version 2 or later
  */
 
-defined('_JEXEC') or die;
+namespace Redfindiver\Component\Tkdclub\Administrator\Field;
 
-use Joomla\CMS\Form\FormHelper;
+\defined('_JEXEC') or die;
+
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\Component\ComponentHelper;
-
-FormHelper::loadFieldClass('list');
 
 /**
  * Supports the options-markup for training years
  * used in backend and frontent
  */
-class JFormFieldTrainyears extends JFormFieldList
+class TrainyearsField extends ListField
 {
     /**
      * The form field type.

@@ -7,10 +7,10 @@
 
 \defined('_JEXEC') or die;
 
-use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
-use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\LayoutHelper;
 
 /** @var \Redfindiver\Component\Tkdclub\Administrator\View\Members\HtmlView $this */
@@ -52,9 +52,7 @@ $columns   = 10;
                         <?php echo Text::sprintf('COM_TKDCLUB_ENTRIES', $this->total, $this->allrows); ?>
                     </div>
                     <?php if ($this->togglestats) :  ?>
-                        <?php
-                                include_once(JPATH_COMPONENT . '/includes/membersstats.php');
-                                ?>
+                        <?php include_once(JPATH_COMPONENT . '/includes/membersstats.php'); ?>
                     <?php endif; ?>
                     <table class="table table-striped table-sm">
                         <thead>
@@ -161,7 +159,6 @@ $columns   = 10;
                             <?php endforeach; ?>
                         </tbody>
                     </table>
-
                 <?php endif; ?>
 
                 <?php echo $this->pagination->getListFooter(); ?>

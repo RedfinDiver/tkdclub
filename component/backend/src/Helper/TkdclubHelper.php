@@ -278,7 +278,7 @@ class TkdclubHelper
 
             $db->setQuery($query);
 
-            return Helper::prepareArray($db->loadObjectList());
+            return TkdclubHelper::prepareArray($db->loadObjectList());
         }
     }
 
