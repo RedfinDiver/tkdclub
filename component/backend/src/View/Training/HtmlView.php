@@ -17,17 +17,40 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 
 /**
- * view-class of edit-view 'training'
+ * View to edit a training
+ * 
  */
 class HtmlView extends BaseHtmlView
 {
-    protected $item;
+    /**
+	 * The Form object
+	 *
+	 * @var    Form
+	 * @since  1.5
+	 */
     protected $form;
 
+    /**
+	 * The active item
+	 *
+	 * @var    object
+	 * @since  1.5
+	 */
+    protected $item;
+
+    /**
+	 * Display the view
+	 *
+	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+	 *
+	 * @return  void
+	 *
+	 * @since   1.5
+	 *
+	 * @throws  Exception
+	 */
     public function display($tpl = null)
     {
-        Factory::getApplication()->input->set('hidemainmenu', true);
-
         $this->form = $this->get('Form');
         $this->item = $this->get('Item');
 
@@ -35,13 +58,27 @@ class HtmlView extends BaseHtmlView
         parent::display($tpl);
     }
 
+    /**
+	 * Add the page title and toolbar.
+	 *
+	 * @return  void
+	 *
+	 * @since   1.6
+	 * @throws  Exception
+	 */
     protected function addToolbar()
-    {
+    {   
+        // No menu in edit view
+        Factory::getApplication()->input->set('hidemainmenu', true);
+
         $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
 
-        if ($this->item->training_id == NULL) {
+        if ($this->item->training_id == NULL)
+        {
             ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_TRAINING_NEW'), 'tkdclub');
-        } else {
+        }
+        else
+        {
             ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_TRAINING_CHANGE'), 'tkdclub');
         }
 
@@ -55,7 +92,7 @@ class HtmlView extends BaseHtmlView
             ToolBarHelper::save2new('training.save2new');
         }
 
-        ToolBarHelper::cancel('training.cancel', 'JTOOLBAR_CANCEL');
+        ToolBarHelper::cancel('training.cancel', 'JTOOLBAR_CLOSE');
 
         $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/mitglieder.html';
         ToolbarHelper::help('', false, $help_url);

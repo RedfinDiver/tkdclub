@@ -13,67 +13,66 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
 $wa = $this->document->getWebAssetManager();
-$wa->useScript('keepalive')->useScript('form.validate');
-
-// HTMLHelper::stylesheet('administrator/components/com_tkdclub/assets/css/tkdclub.css');
-// HTMLHelper::script('administrator/components/com_tkdclub/assets/js/trainerselect.js');
-
+$wa->useScript('keepalive')
+    ->useScript('form.validate')
+    ->useScript('com_tkdclub.trainer-select')
+    ->useStyle('com_tkdclub.tkdclub-css');
 ?>
 
 <form action="<?php echo Route::_('index.php?option=com_tkdclub&training_id=' . (int) $this->item->training_id); ?>" method="post" name="adminForm" id="training-form" class="form-validate">
-
-    <!-- start of tabs -->
-    <div class="form-horizontal">
-        <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'trainingdata')); ?>
-
-        <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'trainingdata', empty($this->item->training_id) ? Text::_('COM_TKDCLUB_TRAINING_NEW_TAB', true) : Text::sprintf('COM_TKDCLUB_TRAINING_EDIT', $this->item->training_id, true)); ?>
-        <div class="row-fluid">
-            <div class="span6">
-                <?php echo $this->form->renderField('date'); ?>
-                <?php echo $this->form->renderField('trainer'); ?>
-                <?php echo $this->form->renderField('km_trainer'); ?>
-                <?php echo $this->form->renderField('trainer_paid'); ?>
-                <?php echo $this->form->renderField('spacer4'); ?>
-                <?php echo $this->form->renderField('type'); ?>
-                <?php echo $this->form->renderField('participants'); ?>
-                <?php echo $this->form->renderField('km'); ?>
-                <?php echo $this->form->renderField('notes'); ?>
-            </div>
-            <div class="span6">
-                <?php echo $this->form->renderField('assist1'); ?>
-                <?php echo $this->form->renderField('km_assist1'); ?>
-                <?php echo $this->form->renderField('assist1_paid'); ?>
-                <?php echo $this->form->renderField('spacer1'); ?>
-                <?php echo $this->form->renderField('assist2'); ?>
-                <?php echo $this->form->renderField('km_assist2'); ?>
-                <?php echo $this->form->renderField('assist2_paid'); ?>
-                <?php echo $this->form->renderField('spacer2'); ?>
-                <?php echo $this->form->renderField('assist3'); ?>
-                <?php echo $this->form->renderField('km_assist3'); ?>
-                <?php echo $this->form->renderField('assist3_paid'); ?>
-            </div>
+    <div class="row form-vertical">
+        <div class="col-12 col-md-4">
+            <?php echo $this->form->renderField('date'); ?>
         </div>
-        <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
-
-        <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'item_data', Text::_('COM_TKDCLUB_ITEM_DATA', true)); ?>
-        <?php if (empty($this->item->training_id)) : ?>
-            <div class="alert alert-no-items">
-                <?php echo Text::_('COM_TKDCLUB_NO_ITEM_DATA'); ?>
+        <div class="col-12 col-md-4">
+            <?php echo $this->form->renderField('type'); ?>
+        </div>
+        <div class="col-12 col-md-4">
+            <?php echo $this->form->renderField('participants'); ?>
+        </div>
+    </div>
+    <div>
+        <?php echo HtmlHelper::_('uitab.startTabSet', 'myTab', array('active' => 'trainingdata')); ?>
+        <?php echo HtmlHelper::_('uitab.addTab', 'myTab', 'trainingdata', empty($this->item->training_id) ? Text::_('COM_TKDCLUB_TRAINING_NEW_TAB', true) : Text::_('COM_TKDCLUB_TRAINING_EDIT', true)); ?>
+            <div class="row">
+                <div class="col-lg-6">
+                    <fieldset id="fieldset-trainer_data" class="options-form">
+                        <legend><?php echo Text::_('Trainingsleitung'); ?></legend>
+                        <div>
+                            <?php echo $this->form->renderFieldset('class_lead'); ?>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="col-lg-6">
+                    <fieldset id="fieldset-trainer_data" class="options-form">
+                        <legend><?php echo Text::_('Assistenz'); ?></legend>
+                        <div>
+                            <?php echo $this->form->renderFieldset('assistents'); ?>
+                        </div>
+                    </fieldset>
+                </div>
             </div>
-        <?php else : ?>
-            <div>
-                <?php foreach ($this->form->getFieldset('item_data') as $field) : ?>
-                    <?php echo $field->renderField(); ?>
-                <?php endforeach; ?>
-            </div>
-        <?php endif; ?>
-        <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
+        <?php echo HtmlHelper::_('uitab.endTab'); ?>
 
-        <?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>
+        <?php echo HtmlHelper::_('uitab.addTab', 'myTab', 'item_data', Text::_('COM_TKDCLUB_ITEM_DATA', true)); ?>
+            <?php if (empty($this->item->training_id)) : ?>
+                <div class="alert alert-info">
+						<span class="icon-info-circle" aria-hidden="true"></span><span class="visually-hidden"><?php echo Text::_('INFO'); ?></span>
+						<?php echo Text::_('COM_TKDCLUB_NO_ITEM_DATA'); ?>
+				</div>
+            <?php else : ?>
+                <div>
+                    <?php foreach ($this->form->getFieldset('item_data') as $field) : ?>
+                        <?php echo $field->renderField(); ?>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+
+        <?php echo HtmlHelper::_('uitab.endTab'); ?>
+        <?php echo HtmlHelper::_('uitab.endTabSet'); ?>
+
+        <input type="hidden" name="task" value="" />
+        <?php echo HtmlHelper::_('form.token'); ?>
 
     </div>
-
-    <input type="hidden" name="task" value="" />
-    <?php echo HTMLHelper::_('form.token'); ?>
-
 </form>

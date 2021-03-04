@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form addfieldprefix="Redfindiver\Component\Tkdclub\Administrator\Field">
     
+
     <fieldset name="training_data">
 
         <field
@@ -14,7 +15,7 @@
             <option value="1">COM_TKDCLUB_TRAINING_PAID</option>
 
         </field>
-    
+        
         <field 
             name="date" type="calendar"
             class="inputbox"
@@ -24,6 +25,35 @@
 		    showtime="false"
             filter="server_utc"
             size="12" required="true" />
+        
+         <field 
+            name="type" type="traintypes"
+            class="inputbox"
+            label="COM_TKDCLUB_TRAINING_TYPE"
+            description="COM_TKDCLUB_TRAINING_TYPE_DESC"
+            filter="safehtml" default="">
+            <option value="">COM_TKDCLUB_SELECT_TRAINING_TYPE</option>
+        </field>
+            
+        <field 
+            name="participants" type="text"
+            class="inputbox"
+            label="COM_TKDCLUB_TRAINING_PARTICIPANTS"
+            description="COM_TKDCLUB_TRAINING_PARTICIPANTS_DESC"
+            size="5" filter="integer" />
+        
+        <field 
+            name="notes" type="textarea"
+            rows="7"
+            class="inputbox"
+            label="COM_TKDCLUB_TRAINING_NOTES"
+            description="COM_TKDCLUB_TRAINING_NOTES_DESC"
+            default="" filter="safehtml" />   
+
+
+    </fieldset>
+
+    <fieldset name="class_lead">
         
         <field 
             name="trainer" type="trainers"
@@ -54,10 +84,9 @@
 
         </field>
 
-        <field name="spacer4"
-	    
-        type="spacer"
-	    hr="true" />     
+    </fieldset>
+
+    <fieldset name="assistents">
         
          <field 
             name="assist1" type="trainers"
@@ -87,11 +116,8 @@
             <option value="1">COM_TKDCLUB_TRAINING_PAID</option>
 
         </field>
-        
-        <field name="spacer1"
-	    
-        type="spacer"
-	    hr="true" />
+
+        <field type="spacer" name="spacer1" hr="true" />
         
          <field 
             name="assist2" type="trainers"
@@ -121,11 +147,8 @@
             <option value="1">COM_TKDCLUB_TRAINING_PAID</option>
 
         </field>
-        
-        <field name="spacer2"
-        
-	    type="spacer"
-	    hr="true" />
+
+        <field type="spacer" name="spacer2" hr="true" />
          
         <field 
             name="assist3" type="trainers"
@@ -156,30 +179,6 @@
 
         </field>
 
-
-        <field 
-            name="type" type="traintypes"
-            class="inputbox"
-            label="COM_TKDCLUB_TRAINING_TYPE"
-            description="COM_TKDCLUB_TRAINING_TYPE_DESC"
-            filter="safehtml" default="">
-            <option value="">COM_TKDCLUB_SELECT_TRAINING_TYPE</option>
-        </field>
-            
-        <field 
-            name="participants" type="text"
-            class="inputbox"
-            label="COM_TKDCLUB_TRAINING_PARTICIPANTS"
-            description="COM_TKDCLUB_TRAINING_PARTICIPANTS_DESC"
-            size="5" filter="integer" />
-        
-        <field 
-            name="notes" type="textarea"
-            rows="7"
-            class="inputbox"
-            label="COM_TKDCLUB_TRAINING_NOTES"
-            description="COM_TKDCLUB_TRAINING_NOTES_DESC"
-            default="" filter="safehtml" />   
     </fieldset>
     
     <fieldset name="item_data">       

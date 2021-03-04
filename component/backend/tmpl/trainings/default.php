@@ -19,6 +19,11 @@ use Redfindiver\Component\Tkdclub\Administrator\Helper\TkdclubHelper;
 HtmlHelper::_('bootstrap.tooltip');
 HtmlHelper::_('behavior.multiselect');
 
+/** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
+$wa = $this->document->getWebAssetManager();
+$wa->getRegistry();
+$wa->useStyle('com_tkdclub.tkdclub-css');
+
 
 /**
  * initilise some variables
@@ -93,7 +98,7 @@ $filter_payment_state  = $this->state->get('filter.payment_state');
                                     ?>
                                 <tr class="row<?php echo $i % 2; ?>">
                                     <td class="center"><?php echo HTMLHelper::_('grid.id', $i, $item->training_id); ?>
-                                    <td class="center hasTooltip">
+                                    <td class="tbody-icon">
                                         <?php
                                                 $state = TkdclubHelper::getpaystate(
                                                     $item->trainer_paid,
@@ -105,14 +110,14 @@ $filter_payment_state  = $this->state->get('filter.payment_state');
                                                     $item->assist3_paid
                                                 );
 
-                                                $classes = array(0 => 'icon-remove tkdclub-icon-red', 1 => 'icon-publish', 2 => 'icon-plus-2 tkdclub-icon-orange');
+                                                $classes = array(0 => 'icon-remove', 1 => 'icon-publish', 2 => 'icon-plus-2 tkdclub-icon-orange');
                                                 $tooltip = array(
                                                     0 => Text::_('COM_TKDCLUB_TRAINING_NOT_PAID'),
                                                     1 => Text::_('COM_TKDCLUB_TRAINING_PAID'),
                                                     2 => Text::_('COM_TKDCLUB_TRAINING_PARTLY_PAID')
                                                 );
                                                 ?>
-                                        <i class="btn btn-micro <?php echo $classes[$state]; ?> hasTooltip" title="" data-original-title="<?php echo $tooltip[$state]; ?>"></i>
+                                        <span class="<?php echo $classes[$state]; ?> hasTooltip" title="" data-original-title="<?php echo $tooltip[$state]; ?>"></span>
 
                                     </td>
 

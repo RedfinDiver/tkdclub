@@ -24,6 +24,16 @@
         "name": "com_tkdclub.member-format-iban",
         "type": "script",
         "uri": "com_tkdclub/member-format-iban.js"
+      },
+      {
+        "name": "com_tkdclub.trainer-select",
+        "type": "script",
+        "uri": "com_tkdclub/trainer-select.js"
+      },
+      {
+        "name": "com_tkdclub.tkdclub-css",
+        "type": "style",
+        "uri": "com_tkdclub/tkdclub.css"
       }
     ]
   }

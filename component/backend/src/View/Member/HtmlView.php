@@ -17,24 +17,44 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 
 /**
- * View class for a edit screen for one member.
+ * View to edit a member
  *
  */
 class HtmlView extends BaseHtmlView
 {
-    protected $item;
+    /**
+	 * The Form object
+	 *
+	 * @var    Form
+	 * @since  1.5
+	 */
     protected $form;
+
+    /**
+	 * The active item
+	 *
+	 * @var    object
+	 * @since  1.5
+	 */
+    protected $item;
+
     protected $attachments;
     protected $memberpicture;
     protected $medals;
 
     /**
-     * Display the view
-     */
+	 * Display the view
+	 *
+	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+	 *
+	 * @return  void
+	 *
+	 * @since   1.5
+	 *
+	 * @throws  Exception
+	 */
     public function display($tpl = null)
     {
-        Factory::getApplication()->input->set('hidemainmenu', true);
-
         $this->form = $this->get('Form');
         $this->item = $this->get('Item');
         //$this->medals = $this->get('Medals');
@@ -42,17 +62,28 @@ class HtmlView extends BaseHtmlView
         $this->addToolbar();
         parent::display($tpl);
     }
+
     /**
-     * Add the page title and toolbar.
-     *
-     */
+	 * Add the page title and toolbar.
+	 *
+	 * @return  void
+	 *
+	 * @since   1.6
+	 * @throws  Exception
+	 */
     protected function addToolbar()
     {
+        // No menu in edit view
+        Factory::getApplication()->input->set('hidemainmenu', true);
+
         $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
 
-        if ($this->item->member_id == NULL) {
+        if ($this->item->member_id == NULL)
+        {
             ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_MEMBER_NEW_TITLE'), 'tkdclub');
-        } else {
+        }
+        else
+        {
             ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_MEMBER_EDIT_TITLE'), 'tkdclub');
         }
 
@@ -62,7 +93,8 @@ class HtmlView extends BaseHtmlView
 
         ToolBarHelper::save('member.save', 'JTOOLBAR_SAVE');
 
-        if ($canDo->get('core.create')) {
+        if ($canDo->get('core.create'))
+        {
             ToolBarHelper::save2new('member.save2new');
         }
 
