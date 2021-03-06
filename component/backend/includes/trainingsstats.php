@@ -8,6 +8,8 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Session\Session;
 
 // TODO: Rework trainingsstats
 
@@ -27,11 +29,11 @@ if (!$filter_trainer && !$filter_type && !$filter_year)
     
     if ($salaryparams == true)
     {
-        echo Text::_('COM_TKDCLUB_TRAINING_NOT_PAID_TRAININGS').'<b>'. \number_format($sum, 2, ',', ' ') .' '. $currency .'</b>'. '</br>';
+        echo Text::_('COM_TKDCLUB_TRAINING_NOT_PAID_TRAININGS') . \number_format($sum, 2, ',', ' ') .' '. $currency . '</br>';
     }
     else
     {
-        echo '<b>' . Text::_('COM_TKDCLUB_TRAINING_SALARY_CALC_NOT_POSSIBLE') . '</b>' . '</br>';
+        echo Text::_('COM_TKDCLUB_TRAINING_SALARY_CALC_NOT_POSSIBLE') . '</br>';
     }
 }
 
@@ -50,11 +52,11 @@ if ($filter_trainer)
     // Text is used later in the script
     if ($salaryparams == true)
     {
-        $sum_text_trainer = Text::_('COM_TKDCLUB_TRAINING_NOT_PAID_TRAININGS_TRAINER').$trainer_data->trainer_name.': '.'<b>'. $sum . ' ' . $currency . '</b>'. '</br>';
+        $sum_text_trainer = Text::_('COM_TKDCLUB_TRAINING_NOT_PAID_TRAININGS_TRAINER').$trainer_data->trainer_name.': '. $sum . ' ' . $currency . '</br>';
     }
     else
     {
-        $sum_text_trainer = '<b>' . Text::_('COM_TKDCLUB_TRAINING_SALARY_CALC_NOT_POSSIBLE') . '</b>';
+        $sum_text_trainer = Text::_('COM_TKDCLUB_TRAINING_SALARY_CALC_NOT_POSSIBLE');
     }
 }
          
@@ -98,7 +100,7 @@ $filter_type ? $average = $this->trainingsdata->sums['parts'][$filter_type] : nu
 
 if (!$filter_trainer && $filter_payment_state === '')
 {
-    echo 'Mittlere Teilnehmerzahl' . $type . $year .': ' .'<b>' . \number_format($average, 1, ',', ' ') . ' Personen'. '</b>' .'</br>'; 
+    echo 'Mittlere Teilnehmerzahl' . $type . $year .': ' . \number_format($average, 1, ',', ' ') . ' Personen ' .'</br>'; 
 }
          
 /**********************************************************************
@@ -117,7 +119,7 @@ if ($filter_trainer && !$filter_type && !$filter_year)
 
     if ($trainer_data->sums['unpaid'] > 0)
     {
-        $url = JRoute::_( 'index.php?option=com_tkdclub&task=trainings.paytrainings&member_id=' . $trainer_data->trainer_id . '&name=' . $trainer_data->trainer_name . '&' . JSession::getFormToken() .'=1');
+        $url = Route::_( 'index.php?option=com_tkdclub&task=trainings.paytrainings&member_id=' . $trainer_data->trainer_id . '&name=' . $trainer_data->trainer_name . '&' . Session::getFormToken() .'=1');
         $button = '<a class="btn btn-small" target="_self" href="' . $url .'" ><span class="icon-publish"></span>alle Trainings als bezahlt speichern</a>';
         echo $button;
     }
@@ -156,7 +158,7 @@ if ($filter_trainer && $filter_type && $filter_year)
 // wenn kein Filter ausgewählt ist
 if (!$filter_trainer && !$filter_type && !$filter_year && !$filter_search && $filter_payment_state == '')
 {  
-    echo 'Gesamtzahl der Trainings in der Datenbank: ' .'<b>'.$this->trainingsdata->sums['trainings'] .'</b>';
+    echo 'Gesamtzahl der Trainings in der Datenbank: ' . $this->trainingsdata->sums['trainings'];
 }
 
 // wenn nur State ausgwählt ist

@@ -64,7 +64,13 @@ $filter_payment_state  = $this->state->get('filter.payment_state');
                         <?php echo Text::sprintf('COM_TKDCLUB_ENTRIES', $this->total, $this->allrows); ?>
                     </div>
                     <?php if ($this->togglestats) :  ?>
-                        <?php include_once(JPATH_COMPONENT . '/includes/trainingsstats.php'); ?>
+                        <div class="m-2 row">
+                            <div class="card alert-info">
+                                <div class="card-body">
+                                    <?php include_once(JPATH_COMPONENT . '/includes/trainingsstats.php'); ?>
+                                </div>
+                            </div>
+                        </div>
                     <?php endif; ?>
                     <table class="table table-striped table-sm">
                         <thead>
@@ -74,14 +80,14 @@ $filter_payment_state  = $this->state->get('filter.payment_state');
                                 </td>
                                 <th  class="w-1 text-center"><?php echo Text::_('COM_TKDCLUB_TRAINING_PAID'); ?></th>
                                 <th><?php echo HTMLHelper::_('searchtools.sort', 'COM_TKDCLUB_DATE', 'date', $listDirn, $listOrder); ?></th>
-                                <th width=""><?php echo Text::_('COM_TKDCLUB_TRAINING_TRAINER'); ?></th>
-                                <th width=""><?php echo Text::_('COM_TKDCLUB_TRAINING_ASSISTENT1'); ?></th>
-                                <th width=""><?php echo Text::_('COM_TKDCLUB_TRAINING_ASSISTENT2'); ?></th>
-                                <th width=""><?php echo Text::_('COM_TKDCLUB_TRAINING_ASSISTENT3'); ?></th>
-                                <th width=""><?php echo Text::_('COM_TKDCLUB_TRAINING_TYPE'); ?></th>
-                                <th width=""><?php echo Text::_('COM_TKDCLUB_TRAINING_PARTICIPANTS'); ?></th>
-                                <th width=""><?php echo Text::_('COM_TKDCLUB_TRAINING_NOTES'); ?></th>
-                                <th width="1%"><?php echo Text::_('COM_TKDCLUB_TRAINING_ID'); ?></th>
+                                <th><?php echo Text::_('COM_TKDCLUB_HINTS'); ?></th>
+                                <th scope="col" class="w-15 text-start d-none d-md-table-cell"><?php echo Text::_('COM_TKDCLUB_TRAINING_TRAINER'); ?></th>
+                                <th scope="col" class="w-15 text-start d-none d-md-table-cell"><?php echo Text::_('COM_TKDCLUB_TRAINING_ASSISTENT1'); ?></th>
+                                <th scope="col" class="w-15 text-start d-none d-md-table-cell"><?php echo Text::_('COM_TKDCLUB_TRAINING_ASSISTENT2'); ?></th>
+                                <th scope="col" class="w-15 text-start d-none d-md-table-cell"><?php echo Text::_('COM_TKDCLUB_TRAINING_ASSISTENT3'); ?></th>
+                                <th scope="col" class="w-15 text-start d-none d-md-table-cell"><?php echo Text::_('COM_TKDCLUB_TRAINING_TYPE'); ?></th>
+                                <th scope="col" class="text-center d-none d-md-table-cell"><?php echo Text::_('COM_TKDCLUB_TRAINING_PARTICIPANTS'); ?></th>
+                                <th scope="col" class="text-center d-none d-md-table-cell"><?php echo Text::_('COM_TKDCLUB_TRAINING_ID'); ?></th>
                             </tr>
                         </thead>
                         <tfoot>
@@ -130,14 +136,18 @@ $filter_payment_state  = $this->state->get('filter.payment_state');
                                                 echo '<a href="' . $mylink . '">' . HTMLHelper::_('date', $item->date, JText::_('DATE_FORMAT_LC4')) . '</a>';
                                                 ?>
                                     </td>
+                                    <td>
+                                        <?php if (!empty($item->notes)) : ?>
+                                            <span class="far fa-clipboard" title="<?php echo Text::_('COM_TKDCLUB_NOTES') . ': ' . $this->escape($item->notes) ?>"></span>
+                                        <?php endif; ?>
+                                    </td>
                                     <td><?php echo $this->escape($item->trainer_firstname) . ' ' . $this->escape($item->trainer_lastname); ?></td>
                                     <td><?php echo $this->escape($item->assist1_firstname) . ' ' . $this->escape($item->assist1_lastname); ?></td>
                                     <td><?php echo $this->escape($item->assist2_firstname) . ' ' . $this->escape($item->assist2_lastname); ?></td>
                                     <td><?php echo $this->escape($item->assist3_firstname) . ' ' . $this->escape($item->assist3_lastname); ?></td>
                                     <td><?php echo $this->escape($item->type); ?></td>
-                                    <td><?php echo $this->escape($item->participants); ?></td>
-                                    <td><?php echo $this->escape($item->notes); ?></td>
-                                    <td><?php echo (int) $item->training_id; ?></td>
+                                    <td class="text-center"><?php echo $this->escape($item->participants); ?></td>
+                                    <td class="text-center"><?php echo (int) $item->training_id; ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>

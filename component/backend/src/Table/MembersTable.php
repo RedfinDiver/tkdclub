@@ -41,7 +41,19 @@ class MembersTable extends Table
 		parent::__construct('#__tkdclub_members', 'member_id', $db);
 
 	}
-
+	
+	/**
+	 * Method to store a row in the database from the Table instance properties.
+	 *
+	 * If a primary key value is set the row with that primary key value will be updated with the instance property values.
+	 * If no primary key value is set a new row will be inserted into the database with the properties from the Table instance.
+	 *
+	 * @param   boolean  $updateNulls  True to update fields even if they are null.
+	 *
+	 * @return  boolean  True on success.
+	 *
+	 * @since   1.7.0
+	 */
 	public function store($updateNulls = true)
 	{
         $date   = Factory::getDate()->toSql();

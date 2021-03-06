@@ -12,6 +12,8 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Layout\LayoutHelper;
+use Joomla\CMS\Uri\Uri;
+use Redfindiver\Component\Tkdclub\Administrator\Helper\TkdclubHelper;
 
 /** @var \Redfindiver\Component\Tkdclub\Administrator\View\Members\HtmlView $this */
 HtmlHelper::_('bootstrap.tooltip');
@@ -65,7 +67,7 @@ $columns   = 10;
                                 <th width="">
                                     <?php echo HtmlHelper::_('grid.sort', 'COM_TKDCLUB_MEMBER_NAME', 'lastname', $listDirn, $listOrder); ?>
                                 </th>
-                                <th><?php echo Text::_('COM_TKDCLUB_MEMBER_HINTS'); ?></th>
+                                <th><?php echo Text::_('COM_TKDCLUB_HINTS'); ?></th>
                                 <th><?php echo Text::_('COM_TKDCLUB_MEMBER_PHONE'); ?></th>
                                 <th><?php echo Text::_('COM_TKDCLUB_MEMBER_EMAIL'); ?></th>
                                 <th><?php echo Text::_('COM_TKDCLUB_MEMBER_PASS'); ?></th>
@@ -118,20 +120,46 @@ $columns   = 10;
                                         </div>
                                     </th>
                                     <td>
-                                    <?php 
-                                        if (!empty($item->functions)) : ?>
-                                            <span class="far fa-star" title="<?php echo Text::_("COM_TKDCLUB_MEMBER_FUNCTION_HINT")?>"></span>
-                                        <?php endif; ?>
-                                        <?php if (!empty($item->notes_taekwondo) || !empty($item->notes_personel) || !empty($item->notes_clubdata)) : ?>
-                                            <span class="far fa-clipboard" title="Notiz: <?php echo $this->escape($item->notes_taekwondo) ?>"></span>
-                                        <?php endif; ?>
-                                        <?php $attachments = json_decode($item->attachments, true); ?>
-                                        <?php if (!empty($attachments)) : ?>
-                                            <span class="far fa-folder" title="<?php echo Text::_("COM_TKDCLUB_MEMBER_ATTACHMENTS_EXIST")?>"></span>
+                                        <?php
+                                        // Functions
+                                        $functions = json_decode($item->functions, true);
+                                        if (!empty($functions)) : ?>
+                                            <?php
+                                                $functions = json_decode($item->functions, true);
+                                                $translation = TkdclubHelper::getFunctionTranslation($item->sex);
+                                                $fstring = '';
+                                                foreach ($functions as $function) {
+                                                    array_key_exists($function, $translation) ? $fstring .= $translation[$function] . "<br>" : $fstring .= $function . "<br>";
+                                                }
+                                            ?>
+                                            <span class="far fa-star hasPopover" data-bs-original-title="<?php echo Text::_('COM_TKDCLUB_MEMBER_FUNCTIONS') ?>" data-bs-content="<?php echo $fstring ?>"></span>
                                         <?php endif; ?>
                                         
-                                        <?php if (!empty($item->image)) : ?>
-                                            <span class="far fa-user" title="<?php echo Text::_("COM_TKDCLUB_MEMBER_PICTURE_HINT") ?>"></span>
+                                        <?php
+                                        // Notes
+                                        if (!empty($item->notes_taekwondo) || !empty($item->notes_personel) || !empty($item->notes_clubdata)) : ?>
+                                            <?php $notes = $item->notes_taekwondo . "\n" . $item->notes_personel . "\n" . $item->notes_clubdata?>
+                                            <span class="far fa-clipboard hasPopover" data-bs-original-title="<?php echo Text::_('COM_TKDCLUB_NOTES') ?>" data-bs-content="<?php echo $this->escape($notes) ?>"></span>
+                                        <?php endif; ?>
+
+                                        <?php 
+                                        // Attachments
+                                        $attachments = json_decode($item->attachments, true); ?>
+                                        <?php if (!empty($attachments)) : ?>
+                                            <?php
+                                                $astring = '';
+                                                foreach ($attachments as $file => $filename) {
+                                                    $astring .= $filename . '<br>';
+                                                }
+                                                
+                                            ?>
+                                            <span class="far fa-folder hasPopover" data-bs-original-title="<?php echo Text::_('COM_TKDCLUB_MEMBER_ATTACHMENTS') ?>" data-bs-content="<?php echo $astring ?>"></span>
+                                        <?php endif; ?>
+                                        
+                                        <?php
+                                        // Image 
+                                        if (!empty($item->image)) : ?>
+                                            <span class="far fa-user hasPopover" data-bs-original-title="<?php echo Text::_('COM_TKDCLUB_MEMBER_PICTURE') ?>" data-bs-content="<?php echo "<img src='" . Uri::root() . $item->image . "'>" ?>"></span>
                                         <?php endif; ?>
                                     </td>
                                     <td><?php echo $this->escape($item->phone); ?></td>

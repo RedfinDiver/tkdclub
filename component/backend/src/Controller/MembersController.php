@@ -10,7 +10,6 @@ namespace Redfindiver\Component\Tkdclub\Administrator\Controller;
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Controller\AdminController;
-use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
@@ -27,24 +26,6 @@ class MembersController extends AdminController
 	 * @since  1.6
 	 */
     protected $text_prefix = 'COM_TKDCLUB_MEMBER';
-
-    /**
-	 * Constructor.
-	 *
-	 * @param   array                $config   An optional associative array of configuration settings.
-	 * Recognized key values include 'name', 'default_task', 'model_path', and
-	 * 'view_path' (this list is not meant to be comprehensive).
-	 * @param   MVCFactoryInterface  $factory  The factory.
-	 * @param   CMSApplication       $app      The JApplication for the dispatcher
-	 * @param   Input                $input    Input
-	 *
-	 * @since   3.0
-	 */
-	public function __construct($config = array(), MVCFactoryInterface $factory = null, $app = null, $input = null)
-	{
-		parent::__construct($config, $factory, $app, $input);
-
-    }
     
     /**
 	 * Method to get a model object, loading it if required.
@@ -73,7 +54,7 @@ class MembersController extends AdminController
     public function togglestats()
     {
         // Check for request forgeries.
-        Session::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+        Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
         
         $session = Factory::getSession();
 

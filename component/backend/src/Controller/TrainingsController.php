@@ -16,13 +16,28 @@ use Joomla\CMS\Language\Text;
 
 class TrainingsController extends AdminController
 {
+    /**
+	 * The prefix to use with controller messages.
+	 *
+	 * @var    string
+	 * @since  1.6
+	 */
     protected $text_prefix = 'COM_TKDCLUB_TRAINING';
 
-    public function getModel($name = 'training', $prefix = 'TkdClubModel', $config = array())
+    /**
+	 * Method to get a model object, loading it if required.
+	 *
+	 * @param   string  $name    The model name. Optional.
+	 * @param   string  $prefix  The class prefix. Optional.
+	 * @param   array   $config  Configuration array for model. Optional.
+	 *
+	 * @return  \JModelLegacy|boolean  Model object on success; otherwise false on failure.
+	 *
+	 * @since   3.0
+	 */
+    public function getModel($name = 'Training', $prefix = 'Administrator', $config = array())
     {
-        $config['ignore_request'] = true;
-        $model = parent::getModel($name, $prefix, $config);
-        return $model;
+        return parent::getModel($name, $prefix, $config);
     }
 
     /**
@@ -104,12 +119,7 @@ class TrainingsController extends AdminController
             $updated_rows == 1 ? $msg = Text::plural('COM_TKDCLUB_TRAINING_PAID_TRAININGS_1', $updated_rows)
                                : $msg = Text::plural('COM_TKDCLUB_TRAINING_PAID_TRAININGS', $updated_rows);
 
-            $app->enqueueMessage(
-                    $msg
-                    . Text::_('COM_TKDCLUB_FROM')
-                    . $name
-                    . Text::_('COM_TKDCLUB_TRAINING_SAVED_AS_PAID')
-                );
+            $app->enqueueMessage($msg . Text::sprintf('COM_TKDCLUB_TRAINING_SAVED_AS_PAID', $name));
         }
         else
         {

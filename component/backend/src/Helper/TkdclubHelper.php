@@ -10,6 +10,7 @@ namespace Redfindiver\Component\Tkdclub\Administrator\Helper;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
 class TkdclubHelper
 {
@@ -294,5 +295,36 @@ class TkdclubHelper
         }
 
         return $trainers;
+    }
+
+    /**
+     * Translation helper for functions
+     * 
+     * @return  array
+     */
+    public static function getFunctionTranslation($sex = 'male')
+    {
+        if ($sex == 'male')
+        {
+            $translation = array(
+                'president' => Text::_('COM_TKDCLUB_SELECT_PRESIDENT'),
+                'vpresident'=> Text::_('COM_TKDCLUB_SELECT_VICE_PRESIDENT'),
+                'treasurer' => Text::_('COM_TKDCLUB_SELECT_TREASURER'),
+                'secratary' => Text::_('COM_TKDCLUB_SELECT_SECRETARY'),
+                'trainer'   => Text::_('COM_TKDCLUB_SELECT_TRAINER_IN_MEMBERFORM')
+            );
+        }
+        else
+        {   $translation = array(
+                'president' => Text::_('COM_TKDCLUB_SELECT_PRESIDENT_FEMALE'),
+                'vpresident'=> Text::_('COM_TKDCLUB_SELECT_VICE_PRESIDENT_FEMALE'),
+                'treasurer' => Text::_('COM_TKDCLUB_SELECT_TREASURER_FEMALE'),
+                'secratary' => Text::_('COM_TKDCLUB_SELECT_SECRETARY_FEMALE'),
+                'trainer'   => Text::_('COM_TKDCLUB_SELECT_TRAINER_IN_MEMBERFORM_FEMALE')
+            );
+
+        }
+
+        return $translation;
     }
 }

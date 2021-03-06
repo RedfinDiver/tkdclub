@@ -30,13 +30,13 @@ $wa->useScript('keepalive')->useScript('form.validate')
             <?php echo $this->form->renderField('firstname'); ?>
         </div>
         <div class="col-12 col-md-2">
-            <?php echo $this->form->renderField('type'); ?>
+            <?php echo $this->form->renderField('birthdate'); ?>
         </div>
         <div class="col-12 col-md-2">
-            <?php echo $this->form->renderField('participants'); ?>
+            <?php echo $this->form->renderField('sex'); ?>
         </div>
         <div class="col-12 col-md-2">
-            <?php echo $this->form->renderField('trainer_paid'); ?>
+            <?php echo $this->form->renderField('entry'); ?>
         </div>
         <div class="col-12 col-md-2">
             <?php echo $this->form->renderField('member_state'); ?>

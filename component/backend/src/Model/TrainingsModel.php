@@ -7,9 +7,10 @@
 
 namespace Redfindiver\Component\Tkdclub\Administrator\Model;
 
-use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\Database\ParameterType;
+use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Component\ComponentHelper;
 use Redfindiver\Component\Tkdclub\Administrator\Helper\TkdclubHelper;
 
@@ -50,6 +51,7 @@ class TrainingsModel extends ListModel
 
         parent::__construct($config);
     }
+
     /**
      * checks if the parameters for calculating the trainer/assistent salary are properly set
      * 
@@ -58,16 +60,35 @@ class TrainingsModel extends ListModel
      */
     public function getSalaryparams()
     {
-        if ($this->training_salary && $this->assist_salary && $this->distance_rate) {
+        if ($this->training_salary && $this->assist_salary && $this->distance_rate)
+        {
             return true;
-        } else {
+        }
+        else
+        {
             return false;
         }
     }
 
+    /**
+	 * Method to auto-populate the model state.
+	 *
+	 * This method should only be called once per instantiation and is designed
+	 * to be called on the first call to the getState() method unless the model
+	 * configuration flag to ignore the request is set.
+	 *
+	 * Note. Calling getState in this method will result in recursion.
+	 *
+	 * @param   string  $ordering   An optional ordering field.
+	 * @param   string  $direction  An optional direction (asc|desc).
+	 *
+	 * @return  void
+	 *
+	 * @since   1.6
+	 */
     protected function populateState($ordering = 'date', $direction = 'DESC')
     {
-        //Suchbegriff aus vorheriger Eingabe ermitteln
+        // Suchbegriff aus vorheriger Eingabe ermitteln
         $search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string');
         $this->setState('filter.search', $search);
 
@@ -86,6 +107,19 @@ class TrainingsModel extends ListModel
         parent::populateState($ordering, $direction);
     }
 
+    /**
+	 * Method to get a store id based on the model configuration state.
+	 *
+	 * This is necessary because the model is used by the component and
+	 * different modules that might need different sets of data or different
+	 * ordering requirements.
+	 *
+	 * @param   string  $id  An identifier string to generate the store id.
+	 *
+	 * @return  string  A store id.
+	 *
+	 * @since   1.6
+	 */
     protected function getStoreId($id = '')
     {
         $id    .= ':' . $this->getState('filter.search');
@@ -97,6 +131,13 @@ class TrainingsModel extends ListModel
         return parent::getStoreId($id);
     }
 
+    /**
+	 * Method to get a \JDatabaseQuery object for retrieving the data set from a database.
+	 *
+	 * @return  \JDatabaseQuery  A \JDatabaseQuery object to retrieve the data set.
+	 *
+	 * @since   1.6
+	 */
     protected function getListQuery()
     {
         $db = $this->getDbo();
@@ -116,41 +157,52 @@ class TrainingsModel extends ListModel
             ->join('LEFT', $db->quoteName('#__tkdclub_members', 'assist2') . ' ON (' . $db->quoteName('a.assist2') . ' = ' . $db->quoteName('assist2.member_id') . ')')
             ->join('LEFT', $db->quoteName('#__tkdclub_members', 'assist3') . ' ON (' . $db->quoteName('a.assist3') . ' = ' . $db->quoteName('assist3.member_id') . ')');
 
+        // Filter by year
         $yearselect = $this->getState('filter.year');
-        if (!empty($yearselect)) {
-            $ys = $db->quote('%' . $db->escape($yearselect) . '%');
-            $query->where('date LIKE ' . $ys);
+        if (!empty($yearselect))
+        {
+            $query->where('YEAR(date) = :yearselect')
+                ->bind(':yearselect', $yearselect, ParameterType::INTEGER);
         }
 
+        // Filter by trainer
         $trainerselect = $this->getState('filter.trainer');
-        if (!empty($trainerselect)) {
-            $ts = $db->quote($db->escape($trainerselect, true));
-            $query->where(' (trainer = ' . $ts
-                . ' OR assist1 = ' . $ts
-                . ' OR assist2 = ' . $ts
-                . ' OR assist3 = ' . $ts . ' )');
+        if (!empty($trainerselect))
+        {
+            $query->where($db->quoteName('a.trainer') . ' = :trainer', 'OR');
+            $query->where($db->quoteName('a.assist1') . ' = :assist1', 'OR');
+            $query->where($db->quoteName('a.assist2') . ' = :assist2', 'OR');
+            $query->where($db->quoteName('a.assist3') . ' = :assist3', 'OR');
+            $query->bind([':trainer', ':assist1', ':assist2', ':assist3'], $trainerselect, ParameterType::INTEGER);
         }
 
+        // Filter by type
         $typeselect = $this->getState('filter.type');
-        if (!empty($typeselect)) {
-            $type = $db->quote($db->escape($typeselect, true));
-            $query->where('type = ' . $type);
+        if (!empty($typeselect))
+        {
+            $query->where($db->quoteName('type') . ' = :type')
+                    ->bind(':type', $typeselect);
         }
 
+        // Filter by payment state
         $stateselect = $this->getState('filter.payment_state');
-        if (is_numeric($stateselect)) {
-            // All unpaid trainings
-            if ($stateselect == 0) {
-                // Remember: standard glue is AND, so every statement is joined to the query with 'and'!
+        if (is_numeric($stateselect))
+        {
+            if ($stateselect == 0)
+            {
                 $query->where('trainer_paid=0')->where('assist1_paid=0')->where('assist2_paid=0')->where('assist3_paid=0');
-            } elseif ($stateselect == 1) {
+            }
+            elseif ($stateselect == 1)
+            {
                 $condition1 = '(trainer_paid=1)';
                 $condition2 = '((`assist1`> 0 AND `assist1_paid`= 1) OR `assist1`= 0 )';
                 $condition3 = '((`assist2`> 0 AND `assist2_paid`= 1) OR `assist2`= 0 )';
                 $condition4 = '((`assist3`> 0 AND `assist3_paid`= 1) OR `assist3`= 0 )';
 
                 $query->where($condition1)->where($condition2)->where($condition3)->where($condition4);
-            } elseif ($stateselect == 2) {
+            }
+            elseif ($stateselect == 2)
+            {
                 $condition1 = '(trainer_paid=1 AND
                  ((assist1>0 AND assist1_paid=0) OR
                   (assist2>0 AND assist2_paid=0) OR
@@ -179,17 +231,28 @@ class TrainingsModel extends ListModel
             }
         }
 
+        // Filter by search in different fields.
         $search = $this->getState('filter.search');
-        if (!empty($search)) {
-            if (stripos($search, 'id:') === 0) {
-                $query->where('trainings_id = ' . (int) substr($search, 3));
-            } else {
-                $search = $db->Quote('%' . $db->escape($search) . '%');
-                $query->where('training_id LIKE' . $search
-                    . 'OR date LIKE' . $search);
+        if (!empty($search))
+        {
+            if (stripos($search, 'id:') === 0) 
+            {
+                $search = (int) substr($search, 3);
+                $query->where($db->quoteName('a.training_id') . ' = :search')
+                    ->bind(':search', $search, ParameterType::INTEGER);
+            }
+            else
+            {   
+                $search = '%' . str_replace(' ', '%', trim($search)) . '%';
+                $query->where(
+                    '(' . $db->quoteName('a.training_id') . ' LIKE :search1'
+                        . ' OR ' . $db->quoteName('a.date') . ' LIKE :search2' .
+                    ')'
+                )
+                    ->bind([':search1', ':search2'], $search);
             }
         }
-
+        
         // Join over the users for the checked out user.
         $query->select('u.name AS editor')->join('LEFT', '#__users AS u ON u.id=a.checked_out');
 
@@ -221,7 +284,7 @@ class TrainingsModel extends ListModel
             $trainer_name = $container->firstname . ' ' . $container->lastname;
 
             // Initialise the container and some variables
-            $trainer = new stdClass;
+            $trainer = new \stdClass;
             $trainer->trainer_id   = $trainer_id;
             $trainer->trainer_name = $trainer_name;
             $trainer->sex = $container->sex;
@@ -266,7 +329,7 @@ class TrainingsModel extends ListModel
         }
 
         // Initialise the container and some variables
-        $trainingsdata = new stdClass;
+        $trainingsdata = new \stdClass;
         $sum_data = array('trainings' => 0, 'average' => 0, 'types' => array(), 'parts' => array());
         $sum_parts = 0; // collecting sum of participants for every year
 
