@@ -1,15 +1,17 @@
 <?php
 /**
- * @package    Taekwondo Club
- * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
+ * @package    Taekwondo Club Site
+ * @copyright  Copyright (C) 2021 Markus Moser. All rights reserved.
+ * @license    GNU General Public License version 2 or later
  */
 
-defined('_JEXEC') or die;
+namespace Redfindiver\Component\Tkdclub\Site\View\Medals;
 
-use Joomla\CMS\MVC\View\HtmlView;
+\defined('_JEXEC') or die;
 
-class TkdClubViewMedals extends HtmlView
+use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+
+class HtmlView extends BaseHtmlView
 {
     protected $items;
     protected $state;

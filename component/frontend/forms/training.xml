@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<form addfieldpath="/administrator/components/com_tkdclub/models/fields">
+<form addfieldprefix="Redfindiver\Component\Tkdclub\Administrator\Field">
     
     <fieldset name="training_data">
     

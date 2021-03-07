@@ -5,13 +5,15 @@
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('_JEXEC') or die;
+namespace Redfindiver\Component\Tkdclub\Site\Model;
+
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Factory;
 
-class TkdClubModelMedal extends AdminModel
+class MedalModel extends AdminModel
 {
     public function getTable($type = 'Medals', $prefix = 'TkdClubTable', $config = array())
     {

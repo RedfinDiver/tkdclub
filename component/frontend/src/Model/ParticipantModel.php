@@ -5,7 +5,9 @@
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('_JEXEC') or die;
+namespace Redfindiver\Component\Tkdclub\Site\Model;
+
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Model\FormModel;
 use Joomla\CMS\Table\Table;
@@ -13,7 +15,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
 
-class TkdClubModelParticipant extends FormModel
+class ParticipantModel extends FormModel
 {
     public function getTable($type = 'Participants', $prefix = 'TkdClubTable', $config = array())
     {

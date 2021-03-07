@@ -5,12 +5,14 @@
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('_JEXEC') or die;
+namespace Redfindiver\Component\Tkdclub\Site\Model;
+
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Factory;
 
-class TkdClubModelMedals extends ListModel
+class MedalsModel extends ListModel
 {   
     protected function getListQuery()
     {

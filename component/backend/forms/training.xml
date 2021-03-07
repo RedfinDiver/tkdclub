@@ -1,67 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <form addfieldprefix="Redfindiver\Component\Tkdclub\Administrator\Field">
     
-
     <fieldset name="training_data">
-
-        <field
-            name="payment_state"
-            type="list"
-            label="COM_TKDCLUB_TRAINING_PAYMENT_STATE"
-            description="COM_TKDCLUB_TRAINING_PAYMENT_STATE_DESC"
-            default="notpaid"
-        >
-            <option value="0">COM_TKDCLUB_TRAINING_NOT_PAID</option>
-            <option value="1">COM_TKDCLUB_TRAINING_PAID</option>
-
-        </field>
         
         <field 
-            name="date" type="calendar"
-            class="inputbox"
+            name="date"
+            type="calendar"
             label="COM_TKDCLUB_DATE"
             description="COM_TKDCLUB_TRAINING_DATE_DESC"
             translateformat="true"
 		    showtime="false"
-            filter="server_utc"
-            size="12" required="true" />
+            filter="user_utc"
+            required="true"
+        />
         
          <field 
-            name="type" type="traintypes"
-            class="inputbox"
+            name="type"
+            type="traintypes"
             label="COM_TKDCLUB_TRAINING_TYPE"
             description="COM_TKDCLUB_TRAINING_TYPE_DESC"
-            filter="safehtml" default="">
+            required="true"
+            validate="options"
+            >
             <option value="">COM_TKDCLUB_SELECT_TRAINING_TYPE</option>
         </field>
             
         <field 
-            name="participants" type="text"
-            class="inputbox"
+            name="participants"
+            type="text"
             label="COM_TKDCLUB_TRAINING_PARTICIPANTS"
             description="COM_TKDCLUB_TRAINING_PARTICIPANTS_DESC"
-            size="5" filter="integer" />
+            required="true"
+            size="5" filter="integer"
+        />
         
         <field 
-            name="notes" type="textarea"
+            name="notes"
+            type="textarea"
             rows="7"
             class="inputbox"
             label="COM_TKDCLUB_TRAINING_NOTES"
             description="COM_TKDCLUB_TRAINING_NOTES_DESC"
-            default="" filter="safehtml" />   
-
+            filter="raw"
+        />   
 
     </fieldset>
 
     <fieldset name="class_lead">
         
         <field 
-            name="trainer" type="trainers"
+            name="trainer"
+            type="trainers"
             isFilter="false"
             class="inputbox"
             label="COM_TKDCLUB_TRAINING_TRAINER"
             description="COM_TKDCLUB_TRAINING_TRAINER_DESC"
-            multiple="false" required="true" filter="safehtml" >
+            required="true"
+            validate="options"
+            >
             <option value="">COM_TKDCLUB_SELECT_TRAINER</option>
         </field>
         
@@ -70,7 +67,8 @@
             class="inputbox"
             label="COM_TKDCLUB_TRAINING_TRAINER_KM"
             description="COM_TKDCLUB_TRAINING_TRAINER_KM_DESC"
-            size="5" filter="integer" />
+            size="5" filter="integer"
+        />
 
         <field
             name="trainer_paid"
@@ -78,82 +76,88 @@
             label="COM_TKDCLUB_TRAINING_PAYMENT_STATE"
             description="COM_TKDCLUB_TRAINING_PAYMENT_STATE_DESC"
             default="0"
-        >
+            >
             <option value="0">COM_TKDCLUB_TRAINING_NOT_PAID</option>
             <option value="1">COM_TKDCLUB_TRAINING_PAID</option>
-
         </field>
 
     </fieldset>
 
     <fieldset name="assistents">
         
-         <field 
+        <field 
             name="assist1" type="trainers"
             isFilter="false"
             class="inputbox"
             label="COM_TKDCLUB_TRAINING_ASSISTENT1"
             description="COM_TKDCLUB_TRAINING_ASSISTENT1_DESC"
-            multiple="false" filter="safehtml" >
+            filter="safehtml"
+            >
             <option value="">COM_TKDCLUB_SELECT_ASSISTENT1</option>
         </field>
         
         <field 
-            name="km_assist1" type="text" showon="assist1!:"
-            class="inputbox"
+            name="km_assist1"
+            type="text"
+            showon="assist1!:"
             label="COM_TKDCLUB_TRAINING_ASSISTENT1_KM"
             description="COM_TKDCLUB_TRAINING_ASSISTENT1_KM_DESC"
-            size="5" filter="integer" />
+            size="5"
+            filter="integer"
+        />
         
         <field
-            name="assist1_paid" showon="assist1!:"
+            name="assist1_paid" 
             type="list"
+            showon="assist1!:"
             label="COM_TKDCLUB_TRAINING_PAYMENT_STATE"
             description="COM_TKDCLUB_TRAINING_PAYMENT_STATE_DESC"
             default="0"
-        >
+            >
             <option value="0">COM_TKDCLUB_TRAINING_NOT_PAID</option>
             <option value="1">COM_TKDCLUB_TRAINING_PAID</option>
-
         </field>
 
         <field type="spacer" name="spacer1" hr="true" />
         
-         <field 
-            name="assist2" type="trainers"
+        <field 
+            name="assist2"
+            type="trainers"
             isFilter="false"
-            class="inputbox"
             label="COM_TKDCLUB_TRAINING_ASSISTENT2"
             description="COM_TKDCLUB_TRAINING_ASSISTENT2_DESC"
-            multiple="false" filter="safehtml" >
+            validate="options"
+            >
             <option value="">COM_TKDCLUB_SELECT_ASSISTENT2</option>
         </field>
         
         <field 
-            name="km_assist2" type="text" showon="assist2!:"
-            class="inputbox"
+            name="km_assist2"
+            type="text"
+            showon="assist2!:"
             label="COM_TKDCLUB_TRAINING_ASSISTENT2_KM"
             description="COM_TKDCLUB_TRAINING_ASSISTENT2_KM_DESC"
-            size="5" filter="integer" />
+            filter="integer"
+        />
 
         <field
-            name="assist2_paid" showon="assist2!:"
+            name="assist2_paid"
             type="list"
+            showon="assist2!:"
             label="COM_TKDCLUB_TRAINING_PAYMENT_STATE"
             description="COM_TKDCLUB_TRAINING_PAYMENT_STATE_DESC"
             default="0"
-        >
+            >
             <option value="0">COM_TKDCLUB_TRAINING_NOT_PAID</option>
             <option value="1">COM_TKDCLUB_TRAINING_PAID</option>
-
         </field>
 
         <field type="spacer" name="spacer2" hr="true" />
          
         <field 
-            name="assist3" type="trainers"
+            name="assist3"
+            type="trainers"
             isFilter="false"
-            class="inputbox"
             label="COM_TKDCLUB_TRAINING_ASSISTENT3"
             description="COM_TKDCLUB_TRAINING_ASSISTENT3_DESC"
             multiple="false" filter="safehtml" >
@@ -161,22 +165,24 @@
         </field>
         
         <field 
-            name="km_assist3" type="text" showon="assist3!:"
-            class="inputbox"
+            name="km_assist3"
+            type="text"
+            showon="assist3!:"
             label="COM_TKDCLUB_TRAINING_ASSISTENT3_KM"
             description="COM_TKDCLUB_TRAINING_ASSISTENT3_KM_DESC"
-            size="5" filter="integer" />
+            filter="integer"
+        />
 
         <field
-            name="assist3_paid" showon="assist3!:"
+            name="assist3_paid"
             type="list"
+            showon="assist3!:"
             label="COM_TKDCLUB_TRAINING_PAYMENT_STATE"
             description="COM_TKDCLUB_TRAINING_PAYMENT_STATE_DESC"
             default="0"
-        >
+            >
             <option value="0">COM_TKDCLUB_TRAINING_NOT_PAID</option>
             <option value="1">COM_TKDCLUB_TRAINING_PAID</option>
-
         </field>
 
     </fieldset>

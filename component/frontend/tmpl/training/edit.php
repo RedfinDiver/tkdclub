@@ -10,15 +10,8 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-
-JLoader::register('Helper', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/tkdclub.php');
-
-HTMLHelper::_('behavior.tabstate');
-HTMLHelper::_('behavior.tooltip');
-HTMLHelper::_('behavior.formvalidator');
-HTMLHelper::_('formbehavior.chosen', 'select');
+use Joomla\CMS\Factory;
 
 Factory::getDocument()->addScriptDeclaration("
 	Joomla.submitbutton = function(task)
@@ -29,6 +22,7 @@ Factory::getDocument()->addScriptDeclaration("
 		}
 	}
 ");
+
 ?>
 
 <div class="tkdclub addtraining">

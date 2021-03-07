@@ -5,14 +5,18 @@
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('_JEXEC') or die;
+namespace Redfindiver\Component\Tkdclub\Site\Service;
+
+\defined('_JEXEC') or die;
+
+use Joomla\CMS\Component\Router\RouterBase;
 
 /**
  * Routing class from com_tkdclub
  *
  * @since  2.1
  */
-class TkdclubRouter extends JComponentRouterBase
+class Router extends RouterBase
 {
 	/**
 	 * Build the route for the com_tkdclub component
