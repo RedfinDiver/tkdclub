@@ -9,6 +9,7 @@ namespace Redfindiver\Component\Tkdclub\Administrator\Model;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\Utilities\ArrayHelper;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Component\ComponentHelper;
@@ -663,27 +664,45 @@ class TrainingsModel extends ListModel
      * @return  mixed  The data.
      */
     public function getExportData($pks)
-    {
-        $pklist = implode(',', $pks);
-
-        $db    = Factory::getDBO();
+    {   
+        $memberlist = TkdclubHelper::getMemberlist();
+        $db    = $this->getDbo();
         $query    = $db->getQuery(true);
         $fields = array(
-            'training_id', 'date',
-            'trainer', 'km_trainer', 'trainer_paid',
-            'assist1', 'km_assist1', 'assist1_paid',
-            'assist2', 'km_assist2', 'assist2_paid',
-            'assist3', 'km_assist3', 'assist3_paid',
-            'type', 'participants'
+            'training_id',  // 0
+            'date',         // 1
+            'trainer',      // 2
+            'km_trainer',   // 3
+            'trainer_paid', // 4
+            'assist1',      // 5
+            'km_assist1',   // 6
+            'assist1_paid', // 7
+            'assist2',      // 8
+            'km_assist2',   // 9
+            'assist2_paid', // 10
+            'assist3',      // 11
+            'km_assist3',   // 12
+            'assist3_paid', // 13
+            'type',         // 14
+            'participants'  // 15
         );
-
+        $pks = ArrayHelper::toInteger($pks);
         $query->select($db->quoteName($fields))
-            ->from($db->quoteName('#__tkdclub_trainings'))
-            ->where('training_id IN (' . $pklist . ')')
-            ->order('training_id DESC');
+            ->from($db->quoteName('#__tkdclub_trainings'));
 
-        $db->setQuery((string) $query);
-        $rows    = $db->loadRowList();
+        if (count($pks) > 0)
+        {
+            $query->whereIn($db->quoteName('training_id'), $pks);
+        }
+        else
+        {
+            $query->where($db->quoteName('training_id') . ' > 0');
+        }
+       
+        $query->order('training_id DESC');
+
+        $db->setQuery($query);
+        $rows = $db->loadRowList();
 
         $headers = array(
             Text::_('COM_TKDCLUB_TRAINING_ID'),                // training_id
@@ -704,8 +723,45 @@ class TrainingsModel extends ListModel
             Text::_('COM_TKDCLUB_TRAINING_PARTICIPANTS'),      // participants
         );
 
-        // return the results as an array of items, each consisting of an array of fields
-        $content    = array($headers);    //header with column names
+        foreach ($rows as &$row)
+		{
+            // Set all 0 and null fields to empty string
+            foreach ($row as &$field)
+            {
+                !$field ? $field = '' : null; 
+            }
+
+            // Prepare trainer fields
+            if ($row[2])
+            {
+                $row[2] = TkdclubHelper::getMembersNames($row[2], $memberlist);
+                $row[4] == 1 ? $row[4] = Text::_('COM_TKDCLUB_TRAINING_PAID') : $row[4] = Text::_('COM_TKDCLUB_TRAINING_NOT_PAID');
+            }
+
+            // Prepare assistent 1 fields
+            if ($row[5] > 0)
+            {
+                $row[5] =  TkdclubHelper::getMembersNames($row[5], $memberlist);
+                $row[7] == 1 ? $row[7] = Text::_('COM_TKDCLUB_TRAINING_PAID') : $row[7] = Text::_('COM_TKDCLUB_TRAINING_NOT_PAID');
+            }
+
+            // Prepare assistent 2 fields
+            if ($row[8] > 0)
+            {
+                $row[8] = TkdclubHelper::getMembersNames($row[8], $memberlist);
+                $row[10] == 1 ? $row[10] = Text::_('COM_TKDCLUB_TRAINING_PAID') : $row[10] = Text::_('COM_TKDCLUB_TRAINING_NOT_PAID');
+            }
+
+            // Prepare assistent 3 fields
+            if ($row[11] > 0)
+            {
+                $row[11] = TkdclubHelper::getMembersNames($row[11], $memberlist);
+                $row[13] == 1 ? $row[13] = Text::_('COM_TKDCLUB_TRAINING_PAID') : $row[13] = Text::_('COM_TKDCLUB_TRAINING_NOT_PAID');
+            }
+        }
+
+        // Return the results as an array of items, each consisting of an array of fields
+        $content    = array($headers);    // Header with column names
         $content    = array_merge($content,  $rows);
         return $content;
     }

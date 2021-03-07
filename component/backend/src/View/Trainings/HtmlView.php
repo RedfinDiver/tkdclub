@@ -87,6 +87,9 @@ class HtmlView extends BaseHtmlView
             ToolBarHelper::custom('trainings.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);
         }
 
+        ToolbarHelper::custom('export.trainings', 'download', '', 'COM_TKDCLUB_EXPORT_CSV', true);
+        ToolbarHelper::custom('export.trainings', 'download', '', 'COM_TKDCLUB_EXPORT_ALL_CSV', false);
+
         if ($canDo->get('core.admin')) {
             ToolBarHelper::divider();
             ToolBarHelper::preferences('com_tkdclub');

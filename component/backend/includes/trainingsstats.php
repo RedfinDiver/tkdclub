@@ -120,7 +120,7 @@ if ($filter_trainer && !$filter_type && !$filter_year)
     if ($trainer_data->sums['unpaid'] > 0)
     {
         $url = Route::_( 'index.php?option=com_tkdclub&task=trainings.paytrainings&member_id=' . $trainer_data->trainer_id . '&name=' . $trainer_data->trainer_name . '&' . Session::getFormToken() .'=1');
-        $button = '<a class="btn btn-small" target="_self" href="' . $url .'" ><span class="icon-publish"></span>alle Trainings als bezahlt speichern</a>';
+        $button = '<a class="btn btn-success mt-3" target="_self" href="' . $url .'" ><span class="icon-publish"></span> alle Trainings als bezahlt speichern</a>';
         echo $button;
     }
 }

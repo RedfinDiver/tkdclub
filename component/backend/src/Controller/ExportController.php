@@ -78,39 +78,22 @@ class ExportController extends FormController
 	**/
 	public function trainings()
 	{	
-		$memberlist = Helper::getMemberlist();
-		$content = $this->getContent('trainings');
+		// Check for request forgeries.
+		$this->checkToken();
 
-		foreach ($content as $key => &$row)
-		{
-			if ($key > 0)
-			{
-				if ($row[2] > 0)
-				{
-					$row[2] = Helper::getMembersNames($row[2], $memberlist);
-					$row[4] == 1 ? $row[4] = Text::_('COM_TKDCLUB_TRAINING_PAID') : $row[4] = Text::_('COM_TKDCLUB_TRAINING_NOT_PAID');
-				}
-				if ($row[5] > 0)
-				{
-					$row[5] = Helper::getMembersNames($row[5], $memberlist);
-					$row[7] == 1 ? $row[7] = Text::_('COM_TKDCLUB_TRAINING_PAID') : $row[7] = Text::_('COM_TKDCLUB_TRAINING_NOT_PAID');
-				}
-				if ($row[8] > 0)
-				{
-					$row[8] = Helper::getMembersNames($row[8], $memberlist);
-					$row[10] == 1 ? $row[10] = Text::_('COM_TKDCLUB_TRAINING_PAID') : $row[10] = Text::_('COM_TKDCLUB_TRAINING_NOT_PAID');
-				}
-				if ($row[11] > 0)
-				{
-					$row[11] = Helper::getMembersNames($row[11], $memberlist);
-					$row[13] == 1 ? $row[13] = Text::_('COM_TKDCLUB_TRAINING_PAID') : $row[13] = Text::_('COM_TKDCLUB_TRAINING_NOT_PAID');
-				}
-			}
-
-			print implode(';', $row)."\n"; // write data to the browser
-		}
+		$rows = $this->getContent('trainings');
 
 		$this->setHeaders(Text::_('COM_TKDCLUB_SIDEBAR_TRAININGS'));
+
+		$output = fopen("php://output", "w");
+
+		foreach ($rows as $row)
+		{
+			fputcsv($output, $row, ',');
+		}
+
+		fclose($output);
+		$this->app->close();
 	}
 
 	/**
