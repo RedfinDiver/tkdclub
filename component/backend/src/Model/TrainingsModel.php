@@ -167,13 +167,12 @@ class TrainingsModel extends ListModel
 
         // Filter by trainer
         $trainerselect = $this->getState('filter.trainer');
-        if (!empty($trainerselect))
-        {
-            $query->where($db->quoteName('a.trainer') . ' = :trainer', 'OR');
-            $query->where($db->quoteName('a.assist1') . ' = :assist1', 'OR');
-            $query->where($db->quoteName('a.assist2') . ' = :assist2', 'OR');
-            $query->where($db->quoteName('a.assist3') . ' = :assist3', 'OR');
-            $query->bind([':trainer', ':assist1', ':assist2', ':assist3'], $trainerselect, ParameterType::INTEGER);
+        if (!empty($trainerselect)) {
+            $query->where(' (' . $db->quoteName('a.trainer') . ' = :trainer'
+                . ' OR ' . $db->quoteName('a.assist1') . ' = :assist1'
+                . ' OR ' . $db->quoteName('a.assist2') . ' = :assist2'
+                . ' OR ' . $db->quoteName('a.assist3') . ' = :assist3' . ' )')
+                ->bind([':trainer', ':assist1', ':assist2', ':assist3'], $trainerselect, ParameterType::INTEGER);
         }
 
         // Filter by type
