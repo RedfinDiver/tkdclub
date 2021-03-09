@@ -9,13 +9,12 @@ namespace Redfindiver\Component\Tkdclub\Site\Controller;
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Factory;
-use Joomla\CMS\MVC\Controller\BaseController;
-
-class DisplayController extends BaseController
+/**
+ * Tkdclub master display controller site.
+ *
+ * @since  3.0
+ */
+class DisplayController extends \Joomla\CMS\MVC\Controller\BaseController
 {
-    public function display($cachable = false, $urlparams = array()) 
-    {   
-        parent::display($cachable, $urlparams);
-    }
+
 }

@@ -22,6 +22,7 @@ class HtmlView extends BaseHtmlView
     
     public function display($tpl = null)
     {
+        $this->state       = $this->get('State');
         $user = Factory::getUser();
         $app  = Factory::getApplication();
         

@@ -31,9 +31,21 @@
         "uri": "com_tkdclub/trainer-select.js"
       },
       {
-        "name": "com_tkdclub.tkdclub-css",
+        "name": "com_tkdclub.tkdclub-site",
         "type": "style",
-        "uri": "com_tkdclub/tkdclub.css"
+        "uri": "com_tkdclub/tkdclub-site.css"
+      },
+      {
+        "name": "com_tkdclub.training-edit",
+        "type": "script",
+        "uri": "com_tkdclub/training-edit.js",
+        "dependencies": [
+          "core"
+        ],
+        "attributes": {
+          "defer": true
+        }
       }
+
     ]
   }

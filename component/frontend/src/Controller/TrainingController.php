@@ -16,8 +16,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
-
-//JLoader::register('Helper', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/tkdclub.php');
+use Redfindiver\Component\Tkdclub\Administrator\Helper\TkdclubHelper;
 
 class TrainingController extends FormController
 {
@@ -56,7 +55,7 @@ class TrainingController extends FormController
         $app = Factory::getApplication(); 
 	    $input = $app->input; 
         $model = $this->getModel('training');
-        $currentUri = (string) Uri::getInstance();
+        $currentUri = Route::_('index.php?option=' . $this->option . '&view=training&layout=edit', false);
 
         // Check that this user is allowed to add a new record
 		if (!Factory::getUser()->authorise( "core.create", "com_tkdclub"))
@@ -138,8 +137,8 @@ class TrainingController extends FormController
         // clear the data in the form
         $app->setUserState($context . '.data', null);
 
-        // redirect to the form
-        $this->setRedirect($currentUri, Text::_('COM_TKDCLUB_TRAINING_ADD_SUCCESS'));
+        // Redirect to the edit screen.
+		$this->setRedirect($currentUri, Text::_('COM_TKDCLUB_TRAINING_ADD_SUCCESS'));
         
         return true;
 
@@ -160,14 +159,14 @@ class TrainingController extends FormController
         }
 
         $groups = $params->get('training_info_to', array(8));
-        $recipients = Helper::getEmailfromUsergroups($groups);
+        $recipients = TkdclubHelper::getEmailfromUsergroups($groups);
         if (empty($recipients))
         {
             return false;
         }
 
         $current_user = Factory::getUser()->get('name');
-        $memberlist = Helper::getMemberlist();
+        $memberlist = TkdclubHelper::getMemberlist();
         
         $subject = $params->get('club_name', 'TKD Club') . " - ". Text::_('COM_TKDCLUB_TRAINING_ADDED_MEDAL_FRONTEND') . $current_user;
         $nl = "\r\n";
@@ -182,24 +181,24 @@ class TrainingController extends FormController
             $body .= Text::_('COM_TKDCLUB_TRAINING_NOTES') . " : " . $enteredData['notes'] . $nl;
         }
         
-        $body .= Text::_('COM_TKDCLUB_TRAINING_TRAINER') . " : " . Helper::getMembersNames((int) $enteredData['trainer'], $memberlist) . $nl;
+        $body .= Text::_('COM_TKDCLUB_TRAINING_TRAINER') . " : " . TkdclubHelper::getMembersNames((int) $enteredData['trainer'], $memberlist) . $nl;
         $body .= Text::_('COM_TKDCLUB_TRAINING_TRAINER_KM') . " : " . $enteredData['km_trainer'] . $nl;
 
         if ((int) $enteredData['assist1'] > 0 )
         {
-            $body .= Text::_('COM_TKDCLUB_TRAINING_ASSISTENT1') . " : " . Helper::getMembersNames((int) $enteredData['assist1'], $memberlist) . $nl;
+            $body .= Text::_('COM_TKDCLUB_TRAINING_ASSISTENT1') . " : " . TkdclubHelper::getMembersNames((int) $enteredData['assist1'], $memberlist) . $nl;
             $body .= Text::_('COM_TKDCLUB_TRAINING_ASSISTENT1_KM') . " : " . $enteredData['km_assist1'] . $nl;
         }
         
         if ((int) $enteredData['assist2'] > 0 )
         {
-            $body .= Text::_('COM_TKDCLUB_TRAINING_ASSISTENT2') . " : " . Helper::getMembersNames((int) $enteredData['assist2'], $memberlist) . $nl;
+            $body .= Text::_('COM_TKDCLUB_TRAINING_ASSISTENT2') . " : " . TkdclubHelper::getMembersNames((int) $enteredData['assist2'], $memberlist) . $nl;
             $body .= Text::_('COM_TKDCLUB_TRAINING_ASSISTENT2_KM') . " : " . $enteredData['km_assist2'] . $nl;
         }
         
         if ((int) $enteredData['assist3'] > 0 )
         {
-            $body .= Text::_('COM_TKDCLUB_TRAINING_ASSISTENT3') . " : " . Helper::getMembersNames((int) $enteredData['assist3'], $memberlist) . $nl;
+            $body .= Text::_('COM_TKDCLUB_TRAINING_ASSISTENT3') . " : " . TkdclubHelper::getMembersNames((int) $enteredData['assist3'], $memberlist) . $nl;
             $body .= Text::_('COM_TKDCLUB_TRAINING_ASSISTENT3_KM') . " : " . $enteredData['km_assist3'] . $nl;
         }
         

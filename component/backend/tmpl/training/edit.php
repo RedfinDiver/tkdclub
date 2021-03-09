@@ -15,8 +15,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('keepalive')
     ->useScript('form.validate')
-    ->useScript('com_tkdclub.trainer-select')
-    ->useStyle('com_tkdclub.tkdclub-css');
+    ->useScript('com_tkdclub.trainer-select');
 ?>
 
 <form action="<?php echo Route::_('index.php?option=com_tkdclub&training_id=' . (int) $this->item->training_id); ?>" method="post" name="adminForm" id="training-form" class="form-validate">

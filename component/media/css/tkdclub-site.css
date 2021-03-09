@@ -39,3 +39,22 @@
 .allmedals{
     margin: 4px auto auto;
 }
+
+.options-form {
+    width: 100%;
+    padding: 1vw 2vw;
+    margin-bottom: 1rem;
+    color: var(--atum-text-dark);
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+
+.options-form > legend {
+    float: none;
+    width: auto;
+    padding: 0 0.5rem;
+    font-weight: 500;
+    font-size: 1.25rem;
+    background-color: #fff;
+}
+

@@ -14,7 +14,7 @@ use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Router\Route;
 
 /**
- * Tkdclub master display controller.
+ * Tkdclub master display controller administrator.
  *
  * @since  3.0
  */
