@@ -23,8 +23,7 @@ HtmlHelper::_('behavior.multiselect');
 $wa = $this->document->getWebAssetManager();
 $wa->getRegistry();
 $wa->useScript('com_tkdclub.iban')
-    ->useScript('com_tkdclub.members-format-iban')
-    ->useStyle('com_tkdclub.tkdclub-css');
+    ->useScript('com_tkdclub.members-format-iban');
 
 /**
  * Get some variables
