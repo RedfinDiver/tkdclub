@@ -16,17 +16,32 @@ use Joomla\CMS\Language\Text;
 
 class MedalsController extends AdminController
 {
+    /**
+	 * The prefix to use with controller messages.
+	 *
+	 * @var    string
+	 * @since  1.6
+	 */
     protected $text_prefix = 'COM_TKDCLUB_MEDAL';
 
-    public function getModel($name = 'medal', $prefix = 'TkdClubModel', $config = array())
+    /**
+	 * Method to get a model object, loading it if required.
+	 *
+	 * @param   string  $name    The model name. Optional.
+	 * @param   string  $prefix  The class prefix. Optional.
+	 * @param   array   $config  Configuration array for model. Optional.
+	 *
+	 * @return  MemberModel|boolean  Model object on success; otherwise false on failure.
+	 *
+	 * @since   3.0
+	 */
+    public function getModel($name = 'Medal', $prefix = 'Administrator', $config = array())
     {
-        $config['ignore_request'] = true;
-        $model = parent::getModel($name, $prefix, $config);
-        return $model;
+        return parent::getModel($name, $prefix, $config);
     }
 
     /**
-     * Toggle on/off the stats
+     * Toggle on/off the statistics
      * 
      * With this method the statistics are switched on or off
      * in the medals list view

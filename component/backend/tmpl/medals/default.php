@@ -16,6 +16,11 @@ use Redfindiver\Component\Tkdclub\Administrator\Helper\TkdclubHelper;
 
 HTMLHelper::_('behavior.multiselect');
 
+/** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
+$wa = $this->document->getWebAssetManager();
+$wa->getRegistry();
+$wa->useStyle('com_tkdclub.tkdclub-admin');
+
 $user      = Factory::getUser();
 $userId    = $user->get('id');
 $listOrder = $this->state->get('list.ordering');
@@ -41,7 +46,7 @@ $columns   = 10;
                         <?php echo Text::sprintf('COM_TKDCLUB_ENTRIES', $this->total, $this->allrows); ?>
                 </div>
                 <?php if ($this->togglestats) :  ?>
-                    <?php include_once(JPATH_COMPONENT . '/includes/membersstats.php'); ?>
+                    <?php include_once(JPATH_COMPONENT . '/includes/medalsstats.php'); ?>
                 <?php endif; ?>
                 <table class="table table-striped table-sm">
                     <thead>
@@ -51,11 +56,11 @@ $columns   = 10;
                             </td>
                             <th  class="w-1 text-center"><?php echo Text::_('JSTATUS'); ?></th>
                             <th><?php echo Text::_('COM_TKDCLUB_DATE'); ?></th>
+                            <th><?php echo Text::_('COM_TKDCLUB_ATHLETS'); ?></th>
+                            <th><?php echo JText::_('COM_TKDCLUB_MEDAL_PLACING'); ?></th>
                             <th><?php echo Text::_('COM_TKDCLUB_MEDAL_CHAMPIONSSHIP'); ?></th>
                             <th><?php echo Text::_('COM_TKDCLUB_MEDAL_CHAMPIONSSHIP_TYPE'); ?></th>
                             <th><?php echo Text::_('COM_TKDCLUB_MEDAL_CLASS'); ?></th>
-                            <th><?php echo JText::_('COM_TKDCLUB_MEDAL_PLACING'); ?></th>
-                            <th><?php echo Text::_('COM_TKDCLUB_ATHLETS'); ?></th>
                             <th><?php echo Text::_('COM_TKDCLUB_NOTES'); ?></th>
                             <th scope="col" class="text-center d-none d-md-table-cell"><?php echo Text::_('COM_TKDCLUB_TRAINING_ID'); ?></th>
                         </tr>
@@ -87,16 +92,16 @@ $columns   = 10;
                                                 echo '<a href="' . $mylink . '">' . HTMLHelper::_('date', $item->date, Text::_('DATE_FORMAT_LC4')) . '</a>';
                                                 ?>
                                     </td>
-                                    <td width=""><?php echo $this->escape($item->championship); ?></td>
-                                    <td width=""><?php echo $this->escape($item->type); ?></td>
-                                    <td width=""><?php echo $this->escape($item->class); ?></td>
+                                    <td width=""><?php echo TkdclubHelper::getMembersNames($item->winner_ids, $this->memberlist); ?></td>
                                     <?php $medalclass = array('1' => 'tkdclub-goldmedal', '2' => 'tkdclub-silbermedal', '3' => 'tkdclub-bronzemedal'); ?>
                                     <td class="center">
                                         <span class="<?php echo $medalclass[(int) $item->placing] ?>">
                                             <?php echo $this->escape($item->placing); ?>
                                         </span>
                                     </td>
-                                    <td width=""><?php echo TkdclubHelper::getMembersNames($item->winner_ids, $this->memberlist); ?></td>
+                                    <td width=""><?php echo $this->escape($item->championship); ?></td>
+                                    <td width=""><?php echo $this->escape($item->type); ?></td>
+                                    <td width=""><?php echo $this->escape($item->class); ?></td>
                                     <td><?php echo $this->escape($item->notes); ?></td>
                                     <td class="center" width="10"><?php echo (int) $item->medal_id; ?></td>
                                 </tr>

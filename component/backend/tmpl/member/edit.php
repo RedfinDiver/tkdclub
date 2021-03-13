@@ -74,7 +74,7 @@ $wa->useScript('keepalive')->useScript('form.validate')
                 </div>
                 <div class="col-lg-3">
                     <fieldset id="fieldset-club_data" class="options-form">
-                        <legend class="card-title"><?php echo Text::_('COM_TKDCLUB_MEMBER_MORE_DATA'); ?></legend>
+                        <legend class="card-title"><?php echo Text::_('COM_TKDCLUB_MORE_DATA'); ?></legend>
                         <div>
                             <?php echo $this->form->renderFieldset('more_data'); ?>
                         </div>
@@ -189,9 +189,10 @@ $wa->useScript('keepalive')->useScript('form.validate')
 
             <?php echo HtmlHelper::_('uitab.addTab', 'myTab', 'item_data', Text::_('COM_TKDCLUB_ITEM_DATA', true)); ?>
             <?php if (empty($this->item->member_id)) : ?>
-                <div class="alert alert-no-items">
+                <div class="alert alert-info">
+                    <span class="icon-info-circle" aria-hidden="true"></span><span class="visually-hidden"><?php echo Text::_('INFO'); ?></span>
                     <?php echo Text::_('COM_TKDCLUB_NO_ITEM_DATA'); ?>
-                </div>
+				</div>
             <?php else : ?>
                 <div>
                     <?php foreach ($this->form->getFieldset('item_data') as $field) : ?>

@@ -57,7 +57,7 @@ class HtmlView extends BaseHtmlView
     {
         $this->form = $this->get('Form');
         $this->item = $this->get('Item');
-        //$this->medals = $this->get('Medals');
+        $this->medals = $this->get('Medals');
 
         $this->addToolbar();
         parent::display($tpl);

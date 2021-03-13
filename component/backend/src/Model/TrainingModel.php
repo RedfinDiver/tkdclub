@@ -17,7 +17,18 @@ use Joomla\CMS\MVC\Model\AdminModel;
  */
 class TrainingModel extends AdminModel
 {
-
+    /**
+	 * Method to get a table object, load it if necessary.
+	 *
+	 * @param   string  $name     The table name. Optional.
+	 * @param   string  $prefix   The class prefix. Optional.
+	 * @param   array   $options  Configuration array for model. Optional.
+	 *
+	 * @return  Table  A Table object
+	 *
+	 * @since   3.0
+	 * @throws  \Exception
+	 */
     public function getTable($type = 'Trainings', $prefix = 'Administrator', $config = array())
     {
         return  parent::getTable($type, $prefix, $config);

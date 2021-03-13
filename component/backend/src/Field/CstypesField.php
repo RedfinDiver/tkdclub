@@ -14,6 +14,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Form\Field\ListField;
 use Redfindiver\Component\Tkdclub\Administrator\Helper\TkdclubHelper;
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Language\Text;
 
 /**
  * Supports the options-markup from component parameter

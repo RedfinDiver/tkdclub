@@ -1,3 +1,7 @@
+/**
+ * Styles for member views
+ */
+
 .member-support {
     color: orange !important;
     border-color: orange !important;
@@ -12,6 +16,10 @@
     color: red !important;
     border-color: red !important;
 }
+
+/**
+ * Styles for training views
+ */
 
 .training-not-paid {
     color: red !important;
@@ -28,14 +36,20 @@
     border-color: green !important;
 }
 
+/**
+ * Styles for medal views
+ */
 
-
-.icon-tkdclub {
-    background-image: url(../images/tkdclub-14-white.png)
+.gold {
+    color: #F6B93D;
 }
 
-.icon-tkdclub-grey {
-    background-image: url(../images/tkdclub-14-grey.png)
+.silver {
+    color: #CCCCCC;
+}
+
+.bronce {
+    color: #D68D46;
 }
 
 .tkdclub-goldmedal {

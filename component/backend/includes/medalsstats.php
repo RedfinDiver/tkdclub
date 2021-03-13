@@ -5,7 +5,7 @@
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
 
@@ -15,23 +15,28 @@ $bronce = isset($this->medaldata['placings']['3']) ? $this->medaldata['placings'
 
 ?>
 
-<div class="container-fluid alert alert-info">
-    <div class="span3">
-        <h4 class="alert-heading"><?php echo Text::_('COM_TKDCLUB_MEDAL_DISTRIBUTION'); ?></h4>
-        <span class="tkdclub-goldmedal">
-            <p><?php echo $gold; ?></p>
-        </span>  <?php echo Text::_('COM_TKDCLUB_MEDAL_GOLD') ?>
-        
-        <span class="tkdclub-silbermedal">
-            <?php echo $silver; ?>                    
-        </span>  <?php echo Text::_('COM_TKDCLUB_MEDAL_SILVER') ?>
-        
-        <span class="tkdclub-bronzemedal">
-            <?php echo $bronce; ?>
-        </span>  <?php echo Text::_('COM_TKDCLUB_MEDAL_BRONCE') ?>
-    </div>
 
-    <div class="span3">
-        <?php echo Text::_('COM_TKDCLUB_MEDAL_SUMMARY').': ' .'<strong>' . $this->medaldata['sum'] . '</strong>'; ?>  
+<div class="m-2 row">
+    <div class="col-12">
+        <div class="card alert-info">
+            <div class="card-body">
+                <h4 class="card-title"><?php echo Text::_('COM_TKDCLUB_MEDAL_DISTRIBUTION'); ?></h4>
+                <div>
+                    <span class="fas fa-medal gold"></span>
+                    <?php echo $gold . ' x ' . Text::_('COM_TKDCLUB_MEDAL_GOLD'); ?>
+                </div>
+                <div>
+                    <span class="fas fa-medal silver"></span>
+                    <?php echo $silver . ' x ' . Text::_('COM_TKDCLUB_MEDAL_SILVER'); ?>
+                </div>
+                <div>
+                    <span class="fas fa-medal bronce"></span>
+                    <?php echo $bronce . ' x ' . Text::_('COM_TKDCLUB_MEDAL_BRONCE'); ?>
+                </div>
+                <div>
+                <?php echo Text::_('COM_TKDCLUB_MEDAL_SUMMARY').': ' . $this->medaldata['sum']; ?>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

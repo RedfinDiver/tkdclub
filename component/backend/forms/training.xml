@@ -53,7 +53,6 @@
             name="trainer"
             type="trainers"
             isFilter="false"
-            class="inputbox"
             label="COM_TKDCLUB_TRAINING_TRAINER"
             description="COM_TKDCLUB_TRAINING_TRAINER_DESC"
             required="true"
@@ -64,7 +63,6 @@
         
         <field 
             name="km_trainer" type="text"
-            class="inputbox"
             label="COM_TKDCLUB_TRAINING_TRAINER_KM"
             description="COM_TKDCLUB_TRAINING_TRAINER_KM_DESC"
             size="5" filter="integer"
@@ -88,7 +86,6 @@
         <field 
             name="assist1" type="trainers"
             isFilter="false"
-            class="inputbox"
             label="COM_TKDCLUB_TRAINING_ASSISTENT1"
             description="COM_TKDCLUB_TRAINING_ASSISTENT1_DESC"
             filter="safehtml"

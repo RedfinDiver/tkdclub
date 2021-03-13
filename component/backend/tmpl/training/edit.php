@@ -62,8 +62,8 @@ $wa->useScript('keepalive')
         <?php echo HtmlHelper::_('uitab.addTab', 'myTab', 'item_data', Text::_('COM_TKDCLUB_ITEM_DATA', true)); ?>
             <?php if (empty($this->item->training_id)) : ?>
                 <div class="alert alert-info">
-						<span class="icon-info-circle" aria-hidden="true"></span><span class="visually-hidden"><?php echo Text::_('INFO'); ?></span>
-						<?php echo Text::_('COM_TKDCLUB_NO_ITEM_DATA'); ?>
+                    <span class="icon-info-circle" aria-hidden="true"></span><span class="visually-hidden"><?php echo Text::_('INFO'); ?></span>
+                    <?php echo Text::_('COM_TKDCLUB_NO_ITEM_DATA'); ?>
 				</div>
             <?php else : ?>
                 <div>

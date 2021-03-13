@@ -75,6 +75,8 @@ class MedalsTable extends Table
             $this->created = $date;
             $this->created_by = $userId;
         }
+
+		empty($this->created) ? $this->created = null : null;
         
         return parent::store($updateNulls = true);
     }
