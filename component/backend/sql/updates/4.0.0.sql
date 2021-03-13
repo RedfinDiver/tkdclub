@@ -49,7 +49,6 @@ ALTER TABLE `#__tkdclub_trainings`
     CHANGE `modified` `modified` datetime DEFAULT NULL,
     CHANGE `created_by` `created_by` int(10) UNSIGNED NOT NULL DEFAULT '0',
     CHANGE `created`  `created` datetime DEFAULT NULL,
-    CHANGE `checked_out_time` `checked_out_time` datetime DEFAULT NULL,
     CHANGE `assist1` `assist1` int(5) DEFAULT NULL,
     CHANGE `km_assist1` `km_assist1` int(4) DEFAULT NULL, 
     CHANGE `assist1_paid` `assist1_paid` tinyint(3) DEFAULT NULL,
@@ -59,4 +58,13 @@ ALTER TABLE `#__tkdclub_trainings`
     CHANGE `assist3` `assist3` int(5) DEFAULT NULL,
     CHANGE `km_assist3` `km_assist3` int(4) DEFAULT NULL, 
     CHANGE `assist3_paid` `assist3_paid` tinyint(3) DEFAULT NULL,
+    CHANGE `notes` `notes` text;
+
+ALTER TABLE `#__tkdclub_medals`
+    CHANGE `checked_out_time` `checked_out_time` datetime DEFAULT NULL,
+    CHANGE `checked_out` `checked_out` int(10) UNSIGNED DEFAULT NULL,
+    CHANGE `modified_by` `modified_by` int(10) UNSIGNED NOT NULL DEFAULT '0',
+    CHANGE `modified` `modified` datetime DEFAULT NULL,
+    CHANGE `created_by` `created_by` int(10) UNSIGNED NOT NULL DEFAULT '0',
+    CHANGE `created`  `created` datetime DEFAULT NULL,
     CHANGE `notes` `notes` text;

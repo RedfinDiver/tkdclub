@@ -13,11 +13,11 @@ use Joomla\CMS\Table\Table;
 use Joomla\CMS\Factory;
 
 /**
-* Members table class
-*/
-class MembersTable extends Table
+ * medals table class
+ */
+class MedalsTable extends Table
 {
-	/**
+    /**
 	 * Indicates that columns fully support the NULL value in the database
 	 *
 	 * @var    boolean
@@ -31,21 +31,22 @@ class MembersTable extends Table
 	 * @var    array
 	 * @since  3.3
 	 */
-	protected $_jsonEncode = array('functions', 'licenses');
+	protected $_jsonEncode = array('winner_ids');
 
-	/**
+    /**
 	 * Constructor
 	 *
 	 * @param   DatabaseDriver  $db  Database connector object
 	 *
 	 * @since   1.0
 	 */
-	public function __construct($db)
-	{
-		parent::__construct('#__tkdclub_members', 'member_id', $db);
-	}
-	
-	/**
+    public function __construct($db)      
+    {
+        $this->setColumnAlias('published', 'state'); // Needed for autoworking of publish-method
+        parent::__construct('#__tkdclub_medals', 'medal_id', $db);
+    }
+
+    /**
 	 * Method to store a row in the database from the Table instance properties.
 	 *
 	 * If a primary key value is set the row with that primary key value will be updated with the instance property values.
@@ -57,38 +58,24 @@ class MembersTable extends Table
 	 *
 	 * @since   1.7.0
 	 */
-	public function store($updateNulls = true)
-	{
+    public function store($updateNulls = true)
+    {
         $date   = Factory::getDate()->toSql();
-		$userId = Factory::getUser()->id;
+        $userId = Factory::getUser()->id;
 
-		$this->modified = $date;
+        $this->modified = $date;
 
-		// taking care of null values
-		empty($this->memberpass) ? $this->memberpass = null : null;
-		empty($this->lastpromotion) ? $this->lastpromotion = null : null;
-		empty($this->leave) ? $this->leave = null : null;
-		empty($this->created) ? $this->created = null : null;
-
-
-		if ($this->member_id)
-		{
-			// Existing item
-			$this->modified_by = $userId;
-		}
-		elseif(!$this->member_id && $this->created_by)
-		{
-			// new item from member registration
-			$this->created = $date;
-		}
-		else
-		{
+        if ($this->medal_id)
+        {
+            // Existing item
+            $this->modified_by = $userId;
+        }
+        else
+        {
             $this->created = $date;
             $this->created_by = $userId;
-		}
-		
-		$this->iban = str_replace(' ', '', $this->iban);
+        }
         
-        return parent::store($updateNulls);
+        return parent::store($updateNulls = true);
     }
 }

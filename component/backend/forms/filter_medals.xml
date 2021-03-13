@@ -2,7 +2,8 @@
 
 <form>
 
-    <fields name="filter">
+    <fields name="filter" addfieldprefix="Redfindiver\Component\Tkdclub\Administrator\Field">
+
         <field
             name="search"
             type="text"
@@ -27,8 +28,10 @@
             name="winner"
             type="members"
             label="COM_TKDCLUB_SELECT_WINNER"
+            layout="joomla.form.field.list-fancy-select"
             description=""
-            onchange="this.form.submit();">
+            onchange="this.form.submit();"
+            >
             <option value="">COM_TKDCLUB_SELECT_ATHLET</option>
         </field>
 
@@ -37,27 +40,29 @@
             type="medalyears"
             label="COM_TKDCLUB_SELECT_MEDALYEAR"
             description=""
-            onchange="this.form.submit();">
+            onchange="this.form.submit();"
+            >
             <option value="">COM_TKDCLUB_SELECT_YEAR</option>
         </field>
 
         <field 
             name="placing" type="integer"
-            class="inputbox"
             label="COM_TKDCLUB_SELECT_PLACING"
             description=""
             first="1" last="3" step="1" filter="integer"
-            onchange="this.form.submit();">
+            onchange="this.form.submit();"
+            >
             <option value="">COM_TKDCLUB_SELECT_PLACING</option>
         </field>
 
         <field 
-            name="type" type="championshiptypes"
+            name="type"
+            type="cstypes"
             isFilter="true"
-            class="inputbox"
             label="COM_TKDCLUB_SELECT_CHAMPIONSHIP_TYPE"
             description=""
-            onchange="this.form.submit();">
+            onchange="this.form.submit();"
+            >
             <option value="">COM_TKDCLUB_SELECT_CHAMPIONSHIP_TYPE</option>    
         </field>
 
@@ -66,7 +71,8 @@
     <fields name="list">
 
         <field
-            name="fullordering" type="list"
+            name="fullordering"
+            type="list"
             label=""
             description=""
             default="date DESC"
@@ -81,7 +87,6 @@
         <field
             name="limit"
             type="limitbox"
-            class="input-mini"
             label="COM_CONTENT_LIST_LIMIT"
             description="COM_CONTENT_LIST_LIMIT_DESC"
             onchange="this.form.submit();"

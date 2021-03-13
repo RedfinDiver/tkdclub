@@ -1,29 +1,29 @@
 <?php
-
 /**
  * @package    Taekwondo Club
- * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2021 Markus Moser. All rights reserved.
+ * @license    GNU General Public License version 2 or later
  */
 
-defined('_JEXEC') or die;
+namespace Redfindiver\Component\Tkdclub\Administrator\Field;
 
-use Joomla\CMS\Form\FormHelper;
+\defined('_JEXEC') or die;
+
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Form\Field\ListField;
+use Redfindiver\Component\Tkdclub\Administrator\Helper\TkdclubHelper;
 use Joomla\CMS\Component\ComponentHelper;
-
-FormHelper::loadFieldClass('list');
-JLoader::register('Helper', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/tkdclub.php');
 
 /**
  * Supports the options-markup from component parameter
  */
-class JFormFieldChampionshiptypes extends JFormFieldList
+class CstypesField extends Listfield
 {
     /**
      * The form field type.
      */
-    protected $type = 'championshiptypes';
+    protected $type = 'Cstypes';
 
     /**
      * Method to get the field input markup for field 'championshiptypes'
@@ -44,22 +44,22 @@ class JFormFieldChampionshiptypes extends JFormFieldList
 
             if ($types = $db->loadColumn()) {
                 foreach ($types as $type) {
-                    $options[] = JHtml::_('select.option', $type, $type);
+                    $options[] = HTMLHelper::_('select.option', $type, $type);
                 }
             }
         } else // not used as filter field, so get the options from the parameter
         {
-            $types = Helper::getList(ComponentHelper::getParams('com_tkdclub')->get('championship_types'));
+            $types = TkdclubHelper::getList(ComponentHelper::getParams('com_tkdclub')->get('championship_types'));
 
             if ($types) {
                 foreach ($types as $type) {
-                    $options[] = JHtml::_('select.option', $type, $type);
+                    $options[] = HTMLHelper::_('select.option', $type, $type);
                 }
             }
 
             // make sure to have always "Poomsae" and "Kyorugi" available
-            $options[] = JHtml::_('select.option', 'Kyorugi', JText::_('COM_TKDCLUB_KYORUGI'));
-            $options[] = JHtml::_('select.option', 'Poomsae', JText::_('COM_TKDCLUB_POOMSAE'));
+            $options[] = HTMLHelper::_('select.option', 'Kyorugi', Text::_('COM_TKDCLUB_KYORUGI'));
+            $options[] = HTMLHelper::_('select.option', 'Poomsae', Text::_('COM_TKDCLUB_POOMSAE'));
         }
 
         if ($this->form) // checking if we are in a form, then merge additional xml data

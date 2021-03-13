@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `#__tkdclub_trainings` (
   PRIMARY KEY (`training_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
-/*
+
 CREATE TABLE IF NOT EXISTS `#__tkdclub_medals` (
   `medal_id` int(11) NOT NULL AUTO_INCREMENT,
   `date` date NOT NULL,
@@ -72,17 +72,18 @@ CREATE TABLE IF NOT EXISTS `#__tkdclub_medals` (
   `class` varchar(50) NOT NULL,
   `placing` tinyint(11) NOT NULL,
   `winner_ids` varchar(50) NOT NULL,
-  `notes` text NOT NULL,
+  `notes` text,
   `state` tinyint(3) NOT NULL DEFAULT 0,
-  `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `created_by` INT(10) unsigned NOT NULL DEFAULT '0',
-  `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `modified_by` INT(10) unsigned NOT NULL DEFAULT '0',
-  `checked_out` int(10) NOT NULL,
-  `checked_out_time` datetime NOT NULL,
+  `created` datetime DEFAULT NULL,
+  `created_by` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `modified` datetime DEFAULT NULL,
+  `modified_by` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `checked_out` int(10) UNSIGNED DEFAULT NULL,
+  `checked_out_time` datetime DEFAULT NULL,
   PRIMARY KEY (`medal_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
+/*
 CREATE TABLE IF NOT EXISTS `#__tkdclub_promotions` (
   `promotion_id` int(10) NOT NULL AUTO_INCREMENT,
   `date` date NOT NULL,
@@ -93,11 +94,11 @@ CREATE TABLE IF NOT EXISTS `#__tkdclub_promotions` (
   `examiner_email` varchar(50) NOT NULL,
   `promotion_state` tinyint(4) NOT NULL,
   `notes` text NOT NULL,
-  `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `created_by` INT(10) unsigned NOT NULL DEFAULT '0',
-  `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `modified_by` INT(10) unsigned NOT NULL DEFAULT '0',
-  `checked_out` int(10) NOT NULL,
+  `created`  `created` datetime DEFAULT NULL,
+  `created_by` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `modified` datetime DEFAULT NULL,
+  `modified_by` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `checked_out` int(10) UNSIGNED DEFAULT NULL,
   `checked_out_time` datetime NOT NULL,
   PRIMARY KEY (`promotion_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;

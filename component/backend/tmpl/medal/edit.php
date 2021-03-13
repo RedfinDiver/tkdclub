@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package    Taekwondo Club
- * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2021 Markus Moser. All rights reserved.
+ * @license    GNU General Public License version 2 or later
  */
 
 defined('_JEXEC') or die;
@@ -12,20 +11,6 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
-
-HTMLHelper::_('behavior.formvalidation');
-HTMLHelper::_('formbehavior.chosen', 'select');
-HTMLHelper::stylesheet('administrator/components/com_tkdclub/assets/css/tkdclub.css');
-
-Factory::getDocument()->addScriptDeclaration("
-    Joomla.submitbutton = function(task)
-    {
-        if (task == 'medal.cancel' || document.formvalidator.isValid(document.getElementById('medal-form'))) 
-                {
-            Joomla.submitform(task, document.getElementById('medal-form'));
-        }
-    };
-");
 
 ?>
 

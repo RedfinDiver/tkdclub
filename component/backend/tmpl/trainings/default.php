@@ -22,6 +22,7 @@ HtmlHelper::_('behavior.multiselect');
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
 $wa = $this->document->getWebAssetManager();
 $wa->getRegistry();
+$wa->useStyle('com_tkdclub.tkdclub-admin');
 
 
 /**
@@ -115,14 +116,14 @@ $filter_payment_state  = $this->state->get('filter.payment_state');
                                                     $item->assist3_paid
                                                 );
 
-                                                $classes = array(0 => 'icon-remove', 1 => 'icon-publish', 2 => 'icon-plus-2 tkdclub-icon-orange');
+                                                $classes = array(0 => 'fas fa-euro-sign training-not-paid', 1 => 'fas fa-euro-sign training-paid', 2 => 'fas fa-euro-sign training-partly-paid');
                                                 $tooltip = array(
                                                     0 => Text::_('COM_TKDCLUB_TRAINING_NOT_PAID'),
                                                     1 => Text::_('COM_TKDCLUB_TRAINING_PAID'),
                                                     2 => Text::_('COM_TKDCLUB_TRAINING_PARTLY_PAID')
                                                 );
                                                 ?>
-                                        <span class="<?php echo $classes[$state]; ?> hasTooltip" title="" data-original-title="<?php echo $tooltip[$state]; ?>"></span>
+                                        <span class="<?php echo $classes[$state]; ?>" title="" data-original-title="<?php echo $tooltip[$state]; ?>"></span>
 
                                     </td>
 

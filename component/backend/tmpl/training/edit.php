@@ -36,15 +36,21 @@ $wa->useScript('keepalive')
             <div class="row">
                 <div class="col-lg-6">
                     <fieldset id="fieldset-trainer_data" class="options-form">
-                        <legend><?php echo Text::_('Trainingsleitung'); ?></legend>
+                        <legend><?php echo Text::_('COM_TKDCLUB_TRAINING_TRAINER'); ?></legend>
                         <div>
                             <?php echo $this->form->renderFieldset('class_lead'); ?>
+                        </div>
+                    </fieldset>
+                    <fieldset id="fieldset-trainer_data" class="options-form">
+                        <legend><?php echo Text::_('COM_TKDCLUB_NOTES'); ?></legend>
+                        <div>
+                            <?php echo $this->form->renderField('notes'); ?>
                         </div>
                     </fieldset>
                 </div>
                 <div class="col-lg-6">
                     <fieldset id="fieldset-trainer_data" class="options-form">
-                        <legend><?php echo Text::_('Assistenz'); ?></legend>
+                        <legend><?php echo Text::_('COM_TKDCLUB_TRAINING_ASSISTENT'); ?></legend>
                         <div>
                             <?php echo $this->form->renderFieldset('assistents'); ?>
                         </div>

@@ -1,27 +1,26 @@
 <?php
-
 /**
  * @package    Taekwondo Club
- * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2021 Markus Moser. All rights reserved.
+ * @license    GNU General Public License version 2 or later
  */
+
+namespace Redfindiver\Component\Tkdclub\Administrator\View\Medals;
 
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\View\HtmlView;
-
-JLoader::register('Helper', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/tkdclub.php');
+use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Redfindiver\Component\Tkdclub\Administrator\Helper\TkdclubHelper;
 
 /**
  * view-class for list view medals
  */
-class TkdClubViewMedals extends HtmlView
+class HtmlView extends BaseHtmlView
 
 {
     protected $items;
@@ -40,7 +39,7 @@ class TkdClubViewMedals extends HtmlView
         $this->activeFilters = $this->get('ActiveFilters');
         $this->total = $this->get('Total');
         $this->allrows = $this->get('Allrows');
-        $this->memberlist = Helper::getMemberlist();
+        $this->memberlist = TkdclubHelper::getMemberlist();
 
         $this->togglestats = Factory::getSession()->get('togglestats_medals', null, 'tkdclub');
 
@@ -49,7 +48,6 @@ class TkdClubViewMedals extends HtmlView
         }
 
         $this->addToolbar();
-        $this->sidebar = JHtmlSidebar::render();
         parent::display($tpl);
     }
 
@@ -84,16 +82,11 @@ class TkdClubViewMedals extends HtmlView
             ToolBarHelper::custom('medals.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);
         }
 
-        $toolbar = Toolbar::getInstance('toolbar');
-        $toolbar->addButtonPath(JPATH_COMPONENT . '/buttons');
-        $toolbar->appendButton('RawFormat',  'download', 'COM_TKDCLUB_BUTTON_EXPORT', 'export.medals');
-
         if ($canDo->get('core.admin')) {
             ToolBarHelper::divider();
             ToolBarHelper::preferences('com_tkdclub');
         }
 
-        JHtmlSidebar::setAction('index.php?option=com_tkdclub&view=medals');
         ToolBarHelper::divider();
 
         $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/erfolge.html';

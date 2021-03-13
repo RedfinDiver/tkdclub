@@ -1,28 +1,28 @@
 <?php
 /**
  * @package    Taekwondo Club
- * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2021 Markus Moser. All rights reserved.
+ * @license    GNU General Public License version 2 or later
  */
 
-defined('_JEXEC') or die;
+namespace Redfindiver\Component\Tkdclub\Administrator\Field;
 
-use Joomla\CMS\Form\FormHelper;
+\defined('_JEXEC') or die;
+
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
-
-FormHelper::loadFieldClass('list');
+use Joomla\CMS\Form\Field\ListField;
 
 /**
  * Supports the options-markup for medal years
  * used in backend and frontent
  */
-class JFormFieldMedalyears extends JFormFieldList
+class MedalyearsField extends ListField
 {
     /**
      * @var		string
      */
-    protected $type = 'medalyears';
+    protected $type = 'Medalyears';
     
     /**
      * Method to get the field input markup.

@@ -1,24 +1,25 @@
 <?php
-
 /**
  * @package    Taekwondo Club
- * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2021 Markus Moser. All rights reserved.
+ * @license    GNU General Public License version 2 or later
  */
 
-defined('_JEXEC') or die;
+namespace Redfindiver\Component\Tkdclub\Administrator\View\Medal;
+
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 
 /**
  * view-class for edit-view: 'medal'
  */
-class TkdClubViewMedal extends HtmlView
+class HtmlView extends BaseHtmlView
 {
     protected $item;
     protected $form;
@@ -36,11 +37,15 @@ class TkdClubViewMedal extends HtmlView
 
     protected function addToolbar()
     {
-        $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
+        $clubname   = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
+        $isNew      = ($this->item->medal_id == 0);
 
-        if ($this->item->medal_id == NULL) {
+        if ($isNew)
+        {
             ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_MEDAL_NEW'), 'tkdclub');
-        } else {
+        }
+        else
+        {
             ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_MEDAL_CHANGE'), 'tkdclub');
         }
 

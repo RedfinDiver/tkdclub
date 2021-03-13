@@ -62,6 +62,13 @@
                 >
                 COM_TKDCLUB_SUBMENU_TRAININGS
             </menu>
+            <menu
+                link="option=com_tkdclub&amp;view=medals"
+                view="medals"
+                img="class:icon-tkdclub"
+                >
+                COM_TKDCLUB_SUBMENU_MEDALS
+            </menu>
         </submenu>
         
         <files folder="backend">

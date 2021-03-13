@@ -1,3 +1,35 @@
+.member-support {
+    color: orange !important;
+    border-color: orange !important;
+}
+
+.member-active {
+    color: green !important;
+    border-color: green !important;
+}
+
+.member-inactive {
+    color: red !important;
+    border-color: red !important;
+}
+
+.training-not-paid {
+    color: red !important;
+    border-color: red !important;
+}
+
+.training-partly-paid {
+    color: orange !important;
+    border-color: orange !important;
+}
+
+.training-paid {
+    color: green !important;
+    border-color: green !important;
+}
+
+
+
 .icon-tkdclub {
     background-image: url(../images/tkdclub-14-white.png)
 }

@@ -16,5 +16,39 @@ defined('_JEXEC') or die;
  */
 class DisplayController extends \Joomla\CMS\MVC\Controller\BaseController
 {
+    /**
+	 * Method to display a view.
+	 *
+	 * @param   boolean  $cachable   If true, the view output will be cached.
+	 * @param   boolean  $urlparams  An array of safe URL parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
+	 *
+	 * @return  \Joomla\CMS\MVC\Controller\BaseController  This object to support chaining.
+	 *
+	 * @since   1.5
+	 */
+	public function display($cachable = false, $urlparams = false)
+	{
+		$cachable = true;
+
+		/**
+		 * Set the default view name and format from the Request.
+		 * Note we are using a_id to avoid collisions with the router and the return page.
+		 * Frontend is a bit messier than the backend.
+		 */
+		$id    = $this->input->getInt('a_id');
+		$vName = $this->input->getCmd('view');
+		$this->input->set('view', $vName);
+
+		// Check for edit form.
+		if ($vName === 'training' && !$this->checkEditId('com_content.edit.training', $id))
+		{
+			// Somehow the person just went to the form - we don't allow that.
+			throw new \Exception(Text::sprintf('JLIB_APPLICATION_ERROR_UNHELD_ID', $id), 403);
+		}
+
+		parent::display($cachable, $urlparams);
+
+		return $this;
+	}
 
 }

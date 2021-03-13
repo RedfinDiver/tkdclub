@@ -7,17 +7,15 @@
 
 namespace Redfindiver\Component\Tkdclub\Administrator\Controller;
 
-\defined('_JEXEC') or die;
-
 use Joomla\CMS\MVC\Controller\FormController;
 
-class TrainingController extends FormController
-{
+class MedalController extends FormController
+{   
     /**
 	 * The prefix to use with controller messages.
 	 *
 	 * @var    string
 	 * @since  1.6
 	 */
-    protected $text_prefix = 'COM_TKDCLUB_TRAINING';
+    protected $text_prefix = 'COM_TKDCLUB_MEDAL';
 }

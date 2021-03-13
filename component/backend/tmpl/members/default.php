@@ -23,7 +23,8 @@ HtmlHelper::_('behavior.multiselect');
 $wa = $this->document->getWebAssetManager();
 $wa->getRegistry();
 $wa->useScript('com_tkdclub.iban')
-    ->useScript('com_tkdclub.members-format-iban');
+    ->useScript('com_tkdclub.members-format-iban')
+    ->useStyle('com_tkdclub.tkdclub-admin');
 
 /**
  * Get some variables
@@ -95,14 +96,14 @@ $columns   = 10;
                                         <?php
                                                 //creating array for altnatives tooltip text on member_state column
                                                 $states = array(
-                                                    'active' => array('COM_TKDCLUB_MEMBER_STATE_ACTIVE', 'publish'),
-                                                    'inactive' => array('COM_TKDCLUB_MEMBER_STATE_INACTIVE', 'unpublish'),
-                                                    'support' => array('COM_TKDCLUB_MEMBER_STATE_SUPPORTER', 'archive')
+                                                    'active' => array('COM_TKDCLUB_MEMBER_STATE_ACTIVE', 'fas fa-user member-active'),
+                                                    'inactive' => array('COM_TKDCLUB_MEMBER_STATE_INACTIVE', 'fas fa-user-slash member-inactive'),
+                                                    'support' => array('COM_TKDCLUB_MEMBER_STATE_SUPPORTER', 'fas fa-user member-support')
                                                 );
                                                 $iconClass = $states[$item->member_state]
                                                 ?>
                                         <span class="tbody-icon" title="<?php echo Text::_($iconClass[0]) ?>">
-                                            <span class="icon-<?php echo $iconClass[1] ?>" aria-hidden="true"></span>
+                                            <span class="<?php echo $iconClass[1] ?>" aria-hidden="true"></span>
                                         </span>
                                     </td>
                                     <th scope="row" class="">

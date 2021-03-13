@@ -1,29 +1,28 @@
 <?php
 /**
  * @package    Taekwondo Club
- * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2021 Markus Moser. All rights reserved.
+ * @license    GNU General Public License version 2 or later
  */
 
-defined('_JEXEC') or die;
+namespace Redfindiver\Component\Tkdclub\Administrator\Field;
 
-use Joomla\CMS\Form\FormHelper;
-use Joomla\CMS\Factory;
+\defined('_JEXEC') or die;
+
+use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
-
-FormHelper::loadFieldClass('list');
-
+use Joomla\CMS\Factory;
 /**
  * Supports the options-markup from parameters
  *
  * @since  1.0
  */
-class JFormFieldMembers extends JFormFieldList
+class MembersField extends ListField
 {       
     /**
      * The form field type.
      */
-    protected $type = 'members';
+    protected $type = 'Members';
 
     /**
      * Method to get the field input markup for a field with all memers.
