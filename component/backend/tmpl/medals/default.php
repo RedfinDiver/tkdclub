@@ -56,8 +56,8 @@ $columns   = 10;
                             </td>
                             <th  class="w-1 text-center"><?php echo Text::_('JSTATUS'); ?></th>
                             <th><?php echo Text::_('COM_TKDCLUB_DATE'); ?></th>
-                            <th><?php echo Text::_('COM_TKDCLUB_ATHLETS'); ?></th>
-                            <th><?php echo JText::_('COM_TKDCLUB_MEDAL_PLACING'); ?></th>
+                            <th scope="col" class="w-25 text-start d-none d-md-table-cell"><?php echo Text::_('COM_TKDCLUB_ATHLETS'); ?></th>
+                            <th scope="col" class="text-center d-none d-md-table-cell"><?php echo JText::_('COM_TKDCLUB_MEDAL_PLACING'); ?></th>
                             <th><?php echo Text::_('COM_TKDCLUB_MEDAL_CHAMPIONSSHIP'); ?></th>
                             <th><?php echo Text::_('COM_TKDCLUB_MEDAL_CHAMPIONSSHIP_TYPE'); ?></th>
                             <th><?php echo Text::_('COM_TKDCLUB_MEDAL_CLASS'); ?></th>
@@ -83,7 +83,7 @@ $columns   = 10;
                                     <td>
                                         <?php echo HTMLHelper::_('jgrid.published', $item->state, $i, 'medals.', TRUE); ?>
                                     </td>
-                                    <td class="title" width="60">
+                                    <th scope="row">
                                         <?php if ($item->checked_out) : ?>
                                             <?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'medals.', $canCheckin); ?>
                                         <?php endif; ?>
@@ -91,10 +91,10 @@ $columns   = 10;
                                                 $mylink = Route::_("index.php?option=com_tkdclub&task=medal.edit&medal_id=" . $item->medal_id);
                                                 echo '<a href="' . $mylink . '">' . HTMLHelper::_('date', $item->date, Text::_('DATE_FORMAT_LC4')) . '</a>';
                                                 ?>
-                                    </td>
+                                    </th>
                                     <td width=""><?php echo TkdclubHelper::getMembersNames($item->winner_ids, $this->memberlist); ?></td>
                                     <?php $medalclass = array('1' => 'tkdclub-goldmedal', '2' => 'tkdclub-silbermedal', '3' => 'tkdclub-bronzemedal'); ?>
-                                    <td class="center">
+                                    <td class="text-center">
                                         <span class="<?php echo $medalclass[(int) $item->placing] ?>">
                                             <?php echo $this->escape($item->placing); ?>
                                         </span>

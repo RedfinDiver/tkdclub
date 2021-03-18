@@ -127,7 +127,7 @@ $filter_payment_state  = $this->state->get('filter.payment_state');
 
                                     </td>
 
-                                    <td width="" class="title">
+                                    <th scope="row">
                                         <?php if ($item->checked_out) : ?>
                                             <?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'trainings.', $canCheckin); ?>
                                         <?php endif; ?>
@@ -135,7 +135,7 @@ $filter_payment_state  = $this->state->get('filter.payment_state');
                                                 $mylink = Route::_("index.php?option=com_tkdclub&task=training.edit&training_id=" . $item->training_id);
                                                 echo '<a href="' . $mylink . '">' . HTMLHelper::_('date', $item->date, JText::_('DATE_FORMAT_LC4')) . '</a>';
                                                 ?>
-                                    </td>
+                                    </th>
                                     <td>
                                         <?php if (!empty($item->notes)) : ?>
                                             <span class="far fa-clipboard" title="<?php echo Text::_('COM_TKDCLUB_NOTES') . ': ' . $this->escape($item->notes) ?>"></span>

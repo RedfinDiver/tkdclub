@@ -106,7 +106,7 @@ $columns   = 10;
                                             <span class="<?php echo $iconClass[1] ?>" aria-hidden="true"></span>
                                         </span>
                                     </td>
-                                    <th scope="row" class="">
+                                    <th scope="row">
                                         <div>
                                             <?php if ($item->checked_out) : ?>
                                                 <?php echo HtmlHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'members.', $canCheckin); ?>

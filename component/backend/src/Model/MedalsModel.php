@@ -12,6 +12,7 @@ namespace Redfindiver\Component\Tkdclub\Administrator\Model;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\Database\ParameterType;
 
 /**
  * Model-class for list view 'medals'
@@ -113,47 +114,70 @@ class MedalsModel extends ListModel
         $query = $db->getQuery(true);
         $query->select('*')->from('#__tkdclub_medals');
 
+        // Filter by state
         $state = $this->getState('filter.state');
         if (is_numeric($state))
         {
-            $query->where($db->qn('state') . ' = ' . (int) $state);
+            $query->where($db->quoteName('state') . ' = :state')
+                ->bind(':state', $state, ParameterType::INTEGER);
         }
 
+        // Filter by placing
         $placing = $this->getState('filter.placing');
         if ($placing >= 1)
         {
-            $query->where('placing = '. (int) $placing );
+            $query->where($db->quoteName('placing')  . ' = :placing')
+                ->bind(':placing', $placing, ParameterType::INTEGER);
         }
 
+        // Filter by athlet
         $winner = $this->getState('filter.winner');
-        if (!empty($winner))
+        if (is_numeric($winner))
         {
-            $query->where('winner_ids REGEXP \'' . '[[:<:]]' . (int)$winner . '[[:>:]]\'');
+            $regex = "[[:<:]]" . (int)$winner . "[[:>:]]";
+            $query->where($db->quoteName('winner_ids') . ' REGEXP ' . ':winner')
+                ->bind(':winner', $regex);
         }
 
+        // Filter by year
         $medalyear = $this->getState('filter.medalyear');
         if (!empty($medalyear))
         {   
-            $medalyear = $db->Quote('%'. $db->escape($medalyear).'%');
-            $query->where('date LIKE ' . $medalyear);
+            $query->where('YEAR(date) = :medalyear')
+                ->bind(':medalyear', $medalyear, ParameterType::INTEGER);
         }
 
+        // Filter by type of championship
         $championshiptype = $this->getState('filter.type');
         if (!empty($championshiptype))
         {
-            $championshiptype = $db->quote($championshiptype);
-            $query->where('type=' . $championshiptype);
+            $query->where($db->quoteName('type') . ' = :type')
+                ->bind(':type', $championshiptype);
         }
 
+        // Filter by search in different fields
         $search = $this->getState('filter.search');
         if (!empty($search))
         {
-            $search = $db->Quote('%'. $db->escape($search).'%');
-            $query->where('medal_id LIKE' .$search
-                        .'OR date LIKE' .$search
-                        .'OR championship LIKE' .$search
-                        .'OR class LIKE' .$search);
+            if (stripos($search, 'id:') === 0) 
+            {
+                $search = (int) substr($search, 3);
+                $query->where($db->quoteName('medal_id') . ' = :search')
+                    ->bind(':search', $search, ParameterType::INTEGER);
+            }
+            else
+            {   
+                $search = '%' . str_replace(' ', '%', trim($search)) . '%';
+                $query->where(
+                    '(' . $db->quoteName('medal_id') . ' LIKE :search1'
+                        . ' OR ' . $db->quoteName('date') . ' LIKE :search2'
+                        . ' OR ' . $db->quoteName('championship') . ' LIKE :search3'
+                        . ' OR ' . $db->quoteName('class') . ' LIKE :search4' .
 
+                    ')'
+                )
+                    ->bind([':search1', ':search2', ':search3', ':search4'], $search);
+            }
         }
 
         // Join over the users for the checked out user.
