@@ -1,9 +1,8 @@
 <?php
-
 /**
  * @package    Taekwondo Club
- * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2021 Markus Moser. All rights reserved.
+ * @license    GNU General Public License version 2 or later
  */
 
 defined('_JEXEC') or die;
@@ -36,7 +35,6 @@ $params = $this->state->get('parameters.menu')
 	<?php endif; ?>
 	<form action="<?php echo Route::_('index.php?option=com_tkdclub') ?>" method="post" name="training-form" id="adminForm" class="form-validate">
 		<fieldset>
-
 			<?php echo HTMLHelper::_('uitab.startTabSet', $this->tab_name, array('active' => 'editor')); ?>
 				<?php echo HTMLHelper::_('uitab.addTab', $this->tab_name, 'training', Text::_('COM_TKDCLUB_TRAINING_NEW_TAB')); ?>
 				<div class="row form-vertical">
@@ -51,29 +49,29 @@ $params = $this->state->get('parameters.menu')
 					</div>
 				</div>
 				<div class="row">
-                <div class="col-lg-6">
-                    <fieldset id="fieldset-trainer_data" class="options-form">
-                        <legend><?php echo Text::_('COM_TKDCLUB_TRAINING_TRAINER'); ?></legend>
-                        <div>
-                            <?php echo $this->form->renderFieldset('class_lead'); ?>
-                        </div>
-                    </fieldset>
-					<fieldset id="fieldset-trainer_data" class="options-form">
-                        <legend><?php echo Text::_('COM_TKDCLUB_NOTES'); ?></legend>
-                        <div>
-                            <?php echo $this->form->renderField('notes'); ?>
-                        </div>
-                    </fieldset>
-                </div>
-                <div class="col-lg-6">
-                    <fieldset id="fieldset-trainer_data" class="options-form">
-                        <legend><?php echo Text::_('COM_TKDCLUB_TRAINING_ASSISTENT'); ?></legend>
-                        <div>
-                            <?php echo $this->form->renderFieldset('assistents'); ?>
-                        </div>
-                    </fieldset>
-                </div>
-            </div>
+					<div class="col-lg-6">
+						<fieldset id="fieldset-trainer_data" class="options-form">
+							<legend><?php echo Text::_('COM_TKDCLUB_TRAINING_TRAINER'); ?></legend>
+							<div>
+								<?php echo $this->form->renderFieldset('class_lead'); ?>
+							</div>
+						</fieldset>
+						<fieldset id="fieldset-trainer_data" class="options-form">
+							<legend><?php echo Text::_('COM_TKDCLUB_NOTES'); ?></legend>
+							<div>
+								<?php echo $this->form->renderField('notes'); ?>
+							</div>
+						</fieldset>
+					</div>
+					<div class="col-lg-6">
+						<fieldset id="fieldset-trainer_data" class="options-form">
+							<legend><?php echo Text::_('COM_TKDCLUB_TRAINING_ASSISTENT'); ?></legend>
+							<div>
+								<?php echo $this->form->renderFieldset('assistents'); ?>
+							</div>
+						</fieldset>
+					</div>
+				</div>
 
 				<?php echo HTMLHelper::_('uitab.endTab'); ?>
 			<?php echo HTMLHelper::_('uitab.endTabSet'); ?>

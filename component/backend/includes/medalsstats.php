@@ -15,26 +15,45 @@ $bronce = isset($this->medaldata['placings']['3']) ? $this->medaldata['placings'
 
 ?>
 
-
-<div class="m-2 row">
-    <div class="col-12">
-        <div class="card alert-info">
-            <div class="card-body">
-                <h4 class="card-title"><?php echo Text::_('COM_TKDCLUB_MEDAL_DISTRIBUTION'); ?></h4>
-                <div>
-                    <span class="fas fa-medal gold"></span>
-                    <?php echo $gold . ' x ' . Text::_('COM_TKDCLUB_MEDAL_GOLD'); ?>
+<div class="row text-center">
+        <div class="col-md-3">
+            <div class="card alert-info">
+                <div class="card-body">
+                    <span class="fas fa-medal fa-3x gold"></span>
+                    <h5 class="card-title mt-2"><?php echo Text::_('COM_TKDCLUB_MEDAL_GOLD') ?></h5>
+                    <div><?php echo $this->medaldata['placings'][1]; ?></div>
                 </div>
-                <div>
-                    <span class="fas fa-medal silver"></span>
-                    <?php echo $silver . ' x ' . Text::_('COM_TKDCLUB_MEDAL_SILVER'); ?>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card alert-info">
+                <div class="card-body">
+                    <span class="fas fa-medal fa-3x silver"></span>
+                    <h5 class="card-title mt-2"><?php echo Text::_('COM_TKDCLUB_MEDAL_SILVER') ?></h5>
+                    <div><?php echo $this->medaldata['placings'][2] ?></div>
                 </div>
-                <div>
-                    <span class="fas fa-medal bronce"></span>
-                    <?php echo $bronce . ' x ' . Text::_('COM_TKDCLUB_MEDAL_BRONCE'); ?>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card alert-info">
+                <div class="card-body">
+                    <span class="fas fa-medal fa-3x bronce"></span>
+                    <h5 class="card-title mt-2"><?php echo Text::_('COM_TKDCLUB_MEDAL_BRONCE') ?></h5>
+                    <div><?php echo $this->medaldata['placings'][3] ?></div>
                 </div>
-                <div>
-                <?php echo Text::_('COM_TKDCLUB_MEDAL_SUMMARY').': ' . $this->medaldata['sum']; ?>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card alert-info">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col"><span class="fas fa-medal fa-3x gold"></span></div>
+                        <div class="col"><span class="fas fa-medal fa-3x silver"></span></div>
+                        <div class="col"><span class="fas fa-medal fa-3x bronce"></span></div>
+                    </div>
+                    
+                    <h5 class="card-title mt-2"><?php echo Text::_('COM_TKDCLUB_MEDAL_SUMMARY') ?></h5>
+                    <div><?php echo $this->medaldata['sum'] ?></div>
                 </div>
             </div>
         </div>

@@ -10,13 +10,12 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
-use Redfindiver\Component\Tkdclub\Site\Model\MedalsModel;
 use Redfindiver\Component\Tkdclub\Administrator\Helper\TkdclubHelper;
 
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
 $wa = $this->document->getWebAssetManager();
 $wa->getRegistry();
-$wa->useStyle('com_tkdclub.tkdclub-admin');
+$wa->useStyle('com_tkdclub.tkdclub-site');
 
 $params = $this->state->get('parameters.menu')
 ?>
@@ -29,27 +28,50 @@ $params = $this->state->get('parameters.menu')
             </h1>
         </div>
 	<?php endif; ?>
-    <div class="row m-3">
-        <div class="col-2">
-            <span class="tkdclub-goldmedal">
-                <p><?php $gold = MedalsModel::getMedals(1); echo $gold; ?></p>
-            </span>  <?php echo Text::_('COM_TKDCLUB_MEDAL_GOLD') ?>
+    <div class="row text-center">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <span class="fas fa-medal fa-3x gold"></span>
+                    <h5 class="card-title mt-2"><?php echo Text::_('COM_TKDCLUB_MEDAL_GOLD') ?></h5>
+                    <div><?php echo $this->medaldata['placings'][1]; ?></div>
+                </div>
+            </div>
         </div>
-        <div class="col-2">
-            <span class="tkdclub-silbermedal">
-                <?php $silver = MedalsModel::getMedals(2); echo $silver; ?>
-            </span>  <?php echo Text::_('COM_TKDCLUB_MEDAL_SILVER') ?>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <span class="fas fa-medal fa-3x silver"></span>
+                    <h5 class="card-title mt-2"><?php echo Text::_('COM_TKDCLUB_MEDAL_SILVER') ?></h5>
+                    <div><?php echo $this->medaldata['placings'][2] ?></div>
+                </div>
+            </div>
         </div>
-        <div class="col-2">
-            <span class="tkdclub-bronzemedal">
-                <?php $bronce = MedalsModel::getMedals(3); echo $bronce; ?>
-            </span>  <?php echo Text::_('COM_TKDCLUB_MEDAL_BRONCE') ?>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <span class="fas fa-medal fa-3x bronce"></span>
+                    <h5 class="card-title mt-2"><?php echo Text::_('COM_TKDCLUB_MEDAL_BRONCE') ?></h5>
+                    <div><?php echo $this->medaldata['placings'][3] ?></div>
+                </div>
+            </div>
         </div>
-        <div class="col-6">   
-            <?php $all = $gold+$silver+$bronce; echo Text::_('COM_TKDCLUB_MEDAL_SUMMARY').': ' .'<strong>' . $all . '</strong>'; ?> 
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col"><span class="fas fa-medal fa-3x gold"></span></div>
+                        <div class="col"><span class="fas fa-medal fa-3x silver"></span></div>
+                        <div class="col"><span class="fas fa-medal fa-3x bronce"></span></div>
+                    </div>
+                    
+                    <h5 class="card-title mt-2"><?php echo Text::_('COM_TKDCLUB_MEDAL_SUMMARY') ?></h5>
+                    <div><?php echo $this->medaldata['sum'] ?></div>
+                </div>
+            </div>
         </div>
     </div>
-<table class="table table-hover">
+<table class="table table-hover mt-3">
     <thead class="">
         <tr>
             <th><?php echo Text::_('COM_TKDCLUB_DATE'); ?></th>
@@ -62,16 +84,16 @@ $params = $this->state->get('parameters.menu')
     </thead>
     <tbody>
         <?php foreach ($this->items as $i => $item) : ?>
-        <?php if ($item->state == 1) : ?> <!-- only published items -->
-        <tr class="row<?php echo $i % 2; ?>">
-            <td class="text-center"><?php echo HTMLHelper::_('date', $item->date, Text::_('DATE_FORMAT_LC4')); ?></td>
-            <td><?php echo $this->escape($item->championship); ?></td>
-            <td><?php echo $this->escape($item->type); ?></td>
-            <td><?php echo $this->escape($item->class); ?></td>
-            <td class="text-center"><?php echo $this->escape($item->placing); ?></td>
-            <td class=""><?php echo TkdclubHelper::getMembersNames($item->winner_ids, $this->memberlist); ?></td>             
-        </tr>
-        <?php endif; ?>
+            <?php if ($item->state == 1) : ?> <!-- only published items -->
+            <tr class="row<?php echo $i % 2; ?>">
+                <td class="text-center"><?php echo HTMLHelper::_('date', $item->date, Text::_('DATE_FORMAT_LC4')); ?></td>
+                <td><?php echo $this->escape($item->championship); ?></td>
+                <td><?php echo $this->escape($item->type); ?></td>
+                <td><?php echo $this->escape($item->class); ?></td>
+                <td class="text-center"><?php echo $this->escape($item->placing); ?></td>
+                <td><?php echo TkdclubHelper::getMembersNames($item->winner_ids, $this->memberlist); ?></td>             
+            </tr>
+            <?php endif; ?>
         <?php endforeach; ?>
     </tbody>
 </table>

@@ -14,7 +14,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 
 /**
- * view-class for edit-view: 'training'
+ * View-class for edit-view training
  */
 class HtmlView extends BaseHtmlView
 {
@@ -22,7 +22,6 @@ class HtmlView extends BaseHtmlView
     
     public function display($tpl = null)
     {
-        $this->state       = $this->get('State');
         $user = Factory::getUser();
         $app  = Factory::getApplication();
         
@@ -38,9 +37,10 @@ class HtmlView extends BaseHtmlView
 
 			return false;
 		}
-        
-        $this->form = $this->get('Form');
 
+        $this->state = $this->get('State');
+        $this->form  = $this->get('Form');
+        
         parent::display($tpl);
     }
 }

@@ -50,6 +50,17 @@
         "attributes": {
           "defer": true
         }
+      },
+      {
+        "name": "com_tkdclub.medal-edit",
+        "type": "script",
+        "uri": "com_tkdclub/medal-edit.js",
+        "dependencies": [
+          "core"
+        ],
+        "attributes": {
+          "defer": true
+        }
       }
 
     ]

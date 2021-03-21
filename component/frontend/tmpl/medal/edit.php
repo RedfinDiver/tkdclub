@@ -10,63 +10,77 @@ defined('_JEXEC') or die;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 
-HTMLHelper::_('behavior.tabstate');
-HTMLHelper::_('behavior.tooltip');
-HTMLHelper::_('behavior.formvalidator');
-HTMLHelper::_('formbehavior.chosen', 'select');
+/** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
+$wa = $this->document->getWebAssetManager();
+$wa->useScript('keepalive')
+	->useScript('form.validate')
+	->useScript('com_tkdclub.medal-edit')
+	->useStyle('com_tkdclub.tkdclub-site');
 
-Factory::getDocument()->addScriptDeclaration("
-	Joomla.submitbutton = function(task)
-	{
-		if (task == 'medal.cancel' || document.formvalidator.isValid(document.getElementById('adminForm')))
-		{
-			Joomla.submitform(task);
-		}
-	}
-");
+$this->tab_name = 'com-tkdclub-form';
+
+$params = $this->state->get('parameters.menu')
+
 ?>
 
-<div class="tkdclub addmedal">
-    <form action="<?php echo Route::_('index.php?option=com_tkdclub') ?>" method="post" name="medal-form" id="adminForm" class="form-validate form-vertical">
-        <fieldset> 
-            <?php echo HTMLHelper::_('bootstrap.startTabSet', 'com-tkdclub-medal', array('active' => 'medal-data')); ?>
-
-            <?php echo HTMLHelper::_('bootstrap.addTab', 'com-tkdclub-medal', 'medal-data', JText::_('COM_TKDCLUB_MEDAL_NEW_TAB')); ?>
-                <?php echo $this->form->renderField('date'); ?>
-                <?php echo $this->form->renderField('championship'); ?>
-                <?php echo $this->form->renderField('type'); ?>
-                <?php echo $this->form->renderField('class'); ?>
-                <?php echo $this->form->renderField('placing'); ?>
-                <?php echo $this->form->renderField('winner_ids'); ?>
-                <?php echo $this->form->renderField('notes'); ?>
-                <?php echo $this->form->renderField('captcha'); ?>
-
-            <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
-
-            <!-- TODO use form also for frontend editing -->
-            <?php echo HTMLHelper::_('bootstrap.addTab', 'com-tkdclub-medal', 'item-data', JText::_('COM_TKDCLUB_ITEM_DATA')); ?>
-                <div class="alert alert-no-items">
-                    <?php echo JText::_('COM_TKDCLUB_NO_ITEM_DATA'); ?>
-                </div>
-
-            <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
-
-            <?php echo HTMLHelper::_('bootstrap.endTabSet'); ?>
-            <input type="hidden" name="task" value="" />
+<div class="edit itempage">
+    <?php if ($params->get('show_page_heading')) : ?>
+	<div class="page-header">
+		<h1>
+			<?php echo  $params->get('page_heading') ? $params->get('page_heading') : Factory::getApplication()->getMenu()->getActive()->title; ?>
+		</h1>
+	</div>
+	<?php endif; ?>
+    <form action="<?php echo Route::_('index.php?option=com_tkdclub') ?>" method="post" name="medal-form" id="adminForm" class="form-validate">
+        <fieldset>
+            <?php echo HTMLHelper::_('uitab.startTabSet', $this->tab_name, array('active' => 'editor')); ?>
+				<?php echo HTMLHelper::_('uitab.addTab', $this->tab_name, 'medal', Text::_('COM_TKDCLUB_MEDAL_NEW_TAB')); ?>
+                <div class="row form-vertical">
+					<div class="col-12 col-md-4">
+						<?php echo $this->form->renderField('date'); ?>
+					</div>
+					<div class="col-12 col-md-4">
+						<?php echo $this->form->renderField('winner_ids'); ?>
+					</div>
+					<div class="col-12 col-md-4">
+						<?php echo $this->form->renderField('placing'); ?>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-6">
+						<fieldset id="fieldset-medal_data" class="options-form">
+							<legend><?php echo Text::_('COM_TKDCLUB_MEDAL_DATA'); ?></legend>
+							<div>
+								<?php echo $this->form->renderFieldset('medal-data'); ?>
+							</div>
+						</fieldset>
+					</div>
+					<div class="col-lg-6">
+						<fieldset id="fieldset-trainer_data" class="options-form">
+							<legend><?php echo Text::_('COM_TKDCLUB_MORE_DATA'); ?></legend>
+							<div>
+								<?php echo $this->form->renderFieldset('more-data'); ?>
+							</div>
+						</fieldset>
+					</div>
+				</div>
+                <?php echo HTMLHelper::_('uitab.endTab'); ?>
+			<?php echo HTMLHelper::_('uitab.endTabSet'); ?>
+			<input type="hidden" name="task" value="">
+			<input type="hidden" name="return" value="<?php echo $this->return_page; ?>">
 			<?php echo HTMLHelper::_('form.token'); ?>
         </fieldset>
-        <div class="btn-toolbar">
-			<div class="btn-group">
-				<button type="button" class="btn btn-primary" onclick="Joomla.submitbutton('medal.save')">
-					<span class="icon-ok"></span><?php echo JText::_('JSAVE') ?>
-				</button>
-			</div>
-			<div class="btn-group">
-				<button type="button" class="btn" onclick="Joomla.submitbutton('medal.cancel')">
-					<span class="icon-cancel"></span><?php echo JText::_('JCANCEL') ?>
-				</button>
-			</div>
+		<div class="mb-2">
+			<button type="button" class="btn btn-primary" data-submit-task="medal.save">
+				<span class="icon-check" aria-hidden="true"></span>
+				<?php echo Text::_('JSAVE'); ?>
+			</button>
+			<button type="button" class="btn btn-danger" data-submit-task="medal.cancel">
+				<span class="icon-times" aria-hidden="true"></span>
+				<?php echo Text::_('JCANCEL'); ?>
+			</button>
 		</div>
     </form>
 </div>

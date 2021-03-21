@@ -40,16 +40,16 @@
  * Styles for medal views
  */
 
-.gold {
-    color: #F6B93D;
+ .gold {
+  color: gold;
 }
 
 .silver {
-    color: #CCCCCC;
+  color: silver;
 }
 
 .bronce {
-    color: #D68D46;
+  color: #cd7f32;
 }
 
 .goldmedal {

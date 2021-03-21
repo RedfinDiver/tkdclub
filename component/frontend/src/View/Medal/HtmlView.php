@@ -14,7 +14,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 
 /**
- * view-class for edit-view: 'medal'
+ * view-class for edit-view medal
  */
 class HtmlView extends BaseHtmlView
 {
@@ -25,7 +25,7 @@ class HtmlView extends BaseHtmlView
         $user = Factory::getUser();
         $app  = Factory::getApplication();
         
-        if (empty($this->item->id))
+        if (empty($this->item->medal_id))
 		{
 			$authorised = $user->authorise('core.create', 'com_tkdclub');
         }
@@ -38,7 +38,8 @@ class HtmlView extends BaseHtmlView
 			return false;
 		}
         
-        $this->form = $this->get('Form');
+        $this->state = $this->get('State');
+        $this->form  = $this->get('Form');
 
         parent::display($tpl);
     }

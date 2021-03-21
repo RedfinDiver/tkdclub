@@ -16,7 +16,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
-
+use Redfindiver\Component\Tkdclub\Administrator\Helper\TkdclubHelper;
 
 class MedalController extends FormController
 {   
@@ -55,13 +55,12 @@ class MedalController extends FormController
         $app = Factory::getApplication(); 
 		$input = $app->input; 
         $model = $this->getModel('medal');
-        $currentUri = (string) Uri::getInstance();
+        $currentUri = $currentUri = Route::_('index.php?option=' . $this->option . '&view=medal&layout=edit', false);
 
-        
         // Check that this user is allowed to add a new record
-		if (!Factory::getUser()->authorise( "core.create", "com_tkdclub"))
+		if (!Factory::getUser()->authorise("core.create", "com_tkdclub"))
 		{
-			$app->enqueueMessage(JText::_('JERROR_ALERTNOAUTHOR'), 'error');
+			$app->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'error');
 			$app->setHeader('status', 403, true);
 
 			return;
@@ -135,8 +134,8 @@ class MedalController extends FormController
         // send the info mail
         $this->sendInfoMail($validData);
 
-        // clear the data in the form, keep date, championship and type
-        // maybe the user wants to add more medals from the same tournament
+        // Clear the data in the form, keep date, championship and type
+        // Maybe the user wants to add more medals from the same tournament
         $validData['class'] = '';
         $validData['placing'] = '';
         $validData['winner_ids'] = '';
@@ -165,7 +164,7 @@ class MedalController extends FormController
         }
 
         $groups = $params->get('medal_info_to', array(8));
-        $recipients = Helper::getEmailfromUsergroups($groups);
+        $recipients = TkdclubHelper::getEmailfromUsergroups($groups);
         if (empty($recipients))
         {
             return false;
@@ -182,8 +181,8 @@ class MedalController extends FormController
         $body .= Text::_('COM_TKDCLUB_MEDAL_CLASS') . " : " . $enteredData['class'] . $nl;
         $body .= Text::_('COM_TKDCLUB_MEDAL_PLACING') . " : " . $enteredData['placing'] . $nl;
     
-        $memberlist = Helper::getMemberlist();
-        $winners = Helper::getMembersNames($enteredData['winner_ids'], $memberlist);
+        $memberlist = TkdclubHelper::getMemberlist();
+        $winners = TkdclubHelper::getMembersNames($enteredData['winner_ids'], $memberlist);
 
         $body .= Text::_('COM_TKDCLUB_ATHLETS') . " : " . $winners . $nl;
         $body .= Text::_('COM_TKDCLUB_NOTES') . " : " . $enteredData['notes']. $nl;
