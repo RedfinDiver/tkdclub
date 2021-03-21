@@ -61,7 +61,7 @@ class HtmlView extends BaseHtmlView
     {
         $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
 
-        ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_TRAINING_ADMIN_VIEW'), 'tkdclub');
+        ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_TRAINING_ADMIN_VIEW'), 'tkdclub tkdclub-logo-v-sw');
 
         $canDo = ContentHelper::getActions('com_tkdclub');
 

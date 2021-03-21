@@ -107,7 +107,7 @@ class HtmlView extends BaseHtmlView
         $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
         $toolbar = Toolbar::getInstance('toolbar');
 
-        ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_MEDAL_ADMIN_VIEW'), 'tkdclub');
+        ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_MEDAL_ADMIN_VIEW'), 'tkdclub tkdclub-logo-v-sw');
 
         if ($canDo->get('core.create'))
         {
@@ -146,6 +146,9 @@ class HtmlView extends BaseHtmlView
         {
             ToolBarHelper::custom('medals.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);
         }
+
+        ToolbarHelper::custom('export.medals', 'download', '', 'COM_TKDCLUB_EXPORT_CSV', true);
+        ToolbarHelper::custom('export.medals', 'download', '', 'COM_TKDCLUB_EXPORT_ALL_CSV', false);
 
         if ($canDo->get('core.admin'))
         {

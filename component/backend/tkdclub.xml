@@ -38,6 +38,7 @@
 
     <media destination="com_tkdclub" folder="media">
 		<filename>joomla.asset.json</filename>
+        <folder>fonts</folder>
         <folder>js</folder>
         <folder>css</folder>
         <folder>images</folder>
@@ -45,27 +46,27 @@
     
     <administration>
 
-        <menu img="class:icon-tkdclub">COM_TKDCLUB</menu>
+        <menu img="class:tkdclub-logo">COM_TKDCLUB</menu>
 
         <submenu>
            <menu
                 link="option=com_tkdclub&amp;view=members"
                 view="members"
-                img="class:icon-tkdclub"
+                img="class:tkdclub-logo"
                 >
                 COM_TKDCLUB_SUBMENU_MEMBERS
             </menu>
             <menu
                 link="option=com_tkdclub&amp;view=trainings"
                 view="trainings"
-                img="class:icon-tkdclub"
+                img="class:tkdclub-logo"
                 >
                 COM_TKDCLUB_SUBMENU_TRAININGS
             </menu>
             <menu
                 link="option=com_tkdclub&amp;view=medals"
                 view="medals"
-                img="class:icon-tkdclub"
+                img="class:tkdclub-logo"
                 >
                 COM_TKDCLUB_SUBMENU_MEDALS
             </menu>

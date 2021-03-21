@@ -80,11 +80,11 @@ class HtmlView extends BaseHtmlView
 
         if ($this->item->member_id == NULL)
         {
-            ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_MEMBER_NEW_TITLE'), 'tkdclub');
+            ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_MEMBER_NEW_TITLE'), 'tkdclub tkdclub-logo-v-sw');
         }
         else
         {
-            ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_MEMBER_EDIT_TITLE'), 'tkdclub');
+            ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_MEMBER_EDIT_TITLE'), 'tkdclub tkdclub-logo-v-sw');
         }
 
         $canDo = ContentHelper::getActions('com_tkdclub');

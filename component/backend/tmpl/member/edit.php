@@ -17,8 +17,8 @@ $wa = $this->document->getWebAssetManager();
 $wa->useScript('keepalive')->useScript('form.validate')
     ->useScript('com_tkdclub.mask-iban')
     ->useScript('com_tkdclub.iban')
-    ->useScript('com_tkdclub.member-format-iban');
-    
+    ->useScript('com_tkdclub.member-format-iban')
+    ->useStyle('com_tkdclub.tkdclub-admin');
 ?>
 
 <form action="<?php echo Route::_('index.php?option=com_tkdclub&member_id=' . (int) $this->item->member_id); ?>" method="post" name="adminForm" id="member-form" class="form-validate" enctype="multipart/form-data">   

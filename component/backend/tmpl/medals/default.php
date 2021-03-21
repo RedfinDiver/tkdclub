@@ -93,7 +93,7 @@ $columns   = 10;
                                                 ?>
                                     </th>
                                     <td width=""><?php echo TkdclubHelper::getMembersNames($item->winner_ids, $this->memberlist); ?></td>
-                                    <?php $medalclass = array('1' => 'tkdclub-goldmedal', '2' => 'tkdclub-silbermedal', '3' => 'tkdclub-bronzemedal'); ?>
+                                    <?php $medalclass = array('1' => 'goldmedal', '2' => 'silbermedal', '3' => 'bronzemedal'); ?>
                                     <td class="text-center">
                                         <span class="<?php echo $medalclass[(int) $item->placing] ?>">
                                             <?php echo $this->escape($item->placing); ?>

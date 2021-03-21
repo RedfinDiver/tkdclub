@@ -66,8 +66,8 @@ class HtmlView extends BaseHtmlView
         $clubname   = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
         $isNew      = ($this->item->medal_id == 0);
 
-        $isNew ? ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_MEDAL_NEW'), 'tkdclub') :
-                    ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_MEDAL_CHANGE'), 'tkdclub');
+        $isNew ? ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_MEDAL_NEW'), 'tkdclub tkdclub-logo-v-sw') :
+                    ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_MEDAL_CHANGE'), 'tkdclub tkdclub-logo-v-sw');
 
         $canDo = ContentHelper::getActions('com_tkdclub');
 

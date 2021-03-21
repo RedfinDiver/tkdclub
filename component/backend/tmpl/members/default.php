@@ -21,7 +21,6 @@ HtmlHelper::_('behavior.multiselect');
 
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
 $wa = $this->document->getWebAssetManager();
-$wa->getRegistry();
 $wa->useScript('com_tkdclub.iban')
     ->useScript('com_tkdclub.members-format-iban')
     ->useStyle('com_tkdclub.tkdclub-admin');

@@ -15,8 +15,8 @@ use Joomla\CMS\Router\Route;
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('keepalive')
-    ->useScript('form.validate');
-
+    ->useScript('form.validate')
+    ->useStyle('com_tkdclub.tkdclub-admin');
 ?>
 
 <form action="<?php echo Route::_('index.php?option=com_tkdclub&medal_id=' . (int) $this->item->medal_id); ?>" method="post" name="adminForm" id="medal-form" class="form-validate">

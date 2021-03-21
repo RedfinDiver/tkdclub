@@ -10,12 +10,8 @@ namespace Redfindiver\Component\Tkdclub\Administrator\Controller;
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Controller\FormController;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
-use Redfindiver\Component\Tkdclub\Administrator\Helper\TkdclubHelper as Helper;
-use Joomla\Utilities\ArrayHelper;
-
 
 class ExportController extends FormController
 {	
@@ -26,7 +22,7 @@ class ExportController extends FormController
 	 *
 	 * @return array an array with data in it
 	 */
-	public function getContent($model = '')
+	protected function getContent($model = '')
 	{
 		// Get the input from the url / post
 		$pks = $this->input->post->get('cid', array());
@@ -42,12 +38,37 @@ class ExportController extends FormController
 	 * @param string $filename name of the file to download
 	 *
 	 **/
-	public function setHeaders($filename = 'download')
+	protected function setHeaders($filename = 'download')
 	{
 		$this->app->setHeader('Content-Type', 'application/csv', true)
 			->setHeader('Content-Disposition', 'attachment; filename="' . $filename . '.csv"', true)
 			->setHeader('Cache-Control', 'must-revalidate', true)
 			->sendHeaders();
+	}
+
+	/**
+	 * Writes the export data to browser as csv file
+	 * 
+	 * @param	string	$model	The name of the model to call
+	 * @param	string	$name	The name of the file to write
+	 * 
+	 * @return	void
+	 */
+	protected function writeFile($model, $name)
+	{
+		$rows = $this->getContent($model);
+
+		$this->setHeaders($name);
+
+		$output = fopen("php://output", "w");
+
+		foreach ($rows as $row)
+		{
+			fputcsv($output, $row, ',');
+		}
+
+		fclose($output);
+		$this->app->close();
 	}
 
 	/**
@@ -57,20 +78,7 @@ class ExportController extends FormController
 	{	
 		// Check for request forgeries.
 		$this->checkToken();
-
-		$rows = $this->getContent('members');
-
-		$this->setHeaders(Text::_('COM_TKDCLUB_SIDEBAR_MEMBERS'));
-
-		$output = fopen("php://output", "w");
-
-		foreach ($rows as $row)
-		{
-			fputcsv($output, $row, ',');
-		}
-
-		fclose($output);
-		$this->app->close();
+		$this->writeFile('members', Text::_('COM_TKDCLUB_SIDEBAR_MEMBERS'));
 	}
 
 	/**
@@ -80,20 +88,7 @@ class ExportController extends FormController
 	{	
 		// Check for request forgeries.
 		$this->checkToken();
-
-		$rows = $this->getContent('trainings');
-
-		$this->setHeaders(Text::_('COM_TKDCLUB_SIDEBAR_TRAININGS'));
-
-		$output = fopen("php://output", "w");
-
-		foreach ($rows as $row)
-		{
-			fputcsv($output, $row, ',');
-		}
-
-		fclose($output);
-		$this->app->close();
+		$this->writeFile('trainings', Text::_('COM_TKDCLUB_SIDEBAR_TRAININGS'));
 	}
 
 	/**
@@ -101,20 +96,9 @@ class ExportController extends FormController
 	 **/
     public function medals()
 	{	
-		$memberlist = Helper::getMemberlist();
-		$content = $this->getContent('medals');;
-
-		foreach ($content as $key => &$row)
-		{
-			if ($key > 0) // getting the names
-			{
-				$row[] = Helper::getMembersNames($row[5], $memberlist);
-			}
-
-			print implode(';', $row)."\n"; 
-		}
-
-		$this->setHeaders(Text::_('COM_TKDCLUB_SIDEBAR_MEDALS'));
+		// Check for request forgeries.
+		$this->checkToken();
+		$this->writeFile('medals', Text::_('COM_TKDCLUB_SIDEBAR_MEDALS'));
 	}
 
 	/**
@@ -226,5 +210,4 @@ class ExportController extends FormController
 
 		$this->setHeaders(Text::_('COM_TKDCLUB_SIDEBAR_SUBSCRIBERS'));
 	}
-
 }

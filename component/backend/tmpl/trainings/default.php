@@ -21,9 +21,7 @@ HtmlHelper::_('behavior.multiselect');
 
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
 $wa = $this->document->getWebAssetManager();
-$wa->getRegistry();
 $wa->useStyle('com_tkdclub.tkdclub-admin');
-
 
 /**
  * initilise some variables

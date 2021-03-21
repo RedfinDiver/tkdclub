@@ -13,6 +13,8 @@ use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Database\ParameterType;
+use Joomla\Utilities\ArrayHelper;
+use Redfindiver\Component\Tkdclub\Administrator\Helper\TkdclubHelper;
 
 /**
  * Model-class for list view 'medals'
@@ -209,17 +211,17 @@ class MedalsModel extends ListModel
      */
     public static function getMedals ($placing)
     {
-            $db = Factory::getDbo();
-            $query = $db->getQuery(true);
-            $query->select('COUNT(*)')
-                ->from('#__tkdclub_medals');
-            $query->where('placing =' .$placing);
+        $db = Factory::getDbo();
+        $query = $db->getQuery(true);
+        $query->select('COUNT(*)')
+            ->from($db->quoteName('#__tkdclub_medals'))
+            ->where('placing = :placing')
+            ->bind(':placing', $placing, ParameterType::INTEGER);
 
-            $db->setQuery($query);
-            $medals = $db->loadResult();
+        $db->setQuery($query);
+        $medals = $db->loadResult();
 
-            return (int) $medals;
-
+        return (int) $medals;
     }
 
     /**
@@ -231,7 +233,7 @@ class MedalsModel extends ListModel
     {
         $db = Factory::getDbo();
         $query = $db->getQuery(true);
-        $query->select('*')->from('#__tkdclub_medals');
+        $query->select('*')->from($db->quoteName('#__tkdclub_medals'));
 
         $db->setQuery($query);
         $data = $db->loadObjectList();
@@ -250,22 +252,39 @@ class MedalsModel extends ListModel
     }
 
     /**
-	 * Method to get the data that should be exported.
-	 * @return  mixed  The data.
-	 */
+     * Method to get the data that should be exported.
+     * @return  mixed  The data.
+     */
 	public function getExportData($pks)
 	{
-		$pklist = implode(',', $pks);
-
 		$db	= Factory::getDBO();
 		$query	= $db->getQuery(true);
-		$query-> select('medal_id, date, championship, class, placing, winner_ids')
-			  -> from($db->quoteName('#__tkdclub_medals'))
-			  -> where('medal_id IN ('.$pklist.')')
-              ->order('date DESC');
+        $fields = array(
+            'medal_id',     // 0
+            'date',         // 1    
+            'championship', // 2
+            'class',        // 3
+            'placing',      // 4
+            'winner_ids'    // 5
+        );
 
-		$db	-> setQuery((string)$query);
-		$rows	= $db->loadRowList();
+        $pks = ArrayHelper::toInteger($pks);
+		$query->select($db->quoteName($fields))
+            ->from($db->quoteName('#__tkdclub_medals'));
+
+        if (count($pks) > 0)
+        {
+            $query->whereIn($db->quoteName('medal_id'), $pks);
+        }
+        else
+        {
+            $query->where($db->quoteName('medal_id') . ' > 0');
+        }
+			  
+        $query->order('date DESC');
+
+		$db->setQuery($query);
+		$rows = $db->loadRowList();
 
         $headers = array(
             Text::_('COM_TKDCLUB_MEDAL_ID'),               // id
@@ -273,14 +292,20 @@ class MedalsModel extends ListModel
             Text::_('COM_TKDCLUB_MEDAL_CHAMPIONSSHIP'),    // championship
             Text::_('COM_TKDCLUB_MEDAL_CLASS'),            // class
             Text::_('COM_TKDCLUB_MEDAL_PLACING'),          // placing
-            Text::_('COM_TKDCLUB_ATHLETS'),                // winner_ids       
-            Text::_('COM_TKDCLUB_ATHLETS')                 // id_win  
+            Text::_('COM_TKDCLUB_ATHLETS')                 // winner_ids
         );
 
-		// return the results as an array of items, each consisting of an array of fields
-		$content	= array($headers);	//header with column names
+        $memberlist = TkdclubHelper::getMemberlist();
+
+        foreach ($rows as &$row)
+        {
+            $row[] = TkdclubHelper::getMembersNames($row[5], $memberlist);
+            unset($row[5]);
+        }
+
+		// Return the results as an array of items, each consisting of an array of fields
+		$content	= array($headers);	// Header with column names
 		$content	= array_merge( $content,  $rows);
 		return $content;
 	}
-    
 }
