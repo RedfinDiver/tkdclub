@@ -21,15 +21,16 @@ $wa->useScript('keepalive')
 
 $this->tab_name = 'com-tkdclub-form';
 
-$params = $this->state->get('parameters.menu')
-
+$menuItem = Factory::getApplication()->getMenu()->getActive();
+$params = $menuItem->getParams();
+$tst = 1;
 ?>
 
 <div class="edit itempage">
     <?php if ($params->get('show_page_heading')) : ?>
 	<div class="page-header">
 		<h1>
-			<?php echo  $params->get('page_heading') ? $params->get('page_heading') : Factory::getApplication()->getMenu()->getActive()->title; ?>
+			<?php echo  $params->get('page_heading') ? $params->get('page_heading') : $menuItem->title; ?>
 		</h1>
 	</div>
 	<?php endif; ?>
@@ -53,6 +54,7 @@ $params = $this->state->get('parameters.menu')
 						<fieldset id="fieldset-medal_data" class="options-form">
 							<legend><?php echo Text::_('COM_TKDCLUB_MEDAL_DATA'); ?></legend>
 							<div>
+								<?php $this->form->removeField('state') // Remove state field, only administrator should publish ?>
 								<?php echo $this->form->renderFieldset('medal-data'); ?>
 							</div>
 						</fieldset>
@@ -69,7 +71,7 @@ $params = $this->state->get('parameters.menu')
                 <?php echo HTMLHelper::_('uitab.endTab'); ?>
 			<?php echo HTMLHelper::_('uitab.endTabSet'); ?>
 			<input type="hidden" name="task" value="">
-			<input type="hidden" name="return" value="<?php echo $this->return_page; ?>">
+			<input type="hidden" name="return" value="<?php echo $menuItem->id ?>">
 			<?php echo HTMLHelper::_('form.token'); ?>
         </fieldset>
 		<div class="mb-2">

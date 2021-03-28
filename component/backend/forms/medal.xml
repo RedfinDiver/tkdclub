@@ -24,7 +24,6 @@
                 hint="COM_TKDCLUB_SELECT_ATHLET"
                 label="COM_TKDCLUB_ATHLETS"
                 description="COM_TKDCLUB_MEDAL_WINNERS_DESC"
-                filter="safehtml"
                 required="true"
             />
 

@@ -9,13 +9,13 @@ namespace Redfindiver\Component\Tkdclub\Site\Controller;
 
 \defined('_JEXEC') or die;
 
-use Joomla\CMS\MVC\Controller\FormController;
-use Joomla\CMS\Router\Route;
-use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\MVC\Controller\FormController;
 use Redfindiver\Component\Tkdclub\Administrator\Helper\TkdclubHelper;
 
 class MedalController extends FormController
@@ -28,18 +28,20 @@ class MedalController extends FormController
      */
     public function cancel($key = null)
     {
-        $app = Factory::getApplication();
-        $context = "$this->option.edit.$this->context";
-
+        $result = parent::cancel($key);
+        
         // clean the session state and go to homepage
+        $context = "$this->option.edit.$this->context";
+        $app = Factory::getApplication();
         $app->setUserState($context . '.data', null);
+
         $this->setRedirect(Route::_(Uri::base(), false));
     }
 
     /**
      * Save the form
      * 
-     * saving the entered form data to the medals-table
+     * Saving the entered form data to the medals-table
      * Based on the save() method in the FormController class
      * 
      * @param   string  $key     The name of the primary key of the URL variable.
@@ -53,9 +55,13 @@ class MedalController extends FormController
         $this->checkToken();
 
         $app = Factory::getApplication(); 
-		$input = $app->input; 
+		$input = $app->input;
         $model = $this->getModel('medal');
-        $currentUri = $currentUri = Route::_('index.php?option=' . $this->option . '&view=medal&layout=edit', false);
+
+        // Prepare redirect
+        $returnId = $input->getInt('return');
+        $menuItem = $app->getMenu()->getItem($returnId);
+        $redirect = Route::_('index.php?Itemid=' . $menuItem->id);
 
         // Check that this user is allowed to add a new record
 		if (!Factory::getUser()->authorise("core.create", "com_tkdclub"))
@@ -107,7 +113,7 @@ class MedalController extends FormController
             $app->setUserState($context . '.data', $data);
 
             // Redirect back to the same screen.
-			$this->setRedirect($currentUri);
+			$this->setRedirect($redirect);
 
             return false;
         }
@@ -126,7 +132,7 @@ class MedalController extends FormController
 			$this->setError(Text::sprintf('JLIB_APPLICATION_ERROR_SAVE_FAILED', $model->getError()));
 			$this->setMessage($this->getError(), 'error');
 
-			$this->setRedirect($currentUri);
+			$this->setRedirect($redirect);
 
 			return false;
         }
@@ -144,7 +150,7 @@ class MedalController extends FormController
         $app->setUserState($context . '.data', $validData);
 
         // redirect to the form
-        $this->setRedirect($currentUri, Text::_('COM_TKDCLUB_MEDAL_ADD_SUCCESS'));
+        $this->setRedirect($redirect, Text::_('COM_TKDCLUB_MEDAL_ADD_SUCCESS'));
         
         return true;
     }

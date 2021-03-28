@@ -9,13 +9,13 @@ namespace Redfindiver\Component\Tkdclub\Site\Controller;
 
 \defined('_JEXEC') or die;
 
-use Joomla\CMS\MVC\Controller\FormController;
-use Joomla\CMS\Router\Route;
-use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\MVC\Controller\FormController;
 use Redfindiver\Component\Tkdclub\Administrator\Helper\TkdclubHelper;
 
 class TrainingController extends FormController
@@ -30,6 +30,7 @@ class TrainingController extends FormController
     {
         $app = Factory::getApplication();
         $context = "$this->option.edit.$this->context";
+        $menu = $app->getMenu()->getActive();
 
         // clean the session state and go to homepage
         $app->setUserState($context . '.data', null);

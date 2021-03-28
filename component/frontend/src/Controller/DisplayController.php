@@ -9,6 +9,9 @@ namespace Redfindiver\Component\Tkdclub\Site\Controller;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
+
 /**
  * Tkdclub master display controller site.
  *
@@ -30,6 +33,9 @@ class DisplayController extends \Joomla\CMS\MVC\Controller\BaseController
 	{
 		$cachable = true;
 
+		$app = Factory::getApplication();
+        $menu = $app->getMenu()->getActive();
+
 		/**
 		 * Set the default view name and format from the Request.
 		 * Note we are using a_id to avoid collisions with the router and the return page.
@@ -40,7 +46,14 @@ class DisplayController extends \Joomla\CMS\MVC\Controller\BaseController
 		$this->input->set('view', $vName);
 
 		// Check for edit form.
-		if ($vName === 'training' && !$this->checkEditId('com_content.edit.training', $id))
+		if ($vName === 'training' && !$this->checkEditId('com_tkdclub.edit.training', $id))
+		{
+			// Somehow the person just went to the form - we don't allow that.
+			throw new \Exception(Text::sprintf('JLIB_APPLICATION_ERROR_UNHELD_ID', $id), 403);
+		}
+
+		// Check for edit form.
+		if ($vName === 'medal' && !$this->checkEditId('com_tkdclub.edit.medal', $id))
 		{
 			// Somehow the person just went to the form - we don't allow that.
 			throw new \Exception(Text::sprintf('JLIB_APPLICATION_ERROR_UNHELD_ID', $id), 403);
