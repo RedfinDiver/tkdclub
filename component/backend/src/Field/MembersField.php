@@ -12,20 +12,27 @@ namespace Redfindiver\Component\Tkdclub\Administrator\Field;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
+use Joomla\Database\ParameterType;
+
 /**
- * Supports the options-markup from parameters
+ * Field to get members
  *
- * @since  1.0
  */
 class MembersField extends ListField
 {       
     /**
      * The form field type.
+     * 
      */
     protected $type = 'Members';
 
     /**
-     * Method to get the field input markup for a field with all memers.
+     * Method to get the field input markup for a field with members.
+     * 
+     * The field can be used in 3 different ways:
+     *  1) Setup in xml markup onlyactive="true" -> only active members are selected.
+     *  2) Setup in xml markup onlywinner="true" -> only members present in the medal table are selected.
+     *  3) No setup in xml markup -> all members present in the database are selected.
      *
      * @return  string	The field input markup.
      *
@@ -46,6 +53,21 @@ class MembersField extends ListField
             $query->where('member_state = "active"');
         }
 
+        // Only members present in the medals table
+        if ($this->element['onlywinner'] == 'true')
+        {
+            if ($winners = $this->getWinners())
+            {
+                $query->whereIn($db->quoteName('member_id'), $winners, ParameterType::INTEGER);
+            }
+            else
+            {
+                // We don't have some medals yet
+                $query->where($db->quoteName('member_id') . ' = 0');
+            }
+            
+        }
+
         $query->order('member_id ASC');
         $db->setQuery($query);
         $members = $db->loadObjectList();
@@ -56,12 +78,38 @@ class MembersField extends ListField
             $options[] = HTMLHelper::_('select.option', $member->member_id, $member->firstname . ' ' . $member->lastname);
         }
 
-        if ($this->form) // if we are in a form merge additional xml data
+        if ($this->form) // If we are in a form merge additional xml data
         {
             $options = array_merge(parent::getOptions(), $options); 
         }
 
         return $options;    
+    }
+
+    protected function getWinners()
+    {
+        $db = Factory::getDBO();
+        
+        $q1 = $db->getQuery(true);
+        $q1->select($q1->quoteName('winner_1'))
+            ->from($q1->quoteName('#__tkdclub_medals'))
+            ->where($q1->quoteName('winner_1') . ' > 0');
+
+        $q2 = $db->getQuery(true);
+        $q2->select($q2->quoteName('winner_2'))
+            ->from($q2->quoteName('#__tkdclub_medals'))
+            ->where($q1->quoteName('winner_2') . ' > 0');
+
+        $q3 = $db->getQuery(true);
+        $q3->select($q3->quoteName('winner_3'))
+            ->from($q3->quoteName('#__tkdclub_medals'))
+            ->where($q1->quoteName('winner_3') . ' > 0');
+
+        $query = $db->getQuery(true);
+        $query = $q1->union($q2)->union($q3);
+
+        $db->setQuery($query);
+        return $db->loadColumn();
     }
         
 }

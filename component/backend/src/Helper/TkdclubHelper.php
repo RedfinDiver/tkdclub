@@ -11,12 +11,16 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\Database\ParameterType;
 
+/**
+ * Helper class for tkdclub component
+ */
 class TkdclubHelper
 {
     /**
      * Get an associative array from string
-     * mostly used for generating lists for select boxes out of parameters
+     * Mostly used for generating lists for select boxes out of parameters
      */
     public static function getList($string = '')
     {
@@ -40,7 +44,7 @@ class TkdclubHelper
      * 
      * @return  int number of participants for the event
      * 
-     * @see     views/events/default.php
+     * @see     tmpl/events/default.php
      */
     public static function getEventparts($event_id)
     {
@@ -49,7 +53,8 @@ class TkdclubHelper
 
         $query->select('sum(' . $db->quoteName('registered') . ')')
             ->from($db->quoteName('#__tkdclub_event_participants'))
-            ->where('event_id = ' . $db->quote($event_id));
+            ->where($db->quoteName('event_id') .' = :event_id')
+            ->bind(':event_id', $event_id, ParameterType::INTEGER);
 
         $db->setQuery($query);
         $db->execute();
@@ -68,7 +73,8 @@ class TkdclubHelper
     public static function getEmailFromUserGroups($groups)
     {
         // If no group is given return
-        if (empty($groups)) {
+        if (empty($groups))
+        {
             return false;
         }
 
@@ -78,10 +84,11 @@ class TkdclubHelper
             // Get all email adesses for the users
             $db    = Factory::getDbo();
             $query = $db->getQuery(true)
-                ->select($db->qn('a.email'))
-                ->from($db->qn('#__users', 'a'))
-                ->join('LEFT', $db->qn('#__user_usergroup_map', 'b') . ' ON a.id = b.user_id')
-                ->where($db->qn('group_id') . ' = ' . (int) $group);
+                ->select($db->quoteName('a.email'))
+                ->from($db->quoteName('#__users', 'a'))
+                ->join('LEFT', $db->quoteName('#__user_usergroup_map', 'b') . ' ON a.id = b.user_id')
+                ->where($db->quoteName('group_id') . ' = :group')
+                ->bind(':group', $group, ParmeterType::INTEGER);
 
             $emails = array_merge($emails, $db->setQuery($query)->loadColumn());
         }
@@ -117,19 +124,13 @@ class TkdclubHelper
                 break;
         }
 
-        $i = count($ids);
         $names = '';
-        $it = 0;
 
         foreach ($ids as $id) {
-            $it += 1;
-            $names .= $memberlist[$id];
-            if ($it < $i) {
-                $names .= ' / ';
-            }
+            $id ? $names .= ' / ' . $memberlist[$id] : '';
         }
 
-        return $names;
+        return ltrim($names, " /");
     }
 
     /**
@@ -167,17 +168,22 @@ class TkdclubHelper
     public static function getpaystate($trainer_paid, $assist1, $assist2, $assist3, $assist1_paid, $assist2_paid, $assist3_paid)
     {
         // No trainer or assistent paid -> training is not paid at all
-        if (!$trainer_paid && !$assist1_paid && !$assist2_paid && !$assist3_paid) {
+        if (!$trainer_paid && !$assist1_paid && !$assist2_paid && !$assist3_paid)
+        {
             return 0;
-        } else {
+        }
+        else
+        {
             !$assist1 || $assist1 && $assist1_paid ? $check1 = true : $check1 = false;
             !$assist2 || $assist2 && $assist2_paid ? $check2 = true : $check1 = false;
             !$assist3 || $assist3 && $assist3_paid ? $check3 = true : $check3 = false;
 
             // All checks good --> training is entirly paid
-            if ($check1 && $check2 && $check3 && $trainer_paid) {
+            if ($check1 && $check2 && $check3 && $trainer_paid)
+            {
                 return 1;
-            } else // One or more checks not OK --> so return partly paid
+            } 
+            else // One or more checks not OK --> so return partly paid
             {
                 return 2;
             }
@@ -200,9 +206,12 @@ class TkdclubHelper
         $now = new \DateTime('today');
         $age = $dob->diff($now);
 
-        if ($format == 'y') {
+        if ($format == 'y')
+        {
             return $age->y;
-        } else {
+        } 
+        else
+        {
             return $age->days;
         }
     }
@@ -210,10 +219,10 @@ class TkdclubHelper
     /**
      * Returns the Age in Years to particular date
      * 
-     * @param string $date date-string in the format YYYY-mm-dd
-     * @param string $birthday date-string in the format YYYY-mm-dd
+     * @param string $date      date-string in the format YYYY-mm-dd
+     * @param string $birthday  date-string in the format YYYY-mm-dd
      * 
-     * @return string Age on current date
+     * @return string Age in years on current date
      * 
      * @since 1.0
      */
@@ -237,9 +246,10 @@ class TkdclubHelper
      * 
      * @since   3.0.0
      */
-    public static function getTrainer($fromTrainingsTable)
+    public static function getTrainer($fromTrainingsTable = true)
     {
-        if ($fromTrainingsTable == true) {
+        if ($fromTrainingsTable == true)
+        {
             $db = Factory::getDBO();
 
             $q1 = $db->getQuery(true)
@@ -268,7 +278,8 @@ class TkdclubHelper
             return $db->loadObjectList();
         }
 
-        if ($fromTrainingsTable == false) {
+        if ($fromTrainingsTable == false)
+        {
             $db = Factory::getDBO();
             $query = $db->getQuery(true);
 

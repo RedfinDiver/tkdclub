@@ -7,6 +7,8 @@
 
 namespace Redfindiver\Component\Tkdclub\Administrator\Model;
 
+\defined('_JEXEC') or die;
+
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\Utilities\ArrayHelper;
@@ -16,45 +18,82 @@ use Joomla\CMS\Component\ComponentHelper;
 use Redfindiver\Component\Tkdclub\Administrator\Helper\TkdclubHelper;
 
 /**
- * Model-class for list view 'trainings'
+ * Model-class for list view trainings.
  *
  * @since  1.0
  */
 class TrainingsModel extends ListModel
-{
-    public $trainer_names; // all trainers in database
-    public $training_years; // all years in which a training was held
-    public $training_salary;
+{   
+    /**
+	 * An array of all trainers in database
+	 *
+	 * @var  array
+	 */
+    public $trainer_names;
+    
+    /**
+	 * An array of all years in which a training was held
+	 *
+	 * @var  array
+	 */
+    public $training_years;
+
+    /**
+	 * An array of all training types in database
+	 *
+	 * @var  array
+	 */
     public $training_types;
+
+    /**
+	 * An integer value of trainings salary
+	 *
+	 * @var  integer
+	 */
+    public $training_salary;
+
+    /**
+	 * An integer value of assistent salary
+	 *
+	 * @var  integer
+	 */
     public $assist_salary;
+
+    /**
+	 * An integer value of the rate per km
+	 *
+	 * @var  integer
+	 */
     public $distance_rate;
 
+    /**
+	 * Constructor.
+	 *
+	 * @param   array  $config  An optional associative array of configuration settings.
+	 *
+	 * @since   1.6
+	 * @see     \Joomla\CMS\MVC\Controller\BaseController
+	 */
     public function __construct($config = array())
     {
-        if (empty($config['filter_fields'])) {
+        if (empty($config['filter_fields']))
+        {
             $config['filter_fields'] =
                 array('training_id', 'date', 'trainer', 'type', 'payment_state', 'year');
         }
 
-        // getting all trainer names from database
-        $this->trainer_names = TkdclubHelper::getTrainer($fromTrainingsTable = true);
-
-        // getting all trainingyears from database
-        $this->training_years = $this->get_all_training_years_from_database();
-
-        // getting all trainingtypes from database
-        $this->training_types = $this->get_all_training_types_from_database();
-
-        // get values from configuration
+        $this->trainer_names   = TkdclubHelper::getTrainer($fromTrainingsTable = true);
+        $this->training_years  = $this->get_all_training_years_from_database();
+        $this->training_types  = $this->get_all_training_types_from_database();
         $this->training_salary = ComponentHelper::getParams('com_tkdclub')->get('training_salary', 0);
-        $this->assist_salary = ComponentHelper::getParams('com_tkdclub')->get('assistent_salary', 0);
-        $this->distance_rate = ComponentHelper::getParams('com_tkdclub')->get('distance_salary', 0);
+        $this->assist_salary   = ComponentHelper::getParams('com_tkdclub')->get('assistent_salary', 0);
+        $this->distance_rate   = ComponentHelper::getParams('com_tkdclub')->get('distance_salary', 0);
 
         parent::__construct($config);
     }
 
     /**
-     * checks if the parameters for calculating the trainer/assistent salary are properly set
+     * Checks if the parameters for calculating the trainer/assistent salary are properly set
      * 
      * @return bool true if all parameters are set, false if one ore more are not set
      * 
@@ -89,7 +128,6 @@ class TrainingsModel extends ListModel
 	 */
     protected function populateState($ordering = 'date', $direction = 'DESC')
     {
-        // Suchbegriff aus vorheriger Eingabe ermitteln
         $search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string');
         $this->setState('filter.search', $search);
 
@@ -133,11 +171,10 @@ class TrainingsModel extends ListModel
     }
 
     /**
-	 * Method to get a \JDatabaseQuery object for retrieving the data set from a database.
+	 * Build an SQL query to load the list data.
 	 *
-	 * @return  \JDatabaseQuery  A \JDatabaseQuery object to retrieve the data set.
+	 * @return  \Joomla\Database\DatabaseQuery
 	 *
-	 * @since   1.6
 	 */
     protected function getListQuery()
     {
@@ -169,10 +206,11 @@ class TrainingsModel extends ListModel
         // Filter by trainer
         $trainerselect = $this->getState('filter.trainer');
         if (!empty($trainerselect)) {
-            $query->where(' (' . $db->quoteName('a.trainer') . ' = :trainer'
-                . ' OR ' . $db->quoteName('a.assist1') . ' = :assist1'
-                . ' OR ' . $db->quoteName('a.assist2') . ' = :assist2'
-                . ' OR ' . $db->quoteName('a.assist3') . ' = :assist3' . ' )')
+            $query
+                ->where($db->quoteName('a.trainer') . ' = :trainer', 'OR')
+                ->where($db->quoteName('a.assist1') . ' = :assist1', 'OR')  
+                ->where($db->quoteName('a.assist2') . ' = :assist2', 'OR') 
+                ->where($db->quoteName('a.assist3') . ' = :assist3', 'OR')
                 ->bind([':trainer', ':assist1', ':assist2', ':assist3'], $trainerselect, ParameterType::INTEGER);
         }
 
@@ -442,13 +480,15 @@ class TrainingsModel extends ListModel
     }
 
     /**
-     * sort function for trainings
+     * Sort function for trainings
      **/
     function sortTrainers($a, $b)
     {
-        if ($a->sums['trainings'] == $b->sums['trainings']) {
+        if ($a->sums['trainings'] == $b->sums['trainings'])
+        {
             return 0;
         }
+
         return ($a->sums['trainings'] < $b->sums['trainings']) ? -1 : 1;
     }
 
@@ -505,7 +545,7 @@ class TrainingsModel extends ListModel
     }
 
     /**
-     * get all the years in which a training was held
+     * Get all the years in which a training was held
      *
      * This function gets all years in 4 digit form (2017) from database
      * It serves as a list for a database-query
@@ -526,7 +566,7 @@ class TrainingsModel extends ListModel
     }
 
     /**
-     * analyses the trainer data  
+     * Analyses the trainer data  
      *
      * @return array statistics of the trainings as trainer or assistent
      **/
@@ -542,15 +582,19 @@ class TrainingsModel extends ListModel
 
         $trainings = count($trainings_data);
 
-        foreach ($trainings_data as $key => $value) {
-            if ($value['trainer'] == $trainer_id) {
+        foreach ($trainings_data as $key => $value)
+        {
+            if ($value['trainer'] == $trainer_id)
+            {
                 $trainer++;
                 isset($types[$value['type']]['trainer']) ? $types[$value['type']]['trainer']++ : $types[$value['type']]['trainer'] = 1;
                 if ($value['trainer_paid'] == 0) {
                     $unpaid_trainer++;
                     $unpaid_km += $value['km_trainer'];
                 }
-            } else {
+            } 
+            else
+            {
                 $assist++;
                 isset($types[$value['type']]['assistent']) ? $types[$value['type']]['assistent']++ : $types[$value['type']]['assistent'] = 1;
 
@@ -576,18 +620,22 @@ class TrainingsModel extends ListModel
         );
 
 
-        foreach ($types as &$type) {
-            if (array_key_exists('trainer', $type) && !array_key_exists('assistent', $type)) {
+        foreach ($types as &$type)
+        {
+            if (array_key_exists('trainer', $type) && !array_key_exists('assistent', $type))
+            {
                 $type['trainings'] = $type['trainer'];
                 $type['assistent'] = 0;
             }
 
-            if (!array_key_exists('trainer', $type) && array_key_exists('assistent', $type)) {
+            if (!array_key_exists('trainer', $type) && array_key_exists('assistent', $type))
+            {
                 $type['trainings'] = $type['assistent'];
                 $type['trainer'] = 0;
             }
 
-            if (array_key_exists('trainer', $type) && array_key_exists('assistent', $type)) {
+            if (array_key_exists('trainer', $type) && array_key_exists('assistent', $type))
+            {
                 $type['trainings'] = $type['assistent'] + $type['trainer'];
             }
         }
@@ -602,10 +650,14 @@ class TrainingsModel extends ListModel
      */
     public function sum_up($a, &$b)
     {
-        foreach ($a as $key => $value) {
-            if (array_key_exists($key, $b)) {
+        foreach ($a as $key => $value)
+        {
+            if (array_key_exists($key, $b))
+            {
                 $b[$key] = $value + $b[$key];
-            } else {
+            }
+            else
+            {
                 $b[$key] = $value;
             }
         }
@@ -625,12 +677,16 @@ class TrainingsModel extends ListModel
         $sum_data['unpaid'] += $year_data['unpaid'];
         $sum_data['unpaid_sum'] += $year_data['unpaid_sum'];
 
-        foreach ($year_data['types'] as $type => $value) {
-            if (isset($sum_data['types'][$type])) {
+        foreach ($year_data['types'] as $type => $value)
+        {
+            if (isset($sum_data['types'][$type]))
+            {
                 $sum_data['types'][$type]['trainings'] += $value['trainings'];
                 $sum_data['types'][$type]['trainer'] += $value['trainer'];
                 $sum_data['types'][$type]['assistent'] += $value['assistent'];
-            } else {
+            }
+            else
+            {
                 $sum_data['types'][$type]['trainings'] = $value['trainings'];
                 $sum_data['types'][$type]['trainer'] = $value['trainer'];
                 $sum_data['types'][$type]['assistent'] = $value['assistent'];

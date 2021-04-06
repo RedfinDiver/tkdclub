@@ -9,15 +9,15 @@ namespace Redfindiver\Component\Tkdclub\Administrator\View\Training;
 
 \defined('_JEXEC') or die;
 
-use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Toolbar\ToolbarHelper;
-use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Helper\ContentHelper;
+use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 
 /**
- * View to edit a training
+ * View to edit a training.
  * 
  */
 class HtmlView extends BaseHtmlView
@@ -26,7 +26,7 @@ class HtmlView extends BaseHtmlView
 	 * The Form object
 	 *
 	 * @var    Form
-	 * @since  1.5
+	 * 
 	 */
     protected $form;
 
@@ -34,7 +34,7 @@ class HtmlView extends BaseHtmlView
 	 * The active item
 	 *
 	 * @var    object
-	 * @since  1.5
+     * 
 	 */
     protected $item;
 
@@ -44,8 +44,6 @@ class HtmlView extends BaseHtmlView
 	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
 	 *
 	 * @return  void
-	 *
-	 * @since   1.5
 	 *
 	 * @throws  Exception
 	 */
@@ -63,7 +61,6 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @return  void
 	 *
-	 * @since   1.6
 	 * @throws  Exception
 	 */
     protected function addToolbar()
@@ -88,7 +85,8 @@ class HtmlView extends BaseHtmlView
 
         ToolBarHelper::save('training.save', 'JTOOLBAR_SAVE');
 
-        if ($canDo->get('core.create')) {
+        if ($canDo->get('core.create'))
+        {
             ToolBarHelper::save2new('training.save2new');
         }
 

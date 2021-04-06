@@ -9,20 +9,17 @@ namespace Redfindiver\Component\Tkdclub\Administrator\Model;
 
 defined('_JEXEC') or die;
 
-use Joomla\Database\ParameterType;
-use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\MVC\Model\AdminModel;
-use Joomla\CMS\Table\Table;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Table\Table;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
-use Joomla\Registry\Registry;
-use Joomla\Utilities\ArrayHelper;
-use stdClass;
+use Joomla\Database\ParameterType;
+use Joomla\CMS\MVC\Model\AdminModel;
+use Joomla\CMS\Component\ComponentHelper;
 
 /**
- * Model-class for edit view 'member'
+ * Model-class for edit view member.
  *
  */
 class MemberModel extends AdminModel
@@ -44,6 +41,16 @@ class MemberModel extends AdminModel
         return parent::getTable($type, $prefix, $config);
     }
 
+    /**
+	 * Method to get the record form.
+	 *
+	 * @param   array    $data      Data for the form.
+	 * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
+	 *
+	 * @return  Form|boolean  A Form object on success, false on failure
+	 *
+	 * @since   1.6
+	 */
     public function getForm($data = array(), $loadData = true)
     {   
         $options = array('control' => 'jform', 'load_data' => $loadData);
@@ -56,7 +63,14 @@ class MemberModel extends AdminModel
         
         return $form;
     }
-        
+
+    /**
+	 * Method to get the data that should be injected in the form.
+	 *
+	 * @return  mixed  The data for the form.
+	 *
+	 * @since   1.6
+	 */
     protected function loadFormData()
     {
         $app =  Factory::getApplication();
@@ -71,9 +85,6 @@ class MemberModel extends AdminModel
 
     /**
 	 * Method to upload a file to attachments folder
-     * 
-     * @param   boolean    $picture false for ordinary attachment file
-     *                     $picture true for member picture upload
 	 *
 	 * @return  boolean    TRUE on success, FALSE on fail
 	 */
@@ -87,33 +98,33 @@ class MemberModel extends AdminModel
         $possible_file_extensions =  ['pdf', 'png', 'jpg', 'jpeg'];
         $upload_path = ComponentHelper::getParams('com_tkdclub')->get('attachments_path', JPATH_SITE . '/images/com_tkdclub/attachments/');
 
-        // just processing the file if there is no error with it
+        // Just processing the file if there is no error with it
         if ($file['error'] != 0)
         {
             $app->enqueueMessage(Text::_('COM_TKDCLUB_MEMBER_FILEUPLOAD_FAILED'), 'error');
             return false;
         }
         
-        // get the filename file-extension
+        // Get the filename file-extension
         $filename = $file['name'];
         $ext = File::getExt($filename);
         $file_size = $file['size'];
         
-        // only certain files are allowed, give error otherwise
+        // Only certain files are allowed, give error otherwise
         if (!in_array($ext, $possible_file_extensions))
         {
             $app->enqueueMessage(Text::_('COM_TKDCLUB_MEMBER_FILEUPLOAD_ONLY_CERTAIN_EXT'), 'error');
             return false;
         }
 
-        // only files <500 kB are allowed
+        // Only files <500 kB are allowed
         if ($file_size > 500000)
         {
             $app->enqueueMessage(Text::_('COM_TKDCLUB_MEMBER_FILEUPLOAD_FILESZIZE'), 'error');
             return false;
         }       
 
-        // check the upload path for .htaccess file
+        // Check the upload path for .htaccess file
         $upload_path = rtrim($upload_path, '/') . '/'; // make sure we have a trailing /
         if (!File::exists($upload_path .'.htaccess'))
         {
@@ -130,7 +141,7 @@ class MemberModel extends AdminModel
 
         $dest = $upload_path . $file_hash;
 
-        // check for already existing files with same hash, not likely but can be...
+        // Check for already existing files with same hash, not likely but can be...
         in_array($file_hash, Folder::files($upload_path)) ? $file_existed = true : $file_existed = false;
 
         // Upload the file, create messages
@@ -150,17 +161,18 @@ class MemberModel extends AdminModel
         }
 
         $app->enqueueMessage(Text::_('COM_TKDCLUB_MEMBER_FILE_OVERWRITE') . $filename, 'notice');
+        
         return true;
     }
     
     /**
-	 * Method to get the already existing files in an array from folder structure
-     * Used also in 'member' - view
+	 * Method to get the path and original filename for already existing files
+     * stored in the database field attachments
      * 
      * @param   INT     $member_id      member id in database
      * 
-	 * @return  mixed    FALSE  if there is no data
-     *                   OBJECT json-object
+	 * @return  mixed   FALSE  if there is no data
+     *                  OBJECT json-object
 	 */
     public function getAttachments($member_id)
     {   
@@ -181,7 +193,6 @@ class MemberModel extends AdminModel
         }
 
         return json_decode($result, true);
-        
     }
 
     /**
@@ -278,7 +289,7 @@ class MemberModel extends AdminModel
     /**
 	 * Method to get all medals for a member
 	 *
-	 * @return  object           medals for the member
+	 * @return  object  medals for the member
      *
 	 */
     public function getMedals()
@@ -290,7 +301,10 @@ class MemberModel extends AdminModel
 
         $query->select('*')
                 ->from('#__tkdclub_medals')
-                ->where('winner_ids REGEXP \'' . '[[:<:]]' . (int) $id_win . '[[:>:]]\'')
+                ->where($db->quoteName('winner_1') . ' = :winner_1', 'OR')
+                ->where($db->quoteName('winner_2') . ' = :winner_2', 'OR')
+                ->where($db->quoteName('winner_3') . ' = :winner_3', 'OR')
+                ->bind([':winner_1', ':winner_2', ':winner_3'], $id_win, ParameterType::INTEGER)
                 ->order('date DESC');
 
         $db->setQuery($query);

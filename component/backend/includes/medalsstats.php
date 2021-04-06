@@ -21,7 +21,7 @@ $bronce = isset($this->medaldata['placings']['3']) ? $this->medaldata['placings'
                 <div class="card-body">
                     <span class="fas fa-medal fa-3x gold"></span>
                     <h5 class="card-title mt-2"><?php echo Text::_('COM_TKDCLUB_MEDAL_GOLD') ?></h5>
-                    <div><?php echo $this->medaldata['placings'][1]; ?></div>
+                    <div><?php echo $gold; ?></div>
                 </div>
             </div>
         </div>
@@ -30,7 +30,7 @@ $bronce = isset($this->medaldata['placings']['3']) ? $this->medaldata['placings'
                 <div class="card-body">
                     <span class="fas fa-medal fa-3x silver"></span>
                     <h5 class="card-title mt-2"><?php echo Text::_('COM_TKDCLUB_MEDAL_SILVER') ?></h5>
-                    <div><?php echo $this->medaldata['placings'][2] ?></div>
+                    <div><?php echo $silver ?></div>
                 </div>
             </div>
         </div>
@@ -39,7 +39,7 @@ $bronce = isset($this->medaldata['placings']['3']) ? $this->medaldata['placings'
                 <div class="card-body">
                     <span class="fas fa-medal fa-3x bronce"></span>
                     <h5 class="card-title mt-2"><?php echo Text::_('COM_TKDCLUB_MEDAL_BRONCE') ?></h5>
-                    <div><?php echo $this->medaldata['placings'][3] ?></div>
+                    <div><?php echo $bronce ?></div>
                 </div>
             </div>
         </div>

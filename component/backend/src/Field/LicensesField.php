@@ -16,18 +16,27 @@ use Joomla\CMS\Component\ComponentHelper;
 use Redfindiver\Component\Tkdclub\Administrator\Helper\TkdclubHelper;
 
 /**
- * Supports the options-markup from parameters
+ * Field for licenses
  *
  */
 class LicensesField extends ListField
 {
     /**
      * The form field type.
+     * 
      */
     protected $type = 'Licenses';
 
     /**
-     * Method to get the field input markup.
+     * Method to get the field input markup for licenses field.
+     * 
+     * The field is designed to provide always the 10 most common licenses in taekwondo:
+     *  - Trainer (A / B / C / D)
+     *  - Referee for Poomsae and Kyorugi (region / federal / international)
+     * 
+     * These 10 licenses are translated in female/male strings.
+     * 
+     * By adding other licenses in the component configuration more licenses can be added.
      *
      * @return  string	The field input markup.
      *

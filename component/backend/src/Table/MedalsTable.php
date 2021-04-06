@@ -13,7 +13,7 @@ use Joomla\CMS\Table\Table;
 use Joomla\CMS\Factory;
 
 /**
- * medals table class
+ * Medals table class
  */
 class MedalsTable extends Table
 {
@@ -24,14 +24,6 @@ class MedalsTable extends Table
 	 * @since  4.0.0
 	 */
 	protected $_supportNullValue = true;
-
-	/**
-	 * Ensure the params and metadata in json encoded in the bind method
-	 *
-	 * @var    array
-	 * @since  3.3
-	 */
-	protected $_jsonEncode = array('winner_ids');
 
     /**
 	 * Constructor

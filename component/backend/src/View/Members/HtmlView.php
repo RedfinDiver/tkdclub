@@ -19,33 +19,84 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 /**
  * View class for a list of members.
  *
- * @since  1.0
  */
 class HtmlView extends BaseHtmlView
 {
+    /**
+	 * An array of items
+	 *
+	 * @var  array
+	 */
     protected $items;
+
+    /**
+	 * The pagination object
+	 *
+	 * @var  \JPagination
+	 */
     protected $pagination;
+
+    /**
+	 * The model state
+	 *
+	 * @var  \JObject
+	 */
     protected $state;
+
+    /**
+	 * Number of all visible rows in view
+	 *
+	 * @var  integer
+	 */
     protected $total;
 
-    //allrows in the database
+    /**
+	 * Number of all rows in table
+	 *
+	 * @var  integer
+	 */
+
+    /**
+	 * Number of all rows in table
+	 *
+	 * @var  integer
+	 */
     protected $allrows;
 
     /**
-     * displays the view
-     */
+	 * Form object for search filters
+	 *
+	 * @var  \JForm
+	 */
+	public $filterForm;
+
+	/**
+	 * The active search filters
+	 *
+	 * @var  array
+	 */
+	public $activeFilters;
+
+    /**
+	 * Display the view
+	 *
+	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+	 *
+	 * @return  mixed  A string if successful, otherwise an Error object.
+	 */
     public function display($tpl = null)
     {
-        $this->items = $this->get('Items');
-        $this->state = $this->get('State');
-        $this->pagination = $this->get('Pagination');
+        $this->items         = $this->get('Items');
+        $this->state         = $this->get('State');
+        $this->pagination    = $this->get('Pagination');
         $this->filterForm    = $this->get('FilterForm');
         $this->activeFilters = $this->get('ActiveFilters');
-        $this->total = $this->get('Total');
-        $this->allrows = $this->get('Allrows');
-        $this->togglestats = Factory::getSession()->get('togglestats_members', null, 'tkdclub');
+        $this->total         = $this->get('Total');
+        $this->allrows       = $this->get('Allrows');
+        $this->togglestats   = Factory::getSession()->get('togglestats_members', null, 'tkdclub');
 
-        if ($this->togglestats) {
+        if ($this->togglestats)
+        {
             $this->memberdata = $this->get('Memberdata');
         }
 
@@ -54,17 +105,20 @@ class HtmlView extends BaseHtmlView
     }
 
     /**
-     * Add the page title and toolbar.
-     */
+	 * Add the page title and toolbar.
+	 *
+	 * @return  void
+	 *
+	 */
     protected function addToolbar()
     {
         $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
-
         ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_MEMBER_ADMIN_VIEW'), 'tkdclub tkdclub-logo-v-sw');
 
         $canDo = ContentHelper::getActions('com_tkdclub');
 
-        if ($canDo->get('core.create')) {
+        if ($canDo->get('core.create'))
+        {
             ToolBarHelper::addNew('member.add', 'JTOOLBAR_NEW');
         }
 
@@ -91,12 +145,5 @@ class HtmlView extends BaseHtmlView
 
         $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/mitglieder.html';
         ToolbarHelper::help('', false, $help_url);
-    }
-
-    protected function getSortFields()
-    {
-        return array(
-            'member_id' => Text::_('COM_TKDCLUB_MEMBER_ID'),
-        );
     }
 }

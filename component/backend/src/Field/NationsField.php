@@ -15,9 +15,8 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Redfindiver\Component\Tkdclub\Administrator\Helper\TkdclubHelper;
 
 /**
- * Supports the options-markup from parameters
+ * Field for nations
  *
- * @since  1.0
  */
 class NationsField extends ListField
 {
@@ -25,16 +24,20 @@ class NationsField extends ListField
      * The form field type.
      *
      * @var		string
-     * @since   1.0
+     * 
      */
     protected $type = 'Nations';
 
     /**
-     * Method to get the field input markup.
+     * Method to get the field input markup for nations field.
+     * 
+     * The field is designed to provide always the 7 most common nations (at least for our geographical enviroment ;-) :
+     *  AUT,GER,SUI,ITA,CRO,BIH,SRB
+     * 
+     * By adding other nations in the component configuration more nations can be added.
      *
      * @return  string	The field input markup.
      *
-     * @since   1.0
      */
     public function getOptions()
     {

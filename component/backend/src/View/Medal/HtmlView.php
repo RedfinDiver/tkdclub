@@ -26,7 +26,7 @@ class HtmlView extends BaseHtmlView
 	 * The Form object
 	 *
 	 * @var    Form
-	 * @since  1.5
+	 * 
 	 */
     protected $form;
 
@@ -34,7 +34,7 @@ class HtmlView extends BaseHtmlView
 	 * The active item
 	 *
 	 * @var    object
-	 * @since  1.5
+	 * 
 	 */
     protected $item;
 
@@ -45,9 +45,6 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @return  void
 	 *
-	 * @since   1.5
-	 *
-	 * @throws  Exception
 	 */
     public function display($tpl = null)
     {
@@ -58,6 +55,13 @@ class HtmlView extends BaseHtmlView
         parent::display($tpl);
     }
 
+    /**
+	 * Add the page title and toolbar.
+	 *
+	 * @return  void
+	 *
+	 * @throws  Exception
+	 */
     protected function addToolbar()
     {
         // No menu in edit view

@@ -9,15 +9,15 @@ namespace Redfindiver\Component\Tkdclub\Administrator\View\Member;
 
 \defined('_JEXEC') or die;
 
-use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Toolbar\ToolbarHelper;
-use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Helper\ContentHelper;
+use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 
 /**
- * View to edit a member
+ * View to edit a member.
  *
  */
 class HtmlView extends BaseHtmlView
@@ -34,12 +34,15 @@ class HtmlView extends BaseHtmlView
 	 * The active item
 	 *
 	 * @var    object
-	 * @since  1.5
+	 * 
 	 */
     protected $item;
 
-    protected $attachments;
-    protected $memberpicture;
+     /**
+	 * The medals for the member
+	 *
+	 * @var    array
+	 */
     protected $medals;
 
     /**
@@ -49,14 +52,12 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @return  void
 	 *
-	 * @since   1.5
-	 *
 	 * @throws  Exception
 	 */
     public function display($tpl = null)
     {
-        $this->form = $this->get('Form');
-        $this->item = $this->get('Item');
+        $this->form   = $this->get('Form');
+        $this->item   = $this->get('Item');
         $this->medals = $this->get('Medals');
 
         $this->addToolbar();
@@ -68,7 +69,6 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @return  void
 	 *
-	 * @since   1.6
 	 * @throws  Exception
 	 */
     protected function addToolbar()

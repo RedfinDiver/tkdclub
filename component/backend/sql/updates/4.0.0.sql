@@ -61,10 +61,14 @@ ALTER TABLE `#__tkdclub_trainings`
     CHANGE `notes` `notes` text;
 
 ALTER TABLE `#__tkdclub_medals`
+    ADD `winner_1` int(11) NOT NULL AFTER `placing`,
+    ADD `winner_2` int(11) DEFAULT NULL AFTER `winner_1`,
+    ADD `winner_3` int(11) DEFAULT NULL AFTER `winner_2`,
     CHANGE `checked_out_time` `checked_out_time` datetime DEFAULT NULL,
     CHANGE `checked_out` `checked_out` int(10) UNSIGNED DEFAULT NULL,
     CHANGE `modified_by` `modified_by` int(10) UNSIGNED NOT NULL DEFAULT '0',
     CHANGE `modified` `modified` datetime DEFAULT NULL,
     CHANGE `created_by` `created_by` int(10) UNSIGNED NOT NULL DEFAULT '0',
     CHANGE `created`  `created` datetime DEFAULT NULL,
-    CHANGE `notes` `notes` text;
+    CHANGE `notes` `notes` text,
+    DROP `winner_ids`;

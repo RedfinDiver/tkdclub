@@ -13,10 +13,18 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\AdminModel;
 
 /**
- * Model-class for edit view 'training'
+ * Model-class for edit view training.
  */
 class TrainingModel extends AdminModel
 {
+    /**
+	 * How many rows were updated on execution of paytraining method
+     * Used for controller messages
+	 *
+	 * @var  integer
+	 */
+    public $updated_rows = 0;
+
     /**
 	 * Method to get a table object, load it if necessary.
 	 *
@@ -34,6 +42,16 @@ class TrainingModel extends AdminModel
         return  parent::getTable($type, $prefix, $config);
     }
 
+    /**
+	 * Method to get the record form.
+	 *
+	 * @param   array    $data      Data for the form.
+	 * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not.
+	 *
+	 * @return  Form|boolean  A Form object on success, false on failure
+	 *
+	 * @since   1.6
+	 */
     public function getForm($data = array(), $loadData = true)
     {   
         $options = array('control' => 'jform', 'load_data' => $loadData);
@@ -47,6 +65,13 @@ class TrainingModel extends AdminModel
         return $form;
     }
 
+    /**
+	 * Method to get the data that should be injected in the form.
+	 *
+	 * @return  mixed  The data for the form.
+	 *
+	 * @since   1.6
+	 */
     protected function loadFormData()
     {
         $app =  Factory::getApplication();
@@ -76,6 +101,7 @@ class TrainingModel extends AdminModel
         /**
          * Create array for query parameters
          * Each array has the form ['field_to_update', 'field_condition_1', 'field_condition_2']
+         * 
          */
         $parameters = array(
             array('trainer_paid', 'trainer_paid', 'trainer'),
@@ -99,19 +125,20 @@ class TrainingModel extends AdminModel
             // Conditions for which records should be updated.
             $conditions = array(
                 $db->quoteName($parameter[1]) . ' = 0',
-                $db->quoteName($parameter[2]) . ' = ' . $member_id
+                $db->quoteName($parameter[2]) . ' = ' . (int) $member_id
             );
 
             $query->update($db->quoteName('#__tkdclub_trainings'))->set($fields)->where($conditions);
             $db->setQuery($query);
 
             $result = $db->execute();
-            $this->updated_rows += $db->getAffectedRows();
             
             if ($result === false)
             {
                 return $result;
             }
+
+            $this->updated_rows += $db->getAffectedRows();
         }
         
         return true;

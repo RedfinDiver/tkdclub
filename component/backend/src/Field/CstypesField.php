@@ -10,14 +10,15 @@ namespace Redfindiver\Component\Tkdclub\Administrator\Field;
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Form\Field\ListField;
-use Redfindiver\Component\Tkdclub\Administrator\Helper\TkdclubHelper;
 use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Language\Text;
+use Redfindiver\Component\Tkdclub\Administrator\Helper\TkdclubHelper;
 
 /**
- * Supports the options-markup from component parameter
+ * Field for championship types
+ * 
  */
 class CstypesField extends Listfield
 {
@@ -27,14 +28,28 @@ class CstypesField extends Listfield
     protected $type = 'Cstypes';
 
     /**
-     * Method to get the field input markup for field 'championshiptypes'
+     * Method to get the field input markup for field championshiptypes.
+     * 
+     * The field can be used in 2 different ways:
+     *  1) As filter field - in xml markup use isFilter="true", input then is generated from database items.
+     *  2) As input field in edit form, no extra markup in xml, input then is generated from component parameters.
+     * 
+     * The field is designed to provide always the 2 most common types for championships:
+     *  1) Kyorugi (Full-contact fighting)
+     *  2) Poomsae (Shadow fighting)
+     * 
+     * By adding other types in the component configuration more types can be added.
+     * 
+     * @return  string	The field input markup.
+     * 
      */
     public function getOptions()
     {
         $options = array();
 
-        // check if field is used as filter, then get options from the database entries
-        if ($this->element['isFilter'] == 'true') {
+        // Check if field is used as filter, then get options from the database entries
+        if ($this->element['isFilter'] == 'true')
+        {
             $db = Factory::getDbo();
             $query = $db->getQuery(true);
             $query->select('DISTINCT(type)');
@@ -48,7 +63,8 @@ class CstypesField extends Listfield
                     $options[] = HTMLHelper::_('select.option', $type, $type);
                 }
             }
-        } else // not used as filter field, so get the options from the parameter
+        }
+        else // Not used as filter field, so get the options from the parameter
         {
             $types = TkdclubHelper::getList(ComponentHelper::getParams('com_tkdclub')->get('championship_types'));
 

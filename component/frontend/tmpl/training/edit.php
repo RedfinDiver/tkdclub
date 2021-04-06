@@ -22,7 +22,8 @@ $wa->useScript('keepalive')
 
 $this->tab_name = 'com-tkdclub-form';
 
-$params = $this->state->get('parameters.menu')
+$menuItem = Factory::getApplication()->getMenu()->getActive();
+$params = $menuItem->getParams();
 ?>
 
 <div class="edit item-page">
@@ -77,7 +78,7 @@ $params = $this->state->get('parameters.menu')
 			<?php echo HTMLHelper::_('uitab.endTabSet'); ?>
 
 			<input type="hidden" name="task" value="">
-			<input type="hidden" name="return" value="<?php echo $this->return_page; ?>">
+			<input type="hidden" name="return" value="<?php echo $menuItem->id ?>">
 			<?php echo HTMLHelper::_('form.token'); ?>
 		</fieldset>
 		<div class="mb-2">

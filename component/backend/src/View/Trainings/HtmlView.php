@@ -9,39 +9,117 @@ namespace Redfindiver\Component\Tkdclub\Administrator\View\Trainings;
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Toolbar\ToolbarHelper;
-use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Helper\ContentHelper;
+use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 
 /**
- * view-class for view: trainings
+ * View class for a list of trainings.
+ *
  */
 class HtmlView extends BaseHtmlView
 {
+    /**
+	 * An array of items
+	 *
+	 * @var  array
+	 */
     protected $items;
-    protected $pagination;
-    protected $state;
-    protected $total;
-    protected $trainerdata;
-    protected $trainingsdata;
-    public    $togglestats;
 
+    /**
+	 * The pagination object
+	 *
+	 * @var  \JPagination
+	 */
+    protected $pagination;
+
+    /**
+	 * The model state
+	 *
+	 * @var  \JObject
+	 */
+    protected $state;
+
+    /**
+	 * Number of all visible rows in view
+	 *
+	 * @var  integer
+	 */
+    protected $total;
+
+    /**
+	 * Number of all rows in table
+	 *
+	 * @var  integer
+	 */
+    protected $allrows;
+
+    /**
+	 * Form object for search filters
+	 *
+	 * @var  \JForm
+	 */
+	public $filterForm;
+
+	/**
+	 * The active search filters
+	 *
+	 * @var  array
+	 */
+	public $activeFilters;
+
+    /**
+	 * Data for trainers
+	 *
+	 * @var  object
+	 */
+    protected $trainerdata;
+
+    /**
+	 * Data of all trainings
+	 *
+	 * @var  object
+	 */
+    protected $trainingsdata;
+
+    /**
+	 * Toggle to switch on/off statistics
+	 *
+	 * @var  integer
+	 */
+    public $togglestats;
+
+    /**
+	 * Salary parameters properly set in configuration
+	 *
+	 * @var  bool
+	 */
+    public $salaryparams;
+
+    /**
+	 * Display the view
+	 *
+	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+	 *
+	 * @return  mixed  A string if successful, otherwise an Error object.
+	 */
     public function display($tpl = null)
     {
-        $this->items = $this->get('Items');
-        $this->pagination = $this->get('Pagination');
-        $this->state = $this->get('State');
-        $this->filterForm = $this->get('FilterForm');
+        $this->items         = $this->get('Items');
+        $this->pagination    = $this->get('Pagination');
+        $this->state         = $this->get('State');
+        $this->total         = $this->get('Total');
+        $this->allrows       = $this->get('Allrows');
+        $this->filterForm    = $this->get('FilterForm');
         $this->activeFilters = $this->get('ActiveFilters');
-        $this->total = $this->get('Total');
-        $this->allrows = $this->get('Allrows');
-        $this->togglestats = Factory::getSession()->get('togglestats_trainings', null, 'tkdclub');
-        $this->salaryparams = $this->get('Salaryparams');
+        $this->togglestats   = Factory::getSession()->get('togglestats_trainings', null, 'tkdclub');
+        $this->salaryparams  = $this->get('Salaryparams');
 
-        if ($this->togglestats) {
+        if ($this->togglestats)
+        {
             $this->trainerdata = $this->get('Trainerdata');
             $this->trainingsdata = $this->get('Trainingsdata');
         }
@@ -55,8 +133,11 @@ class HtmlView extends BaseHtmlView
     }
 
     /**
-     * Add the page title and toolbar.
-     */
+	 * Add the page title and toolbar.
+	 *
+	 * @return  void
+	 *
+	 */
     protected function addToolbar()
     {
         $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
@@ -81,7 +162,9 @@ class HtmlView extends BaseHtmlView
 
         if ($this->togglestats) {
             ToolBarHelper::custom('trainings.togglestats', 'eye-close', 'eye-close', 'COM_TKDCLUB_BUTTON_STATS', false);
-        } else {
+        }
+        else
+        {
             ToolBarHelper::custom('trainings.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);
         }
 
@@ -95,12 +178,5 @@ class HtmlView extends BaseHtmlView
 
         $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/trainings.html';
         ToolbarHelper::help('', false, $help_url);
-    }
-
-    protected function getSortFields()
-    {
-        return array(
-            'date' => Text::_('COM_TKDCLUB_TRAINING_DATE'),
-        );
     }
 }

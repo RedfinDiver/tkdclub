@@ -30,7 +30,7 @@ class MedalController extends FormController
     {
         $result = parent::cancel($key);
         
-        // clean the session state and go to homepage
+        // Clean the session state and go to homepage
         $context = "$this->option.edit.$this->context";
         $app = Factory::getApplication();
         $app->setUserState($context . '.data', null);

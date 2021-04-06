@@ -9,15 +9,15 @@ namespace Redfindiver\Component\Tkdclub\Administrator\Model;
 
 \defined('_JEXEC') or die;
 
-use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\Database\ParameterType;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\Database\ParameterType;
+use Joomla\CMS\MVC\Model\ListModel;
 use Redfindiver\Component\Tkdclub\Administrator\Helper\TkdclubHelper;
 
 /**
- * Model-class for list view 'medals'
+ * Model-class for list view medals.
  */
 class MedalsModel extends ListModel
 {       
@@ -26,8 +26,8 @@ class MedalsModel extends ListModel
 	 *
 	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
-	 * @see     JModelLegacy
-     * 
+	 * @since   1.6
+	 * @see     \Joomla\CMS\MVC\Controller\BaseController
 	 */
     public function __construct($config = array())
     {
@@ -65,7 +65,7 @@ class MedalsModel extends ListModel
         $placing = $this->getUserStateFromRequest($this->context.'.filter.placing', 'filter_placing', '', 'integer');
         $this->setState('filter.placing', $placing);
 
-        $winner = $this->getUserStateFromRequest($this->context.'.filter.winner', 'filter_winner', '', 'integer');
+        $winner = $this->getUserStateFromRequest($this->context.'.filter.winner', 'filter_winner', '', 'array');
         $this->setState('filter.winner', $winner);
 
         $medalyear = $this->getUserStateFromRequest($this->context.'.filter.medalyear', 'filter_medalyear', '', 'integer');
@@ -105,9 +105,9 @@ class MedalsModel extends ListModel
     }
 
     /**
-	 * Method to get a JDatabaseQuery object for retrieving the data set from a database.
+	 * Build an SQL query to load the list data.
 	 *
-	 * @return  JDatabaseQuery   A JDatabaseQuery object to retrieve the data set.
+	 * @return  \Joomla\Database\DatabaseQuery
 	 *
 	 */
     protected function getListQuery()
@@ -136,9 +136,10 @@ class MedalsModel extends ListModel
         $winner = $this->getState('filter.winner');
         if (is_numeric($winner))
         {
-            $regex = "[[:<:]]" . (int)$winner . "[[:>:]]";
-            $query->where($db->quoteName('winner_ids') . ' REGEXP ' . ':winner')
-                ->bind(':winner', $regex);
+            $query->where($db->quoteName('winner_1') . ' = :winner1', 'OR')
+                    ->where($db->quoteName('winner_2') . ' = :winner2', 'OR')
+                    ->where($db->quoteName('winner_3') . ' = :winner3', 'OR')
+                    ->bind([':winner1', ':winner2', ':winner3'], $winner, ParameterType::INTEGER);
         }
 
         // Filter by year
@@ -203,9 +204,11 @@ class MedalsModel extends ListModel
     }
          
     /**
+     * Method to get the number of Medals for a place
      * 
-     * @param type integer $placing, 1 for first-place....
-     * @return type integer number of medals in selected place
+     * @param   type integer $placing, 1 for first-place....
+     * 
+     * @return  type integer number of medals in selected place
      * 
      * @since   1.0
      */
@@ -215,7 +218,7 @@ class MedalsModel extends ListModel
         $query = $db->getQuery(true);
         $query->select('COUNT(*)')
             ->from($db->quoteName('#__tkdclub_medals'))
-            ->where('placing = :placing')
+            ->where($db->quoteName('placing') . ' = :placing')
             ->bind(':placing', $placing, ParameterType::INTEGER);
 
         $db->setQuery($query);

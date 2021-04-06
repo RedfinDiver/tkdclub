@@ -19,7 +19,8 @@ use Redfindiver\Component\Tkdclub\Administrator\Helper\TkdclubHelper;
 use Joomla\CMS\Toolbar\Toolbar;
 
 /**
- * view-class for list view medals
+ * View class for a list of medals.
+ *
  */
 class HtmlView extends BaseHtmlView
 {
@@ -73,6 +74,21 @@ class HtmlView extends BaseHtmlView
     protected $medaldata;
 
     /**
+	 * Form object for search filters
+	 *
+	 * @var  \JForm
+	 */
+	public $filterForm;
+
+
+	/**
+	 * The active search filters
+	 *
+	 * @var  array
+	 */
+	public $activeFilters;
+
+    /**
 	 * Display the view
 	 *
 	 * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
@@ -89,8 +105,7 @@ class HtmlView extends BaseHtmlView
         $this->total         = $this->get('Total');
         $this->allrows       = $this->get('Allrows');
         $this->memberlist    = TkdclubHelper::getMemberlist();
-
-        $this->togglestats = Factory::getSession()->get('togglestats_medals', null, 'tkdclub');
+        $this->togglestats   = Factory::getSession()->get('togglestats_medals', null, 'tkdclub');
 
         if ($this->togglestats)
         {
@@ -101,13 +116,19 @@ class HtmlView extends BaseHtmlView
         parent::display($tpl);
     }
 
+    /**
+	 * Add the page title and toolbar.
+	 *
+	 * @return  void
+     * 
+	 */
     protected function addToolbar()
     {
-        $canDo = ContentHelper::getActions('com_tkdclub');
         $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
-        $toolbar = Toolbar::getInstance('toolbar');
-
         ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_MEDAL_ADMIN_VIEW'), 'tkdclub tkdclub-logo-v-sw');
+
+        $canDo = ContentHelper::getActions('com_tkdclub');
+        $toolbar = Toolbar::getInstance('toolbar');
 
         if ($canDo->get('core.create'))
         {
@@ -160,12 +181,5 @@ class HtmlView extends BaseHtmlView
 
         $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/erfolge.html';
         ToolbarHelper::help('', false, $help_url);
-    }
-
-    protected function getSortFields()
-    {
-        return array(
-            'date' => Text::_('COM_TKDCLUB_MEDAL_DATEWIN'),
-        );
     }
 }

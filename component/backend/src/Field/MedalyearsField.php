@@ -14,8 +14,8 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Form\Field\ListField;
 
 /**
- * Supports the options-markup for medal years
- * used in backend and frontent
+ * Field for medal years
+ * 
  */
 class MedalyearsField extends ListField
 {
@@ -25,7 +25,9 @@ class MedalyearsField extends ListField
     protected $type = 'Medalyears';
     
     /**
-     * Method to get the field input markup.
+     * Method to get the field input markup for medalyears field.
+     * 
+     * Returns all years in which a medal is in the database.
      *
      * @return  string	The field input markup.
      *
@@ -49,7 +51,7 @@ class MedalyearsField extends ListField
             $options[] = HTMLHelper::_('select.option', $year, $year);
         }
         
-        if ($this->form) //checking if we are in a form, then merge additional xml data
+        if ($this->form) // Checking if we are in a form, then merge additional xml data
         {
             $options = array_merge(parent::getOptions(), $options); 
         }

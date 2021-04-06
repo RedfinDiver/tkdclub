@@ -23,7 +23,6 @@ $this->tab_name = 'com-tkdclub-form';
 
 $menuItem = Factory::getApplication()->getMenu()->getActive();
 $params = $menuItem->getParams();
-$tst = 1;
 ?>
 
 <div class="edit itempage">

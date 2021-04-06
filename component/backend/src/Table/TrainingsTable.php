@@ -7,6 +7,8 @@
 
 namespace Redfindiver\Component\Tkdclub\Administrator\Table;
 
+\defined('_JEXEC') or die;
+
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Factory;
 
@@ -65,7 +67,7 @@ class TrainingsTable extends Table
             $this->created_by = $userId;
         }
 
-        // taking care of null values
+        // Taking care of null values
 		empty($this->assist1) ? $this->assist1 = null : null;
         empty($this->km_assist1) ? $this->km_assist1 = null : null;
 		empty($this->assist2) ? $this->assist2 = null : null;

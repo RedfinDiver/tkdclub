@@ -91,7 +91,8 @@ $params = $this->state->get('parameters.menu')
                 <td><?php echo $this->escape($item->type); ?></td>
                 <td><?php echo $this->escape($item->class); ?></td>
                 <td class="text-center"><?php echo $this->escape($item->placing); ?></td>
-                <td><?php echo TkdclubHelper::getMembersNames($item->winner_ids, $this->memberlist); ?></td>             
+                <?php $winner_ids = array($item->winner_1, $item->winner_2, $item->winner_3) ?>
+                <td><?php echo TkdclubHelper::getMembersNames($winner_ids, $this->memberlist); ?></td>             
             </tr>
             <?php endif; ?>
         <?php endforeach; ?>

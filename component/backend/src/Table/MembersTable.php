@@ -64,13 +64,6 @@ class MembersTable extends Table
 
 		$this->modified = $date;
 
-		// taking care of null values
-		empty($this->memberpass) ? $this->memberpass = null : null;
-		empty($this->lastpromotion) ? $this->lastpromotion = null : null;
-		empty($this->leave) ? $this->leave = null : null;
-		empty($this->created) ? $this->created = null : null;
-
-
 		if ($this->member_id)
 		{
 			// Existing item
@@ -78,7 +71,7 @@ class MembersTable extends Table
 		}
 		elseif(!$this->member_id && $this->created_by)
 		{
-			// new item from member registration
+			// New item from member registration
 			$this->created = $date;
 		}
 		else
@@ -88,6 +81,12 @@ class MembersTable extends Table
 		}
 		
 		$this->iban = str_replace(' ', '', $this->iban);
+
+		// Taking care of null values
+		empty($this->memberpass) ? $this->memberpass = null : null;
+		empty($this->lastpromotion) ? $this->lastpromotion = null : null;
+		empty($this->leave) ? $this->leave = null : null;
+		empty($this->created) ? $this->created = null : null;
         
         return parent::store($updateNulls);
     }

@@ -27,13 +27,25 @@ class TraintypesField extends ListField
     protected $type = 'traintypes';
 
     /**
-     * Method to get the field input markup for field 'traintypes'
+     * Method to get the field input markup for field training types
+     * 
+     * The field can be used in 2 different ways:
+     *  1) As filter field - in xml markup use isFilter="true".
+     *     Input then is generated from the existing trainings table.
+     * 
+     *  2) As input field in edit form, no extra markup in xml.
+     *     Input then is generated from component configuration.
+     * 
+     * By adding other training types in the component configuration more training types can be added.
+     *
+     * @return  string	The field input markup.
+     * 
      */
     public function getOptions()
     {
         $options = array();
 
-        // check if field is used as filter, then get options from the database entries
+        // check if field is used as filter, then get options from the database entries.
         if ($this->element['isFilter'] == 'true') {
             $db = Factory::getDbo();
             $query = $db->getQuery(true);
@@ -42,26 +54,32 @@ class TraintypesField extends ListField
             $query->order('type ASC');
             $db->setQuery($query);
 
-            if ($types = $db->loadColumn()) {
-                foreach ($types as $type) {
-                    // Just rendering existing types, not empty strings
+            if ($types = $db->loadColumn()) 
+            {
+                foreach ($types as $type)
+                {
+                    // Just rendering existing types, not empty strings.
                     $type != '' ? $options[] = HTMLHelper::_('select.option', $type, $type) : null;
                 }
             }
-        } else // not used as filter field, so get the training types from the parameter
+        }
+        else // Not used as filter field, so get the training types from the parameter.
         {
             $types = TkdclubHelper::getList(ComponentHelper::getParams('com_tkdclub')->get('training_types'));
 
             if (!$types) {
                 Factory::getApplication()->enqueueMessage(Text::_('COM_TKDCLUB_TRAINING_NO_TRAINTYPES_DEFINED'), 'warning');
-            } else {
-                foreach ($types as $type) {
+            }
+            else
+            {
+                foreach ($types as $type)
+                {
                     $options[] = HTMLHelper::_('select.option', $type, $type);
                 }
             }
         }
 
-        if ($this->form) // checking if we are in a form, then merge additional xml data
+        if ($this->form) // Checking if we are in a form, then merge additional xml data.
         {
             $options = array_merge(parent::getOptions(), $options);
         }

@@ -16,7 +16,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Redfindiver\Component\Tkdclub\Administrator\Helper\TkdclubHelper;
 
 /**
- * Supports the options-markup from parameters
+ * Field for board member functions
  *
  */
 class FunctionsField extends ListField
@@ -27,11 +27,20 @@ class FunctionsField extends ListField
     protected $type = 'Functions';
 
     /**
-     * Method to get the field input markup.
+     * Method to get the field input markup for functions field.
+     * 
+     * The field is designed to provide always the 4 most common functions of board members in a club:
+     *  1) president
+     *  2) vicepresident
+     *  3) treasurer
+     *  4) secretary
+     * 
+     * These 4 functions are translated in female/male strings.
+     * 
+     * By adding other functions in the component configuration more functions can be added.
      *
      * @return  string	The field input markup.
      *
-     * @since   1.0
      */
     public function getOptions()
     {

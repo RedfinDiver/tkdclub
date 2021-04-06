@@ -28,12 +28,13 @@ class TrainingController extends FormController
      */
     public function cancel($key = null)
     {
-        $app = Factory::getApplication();
+        $result = parent::cancel($key);
+        
+        // Clean the session state and go to homepage
         $context = "$this->option.edit.$this->context";
-        $menu = $app->getMenu()->getActive();
-
-        // clean the session state and go to homepage
+        $app = Factory::getApplication();
         $app->setUserState($context . '.data', null);
+
         $this->setRedirect(Route::_(Uri::base(), false));
     }
 
@@ -56,7 +57,11 @@ class TrainingController extends FormController
         $app = Factory::getApplication(); 
 	    $input = $app->input; 
         $model = $this->getModel('training');
-        $currentUri = Route::_('index.php?option=' . $this->option . '&view=training&layout=edit', false);
+        
+        // Prepare redirect
+        $returnId = $input->getInt('return');
+        $menuItem = $app->getMenu()->getItem($returnId);
+        $redirect = Route::_('index.php?Itemid=' . $menuItem->id);
 
         // Check that this user is allowed to add a new record
 		if (!Factory::getUser()->authorise( "core.create", "com_tkdclub"))
@@ -108,7 +113,7 @@ class TrainingController extends FormController
             $app->setUserState($context . '.data', $data);
 
             // Redirect back to the same screen.
-			$this->setRedirect($currentUri);
+			$this->setRedirect($redirect);
 
             return false;
         }
@@ -127,7 +132,7 @@ class TrainingController extends FormController
 			$this->setError(Text::sprintf('JLIB_APPLICATION_ERROR_SAVE_FAILED', $model->getError()));
 			$this->setMessage($this->getError(), 'error');
 
-			$this->setRedirect($currentUri);
+			$this->setRedirect($redirect);
 
 			return false;
         }
@@ -139,7 +144,7 @@ class TrainingController extends FormController
         $app->setUserState($context . '.data', null);
 
         // Redirect to the edit screen.
-		$this->setRedirect($currentUri, Text::_('COM_TKDCLUB_TRAINING_ADD_SUCCESS'));
+		$this->setRedirect($redirect, Text::_('COM_TKDCLUB_TRAINING_ADD_SUCCESS'));
         
         return true;
 
@@ -169,7 +174,7 @@ class TrainingController extends FormController
         $current_user = Factory::getUser()->get('name');
         $memberlist = TkdclubHelper::getMemberlist();
         
-        $subject = $params->get('club_name', 'TKD Club') . " - ". Text::_('COM_TKDCLUB_TRAINING_ADDED_MEDAL_FRONTEND') . $current_user;
+        $subject = $params->get('club_name', 'TKD Club') . " - " . Text::_('COM_TKDCLUB_TRAINING_ADDED_MEDAL_FRONTEND') . $current_user;
         $nl = "\r\n";
 
         $body  = Text::_('COM_TKDCLUB_TRAINING_ADDED_MEDAL_FRONTEND_BODY') . $nl .$nl;

@@ -14,7 +14,7 @@
                 filter="user_utc"
                 required="true"
             />
-
+            <!-- winner_ids field only used to select the winners, they are stored in separated fields -->
             <field 
                 name="winner_ids"
                 type="members"
@@ -39,6 +39,31 @@
                 <option value="">COM_TKDCLUB_SELECT_PLACING</option>
             </field>
     
+    </fieldset>
+
+    <fieldset>
+            <!-- Here are the winners, up to 3 for team classes, actually stored -->
+            <field
+                name="winner_1"
+                type="text"
+                label="COM_TKDCLUB_ATHLETS"
+                filter="integer"
+            />
+
+            <field
+                name="winner_2"
+                type="text"
+                label="COM_TKDCLUB_ATHLETS"
+                filter="integer"
+            />
+
+            <field
+                name="winner_3"
+                type="text"
+                label="COM_TKDCLUB_ATHLETS"
+                filter="integer"
+            />
+
     </fieldset>
     
     <fieldset name="medal-data">

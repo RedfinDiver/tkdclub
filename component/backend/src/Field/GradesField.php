@@ -14,8 +14,8 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
 
 /**
- * Supports the options-markup for taekwondo-grades
- * used in backend and frontend
+ * Field for Taekwondo grades
+ *
  */
 class GradesField extends ListField
 {       

@@ -13,7 +13,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\AdminModel;
 
 /**
- * Model-class for edit view 'medal'
+ * Model-class for edit view medal.
  *
  * @since  1.0
  */
@@ -90,12 +90,59 @@ class MedalModel extends AdminModel
     */
     public function getItem($pk = null)
     {   
-        // Handling the String for multible field
+        // Handling the winner fields
         $items = parent::getItem($pk);
-        $ids = json_decode($items->get('winner_ids'));
-        $items->set('winner_ids',$ids);
+        
+        $ids = array();
+        
+        !empty($items->get('winner_1')) ? $ids[] = $items->get('winner_1') : '';
+        !empty($items->get('winner_2')) ? $ids[] = $items->get('winner_2') : '';
+        !empty($items->get('winner_3')) ? $ids[] = $items->get('winner_3') : '';
+
+        $items->set('winner_ids', $ids);
+
+        unset($items->winner_1);
+        unset($items->winner_2);
+        unset($items->winner_3);
 
         return $items;
     }
 
+    /**
+	 * Override of the save method.
+     * We have to do this because we store the values of
+     * the 'winner_ids' field separatly in database fields.
+	 *
+	 * @param   array  $data  The form data.
+	 *
+	 * @return  boolean  True on success, False on error.
+	 *
+	 * @since   1.6
+	 */
+	public function save($data)
+	{
+        $winner_ids = $data['winner_ids'];
+
+        $i = 1;
+		foreach ($winner_ids as $id)
+		{
+			if ($id)
+			{
+				$data['winner_' . $i] = (int) $id;
+				$i++;
+			}
+
+			// Only allow up to 3 winners
+			if ($i == 4) break;
+		}
+
+		// Set unused fields to 0, this is important for the bind method to work
+		!isset($data['winner_2']) ? $data['winner_2'] = 0 : '';
+		!isset($data['winner_3']) ? $data['winner_3'] = 0 : '';
+
+        // Unset the now useless field
+        unset($data['winner_ids']);
+
+        return parent::save($data);
+    }
 }

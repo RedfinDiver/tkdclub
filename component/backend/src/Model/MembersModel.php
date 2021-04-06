@@ -9,35 +9,42 @@ namespace Redfindiver\Component\Tkdclub\Administrator\Model;
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\Utilities\ArrayHelper;
+use Joomla\Database\ParameterType;
+use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Component\ComponentHelper;
 use Redfindiver\Component\Tkdclub\Administrator\Helper\TkdclubHelper;
-use Joomla\Database\ParameterType;
-use Joomla\Utilities\ArrayHelper;
 
 /**
- * Model-class for list view 'members'
+ * Model-class for list view members.
  */
 class MembersModel extends ListModel
 {
     /**
-     * helper vars for grade filter
+     * Helper var for grade filter
      */
     public  $student_grades = array(
         '10. Kup', '9. Kup', '8. Kup', '7. Kup', '6. Kup', '5. Kup', '4. Kup', '3. Kup', '2. Kup', '1. Kup'
     );
 
-
+    /**
+     * Helper var for grade filter
+     */
     public $master_grades = array(
         '1. Poom', '2. Poom', '3. Poom',
         '1. Dan', '2. Dan', '3. Dan', '4. Dan', '5. Dan', '6. Dan', '7. Dan', '8. Dan', '9. Dan', '10. Dan'
     );
 
     /**
-     * Constructor
-     */
+	 * Constructor.
+	 *
+	 * @param   array  $config  An optional associative array of configuration settings.
+	 *
+	 * @since   1.6
+	 * @see     \Joomla\CMS\MVC\Controller\BaseController
+	 */
     public function __construct($config = array())
     {
         if (empty($config['filter_fields'])) {
@@ -117,12 +124,11 @@ class MembersModel extends ListModel
     }
 
     /**
-     * Method to get a JDatabaseQuery object for retrieving the data set from a database.
-     *
-     * @return  JDatabaseQuery   A JDatabaseQuery object to retrieve the data set.
-     *
-     * @since   1.0
-     */
+	 * Build an SQL query to load the list data.
+	 *
+	 * @return  \Joomla\Database\DatabaseQuery
+	 *
+	 */
     protected function getListQuery()
     {
         $db = $this->getDbo();
@@ -262,14 +268,14 @@ class MembersModel extends ListModel
      */
     public function getMemberdata($json = false)
     {
-        //getting all data from memberdatabase
+        // Getting all data from memberdatabase
         $data = $this->getData('#__tkdclub_members', 'member_id');
 
         if (empty($data)) {
             return false;
         }
 
-        //initilise some variables
+        // Initilise some variables
         $memberdata = new \stdClass;
         $active = 0;
         $inactive = 0;
@@ -284,13 +290,13 @@ class MembersModel extends ListModel
         $oldest = array('name' => '', 'age_y' => 0, 'age_d' => 0);
         $youngest = array('name' => '', 'age_y' => 100, 'age_d' => 36500);
 
-        //getting all data from memberdatabase
+        // Getting all data from memberdatabase
         $data = $this->getData('#__tkdclub_members', 'member_id');
 
-        //all rows in members table
+        // All rows in members table
         $allrows = count($data);
 
-        //getting Memberstates, age and gender distribution
+        // Getting Memberstates, age and gender distribution
         foreach ($data as $member) {
             $member->member_state == 'active' ? $active++ : '';
             $member->member_state == 'inactive' ? $inactive++ : '';
@@ -326,15 +332,15 @@ class MembersModel extends ListModel
             }
         }
 
-        $memberdata->allrows = $allrows;
-        $memberdata->active = $active;
-        $memberdata->inactive = $inactive;
-        $memberdata->support = $support;
-        $memberdata->agedist = $agedistribution;
+        $memberdata->allrows     = $allrows;
+        $memberdata->active      = $active;
+        $memberdata->inactive    = $inactive;
+        $memberdata->support     = $support;
+        $memberdata->agedist     = $agedistribution;
         $memberdata->average_age = round($agesum / $active, 1);
-        $memberdata->genderdist = $genderdist;
-        $memberdata->oldest = $oldest;
-        $memberdata->youngest = $youngest;
+        $memberdata->genderdist  = $genderdist;
+        $memberdata->oldest      = $oldest;
+        $memberdata->youngest    = $youngest;
 
         return $json ? json_encode($memberdata) : $memberdata;
     }
@@ -469,6 +475,7 @@ class MembersModel extends ListModel
         // Return the results as an array of items, each consisting of an array of fields
         $content    = array($headers);
         $content    = array_merge($content,  $rows);
+        
         return $content;
     }
 }

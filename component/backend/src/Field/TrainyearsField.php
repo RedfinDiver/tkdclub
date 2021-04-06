@@ -15,8 +15,8 @@ use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\Component\ComponentHelper;
 
 /**
- * Supports the options-markup for training years
- * used in backend and frontent
+ * Field for training years
+ * 
  */
 class TrainyearsField extends ListField
 {
@@ -29,7 +29,11 @@ class TrainyearsField extends ListField
     protected $type = 'trainyears';
     
     /**
-     * Method to get the field input markup.
+     * Method to get the field input markup for trainig years.
+     * 
+     * Returns all years in which a training is in the database.
+     * Number of years to be shown can be altered by component configuration.
+     * With no configuration, 5 years is the default.
      *
      * @return  string	The field input markup.
      * 
@@ -46,7 +50,7 @@ class TrainyearsField extends ListField
         
         if ($years = $db->loadColumn())
         {
-            // maximum years to show as set in the configuration
+            // Maximum years to show as set in the configuration
             $number_years = ComponentHelper::getParams('com_tkdclub')->get('training_years', 5);
             $min_year = max($years) - $number_years;
 
@@ -64,7 +68,7 @@ class TrainyearsField extends ListField
             }
             
 
-            if ($this->form) // if we are in a form merge additional xml data
+            if ($this->form) // If we are in a form merge additional xml data
             {
                 $options = array_merge(parent::getOptions(), $options); 
             }
@@ -74,5 +78,4 @@ class TrainyearsField extends ListField
         
         return parent::getOptions();
     }
-
 }

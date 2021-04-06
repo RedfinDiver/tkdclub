@@ -92,7 +92,8 @@ $columns   = 10;
                                                 echo '<a href="' . $mylink . '">' . HTMLHelper::_('date', $item->date, Text::_('DATE_FORMAT_LC4')) . '</a>';
                                                 ?>
                                     </th>
-                                    <td width=""><?php echo TkdclubHelper::getMembersNames($item->winner_ids, $this->memberlist); ?></td>
+                                    <?php $winner_ids = array($item->winner_1, $item->winner_2, $item->winner_3) ?>
+                                    <td width=""><?php echo TkdclubHelper::getMembersNames($winner_ids, $this->memberlist); ?></td>
                                     <?php $medalclass = array('1' => 'goldmedal', '2' => 'silbermedal', '3' => 'bronzemedal'); ?>
                                     <td class="text-center">
                                         <span class="<?php echo $medalclass[(int) $item->placing] ?>">
