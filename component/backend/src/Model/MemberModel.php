@@ -310,5 +310,37 @@ class MemberModel extends AdminModel
         $db->setQuery($query);
 
         return $db->loadObjectList();
-    }    
+    }
+
+
+    /**
+     * Method to validate the form data.
+     *
+     * @param   Form    $form   The form to validate against.
+     * @param   array   $data   The data to validate.
+     * @param   string  $group  The name of the field group to validate.
+     *
+     * @return  array|boolean  Array of filtered data if valid, false otherwise.
+     *
+     * @see     FormRule
+     * @see     InputFilter
+     * @since   1.6
+     */
+    public function validate($form, $data, $group = null)
+    {
+        $validData = parent::validate($form, $data, $group = null);
+
+        // check for no data for functions and licenses fields
+        if (!isset($validData['functions'])) {
+            $validData['functions'] = "";
+        }
+
+        if (!isset($validData['licenses'])) {
+            $validData['licenses'] = "";
+        }
+
+        return $validData;
+    }
+
+
 }

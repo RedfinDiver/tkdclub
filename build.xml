@@ -22,7 +22,7 @@
     <property name="plgdir" location="${basedir}/plugins/"/>
 
     <!-- properties for symlinking -->
-    <property name="web.root" value="/home/markus/Projekte/websites/joomla4/htdocs/"/>
+    <property name="web.root" value="/home/markus/Projekte/websites/joomla5/htdocs/"/>
     <property name="componentAdmin" value="${web.root}administrator/components/com_${name}" />
     <property name="componentSite" value="${web.root}components/com_${name}" />
     <property name="componentMedia" value="${web.root}media/com_${name}" />

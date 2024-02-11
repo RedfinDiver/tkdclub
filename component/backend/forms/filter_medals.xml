@@ -30,7 +30,7 @@
             label="COM_TKDCLUB_SELECT_WINNER"
             description=""
             onlywinner="true"
-            layout="joomla.form.field.list-fancy-select"
+
             onchange="this.form.submit();"
             >
             <option value="">COM_TKDCLUB_SELECT_ATHLET</option>

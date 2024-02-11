@@ -121,8 +121,7 @@ $columns   = 10;
                                     <td>
                                         <?php
                                         // Functions
-                                        $functions = json_decode($item->functions, true);
-                                        if (!empty($functions)) : ?>
+                                        if ($item->functions) : ?>
                                             <?php
                                                 $functions = json_decode($item->functions, true);
                                                 $translation = TkdclubHelper::getFunctionTranslation($item->sex);
@@ -140,12 +139,12 @@ $columns   = 10;
                                             <?php $notes = $item->notes_taekwondo . "\n" . $item->notes_personel . "\n" . $item->notes_clubdata?>
                                             <span class="far fa-clipboard hasPopover" data-bs-original-title="<?php echo Text::_('COM_TKDCLUB_NOTES') ?>" data-bs-content="<?php echo $this->escape($notes) ?>"></span>
                                         <?php endif; ?>
-
-                                        <?php 
+                                        
+                                        <?php
                                         // Attachments
-                                        $attachments = json_decode($item->attachments, true); ?>
-                                        <?php if (!empty($attachments)) : ?>
+                                        if ($item->attachments) : ?>
                                             <?php
+                                                $attachments = json_decode($item->attachments, true);
                                                 $astring = '';
                                                 foreach ($attachments as $file => $filename) {
                                                     $astring .= $filename . '<br>';

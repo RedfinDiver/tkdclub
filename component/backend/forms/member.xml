@@ -177,7 +177,7 @@
     <fieldset name="club_data">
 
         <field
-            name="functions" type="functions"
+            name="functions" type="functions" default=""
             label="COM_TKDCLUB_MEMBER_FUNCTIONS"
             description="COM_TKDCLUB_MEMBER_FUNCTIONS_DESC"
             multiple="true" layout="joomla.form.field.list-fancy-select">
