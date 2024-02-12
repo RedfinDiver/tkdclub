@@ -1,0 +1,9 @@
+Vorbereitung
+
+- Expose framework deinstallieren
+- magiceraser von akeeba durchführen
+- 2CSB button entfernen (nur Datenbank)
+- eec plugin deinstallieren
+- regular labs extensions deinstallieren
+- Taekwondo Club deaktivieren
+- behavior framework aus den html overrides entfernen
