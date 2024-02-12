@@ -1,23 +1,25 @@
 <?php
 /**
  * @package    Taekwondo Club
- * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2021 Markus Moser. All rights reserved.
+ * @license    GNU General Public License version 2 or later
  */
 
-defined('_JEXEC') or die;
+namespace Redfindiver\Component\Tkdclub\Administrator\Table;
+
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Factory;
 
 /**
-* Event participants table class
-*/
-class TkdClubTableParticipants extends Table
+ * Newsletter subscriber table class
+ */
+class SubscribersTable extends Table
 {
     public function __construct(&$db)      
     {
-        parent::__construct('#__tkdclub_event_participants', 'id', $db);
+        parent::__construct('#__tkdclub_newsletter_subscribers', 'id', $db);
     }
 
     public function store($updateNulls = false) {

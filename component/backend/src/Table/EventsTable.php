@@ -1,18 +1,21 @@
 <?php
 /**
  * @package    Taekwondo Club
- * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2021 Markus Moser. All rights reserved.
+ * @license    GNU General Public License version 2 or later
  */
 
-defined('_JEXEC') or die;
+namespace Redfindiver\Component\Tkdclub\Administrator\Table;
+
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Table\Table;
+use Joomla\CMS\Factory;
 
 /**
 * Events table class
 */
-class TkdClubTableEvents extends Table
+class EventsTable extends Table
 {
     public function __construct(&$db)      
     {
@@ -21,8 +24,8 @@ class TkdClubTableEvents extends Table
 
     public function store($updateNulls = false) {
         
-        $date   = JFactory::getDate()->toSql();
-        $userId = JFactory::getUser()->id;
+        $date   = Factory::getDate()->toSql();
+        $userId = Factory::getUser()->id;
 
         $this->modified = $date;
 

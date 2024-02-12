@@ -1,11 +1,13 @@
 <?php
 /**
  * @package    Taekwondo Club
- * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2021 Markus Moser. All rights reserved.
+ * @license    GNU General Public License version 2 or later
  */
 
-defined('_JEXEC') or die;
+namespace Redfindiver\Component\Tkdclub\Administrator\Table;
+
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\Table\Table;
 use \Joomla\CMS\Factory;
@@ -13,7 +15,7 @@ use \Joomla\CMS\Factory;
 /**
 * candidates table class
 */
-class TkdClubTableCandidates extends Table
+class CandidatesTable extends Table
 {
     public function __construct(&$db)      
     {
