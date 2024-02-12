@@ -72,3 +72,8 @@ ALTER TABLE `#__tkdclub_medals`
     CHANGE `created`  `created` datetime DEFAULT NULL,
     CHANGE `notes` `notes` text,
     DROP `winner_ids`;
+
+ALTER TABLE `#__tkdclub_promotions`
+    CHANGE `created` `created` datetime DEFAULT NULL,
+    CHANGE `checked_out_time` `checked_out_time` datetime DEFAULT NULL,
+    CHANGE `checked_out` `checked_out` int(10) UNSIGNED DEFAULT NULL;

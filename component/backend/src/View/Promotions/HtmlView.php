@@ -6,20 +6,21 @@
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+namespace Redfindiver\Component\Tkdclub\Administrator\View\Promotions;
+
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Helper\ContentHelper;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 
 /**
  * view-class for view: 'promotions'
  */
-class TkdClubViewPromotions extends HtmlView
+class HtmlView extends BaseHtmlView
 {
     protected $items;
     protected $pagination;
@@ -45,16 +46,14 @@ class TkdClubViewPromotions extends HtmlView
             $this->promotiondata = $this->get('Promotionsdata');
         } */
 
-        $this->addToolbar();
-        $this->sidebar = JHtmlSidebar::render();
+        $this->addToolbar();;
         parent::display($tpl);
     }
 
     protected function addToolbar()
     {
         $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
-
-        ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_PROMOTION_ADMIN_VIEW'), 'tkdclub');
+        ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_PROMOTION_ADMIN_VIEW'), 'tkdclub tkdclub-logo-v-sw');
 
         $canDo = ContentHelper::getActions('com_tkdclub');
 
@@ -77,10 +76,6 @@ class TkdClubViewPromotions extends HtmlView
             ToolBarHelper::deleteList('COM_TKDCLUB_PROMOTION_DELETE_QUESTION', 'promotions.delete', 'JTOOLBAR_DELETE', true);
         }
 
-        if ($canDo->get('core.admin')) {
-            ToolBarHelper::preferences('com_tkdclub');
-        }
-
         $toolbar = Toolbar::getInstance('toolbar');
         $toolbar->addButtonPath(JPATH_COMPONENT . '/buttons');
 
@@ -94,10 +89,16 @@ class TkdClubViewPromotions extends HtmlView
             ToolBarHelper::custom('promotions.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);
         } */
 
-        $toolbar->appendButton('RawFormat',  'download', 'COM_TKDCLUB_BUTTON_EXPORT', 'export.promotions');
+        ToolbarHelper::custom('export.promotions', 'download', '', 'COM_TKDCLUB_EXPORT_CSV', true);
+        ToolbarHelper::custom('export.promotions', 'download', '', 'COM_TKDCLUB_EXPORT_ALL_CSV', false);
+
+        if ($canDo->get('core.admin'))
+        {
+            ToolBarHelper::preferences('com_tkdclub');
+        }
 
         $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/pruefungen.html';
-        JToolbarHelper::help('', false, $help_url);
+        ToolbarHelper::help('', false, $help_url);
     }
 
     protected function getSortFields()

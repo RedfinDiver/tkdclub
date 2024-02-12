@@ -1,12 +1,15 @@
 <?php
 /**
  * @package    Taekwondo Club
- * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2021 Markus Moser. All rights reserved.
+ * @license    GNU General Public License version 2 or later
  */
 
-defined('_JEXEC') or die;
+namespace Redfindiver\Component\Tkdclub\Administrator\Field;
 
+\defined('_JEXEC') or die;
+
+use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\Form\FormHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -18,7 +21,7 @@ FormHelper::loadFieldClass('list');
  * Supports the options-markup for promotions
  * used in backend
  */
-class JFormFieldPromotions extends JFormFieldList
+class PromotionsField extends ListField
 {
     /**
      * The form field type.

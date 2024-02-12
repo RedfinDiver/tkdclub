@@ -1,11 +1,13 @@
 <?php
 /**
  * @package    Taekwondo Club
- * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2021 Markus Moser. All rights reserved.
+ * @license    GNU General Public License version 2 or later
  */
 
-defined('_JEXEC') or die;
+namespace Redfindiver\Component\Tkdclub\Administrator\Model;
+
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Factory;
@@ -14,7 +16,7 @@ use Joomla\CMS\Language\Text;
 /**
  * Model class for list view 'promotions'
  */
-class TkdClubModelPromotions extends ListModel
+class PromotionsModel extends ListModel
 {       
     /**
      * Constructor.

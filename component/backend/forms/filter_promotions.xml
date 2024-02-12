@@ -2,7 +2,7 @@
 
 <form>
 
-    <fields name="filter">
+    <fields name="filter" addfieldprefix="Redfindiver\Component\Tkdclub\Administrator\Field">
         <field
             name="search"
             type="text"
@@ -12,8 +12,7 @@
         />
 
         <field
-            name="promotion_state"
-            type="list"
+            name="promotion_state" type="list"
             label="JSTATUS"
             description=""
             onchange="this.form.submit();">
@@ -23,8 +22,7 @@
         </field>
 
         <field
-            name="type"
-            type="list"
+            name="type" type="list"
             label="JSTATUS"
             description=""
             onchange="this.form.submit();">

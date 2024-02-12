@@ -1,10 +1,11 @@
 <?php
-
 /**
  * @package    Taekwondo Club
- * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2021 Markus Moser. All rights reserved.
+ * @license    GNU General Public License version 2 or later
  */
+
+namespace Redfindiver\Component\Tkdclub\Administrator\View\Promotion;
 
 defined('_JEXEC') or die;
 
@@ -13,12 +14,12 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 
 /**
  * view-class for edit-view: 'promotion'
  */
-class TkdClubViewPromotion extends HtmlView
+class HtmlView extends BaseHtmlView
 {
     protected $item;
     protected $form;
@@ -38,6 +39,7 @@ class TkdClubViewPromotion extends HtmlView
     protected function addToolbar()
     {
         $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
+        ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_PROMOTION_ADMIN_VIEW'), 'tkdclub tkdclub-logo-v-sw');
 
         if ($this->item->promotion_id == NULL) {
             ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_PROMOTION_NEW_TITLE'), 'tkdclub');

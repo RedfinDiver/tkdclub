@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `#__tkdclub_medals` (
   PRIMARY KEY (`medal_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
-/*
+
 CREATE TABLE IF NOT EXISTS `#__tkdclub_promotions` (
   `promotion_id` int(10) NOT NULL AUTO_INCREMENT,
   `date` date NOT NULL,
@@ -96,15 +96,17 @@ CREATE TABLE IF NOT EXISTS `#__tkdclub_promotions` (
   `examiner_email` varchar(50) NOT NULL,
   `promotion_state` tinyint(4) NOT NULL,
   `notes` text NOT NULL,
-  `created`  `created` datetime DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
   `created_by` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `modified` datetime DEFAULT NULL,
   `modified_by` int(10) UNSIGNED NOT NULL DEFAULT '0',
   `checked_out` int(10) UNSIGNED DEFAULT NULL,
-  `checked_out_time` datetime NOT NULL,
+  `checked_out_time` datetime DEFAULT NULL,
+
   PRIMARY KEY (`promotion_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
+/*
 CREATE TABLE IF NOT EXISTS `#__tkdclub_candidates` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `id_promotion` int(10) NOT NULL,

@@ -70,6 +70,13 @@
                 >
                 COM_TKDCLUB_SUBMENU_MEDALS
             </menu>
+            <menu
+                link="option=com_tkdclub&amp;view=promotions"
+                view="promotions"
+                img="class:tkdclub-logo"
+                >
+                COM_TKDCLUB_SUBMENU_PROMOTIONS
+            </menu>
         </submenu>
         
         <files folder="backend">

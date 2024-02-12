@@ -1,20 +1,21 @@
 <?php
 /**
  * @package    Taekwondo Club
- * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2021 Markus Moser. All rights reserved.
+ * @license    GNU General Public License version 2 or later
  */
+
+ namespace Redfindiver\Component\Tkdclub\Administrator\Model;
 
 defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Model\AdminModel;
-use Joomla\CMS\Table\Table;
 use Joomla\CMS\Factory;
 
 /**
  * Model-class for edit view 'exam'
  */
-class TkdClubModelPromotion extends AdminModel
+class PromotionModel extends AdminModel
 {   
     protected $text_prefix = 'COM_TKDCLUB_PROMOTION';
 
@@ -30,9 +31,9 @@ class TkdClubModelPromotion extends AdminModel
      * @since   1.0
      * @throws  Exception
      */
-    public function getTable($type = 'Promotions', $prefix = 'TkdClubTable', $config = array())
+    public function getTable($type = 'Promotions', $prefix = 'Administrator', $config = array())
     {
-        return Table::getInstance($type, $prefix, $config);
+        return parent::getTable($type, $prefix, $config);
     }
         
     /**

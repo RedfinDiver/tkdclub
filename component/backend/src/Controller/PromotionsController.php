@@ -1,11 +1,13 @@
 <?php
 /**
  * @package    Taekwondo Club
- * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2021 Markus Moser. All rights reserved.
+ * @license    GNU General Public License version 2 or later
  */
 
-defined('_JEXEC') or die;
+namespace Redfindiver\Component\Tkdclub\Administrator\Controller;
+
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\Session\Session;
@@ -15,15 +17,13 @@ use Joomla\CMS\Language\Text;
 /**
  * listview promotions controller
  */
-class TkdClubControllerPromotions extends AdminController
+class PromotionsController extends AdminController
 {
     protected $text_prefix = 'COM_TKDCLUB_PROMOTION';
     
-    public function getModel($name = 'promotion', $prefix = 'TkdClubModel', $config = array())
+    public function getModel($name = 'promotion', $prefix = 'Administrator', $config = array())
     {
-        $config['ignore_request'] = true;
-        $model = parent::getModel($name, $prefix, $config);
-        return $model;
+        return parent::getModel($name, $prefix, $config);
     }
 
     /**
