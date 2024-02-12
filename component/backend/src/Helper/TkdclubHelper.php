@@ -88,7 +88,7 @@ class TkdclubHelper
                 ->from($db->quoteName('#__users', 'a'))
                 ->join('LEFT', $db->quoteName('#__user_usergroup_map', 'b') . ' ON a.id = b.user_id')
                 ->where($db->quoteName('group_id') . ' = :group')
-                ->bind(':group', $group, ParmeterType::INTEGER);
+                ->bind(':group', $group, ParameterType::INTEGER);
 
             $emails = array_merge($emails, $db->setQuery($query)->loadColumn());
         }
