@@ -32,7 +32,7 @@ class MedalController extends FormController
 	 */
 	public function save($key = null, $urlVar = null)
 	{
-/* 		// We have to change the input data, because we using an array to
+		// We have to change the input data, because we using an array to
 		// fill 3 fields in the database
 		$data  = $this->input->post->get('jform', array(), 'array');
 		$winner_ids = $data['winner_ids'];
@@ -54,7 +54,7 @@ class MedalController extends FormController
 		!isset($data['winner_2']) ? $data['winner_2'] = 0 : "";
 		!isset($data['winner_3']) ? $data['winner_3'] = 0 : "";
 		
-		$this->input->post->set('jform', $data); */
+		$this->input->post->set('jform', $data);
 
 		return parent::save($key, $urlVar);
 	}
