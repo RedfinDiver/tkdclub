@@ -77,6 +77,48 @@
                 >
                 COM_TKDCLUB_SUBMENU_PROMOTIONS
             </menu>
+            <menu
+                link="option=com_tkdclub&amp;view=candidates"
+                view="candidates"
+                img="class:tkdclub-logo"
+                >
+                COM_TKDCLUB_SUBMENU_CANDIDATES
+            </menu>
+            <menu
+                link="option=com_tkdclub&amp;view=events"
+                view="events"
+                img="class:tkdclub-logo"
+                >
+                COM_TKDCLUB_SUBMENU_EVENTS
+            </menu>
+            <menu
+                link="option=com_tkdclub&amp;view=participants"
+                view="participants"
+                img="class:tkdclub-logo"
+                >
+                COM_TKDCLUB_SUBMENU_PARTICIPANTS
+            </menu>
+            <menu
+                link="option=com_tkdclub&amp;view=EMAIL"
+                view="EMAIL"
+                img="class:tkdclub-logo"
+                >
+                COM_TKDCLUB_SUBMENU_EMAIL
+            </menu>
+            <menu
+                link="option=com_tkdclub&amp;view=subscribers"
+                view="subscribers"
+                img="class:tkdclub-logo"
+                >
+                COM_TKDCLUB_SUBMENU_SUBSCRIBERS
+            </menu>
+            <menu
+                link="option=com_tkdclub&amp;view=statistics"
+                view="statistics"
+                img="class:tkdclub-logo"
+                >
+                COM_TKDCLUB_SUBMENU_STATISTICS
+            </menu>
         </submenu>
         
         <files folder="backend">

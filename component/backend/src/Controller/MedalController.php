@@ -7,6 +7,8 @@
 
 namespace Redfindiver\Component\Tkdclub\Administrator\Controller;
 
+\defined('_JEXEC') or die;
+
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Controller\FormController;
 
