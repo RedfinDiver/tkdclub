@@ -38,13 +38,17 @@ class HtmlView extends BaseHtmlView
 
     protected function addToolbar()
     {
-        $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
-        ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_PROMOTION_ADMIN_VIEW'), 'tkdclub tkdclub-logo-v-sw');
+        Factory::getApplication()->input->set('hidemainmenu', true);
 
-        if ($this->item->promotion_id == NULL) {
-            ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_PROMOTION_NEW_TITLE'), 'tkdclub');
-        } else {
-            ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_PROMOTION_EDIT_TITLE'), 'tkdclub');
+        $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
+
+        if ($this->item->promotion_id == NULL)
+        {
+            ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_PROMOTION_NEW_TITLE'), 'tkdclub tkdclub-logo-v-sw');
+        }
+        else
+        {
+            ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_PROMOTION_EDIT_TITLE'), 'tkdclub tkdclub-logo-v-sw');
         }
 
         $canDo = ContentHelper::getActions('com_tkdclub');
