@@ -27,9 +27,7 @@ class MedalController extends FormController
      * the user is redirected to the homepage.
      */
     public function cancel($key = null)
-    {
-        $result = parent::cancel($key);
-        
+    {        
         // Clean the session state and go to homepage
         $context = "$this->option.edit.$this->context";
         $app = Factory::getApplication();
@@ -74,6 +72,27 @@ class MedalController extends FormController
         
         // get the data from the HTTP POST request
         $data  = $input->post->get('jform', array(), 'array');
+
+        // We have to change the input data, because we using an array to
+		// fill 3 fields in the database
+		$winner_ids = $data['winner_ids'];
+		
+		$i = 1;
+		foreach ($winner_ids as $id)
+		{
+			if ($id)
+			{
+				$data['winner_' . $i] = $id;
+				$i++;
+			}
+
+			// Only allow up to 3 winner fields
+			if ($i == 4) break;
+		}
+
+		// Check if the required fields are set
+		!isset($data['winner_2']) ? $data['winner_2'] = 0 : "";
+		!isset($data['winner_3']) ? $data['winner_3'] = 0 : "";
 
         // set up context for saving form data
         $context = "$this->option.edit.$this->context";
