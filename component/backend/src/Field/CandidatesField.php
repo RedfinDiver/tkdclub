@@ -11,7 +11,7 @@ namespace Redfindiver\Component\Tkdclub\Administrator\Field;
 
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\Factory;
-
+use Joomla\CMS\HTML\HTMLHelper;
 
 /**
  * Supports the options-markup for all candidates
@@ -58,7 +58,7 @@ class CandidatesField extends ListField
 
             foreach ($items as $item)
             {
-                 $options[] = JHtml::_('select.option', $item->id_candidate, $item->firstname . ' ' . $item->lastname);
+                 $options[] = HTMLHelper::_('select.option', $item->id_candidate, $item->firstname . ' ' . $item->lastname);
             }
 
             if ($this->form) //checking if we are in a form, then merge additional xml data

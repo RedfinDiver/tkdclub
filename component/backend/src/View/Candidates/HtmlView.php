@@ -10,17 +10,16 @@ namespace Redfindiver\Component\Tkdclub\Administrator\View\Candidates;
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Helper\ContentHelper;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\HTML\Helpers\Sidebar;
 
 /**
  * view-class for edit-view: 'candidates'
  */
-class CandidatesView extends HtmlView
+class HtmlView extends BaseHtmlView
 {
     protected $items;
     protected $pagination;
@@ -66,15 +65,13 @@ class CandidatesView extends HtmlView
         $this->activeFilters = $this->get('ActiveFilters');
 
         $this->addToolbar();
-        $this->sidebar = JHtmlSidebar::render();
         parent::display($tpl);
     }
 
     protected function addToolbar()
     {
         $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
-
-        ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_CANDIDATE_ADMIN_VIEW'), 'tkdclub');
+        ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_CANDIDATE_ADMIN_VIEW'), 'tkdclub tkdclub-logo-v-sw');
 
         $canDo = ContentHelper::getActions('com_tkdclub');
 
@@ -102,15 +99,14 @@ class CandidatesView extends HtmlView
         {ToolBarHelper::custom('candidates.togglestats', 'eye-close', 'eye-close', 'COM_TKDCLUB_BUTTON_STATS', false);}
         else {ToolBarHelper::custom('candidates.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);} */
 
-        $toolbar = Toolbar::getInstance('toolbar');
-        $toolbar->addButtonPath(JPATH_COMPONENT . '/buttons');
-        $toolbar->appendButton('RawFormat',  'download', 'COM_TKDCLUB_BUTTON_EXPORT', 'export.candidates');
+        ToolbarHelper::custom('export.canditates', 'download', '', 'COM_TKDCLUB_EXPORT_CSV', true);
+        ToolbarHelper::custom('export.canditates', 'download', '', 'COM_TKDCLUB_EXPORT_ALL_CSV', false);
 
         if ($canDo->get('core.admin')) {
             ToolBarHelper::preferences('com_tkdclub');
         }
 
-        JHtmlSidebar::setAction('index.php?option=com_tkdclub&view=candidates');
+        Sidebar::setAction('index.php?option=com_tkdclub&view=candidates');
 
         $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/pruefungsteilnehmer.html';
         ToolBarHelper::help('', false, $help_url);

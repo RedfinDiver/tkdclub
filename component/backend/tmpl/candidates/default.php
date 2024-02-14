@@ -1,81 +1,81 @@
 <?php
-
 /**
  * @package    Taekwondo Club
- * @copyright  Copyright (C) 2018 Markus Moser. All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2021 Markus Moser. All rights reserved.
+ * @license    GNU General Public License version 2 or later
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
-JLoader::register('Helper', JPATH_COMPONENT_ADMINISTRATOR . '/helpers/tkdclub.php');
+use Joomla\CMS\Factory;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Layout\LayoutHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\HTML\HTMLHelper;
+use Redfindiver\Component\Tkdclub\Administrator\Helper\TkdclubHelper;
 
-JHtml::stylesheet('administrator/components/com_tkdclub/assets/css/tkdclub.css');
-JHtml::_('script', 'administrator/components/com_tkdclub/assets/js/rawsubmitbutton.js');
-JHtml::_('formbehavior.chosen', 'select');
-JHtml::_('behavior.multiselect');
+/** @var \Redfindiver\Component\Tkdclub\Administrator\View\Members\HtmlView $this */
+HtmlHelper::_('bootstrap.tooltip');
+HtmlHelper::_('behavior.multiselect');
 
-$params = JComponentHelper::getParams('com_tkdclub');
+/** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
+$this->document->getWebAssetManager()
+    ->useScript('com_tkdclub.iban')
+    ->useStyle('com_tkdclub.tkdclub-admin');
+
+$params = ComponentHelper::getParams('com_tkdclub');
 $currency = $params->get('currency', '€');
 $costs = $params->get('badge_cost', 0) + $params->get('examiner_cost', 0) + $params->get('club_cost', 0);
 
-$user      = JFactory::getUser();
+$user      = Factory::getUser();
 $userId    = $user->get('id');
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn  = $this->escape($this->state->get('list.direction'));
 
 ?>
 
-<form action="<?php echo JRoute::_('index.php?option=com_tkdclub&view=candidates'); ?>" method="post" name="adminForm" id="adminForm">
-
-    <?php if (!empty($this->sidebar)) : ?>
-        <div id="j-sidebar-container" class="span2">
-            <?php echo $this->sidebar; ?>
-        </div>
-        <div id="j-main-container" class="span10">
-        <?php else : ?>
-            <div id="j-main-container">
-            <?php endif; ?>
-            <?php
-            echo JLayoutHelper::render('joomla.searchtools.default', array('view' => $this));
-            ?>
-            <?php if (empty($this->items)) : ?>
-                <div class="alert alert-no-items">
-                    <?php echo JText::_('JGLOBAL_NO_MATCHING_RESULTS'); ?>
-                </div>
-            <?php else : ?>
-                <div class="tkdclub-numbers">
-                    <b><?php echo $this->total; ?></b> <?php echo JText::_('COM_TKDCLUB_FROM'); ?>
-                    <b><?php echo $this->allrows; ?></b>
-                    <?php echo JText::_('COM_TKDCLUB_ENTRIES'); ?>
-                </div>
-                <!-- TODO statistics for candidates -->
-                <div class="clearfix"> </div>
-
-                <table class="table table-condensed table-striped">
+<form action="<?php echo Route::_('index.php?option=com_tkdclub&view=candidates'); ?>" method="post" name="adminForm" id="adminForm">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="j-main-container" class="j-main-container">
+                <?php
+                // Search tools bar
+                echo LayoutHelper::render('joomla.searchtools.default', ['view' => $this]);
+                ?>
+                <?php if (empty($this->items)) : ?>
+                    <div class="alert alert-info">
+                        <span class="icon-info-circle" aria-hidden="true"></span><span class="visually-hidden"><?php echo Text::_('INFO'); ?></span>
+                        <?php echo Text::_('JGLOBAL_NO_MATCHING_RESULTS'); ?>
+				    </div>
+                <?php else : ?>
+                    <div class="m-2">
+                        <?php echo Text::sprintf('COM_TKDCLUB_ENTRIES', $this->total, $this->allrows); ?>
+                    </div>    
+                    <table class="table table-striped table-sm">
                     <thead>
                         <th width="1%" class="hidden-phone">
-                            <?php echo JHtml::_('grid.checkall'); ?>
+                            <?php echo HTMLHelper::_('grid.checkall'); ?>
                         </th>
-                        <th class="center" width="20"><?php echo JText::_('JSTATUS'); ?></th>
+                        <th class="center" width="20"><?php echo Text::_('JSTATUS'); ?></th>
                         <th class="center">
-                            <?php echo JHtml::_('searchtools.sort', 'COM_TKDCLUB_CANDIDATE_PROMOTION_DATE', 'c.date', $listDirn, $listOrder); ?>
+                            <?php echo HTMLHelper::_('searchtools.sort', 'COM_TKDCLUB_CANDIDATE_PROMOTION_DATE', 'c.date', $listDirn, $listOrder); ?>
                         </th>
-                        <th class="center"><?php echo JText::_('COM_TKDCLUB_PROMOTION_TYPE') ?></th>
-                        <th class="center"><?php echo JText::_('COM_TKDCLUB_MEMBER_PASS') ?></th>
-                        <th><?php echo JText::_('COM_TKDCLUB_MEMBER_FIRSTNAME') ?></th>
-                        <th><?php echo JText::_('COM_TKDCLUB_MEMBER_LASTNAME') ?></th>
+                        <th class="center"><?php echo Text::_('COM_TKDCLUB_PROMOTION_TYPE') ?></th>
+                        <th class="center"><?php echo Text::_('COM_TKDCLUB_MEMBER_PASS') ?></th>
+                        <th><?php echo Text::_('COM_TKDCLUB_MEMBER_FIRSTNAME') ?></th>
+                        <th><?php echo Text::_('COM_TKDCLUB_MEMBER_LASTNAME') ?></th>
                         <th>
-                            <?php echo JHtml::tooltip(JText::_('COM_TKDCLUB_MEMBER_AGE_AT_PROMOTION'), JText::_('COM_TKDCLUB_MEMBER_AGE'), '', JText::_('COM_TKDCLUB_MEMBER_AGE')); ?>
+                            <?php echo HTMLHelper::tooltip(Text::_('COM_TKDCLUB_MEMBER_AGE_AT_PROMOTION'), Text::_('COM_TKDCLUB_MEMBER_AGE'), '', Text::_('COM_TKDCLUB_MEMBER_AGE')); ?>
                         </th>
-                        <th width=""><?php echo JText::_('COM_TKDCLUB_CANDIDATE_PROMOTION_GRADE_ACHIEVE'); ?></th>
-                        <th class="center"><?php echo JText::_('COM_TKDCLUB_CANDIDATE_PROMOTION_COSTS'); ?></th>
-                        <th width="25%"><?php echo JText::_('COM_TKDCLUB_NOTES'); ?></th>
+                        <th width=""><?php echo Text::_('COM_TKDCLUB_CANDIDATE_PROMOTION_GRADE_ACHIEVE'); ?></th>
+                        <th class="center"><?php echo Text::_('COM_TKDCLUB_CANDIDATE_PROMOTION_COSTS'); ?></th>
+                        <th width="25%"><?php echo Text::_('COM_TKDCLUB_NOTES'); ?></th>
                     </thead>
 
                     <tfoot>
                         <tr>
-                            <td colspan="18"><?php echo $this->pagination->getListFooter(); ?></td>
+  
                         </tr>
                     </tfoot>
 
@@ -87,7 +87,7 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                                 $canChange  = $user->authorise('core.edit.state', 'com_tkdclub.candidate.' . $item->id) && $canCheckin;
                                 ?>
                             <tr class="row<?php echo $i % 2; ?>">
-                                <td class="center"><?php echo JHtml::_('grid.id', $i, $item->id); ?>
+                                <td class="center"><?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
                                 <td class="center hasTooltip">
                                     <div class="btn-group">
                                         <?php
@@ -97,21 +97,21 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                                                     0 => array('publish', 'COM_TKDCLUB_CANDIDATE_NOT_PASSED', 'COM_TKDCLUB_CANDIDATE_MARK_PASSED', 'JUNPUBLISHED', 'COM_TKDCLUB_CANDIDATE_NOT_PASSED', 'unpublish', 'unpublish'),
                                                     2 => array('publish', 'COM_TKDCLUB_CANDIDATE_SUBSCRIBED', 'COM_TKDCLUB_CANDIDATE_MARK_PASSED', 'JARCHIVED', true, 'archive', 'archive')
                                                 );
-                                                echo JHtml::_('jgrid.state', $states, $item->test_state, $i, 'candidates.', true);
+                                                echo HTMLHelper::_('jgrid.state', $states, $item->test_state, $i, 'candidates.', true);
                                                 ?>
                                     </div>
                                 </td>
                                 <td class="title center">
                                     <?php if ($item->checked_out) : ?>
-                                        <?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'candidates.', $canCheckin); ?>
+                                        <?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'candidates.', $canCheckin); ?>
                                     <?php endif; ?>
                                     <?php
-                                            $mylink = JRoute::_("index.php?option=com_tkdclub&task=candidate.edit&form=candidate_edit&id=" . $item->id);
-                                            echo '<a href="' . $mylink . '">' . JHtml::_('date', $item->date, JText::_('DATE_FORMAT_LC4')) . '</a>';
+                                            $mylink = Route::_("index.php?option=com_tkdclub&task=candidate.edit&form=candidate_edit&id=" . $item->id);
+                                            echo '<a href="' . $mylink . '">' . HTMLHelper::_('date', $item->date, Text::_('DATE_FORMAT_LC4')) . '</a>';
                                             ?>
                                     <span class="small"><?php echo '(' . $this->escape($item->city) . ')' ?></span>
                                 </td>
-                                <?php $type = array('kup' => JText::_('COM_TKDCLUB_KUP'), 'dan' => JText::_('COM_TKDCLUB_DAN')) ?>
+                                <?php $type = array('kup' => Text::_('COM_TKDCLUB_KUP'), 'dan' => Text::_('COM_TKDCLUB_DAN')) ?>
                                 <td class="center"><?php echo $type[$this->escape($item->type)]; ?></td>
                                 <td class="center">
                                     <?php echo $this->escape($item->memberpass) > 0 ? $this->escape($item->memberpass) : ''; ?>
@@ -119,7 +119,7 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                                 <td><?php echo $this->escape($item->firstname); ?></td>
                                 <td><?php echo $this->escape($item->lastname); ?></td>
                                 <td class="center">
-                                    <?php $age = Helper::getAgetoDate($item->date, $item->birthdate);
+                                    <?php $age = TkdclubHelper::getAgetoDate($item->date, $item->birthdate);
                                             echo $age; ?>
                                 </td>
                                 <td class="center"><?php echo $this->escape($item->grade_achieve); ?></td>
@@ -140,11 +140,14 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-            <?php endif; ?>
+                <?php endif; ?>
+                <?php echo $this->pagination->getListFooter(); ?>
+                <div>
+                    <input type="hidden" name="task" value="" />
+                    <input type="hidden" name="boxchecked" value="0" />
+                    <?php echo HTMLHelper::_('form.token'); ?>
+                </div>                             
             </div>
-            <div>
-                <input type="hidden" name="task" value="" />
-                <input type="hidden" name="boxchecked" value="0" />
-                <?php echo JHtml::_('form.token'); ?>
-            </div>
+        </div>
+    </div>
 </form>

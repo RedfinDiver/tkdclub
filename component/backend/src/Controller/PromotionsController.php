@@ -21,7 +21,7 @@ class PromotionsController extends AdminController
 {
     protected $text_prefix = 'COM_TKDCLUB_PROMOTION';
     
-    public function getModel($name = 'promotion', $prefix = 'Administrator', $config = array())
+    public function getModel($name = 'Promotion', $prefix = 'Administrator', $config = array())
     {
         return parent::getModel($name, $prefix, $config);
     }

@@ -228,6 +228,11 @@ class TkdclubHelper
      */
     public static function getAgetoDate($date, $birthday)
     {
+        if (!$birthday)
+        {
+            return "n/a";
+        }
+
         $dob = new \DateTime($birthday);
         $dat = new \DateTime($date);
         $age = $dob->diff($dat);

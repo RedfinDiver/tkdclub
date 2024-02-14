@@ -77,7 +77,7 @@ $columns   = 10;
                         </thead>
                         <tfoot>
                             <tr>
-                                <td colspan="<?php echo $columns; ?>"></td>
+                                
                             </tr>
                         </tfoot>
                         <tbody>

@@ -1,5 +1,4 @@
 Vorbereitung
-
 - Expose framework deinstallieren
 - magiceraser von akeeba durchführen
 - 2CSB button entfernen (nur Datenbank)
@@ -7,3 +6,8 @@ Vorbereitung
 - regular labs extensions deinstallieren
 - Taekwondo Club deaktivieren
 - behavior framework aus den html overrides entfernen
+
+
+Migration
+- Mitgliederuploads per Hand durchführen
+- Mitgliederdatenbank per neu SQL erstellen und dann mit Daten füttern

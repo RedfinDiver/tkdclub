@@ -61,6 +61,17 @@
         "attributes": {
           "defer": true
         }
+      },
+      {
+        "name": "com_tkdclub.getcandidatedata",
+        "type": "script",
+        "uri": "com_tkdclub/getcandidatedata.js",
+        "dependencies": [
+          "core"
+        ],
+        "attributes": {
+          "defer": true
+        }
       }
 
     ]

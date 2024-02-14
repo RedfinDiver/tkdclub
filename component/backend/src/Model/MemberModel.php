@@ -96,7 +96,7 @@ class MemberModel extends AdminModel
         $file = $input->files->get('jform', '', '')['file'];
         $file_hash = hash_file('md5', $file['tmp_name']);
         $possible_file_extensions =  ['pdf', 'png', 'jpg', 'jpeg'];
-        $upload_path = ComponentHelper::getParams('com_tkdclub')->get('attachments_path', JPATH_SITE . '/images/com_tkdclub/attachments/');
+        $upload_path = ComponentHelper::getParams('com_tkdclub')->get('attachments_path', JPATH_ADMINISTRATOR . '/components/com_tkdclub/attachments/');
 
         // Just processing the file if there is no error with it
         if ($file['error'] != 0)

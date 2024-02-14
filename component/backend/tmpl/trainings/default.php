@@ -90,7 +90,7 @@ $filter_payment_state  = $this->state->get('filter.payment_state');
                         </thead>
                         <tfoot>
                             <tr>
-                                <td colspan="<?php echo $columns; ?>"></td>
+
                             </tr>
                         </tfoot>
                         <tbody>

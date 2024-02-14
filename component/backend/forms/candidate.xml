@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<form>
+<form addfieldprefix="Redfindiver\Component\Tkdclub\Administrator\Field">
     
-    <fieldset name="candidate_data">
+    <fieldset name="top_data">
 
         <field
             name="test_state" type="list"
@@ -39,6 +39,10 @@
             <option value="">COM_TKDCLUB_SELECT_CANDIDATE</option>
         </field>
 
+    </fieldset>
+
+    <fieldset name="readonly_data">
+
         <field 
             name="lastpromotion" type="text" showon="id_candidate!:"
             id="lastpromotion"
@@ -62,15 +66,15 @@
                 <option value="">COM_TKDCLUB_SELECT_GRADE</option>
         </field>
 
-        <field 
+    </fieldset>
+
+    <field 
             name="notes" type="textarea" showon="id_candidate!:"
             rows="7"
             class="inputbox"
             label="COM_TKDCLUB_MEMBER_COMMENT"
             description="COM_TKDCLUB_MEMBER_COMMENT_DESC"
             default=""/>
-        
-    </fieldset>
 
     <fieldset name="item_data">       
 

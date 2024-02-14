@@ -17,9 +17,8 @@ use Joomla\CMS\Layout\LayoutHelper;
 HTMLHelper::_('behavior.multiselect');
 
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
-$wa = $this->document->getWebAssetManager();
-$wa->getRegistry();
-$wa->useStyle('com_tkdclub.tkdclub-admin');
+$this->document->getWebAssetManager()
+    ->useStyle('com_tkdclub.tkdclub-admin');
 
 $user      = Factory::getUser();
 $userId    = $user->get('id');
@@ -67,7 +66,7 @@ $columns   = 10;
                         </thead>
                         <tfoot>
                             <tr>
-                                <td colspan="<?php echo $columns; ?>"></td>
+
                             </tr>
                         </tfoot>
                         <tbody>

@@ -18,11 +18,9 @@ class CandidatesController extends AdminController
 {
     protected $text_prefix = 'COM_TKDCLUB_CANDIDATE';
 
-    public function getModel($name = 'candidate', $prefix = 'Administrator', $config = array())
+    public function getModel($name = 'Candidate', $prefix = '', $config = ['ignore_request' => true])
     {
-        $config['ignore_request'] = true;
-        $model = parent::getModel($name, $prefix, $config);
-        return $model;
+        return parent::getModel($name, $prefix, $config);
     }
 
     /**

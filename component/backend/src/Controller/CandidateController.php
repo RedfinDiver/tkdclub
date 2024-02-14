@@ -12,59 +12,55 @@ namespace Redfindiver\Component\Tkdclub\Administrator\Controller;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-
+use Joomla\CMS\Response\JsonResponse;
+use Redfindiver\Component\Tkdclub\Administrator\Helper\TkdclubHelper;
 
 class CandidateController extends FormController
 {
     protected $text_prefix = 'COM_TKDCLUB_CANDIDATE';
 
     /**
+     * Data fetched for a candidate
+     * 
+     * @var array
+     */
+    protected $candidate_data = array();
+
+    /**
      * The grades with a certain value, makes it easier to calculate
      * 
      * @var array
      */
-    protected $grades;
+    protected $grades = array(
+        '10. Kup' => 1, '9. Kup' => 2, '8. Kup' => 3, '7. Kup' => 4, '6. Kup' => 5, '5. Kup' => 6, '4. Kup' => 7,
+        '3. Kup' => 8, '2. Kup' => 9, '1. Kup' => 10, '1. Poom' => 11, '2. Poom' => 12, '3. Poom' => 13, '4. Poom' => 14,
+        '1. Dan' => 11, '2. Dan' => 12, '3. Dan' => 13, '4. Dan' => 14, '5. Dan' => 15, '6. Dan' => 16, '7. Dan' => 17,
+    );
 
     /**
      * The waiting time in days for a certain grade
      * 
      * @var integer
      */
-    protected $waiting_time;
+    protected $waiting_time = array(
+        '10. Kup' => 56, '9. Kup' => 56, '8. Kup' => 84, '7. Kup' => 84, '6. Kup' => 112, '5. Kup' => 112, '4. Kup' => 140,
+        '3. Kup' => 140, '2. Kup' => 168, '1. Kup' => 168, '1. Poom' => 252, '2. Poom' => 728, '3. Poom' => 1092, '4. Poom' => 1092,
+        '1. Dan' => 182, '2. Dan' => 364, '3. Dan' => 728, '4. Dan' => 1092, '5. Dan' => 1456, '6. Dan' => 1820, '7. Dan' => 2184
+    );
 
     /**
      * The minimum ages for a certain grade in years
      * 
      * @var array
      */
-    protected $minimum_age;
-
-    /**
-     * Overriding constructor
-     */
-    public function __construct($config = array())
-    {
-        $this->grades = array(
-            '10. Kup' => 1, '9. Kup' => 2, '8. Kup' => 3, '7. Kup' => 4, '6. Kup' => 5, '5. Kup' => 6, '4. Kup' => 7,
-            '3. Kup' => 8, '2. Kup' => 9, '1. Kup' => 10, '1. Poom' => 11, '2. Poom' => 12, '3. Poom' => 13, '4. Poom' => 14,
-            '1. Dan' => 11, '2. Dan' => 12, '3. Dan' => 13, '4. Dan' => 14, '5. Dan' => 15, '6. Dan' => 16, '7. Dan' => 17,
-        );
-
-        $this->waiting_time = array(
-            '10. Kup' => 56, '9. Kup' => 56, '8. Kup' => 84, '7. Kup' => 84, '6. Kup' => 112, '5. Kup' => 112, '4. Kup' => 140,
-            '3. Kup' => 140, '2. Kup' => 168, '1. Kup' => 168, '1. Poom' => 252, '2. Poom' => 728, '3. Poom' => 1092, '4. Poom' => 1092,
-            '1. Dan' => 182, '2. Dan' => 364, '3. Dan' => 728, '4. Dan' => 1092, '5. Dan' => 1456, '6. Dan' => 1820, '7. Dan' => 2184
-        );
-
-        $this->minimum_age = array(
-            '1. Poom' => 6, '2. Poom' => 8, '3. Poom' => 11, '4. Poom' => 14,
-            '1. Dan' => 15, '2. Dan' => 16, '3. Dan' => 18, '4. Dan' => 21,
-            '5. Dan' => 25, '6. Dan' => 30, '7. Dan' => 36
-        );
-
-        parent::__construct($config = array());
-    }
+    protected $minimum_age = array(
+        '1. Poom' => 6, '2. Poom' => 8, '3. Poom' => 11, '4. Poom' => 14,
+        '1. Dan' => 15, '2. Dan' => 16, '3. Dan' => 18, '4. Dan' => 21,
+        '5. Dan' => 25, '6. Dan' => 30, '7. Dan' => 36
+    );
+    
 
     /**
      * Add a new candidate
@@ -74,20 +70,15 @@ class CandidateController extends FormController
      */
     public function add()
     {
-        // check for published promotions
-        $model =  $this->getModel();
-        $exams =  $model->checkPromotionsPublished();
-
-        if (!$exams) {
-            $this->setError(Text::_('COM_TKDCLUB_CANDIDATE_NO_PUPLISHED_PROMOTIONS'));
-            $this->setMessage($this->getError(), 'error');
+        if (!$this->getModel()->checkPromotionsPublished())
+        {
+            $this->setMessage(Text::_('COM_TKDCLUB_CANDIDATE_NO_PUPLISHED_PROMOTIONS'), 'error');
 
             $this->setRedirect(
-                Route::_(
-                    'index.php?option=' . $this->option . '&view=' . $this->view_list
-                        . $this->getRedirectToListAppend(),
-                    false
-                )
+                    Route::_(
+                        'index.php?option=' . $this->option . '&view=' . $this->view_list
+                            . $this->getRedirectToListAppend(),
+                        false)
             );
 
             return false;
@@ -116,54 +107,55 @@ class CandidateController extends FormController
         !empty($checkIDs) ? $this->response($checkIDs) : null;
 
         // IDs ok, get Model and fetch data
-        $model = $this->getModel($name = 'candidate', $prefix = 'TkdClubModel', $config = array());
-        $candidate_data = $model->getCandidateData($candidate_id, $promotion_id);
+        $model = $this->getModel($name = 'candidate', $prefix = 'Administrator', $config = array());
+        $this->candidate_data = $model->getCandidateData($candidate_id, $promotion_id);
+        $this->candidate_data['name'] = $this->candidate_data['firstname'] . ' ' . $this->candidate_data['lastname'];
 
         // Check for some missing candidates-data for finding proper grade to achieve
-        $checkData = $this->checkData($candidate_data);
-        !empty($checkData) ? $this->response($checkData) : null;
-
+        $this->checkData($this->candidate_data);
+ 
         // Check for double promotions and already assigned promotions
         $checkForDouble = $this->checkForDouble();
         !empty($checkForDouble) ? $this->response($checkForDouble) : null;
 
         // check for minimum age and waiting time
-        $this->age = (int) Helper::getAgetoDate($this->promotion_date, $this->birthdate);
+        $this->candidate_data['age'] = (int) TkdclubHelper::getAgetoDate($this->candidate_data['promotion_date'], $this->candidate_data['birthdate']);
         $this->changeGrades();
 
         // calculate grade value
-        if (!$this->double) {
-            $this->grade == '0' ? $grade_achieve_value = 1 : $grade_achieve_value = $this->grades[$candidate_data['grade']] + 1;
+        if (!$this->candidate_data['double']) {
+            $this->candidate_data['grade'] == '0' ? $grade_achieve_value = 1 : $grade_achieve_value = $this->grades[$this->candidate_data['grade']] + 1;
         } else {
-            $grade_achieve_value = $this->grades[$this->double] + 1;
+            $grade_achieve_value = $this->grades[$this->candidate_data['double']] + 1;
         }
 
         // Find the correct grade for the grade value
-        $grade_achieve = array_search($grade_achieve_value, $this->grades);
+        $this->candidate_data['grade_achieve'] = array_search($grade_achieve_value, $this->grades);
 
         // Check if the correct promotion type is selected
         $checkType = $this->checkType($grade_achieve_value);
         !empty($checkType) ? $this->response($checkType) : null;
 
-        $checkAgeAndWaitingtime = $this->checkAgeAndWaitingtime($grade_achieve_value, $grade_achieve);
+        $checkAgeAndWaitingtime = $this->checkAgeAndWaitingtime($grade_achieve_value, $this->candidate_data['grade_achieve']);
         !empty($checkAgeAndWaitingtime) ? $this->response($checkAgeAndWaitingtime) : null;
 
         // everything is fine, give back the grade achieve and Information about double promotion
         $candidate_data['grade_achieve'] = array_search($grade_achieve_value, $this->grades);
 
-        if ($candidate_data['lastpromotion'] == '0000-00-00') {
-            $candidate_data['lastpromotion'] = '';
-            $candidate_data['grade'] = Text::_('COM_TKDCLUB_NO_GRADE_LISTVIEW');
+        if ($this->candidate_data['lastpromotion'] == '0000-00-00') {
+            $this->candidate_data['lastpromotion'] = '';
+            $this->candidate_data['grade'] = Text::_('COM_TKDCLUB_NO_GRADE_LISTVIEW');
         } else {
-            $candidate_data['lastpromotion'] = JHtml::_('date', $candidate_data['lastpromotion'], Text::_('DATE_FORMAT_LC4'));
+            $this->candidate_data['lastpromotion'] = HTMLHelper::_('date', $this->candidate_data['lastpromotion'], Text::_('DATE_FORMAT_LC4'));
         }
 
-        if ($this->double) {
-            $candidate_data['notes'] = Text::_('COM_TKDCLUB_CANDIDATE_DOUBLE_PROMOTION');
+        if ($this->candidate_data['double']) {
+            $this->candidate_data['notes'] = Text::_('COM_TKDCLUB_CANDIDATE_DOUBLE_PROMOTION');
         }
 
-        $candidate_data['no_error'] = true;
-        $this->response($candidate_data);
+        $this->candidate_data['no_error'] = true;
+
+        $this->response($this->candidate_data);
     }
 
     /**
@@ -202,33 +194,25 @@ class CandidateController extends FormController
     {
         $errors = array();
 
-        // writing data to class variables
-        $this->birthdate = $candidate_data['birthdate'];
-        $this->lastpromotion = $candidate_data['lastpromotion'];
-        $this->grade = $candidate_data['grade'];
-        $this->entry = $candidate_data['entry'];
-        $this->member_id = $candidate_data['member_id'];
-        $this->name = $candidate_data['firstname'] . ' ' . $candidate_data['lastname'];
-        $this->promotion_date = $candidate_data['promotion_date'];
-        $this->promotion_type = $candidate_data['promotion_type'];
-        $this->double = isset($candidate_data['double']) ? $candidate_data['double'] : null;
-        $this->second_promotion = isset($candidate_data['second_promotion']) ? $candidate_data['second_promotion'] : null;
+        // checking for double
+        $this->candidate_data['double'] = isset($candidate_data['double']) ? $candidate_data['double'] : null;
+        $this->candidate_data['second_promotion'] = isset($candidate_data['second_promotion']) ? $candidate_data['second_promotion'] : null;
 
         // missing birthdate
-        $this->birthdate == '0000-00-00' ? $errors['error_birthdate'] = '- ' . Text::_('COM_TKDCLUB_MEMBER_BIRTHDATE') : null;
+        $this->candidate_data['birthdate'] == '0000-00-00' ? $errors['error_birthdate'] = '- ' . Text::_('COM_TKDCLUB_MEMBER_BIRTHDATE') : null;
 
         // missing last promotion date when grade is set
-        if ($this->lastpromotion == '0000-00-00' && $this->grade != '0') {
+        if ($this->candidate_data['lastpromotion'] == '0000-00-00' && $this->candidate_data['grade'] != '0') {
             $errors['error_lastpromotion'] = '- ' . Text::_('COM_TKDCLUB_MEMBER_LAST_PROMOTION');
         }
 
         // missing grade when last promotion date is set
-        if ($this->lastpromotion != '0000-00-00' && $this->grade == '0') {
+        if ($this->candidate_data['lastpromotion'] != '0000-00-00' && $this->candidate_data['grade'] == '0') {
             $errors['error_grade'] = '- ' . Text::_('COM_TKDCLUB_MEMBER_GRADE');
         }
 
         // missing entry date when no grade is set
-        if ($this->entry == '0000-00-00' && $this->grade == '0') {
+        if ($this->candidate_data['entry'] == '0000-00-00' && $this->candidate_data['grade'] == '0') {
             $errors['error_entry'] = '- ' . Text::_('COM_TKDCLUB_MEMBER_ENTRY');
         }
 
@@ -254,11 +238,11 @@ class CandidateController extends FormController
     {
         $errors = array();
 
-        if ($this->double == 'error_already_double') {
-            $errors[$this->double] = '- ' . Text::_('COM_TKDCLUB_CANDIDATE_ALREADY_DOUBLE_PROMOTION');
+        if ($this->candidate_data['double'] == 'error_already_double') {
+            $errors[$this->candidate_data['double']] = '- ' . Text::_('COM_TKDCLUB_CANDIDATE_ALREADY_DOUBLE_PROMOTION');
         }
 
-        if ($this->second_promotion) {
+        if ($this->candidate_data['second_promotion']) {
             $errors['second_promotion'] = '- ' . Text::_('COM_TKDCLUB_CANDIDATE_ALREADY_PROMOTION_ASSIGNED');
         }
 
@@ -274,7 +258,7 @@ class CandidateController extends FormController
      */
     protected function changeGrades()
     {
-        if ($this->age < 15) {
+        if ($this->candidate_data['age'] < 15) {
             unset($this->grades['1. Dan']);
             unset($this->grades['2. Dan']);
             unset($this->grades['3. Dan']);
@@ -306,21 +290,21 @@ class CandidateController extends FormController
         // First check minimum age
         if (array_key_exists($grade_achieve, $this->minimum_age))
         {
-            $this->age < $this->minimum_age[$grade_achieve] ? $errors['error_minage'] = '- ' . Text::_('COM_TKDCLUB_CANDIDATE_MINIMUM_AGE_NOT_ACHIEVED') : null;
+            $this->candidate_data['age'] < $this->minimum_age[$grade_achieve] ? $errors['error_minage'] = '- ' . Text::_('COM_TKDCLUB_CANDIDATE_MINIMUM_AGE_NOT_ACHIEVED') : null;
         }
 
         // Now check the waiting time, for double promotion calculate as necessary
-        $promotion = date_create($this->promotion_date);
+        $promotion = date_create($this->candidate_data['promotion_date']);
 
-        if (!$this->double) // No double promotion
+        if (!$this->candidate_data['double']) // No double promotion
         {
-            $last = date_create($this->lastpromotion);
+            $last = date_create($this->candidate_data['lastpromotion']);
             $time = $this->waiting_time[$grade_achieve];
         }
 
-        if ($this->double) // double promotion, figure out date to use and waiting time
+        if ($this->candidate_data['double']) // double promotion, figure out date to use and waiting time
         {
-            $this->lastpromotion == '0000-00-00' ? $last = date_create($this->entry) : $last = date_create($this->lastpromotion);
+            $this->candidate_data['lastpromotion'] == '0000-00-00' ? $last = date_create($this->candidate_data['entry']) : $last = date_create($this->candidate_data['lastpromotion']);
 
             $time2 = $this->waiting_time[$grade_achieve]; // for 2. grade
             $grade1_val = $this->grades[$grade_achieve] - 1;
@@ -337,7 +321,7 @@ class CandidateController extends FormController
         }
 
         if (!empty($errors)) {
-            $errors['error'] = '<b>' . Text::_('COM_TKDCLUB_CANDIDATE_ERROR') . $this->name . '</b>';
+            $errors['error'] = '<b>' . Text::_('COM_TKDCLUB_CANDIDATE_ERROR') . $this->candidate_data['name'] . '</b>';
         }
 
         return $errors;
@@ -357,16 +341,16 @@ class CandidateController extends FormController
     {
         $errors = array();
 
-        if ($grade_achieve_value > 10 && $this->promotion_type == 'kup') {
+        if ($grade_achieve_value > 10 && $this->candidate_data['promotion_type'] == 'kup') {
             $errors['error_type'] = Text::_('COM_TKDCLUB_CANDIDATE_SUBSCRIBE_TO_DAN');
         }
 
-        if ($grade_achieve_value < 11 && $this->promotion_type == 'dan') {
+        if ($grade_achieve_value < 11 && $this->candidate_data['promotion_type'] == 'dan') {
             $errors['error_type'] = Text::_('COM_TKDCLUB_CANDIDATE_SUBSCRIBE_TO_KUP');
         }
 
         if (!empty($errors)) {
-            $errors['error'] = '<b>' . Text::_('COM_TKDCLUB_CANDIDATE_ERROR') . $this->name . '</b>';
+            $errors['error'] = '<b>' . Text::_('COM_TKDCLUB_CANDIDATE_ERROR') . $this->candidate_data['name'] . '</b>';
         }
 
         return $errors;
@@ -381,6 +365,7 @@ class CandidateController extends FormController
     protected function response($data)
     {
         echo json_encode($data);
+        //echo new JsonResponse($data);
         $this->app->close();
     }
 }

@@ -10,8 +10,8 @@ namespace Redfindiver\Component\Tkdclub\Administrator\Model;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Model\AdminModel;
-use Joomla\CMS\Table\Table;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
 /**
@@ -30,9 +30,9 @@ class CandidateModel extends AdminModel
      *
      * @throws  Exception
      */
-    public function getTable($type = 'Candidates', $prefix = 'TkdClubTable', $config = array())
+    public function getTable($type = 'candidates', $prefix = 'administrator', $config = array())
     {
-        return Table::getInstance($type, $prefix, $config);
+        return parent::getTable($type, $prefix, $config);
     }
 
     /**
@@ -88,7 +88,7 @@ class CandidateModel extends AdminModel
      */
     public function getItem($pk = null)
     {
-        $item = parent::getItem($pk);
+        $item = parent::getItem($pk = null);
 
         if ($item->id_candidate >= (int)1)
         {      
@@ -110,7 +110,7 @@ class CandidateModel extends AdminModel
             }
             else
             {
-                $item2['lastpromotion'] = JHtml::_('date', $item2['lastpromotion'], Text::_('DATE_FORMAT_LC4'));
+                $item2['lastpromotion'] = HTMLHelper::_('date', $item2['lastpromotion'], Text::_('DATE_FORMAT_LC4'));
             }
             
             // Append the array
