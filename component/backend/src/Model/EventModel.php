@@ -16,7 +16,7 @@ use Joomla\CMS\Factory;
 /**
  * Model-class for edit view 'event'
  */
-class ModelEventModel extends AdminModel
+class EventModel extends AdminModel
 {
     /**
      * Method to get a table object, load it if necessary.
@@ -30,9 +30,9 @@ class ModelEventModel extends AdminModel
      * @since   2.0
      * @throws  Exception
      */
-    public function getTable($type = 'Events', $prefix = 'TkdClubTable', $config = array())
+    public function getTable($type = 'Events', $prefix = 'Administrator', $config = array())
     {
-        return Table::getInstance($type, $prefix, $config);
+        return parent::getTable($type, $prefix, $config);
     }
         
     /**

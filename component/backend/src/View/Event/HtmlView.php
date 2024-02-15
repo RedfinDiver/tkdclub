@@ -14,13 +14,13 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 
 
 /**
  * view-class for edit-view: 'event'
  */
-class EventView extends HtmlView
+class HtmlView extends BaseHtmlView
 {
     protected $item;
     protected $form;
@@ -42,10 +42,13 @@ class EventView extends HtmlView
     {
         $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
 
-        if ($this->item->event_id == NULL) {
-            ToolbarHelper::title($clubname . Text::_('COM_TKDCLUB_EVENT_NEW_TITLE'), 'tkdclub');
-        } else {
-            ToolbarHelper::title($clubname . Text::_('COM_TKDCLUB_EVENT_EDIT_TITLE'), 'tkdclub');
+        if ($this->item->event_id == NULL)
+        {
+            ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_EVENT_NEW_TITLE'), 'tkdclub tkdclub-logo-v-sw');
+        }
+        else
+        {
+            ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_EVENT_EDIT_TITLE'), 'tkdclub tkdclub-logo-v-sw');
         }
 
         $canDo = ContentHelper::getActions('com_tkdclub');

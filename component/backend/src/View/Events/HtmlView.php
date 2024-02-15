@@ -15,12 +15,12 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 
 /**
  * view-class for list-view 'events'
  */
-class EventsView extends HtmlView
+class HtmlView extends BaseHtmlView
 {
     protected $items;
     protected $state;
@@ -47,15 +47,13 @@ class EventsView extends HtmlView
         } */
 
         $this->addToolbar();
-        $this->sidebar = JHtmlSidebar::render();
         parent::display($tpl);
     }
 
     protected function addToolbar()
     {
         $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
-
-        ToolbarHelper::title($clubname . JText::_('COM_TKDCLUB_EVENT_ADMIN_VIEW'), 'tkdclub');
+        ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_EVENT_ADMIN_VIEW'), 'tkdclub tkdclub-logo-v-sw');
 
         $canDo = ContentHelper::getActions('com_tkdclub');
 
@@ -89,13 +87,9 @@ class EventsView extends HtmlView
             ToolbarHelper::custom('events.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);
         } */
 
-        $toolbar->appendButton('RawFormat',  'download', 'COM_TKDCLUB_BUTTON_EXPORT', 'export.events');
-
         if ($canDo->get('core.admin')) {
             ToolbarHelper::preferences('com_tkdclub');
         }
-
-        JHtmlSidebar::setAction('index.php?option=com_tkdclub&view=events');
 
         $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/veranstaltungen.html';
         ToolbarHelper::help('', false, $help_url);
@@ -104,7 +98,7 @@ class EventsView extends HtmlView
     protected function getSortFields()
     {
         return array(
-            'date' => JText::_('COM_TKDCLUB_PROMOTION_DATE'),
+            'date' => Text::_('COM_TKDCLUB_PROMOTION_DATE'),
         );
     }
 }
