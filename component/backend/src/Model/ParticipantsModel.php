@@ -1,4 +1,4 @@
-<<?php
+<?php
 /**
  * @package    Taekwondo Club
  * @copyright  Copyright (C) 2021 Markus Moser. All rights reserved.

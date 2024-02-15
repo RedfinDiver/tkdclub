@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<form>
+<form name="filter" addfieldprefix="Redfindiver\Component\Tkdclub\Administrator\Field">
 
     <fields name="filter">
         <field

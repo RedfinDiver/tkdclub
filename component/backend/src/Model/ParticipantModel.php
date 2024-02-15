@@ -13,6 +13,7 @@ use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
+use Redfindiver\Component\Tkdclub\Administrator\Table\SubscribersTable;
 
 /**
  * Model-class for edit view 'participant'
@@ -31,9 +32,9 @@ class ParticipantModel extends AdminModel
      * @since   2.0
      * @throws  Exception
      */
-    public function getTable($type = 'Participants', $prefix = 'TkdClubTable', $config = array())
+    public function getTable($type = 'Participants', $prefix = 'Administrator', $config = array())
     {   
-        return Table::getInstance($type, $prefix, $config);
+        return parent::getTable($type, $prefix, $config);
     }
         
     /**
@@ -146,7 +147,7 @@ class ParticipantModel extends AdminModel
             // Check if email is there and already present
             if ($row->email != '' && !in_array($row->email, $all_emails))
             {
-                $table = Table::getInstance($type = 'subscribers', $prefix= 'TkdclubTable', $config = array());
+                $table = $this->getMVCFactory()->createTable('Subscribers', 'Administrator');
                 $row->origin = 2; // set origin from form in database
                 $table->save($row) ? $stored++ : null;
             }

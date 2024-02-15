@@ -20,7 +20,7 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 /**
  * view-class for view: 'participants'
  */
-class ParticipantsView extends BaseHtmlView
+class HtmlView extends BaseHtmlView
 {
     protected $items;
     protected $pagination;
@@ -53,7 +53,7 @@ class ParticipantsView extends BaseHtmlView
     protected function addToolbar()
     {
         $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
-        ToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_PARTICIPANT_ADMIN_VIEW'), 'tkdclub tkdclub-logo-v-sw');
+        ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_PARTICIPANT_ADMIN_VIEW'), 'tkdclub tkdclub-logo-v-sw');
 
         $canDo = ContentHelper::getActions('com_tkdclub');
 
@@ -75,23 +75,11 @@ class ParticipantsView extends BaseHtmlView
         }
 
         $toolbar = ToolBar::getInstance('toolbar');
-        $toolbar->addButtonPath(JPATH_COMPONENT . '/buttons');
 
         if ($canDo->get('core.admin')) {
-            $toolbar->appendButton('Delgdpr', 'COM_TKDKLUB_PARTICIPANT_GDPR_DELETE_MESSAGE', 'flash', 'COM_TKDKLUB_PARTICIPANT_GDPR_DELETE', 'participants.delete_gdpr');
+            $toolbar->appendButton('confirm', 'COM_TKDKLUB_PARTICIPANT_GDPR_DELETE_MESSAGE', 'flash', 'COM_TKDKLUB_PARTICIPANT_GDPR_DELETE', 'participants.delete_gdpr');
         }
 
-        /* // TODO statistics for participants
-        if ($this->togglestats)
-        {
-            ToolBarHelper::custom('participants.togglestats', 'eye-close', 'eye-close', 'COM_TKDCLUB_BUTTON_STATS', false);
-        }
-        else
-        {
-            ToolBarHelper::custom('participants.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);
-        } */
-
-        $toolbar->appendButton('RawFormat',  'download', 'COM_TKDCLUB_BUTTON_EXPORT', 'export.participants');
 
         if ($canDo->get('core.admin')) {
             ToolBarHelper::preferences('com_tkdclub');

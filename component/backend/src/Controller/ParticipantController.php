@@ -11,7 +11,7 @@ namespace Redfindiver\Component\Tkdclub\Administrator\Controller;
 
 use Joomla\CMS\MVC\Controller\FormController;
 
-class ParticipantConroller extends FormController
+class ParticipantController extends FormController
 {
     
 }

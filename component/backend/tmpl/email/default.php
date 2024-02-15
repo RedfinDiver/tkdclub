@@ -13,80 +13,44 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 
-HTMLHelper::_('behavior.core');
-HTMLHelper::_('behavior.formvalidator');
-HTMLHelper::_('formbehavior.chosen', 'select');
-HTMLHelper::stylesheet('administrator/components/com_tkdclub/assets/css/tkdclub.css');
-
 //test email active
 if ($this->email_test) {
     Factory::getApplication()->enqueueMessage(Text::_('COM_TKDCLUB_EMAIL_TESTMAIL_ACTIVE') . $this->email_test, 'message');
 }
+
+HtmlHelper::_('bootstrap.tooltip');
+
+/** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
+$wa = $this->document->getWebAssetManager();
+$wa->useScript('keepalive')
+    ->useScript('form.validate')
+    ->useScript('com_tkdclub.email')
+    ->useStyle('com_tkdclub.tkdclub-admin');
 ?>
 
-<script type="text/javascript">
-    Joomla.submitbutton = function(pressbutton) {
-        var form = document.adminForm;
-
-        if (pressbutton == 'email.cancel') {
-            Joomla.submitform(pressbutton);
-            return;
-        }
-
-        // do field validation
-        if (form.jform_subject.value == "") {
-            alert(Joomla.Text._('COM_TKDCLUB_EMAIL_PLEASE_FILL_IN_THE_SUBJECT'));
-        } else if (form.jform_message.value == "") {
-            alert(Joomla.Text._('COM_TKDCLUB_EMAIL_PLEASE_FILL_IN_THE_MESSAGE'));
-        } else {
-            Joomla.submitform(pressbutton);
-        }
-    }
-</script>
-
-<?php if (!empty($this->sidebar)) : ?>
-    <div id="j-sidebar-container" class="span2">
-        <?php echo $this->sidebar; ?>
-    </div>
-    <div id="j-main-container" class="span10">
-    <?php else : ?>
-        <div id="j-main-container">
-        <?php endif; ?>
-
-        <form action="<?php echo Route::_('index.php?option=com_tkdclub&view=email'); ?>" name="adminForm" method="post" id="adminForm" class="form-validate" enctype="multipart/form-data">
-
-            <div class="row-fluid">
-                <div class="span8">
-                    <fieldset class="adminform">
-                        <?php foreach ($this->form->getFieldset('email') as $field) : ?>
-                            <?php echo $field->renderField(); ?>
-                        <?php endforeach; ?>
-                    </fieldset>
-                    <input type="hidden" name="task" value="" />
-                    <?php echo HTMLHelper::_('form.token'); ?>
-
+<form action="<?php echo Route::_('index.php?option=com_tkdclub&view=email'); ?>" name="adminForm" method="post" id="adminForm" class="form-validate" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-lg-6">
+            <fieldset id="fieldset-personal_data" class="options-form">
+                <legend><?php echo Text::_('COM_TKDCLUB_EMAIL_DATA'); ?></legend>
+                <div>
+                    <?php echo $this->form->renderFieldset('email'); ?>
                 </div>
-                <?php if (!$this->email_test) : ?>
-                    <div class="span4">
-                        <h4><?php echo Text::_('COM_TKDCLUB_EMAIL_RECIPIENTS') ?></h4>
-                        <fieldset class="form-vertical">
-                            <div class="control-group checkbox">
-                                <div class="controls"><?php echo $this->form->getInput('active'); ?> <?php echo $this->form->getLabel('active'); ?></div>
-                            </div>
-                            <div class="control-group checkbox">
-                                <div class="control-label"><?php echo $this->form->getInput('supporter'); ?> <?php echo $this->form->getLabel('supporter'); ?></div>
-                            </div>
-                            <div class="control-group checkbox">
-                                <div class="control-label"><?php echo $this->form->getInput('inactive'); ?> <?php echo $this->form->getLabel('inactive'); ?></div>
-                            </div>
-                            <div class="control-group checkbox">
-                                <div class="control-label"><?php echo $this->form->getInput('newsletter'); ?> <?php echo $this->form->getLabel('newsletter'); ?></div>
-                            </div>
-                            <div class="control-label"><?php echo $this->form->getLabel('event'); ?> </div>
-                            <div class="controls"><?php echo $this->form->getInput('event'); ?> </div>
-                        </fieldset>
-                    </div>
-                <?php endif; ?>
-            </div>
+            </fieldset>
         </div>
-        </form>
+        <div class="col-lg-6">
+            <fieldset id="fieldset-taekwondo_data" class="options-form">
+                <legend class="card-title"><?php echo Text::_('COM_TKDCLUB_EMAIL_RECPIENTS'); ?></legend>
+                <div>
+                    <?php echo $this->form->renderFieldset('recipients'); ?>
+                </div>
+            </fieldset>
+            <fieldset id="fieldset-taekwondo_data" class="options-form">
+                <legend class="card-title"><?php echo Text::_('COM_TKDCLUB_EMAIL_ATTACHMENTS'); ?></legend>
+                <div>
+                    <?php echo $this->form->renderFieldset('attachments'); ?>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</form>

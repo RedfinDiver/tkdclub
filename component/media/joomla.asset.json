@@ -72,6 +72,17 @@
         "attributes": {
           "defer": true
         }
+      },
+      {
+        "name": "com_tkdclub.email",
+        "type": "script",
+        "uri": "com_tkdclub/email.js",
+        "dependencies": [
+          "core"
+        ],
+        "attributes": {
+          "defer": true
+        }
       }
 
     ]

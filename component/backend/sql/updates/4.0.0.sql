@@ -77,3 +77,17 @@ ALTER TABLE `#__tkdclub_promotions`
     CHANGE `created` `created` datetime DEFAULT NULL,
     CHANGE `checked_out_time` `checked_out_time` datetime DEFAULT NULL,
     CHANGE `checked_out` `checked_out` int(10) UNSIGNED DEFAULT NULL;
+
+ALTER TABLE `#__tkdclub_event_participants`
+    CHANGE `user1` `user1` varchar(50) NOT NULL DEFAULT '',
+    CHANGE `user2` `user2` varchar(50) NOT NULL DEFAULT '',
+    CHANGE `user3` `user3` varchar(50) NOT NULL DEFAULT '',
+    CHANGE `user4` `user4` varchar(50) NOT NULL DEFAULT '',
+    CHANGE `store_data` `store_data` tinyint(4) NOT NULL DEFAULT '0',
+    CHANGE `privacy_agreed` `privacy_agreed` tinyint(4) DEFAULT NULL,
+    CHANGE `created` `created` DATETIME DEFAULT NULL,
+    CHANGE `created_by` int(10) UNSIGNED NOT NULL DEFAULT '0',
+    CHANGE `modified` `modified` datetime DEFAULT NULL,
+    CHANGE `modified_by` `modified_by` INT(10) unsigned NOT NULL DEFAULT '0',
+    CHANGE `checked_out` `checked_out` int(10) UNSIGNED DEFAULT NULL,
+    CHANGE `checked_out_time` `checked_out_time` datetime DEFAULT NULL;
