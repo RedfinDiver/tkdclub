@@ -99,7 +99,7 @@
                 COM_TKDCLUB_SUBMENU_PARTICIPANTS
             </menu>
             <menu
-                link="option=com_tkdclub&amp;view=EMAIL"
+                link="option=com_tkdclub&amp;view=email"
                 view="EMAIL"
                 img="class:tkdclub-logo"
                 >
