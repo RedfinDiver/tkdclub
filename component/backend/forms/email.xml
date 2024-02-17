@@ -4,31 +4,31 @@
 
 		<field
             name="active" type="checkbox"
-			description="COM_TKDCLUB_EMAIL_FIELD_ACTIVE_DESC"
+			description=""
 			label="COM_TKDCLUB_EMAIL_FIELD_ACTIVE_LABEL"
 			value="1" default="0" />
 
 		<field
             name="supporter" type="checkbox"
-			description="COM_TKDCLUB_EMAIL_FIELD_SUPPORTER_DESC"
+			description=""
 			label="COM_TKDCLUB_EMAIL_FIELD_SUPPORTER_LABEL"
 			value="1" default="0" />
 
 		<field
             name="inactive" type="checkbox"
-			description="COM_TKDCLUB_EMAIL_FIELD_INACTIVE_DESC"
+			description=""
 			label="COM_TKDCLUB_EMAIL_FIELD_INACTIVE_LABEL"
 			value="1" default="0" />
                 
 		<field
             name="newsletter" type="checkbox"
-			description="COM_TKDCLUB_EMAIL_FIELD_NEWSLETTER_SUBS_DESC"
+			description=""
 			label="COM_TKDCLUB_EMAIL_FIELD_NEWSLETTER_SUBS_LABEL"
 			value="1" default="0" />
 		
 		<field
             name="event" type="events"
-			description="COM_TKDCLUB_EMAIL_FIELD_EVENT_DESC"
+			description=""
 			label="COM_TKDCLUB_EMAIL_FIELD_EVENT_LABEL"
 			onlypublished="true">
 			<option value="">COM_TKDCLUB_SELECT_EVENT</option>

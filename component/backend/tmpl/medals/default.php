@@ -25,7 +25,6 @@ $user      = Factory::getUser();
 $userId    = $user->get('id');
 $listOrder = $this->state->get('list.ordering');
 $listDirn  = $this->state->get('list.direction');
-$columns   = 10;
 ?>
 
 <form action="<?php echo Route::_('index.php?option=com_tkdclub&view=medals'); ?>" method="post" name="adminForm" id="adminForm">

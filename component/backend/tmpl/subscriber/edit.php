@@ -9,48 +9,41 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Router\Route;
 
-HTMLHelper::_('behavior.formvalidator');
-HTMLHelper::_('formbehavior.chosen', 'select');
-HTMLHelper::stylesheet('administrator/components/com_tkdclub/assets/css/tkdclub.css');
-
-Factory::getDocument()->addScriptDeclaration("
-	Joomla.submitbutton = function(task)
-	{
-		if (task == 'subscriber.cancel' || document.formvalidator.isValid(document.getElementById('subscriber-form'))) 
-                {
-			Joomla.submitform(task, document.getElementById('subscriber-form'));
-		}
-	};
-");
+/** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
+$wa = $this->document->getWebAssetManager();
+$wa->useScript('keepalive')
+    ->useScript('form.validate')
+    ->useStyle('com_tkdclub.tkdclub-admin');
 
 ?>
 
 <form action="<?php echo Route::_('index.php?option=com_tkdclub&id=' . (int) $this->item->id); ?>" method="post" name="adminForm" id="subscriber-form" class="form-validate">
-
-    <div class="row-fluid">
-        <div class="span12 form-horizontal">
-            <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'subscriberdata')); ?>
-
-            <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'participant', empty($this->item->id) ? Text::_('COM_TKDCLUB_SUBSCRIBER_NEW_TAB', true) : Text::_('COM_TKDCLUB_SUBSCRIBER_EDIT_TAB', true)); ?>
-            <?php echo $this->form->renderFieldset('subscriberdata') ?>
-            <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
-
-            <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'item_data', Text::_('COM_TKDCLUB_ITEM_DATA', true)); ?>
+    <div>
+        <?php echo HTMLHelper::_('uitab.startTabSet', 'myTab', array('active' => 'subscriberdata')); ?>
+            <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'participant', empty($this->item->id) ? Text::_('COM_TKDCLUB_SUBSCRIBER_NEW_TAB', true) : Text::_('COM_TKDCLUB_SUBSCRIBER_EDIT_TAB', true)); ?>
+                <div class="row">
+                    <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'participant', empty($this->item->id) ? Text::_('COM_TKDCLUB_SUBSCRIBER_NEW_TAB', true) : Text::_('COM_TKDCLUB_SUBSCRIBER_EDIT_TAB', true)); ?>
+                    <?php echo $this->form->renderFieldset('subscriberdata') ?>
+                </div>
+        <?php echo HTMLHelper::_('uitab.endTab'); ?>
+        <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'item_data', Text::_('COM_TKDCLUB_ITEM_DATA', true)); ?>
             <?php if (empty($this->item->id)) : ?>
-                <div class="alert alert-no-items">
+                <div class="alert alert-info">
+                    <span class="icon-info-circle" aria-hidden="true"></span><span class="visually-hidden"><?php echo Text::_('INFO'); ?></span>
                     <?php echo Text::_('COM_TKDCLUB_NO_ITEM_DATA'); ?>
                 </div>
             <?php else : ?>
-                <?php echo $this->form->renderFieldset('item_data') ?>
+                <div>
+                    <?php foreach ($this->form->getFieldset('item_data') as $field) : ?>
+                        <?php echo $field->renderField(); ?>
+                    <?php endforeach; ?>
+                </div>
             <?php endif; ?>
-            <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
-
-            <?php echo HTMLHelper::_('bootstrap.endTabset'); ?>
-        </div>
+            <?php echo HTMLHelper::_('uitab.endTab'); ?>
+        <?php echo HTMLHelper::_('uitab.endTabset'); ?>
     </div>
     <div>
         <input type="hidden" name="task" value="" />

@@ -10,7 +10,7 @@ namespace Redfindiver\Component\Tkdclub\Administrator\Model;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Model\AdminModel;
-use Joomla\CMS\Table\Table;
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
 
 /**
@@ -19,9 +19,9 @@ use Joomla\CMS\Factory;
 class SubscriberModel extends AdminModel
 {
 
-    public function getTable($type = 'subscribers', $prefix = 'TkdClubTable', $config = array())
+    public function getTable($type = 'subscribers', $prefix = 'Administrator', $config = array())
     {
-        return Table::getInstance($type, $prefix, $config);
+        return parent::getTable($type, $prefix, $config);
     }
 
     public function getForm($data = array(), $loadData = true)
@@ -50,7 +50,7 @@ class SubscriberModel extends AdminModel
             "2" => 'COM_TKDCLUB_SUBSCRIBER_ORIGIN_FORM'
         );
 
-        $data->origin = $data->origin ? JText::_($text[$data->origin]) : null;
+        $data->origin = $data->origin ? Text::_($text[$data->origin]) : null;
 
         return $data;
     }

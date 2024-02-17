@@ -15,29 +15,22 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormHelper;
-use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 
-class SubscribersView extends HtmlView
+class HtmlView extends BaseHtmlView
 {
     protected $items;
-    // public    $togglestats;
-
 
     public function display($tpl = null)
     {
         $this->items = $this->get('Items');
         $this->pagination = $this->get('Pagination');
-        $this->addToolbar();
         $this->filterForm = $this->get('FilterForm');
         $this->activeFilters = $this->get('ActiveFilters');
         $this->total = $this->get('Total');
         $this->allrows = $this->get('Allrows');
 
-        /* if ($this->togglestats)
-        {
-            $this->trainerdata = $this->get('Trainerdata');
-            $this->trainingsdata = $this->get('Trainingsdata');
-        } */
+        $this->addToolbar();
 
         parent::display($tpl);
     }
@@ -47,12 +40,8 @@ class SubscribersView extends HtmlView
      */
     protected function addToolbar()
     {
-        // Adding the fieldpath for the filters
-        FormHelper::addFieldPath(JPATH_COMPONENT . '/models/fields');
-
         $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
-
-        ToolbarHelper::title($clubname . Text::_('COM_TKDCLUB_SUBSCRIBER_ADMIN_VIEW'), 'tkdclub');
+        ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_SUBSCRIBER_ADMIN_VIEW'), 'tkdclub tkdclub-logo-v-sw');
 
         $canDo = ContentHelper::getActions('com_tkdclub');
 
@@ -72,17 +61,6 @@ class SubscribersView extends HtmlView
 
         $toolbar = Toolbar::getInstance('toolbar');
         $toolbar->addButtonPath(JPATH_COMPONENT . '/buttons');
-
-        /* if ($this->togglestats)
-        {ToolbarHelper::custom('subscribers.togglestats', 'eye-close', 'eye-close', 'COM_TKDCLUB_BUTTON_STATS', false);}
-        else {ToolbarHelper::custom('subscribers.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);} */
-
-        $toolbar->appendButton('RawFormat',  'download', 'COM_TKDCLUB_BUTTON_EXPORT', 'export.subscribers');
-
-        if ($canDo->get('core.admin')) {
-            ToolbarHelper::divider();
-            ToolbarHelper::preferences('com_tkdclub');
-        }
 
         ToolbarHelper::divider();
 
