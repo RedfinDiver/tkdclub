@@ -77,7 +77,7 @@ class TrainingsController extends AdminController
         // Check for request forgeries.
         Session::checkToken('GET') or jexit(Text::_('JINVALID_TOKEN'));
         
-        $model = $this->getModel($name = 'trainings', $prefix = 'TkdClubModel', $config = array());
+        $model = $this->getModel($name = 'trainings', $prefix = 'Administrator', $config = array());
         $data = $model->gettrainerdata();
         echo json_encode($data);
 
@@ -92,7 +92,7 @@ class TrainingsController extends AdminController
         // Check for request forgeries.
         Session::checkToken('GET') or jexit(Text::_('JINVALID_TOKEN'));
         
-        $model = $this->getModel($name = 'trainings', $prefix = 'TkdClubModel', $config = array());
+        $model = $this->getModel($name = 'trainings', $prefix = 'Administrator', $config = array());
         $data = $model->gettrainingsdata();
         echo json_encode($data);
 

@@ -137,6 +137,10 @@ div.tkdclub-loader {
     100% { transform: rotate(360deg); }
 }
 
+div.stats-member-row2 {
+  margin-top: 10px;
+}
+
 .tkdclub-icon-orange {
     color: #C67605 !important;
 }

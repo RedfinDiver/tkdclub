@@ -83,7 +83,50 @@
         "attributes": {
           "defer": true
         }
+      },
+      {
+        "name": "com_tkdclub.gstatic",
+        "type": "script",
+        "uri": "https://www.gstatic.com/charts/loader.js",
+        "dependencies": [
+          "core"
+        ],
+        "attributes": {
+          "defer": true
+        }
+      },
+      {
+        "name": "com_tkdclub.statistics",
+        "type": "script",
+        "uri": "com_tkdclub/statistics.js",
+        "dependencies": [
+          "com_tkdclub.gstatic"
+        ],
+        "attributes": {
+          "defer": true
+        }
+      },
+      {
+        "name": "com_tkdclub.membercharts",
+        "type": "script",
+        "uri": "com_tkdclub/membercharts.js",
+        "dependencies": [
+          "com_tkdclub.gstatic"
+        ],
+        "attributes": {
+          "defer": true
+        }
+      },
+      {
+        "name": "com_tkdclub.trainingcharts",
+        "type": "script",
+        "uri": "com_tkdclub/trainingcharts.js",
+        "dependencies": [
+          "com_tkdclub.gstatic"
+        ],
+        "attributes": {
+          "defer": true
+        }
       }
-
     ]
   }

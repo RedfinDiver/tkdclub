@@ -201,8 +201,8 @@ Tkdclub.addDataToTable = function (id, data) {
                 + '&name=' + trainer.trainer_name
                 + '&' + Joomla.optionsStorage['csrf.token'] + '=1';
 
-            rows += '<td><a href="' + url_pay + '" class="btn btn-small">';
-            rows += '<span class="icon-publish"></span>' + Joomla.JText._('COM_TKDCLUB_TRAINING_PAY') + '</a></td>';
+            rows += '<td><a href="' + url_pay + '" class="btn btn-success btn-sm">';
+            rows += '<span class=""></span>' + Joomla.JText._('COM_TKDCLUB_TRAINING_PAY') + '</a></td>';
         } else {
             rows += '<td></td>';
         }

@@ -80,7 +80,7 @@ class MembersController extends AdminController
         // Check for request forgeries.
         Session::checkToken('GET') or jexit(Text::_('JINVALID_TOKEN'));
 
-        $model = $this->getModel($name = 'members', $prefix = 'TkdClubModel', $config = array());
+        $model = $this->getModel($name = 'members', $prefix = 'Administrator', $config = array());
         $data = $model->getmemberdata();
         echo json_encode($data);
 

@@ -174,10 +174,11 @@ CREATE TABLE IF NOT EXISTS `#__tkdclub_newsletter_subscribers` (
   `email` varchar(50) NOT NULL,
   `origin` varchar(10) NOT NULL,
   `created` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `created_by` INT(10) unsigned NOT NULL DEFAULT '0',
-  `modified` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created` DATETIME DEFAULT NULL,
+  `created_by` int(10) UNSIGNED NOT NULL DEFAULT '0',
+  `modified` datetime DEFAULT NULL,
   `modified_by` INT(10) unsigned NOT NULL DEFAULT '0',
-  `checked_out` int(10) NOT NULL,
-  `checked_out_time` datetime NOT NULL,
+  `checked_out` int(10) UNSIGNED DEFAULT NULL,
+  `checked_out_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
  ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;

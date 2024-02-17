@@ -9,7 +9,7 @@ namespace Redfindiver\Component\Tkdclub\Administrator\View\Statistics;
 
 \defined('_JEXEC') or die;
 
-use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Language\Text;
@@ -38,7 +38,7 @@ Text::script('JGLOBAL_NO_MATCHING_RESULTS');
 /**
  * View class for statistics view
  */
-class StatisticsView extends HtmlView
+class HtmlView extends BaseHtmlView
 {
     public function display($tpl = null)
     {
@@ -50,7 +50,7 @@ class StatisticsView extends HtmlView
     {
         $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
 
-        ToolBarHelper::title($clubname . JText::_('COM_TKDCLUB_STATISTIC_ADMIN_VIEW'), 'tkdclub');
+        ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_STATISTIC_ADMIN_VIEW'), 'tkdclub');
 
         $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/statistik.html';
         ToolbarHelper::help('', false, $help_url);
