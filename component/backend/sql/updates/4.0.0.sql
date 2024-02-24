@@ -90,7 +90,17 @@ ALTER TABLE `#__tkdclub_event_participants`
     CHANGE `modified` `modified` datetime DEFAULT NULL,
     CHANGE `modified_by` `modified_by` INT(10) unsigned NOT NULL DEFAULT '0',
     CHANGE `checked_out` `checked_out` int(10) UNSIGNED DEFAULT NULL,
-    CHANGE `checked_out_time` `checked_out_time` datetime DEFAULT NULL;
+    CHANGE `checked_out_time` `checked_out_time` datetime DEFAULT NULL,
+    CHANGE `event_id` `event_id` int(11) NOT NULL DEFAULT '0',
+    CHANGE `firstname` `firstname` varchar(50) NOT NULL DEFAULT '',
+    CHANGE `lastname` `lastname` varchar(50) NOT NULL DEFAULT '',
+    CHANGE `clubname` `clubname` varchar(50) NOT NULL DEFAULT '',
+    CHANGE `email` `email` varchar(50) NOT NULL DEFAULT '',
+    CHANGE `registered` `registered` INT(3) NOT NULL DEFAULT 0,
+    CHANGE `grade` `grade` varchar(30) NOT NULL DEFAULT '', 
+    CHANGE `age` `age` TINYTEXT NOT NULL DEFAULT '',
+    CHANGE `notes` `notes` text NOT NULL DEFAULT '',
+    CHANGE `published` `published` tinyint(4) NOT NULL DEFAULT 0;
 
 ALTER TABLE `#__tkdclub_newsletter_subscribers`
     CHANGE `created` `created` DATETIME DEFAULT NULL,

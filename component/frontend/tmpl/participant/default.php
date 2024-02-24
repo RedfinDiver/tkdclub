@@ -8,19 +8,22 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Plugin\PluginHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Factory;
 
-HTMLHelper::_('behavior.tooltip');
-HTMLHelper::_('behavior.formvalidation');
-HTMLHelper::_('formbehavior.chosen', 'select');
-HTMLHelper::_('script', 'components/com_tkdclub/assets/js/reload_fields.js');
+/** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
+$wa = $this->document->getWebAssetManager();
+$wa->useScript('keepalive')
+	->useScript('form.validate')
+	->useScript('com_tkdclub.reload_fields')
+	->useStyle('com_tkdclub.tkdclub-site');
 
 $params = ComponentHelper::getParams('com_tkdclub');
-$item_params = Factory::getApplication()->getUserState('com_tkdclub.participant.itemparams');
+$menu = Factory::getApplication()->getMenu()->getActive();
+$item_params = $menu->getParams();
 
 $places_free = $this->event_data['max'] - $this->event_data['subscribed'];
 $subscribed = $this->event_data['subscribed'] ? $subscribed = $this->event_data['subscribed'] : $subscribed = 0;
@@ -32,19 +35,8 @@ if ($params->get('captcha') != '0')
 {
     // TODO: Handle Plugin with new joomla/event package
     PluginHelper::importPlugin('captcha');
-    $dispatcher = JEventDispatcher::getInstance();
-    $dispatcher->trigger('onInit',''); 
 }
 
-Factory::getDocument()->addScriptDeclaration("
-	Joomla.submitbutton = function(task)
-	{
-		if (task == 'participant.cancel' || document.formvalidator.isValid(document.getElementById('participant-form'))) 
-                {
-			Joomla.submitform(task, document.getElementById('participant-form'));
-		}
-	};
-");
 ?>
 
 <div class="tkdclub_subscribe">
@@ -53,13 +45,13 @@ Factory::getDocument()->addScriptDeclaration("
         . Text::_('COM_TKDCLUB_EVENT_ON') . HTMLHelper::_('date', $this->event_data['date'], Text::_('DATE_FORMAT_LC4')); ?>
     </h2>
     <!-- blocking form if it is set in parameters -->   
-    <?php if ($item_params->block_form_places && $places_free <= 0) : ?>
+    <?php if ($item_params->get('block_form_places') && $places_free <= 0) : ?>
         <h4><?php echo Text::_('COM_TKDCLUB_EVENT_SUBSCRIPTION_UNPOSSIBLE_PLACES'); ?></h4>
-    <?php elseif ($item_params->block_form_deadline && $stop_sub == 1) : ?>
+    <?php elseif ($item_params->get('block_form_deadline') && $stop_sub == 1) : ?>
         <h4><?php echo Text::_('COM_TKDCLUB_EVENT_SUBSCRIPTION_UNPOSSIBLE_DEADLINE'); ?></h4>
     <?php else : ?>
         <div>
-            <?php if ($item_params->show_places) : ?>
+            <?php if ($item_params->get('show_places')): ?>
                 <!-- Listing of subscribed participants -->
                 <?php if ($places_free > 0) : ?>
                     <p>    
@@ -93,7 +85,7 @@ Factory::getDocument()->addScriptDeclaration("
         <div class="form-horizontal">
             <fieldset>
                 <!-- check for multi-participants -->
-                <?php if ($item_params->allow_multi){ echo $this->form->renderField('group');} ?>
+                <?php if ($item_params->get('allow_multi')){ echo $this->form->renderField('group');} ?>
                 <!-- render fields for all participants -->
                 <?php
                     foreach($this->form->getFieldset('participant_data_all') as $field)
@@ -135,7 +127,7 @@ Factory::getDocument()->addScriptDeclaration("
                 <!-- render GDPR field -->
                 <?php 
                     $privacy_field = $this->form->getField('privacy_agreed');
-                    $privacy_message = $item_params->privacy_message ? $item_params->privacy_message : Text::_('COM_TKDCLUB_PARTICIPANT_MENUITEM_PRIVACY_MESSAGE_DEFAULT')
+                    $privacy_message = $item_params->get('privacy_message') ? $item_params->get('privacy_message') : Text::_('COM_TKDCLUB_PARTICIPANT_MENUITEM_PRIVACY_MESSAGE_DEFAULT')
                 ?>
                 <div class="control-group">
                     <div class="control-label"><?php echo $privacy_field->label; ?>
@@ -148,7 +140,7 @@ Factory::getDocument()->addScriptDeclaration("
                 <!-- render store_email field -->
                 <?php
                     $store_mail_field = $this->form->getField('store_data');
-                    $store_mail_message = $item_params->store_email_message ? $item_params->store_email_message : Text::_('COM_TKDCLUB_PARTICIPANT_MENUITEM_STORE_EMAIL_MESSAGE_DEFAULT');
+                    $store_mail_message = $item_params->get('store_email_message') ? $item_params->get('store_email_message') : Text::_('COM_TKDCLUB_PARTICIPANT_MENUITEM_STORE_EMAIL_MESSAGE_DEFAULT');
                 ?>
                 <div class="control-group">
                     <div class="control-label"><?php echo $store_mail_field->label; ?>
@@ -162,14 +154,14 @@ Factory::getDocument()->addScriptDeclaration("
 
             <div class="btn-toolbar">
                 <div class="btn-group">
-                    <button type="button" class="btn btn-primary" onclick="Joomla.submitbutton('participant.subscribe')">
-                        <span class="icon-ok"></span> <?php echo Text::_('COM_TKDCLUB_SUBSCRIBE') ?>
-                    </button>
+                    <button class="btn btn-primary validate" type="submit"><?php echo Text::_('COM_TKDCLUB_SUBSCRIBE'); ?></button>
                 </div>
             </div>
                     
             <div>
-                <input type="hidden" name="task" value="" />
+                <input type="hidden" name="option" value="com_tkdclub">
+                <input type="hidden" name="task" value="participant.subscribe">
+                <input type="hidden" name="return" value="<?php echo $menu->id ?>">
                 <?php echo HTMLHelper::_('form.token'); ?>
             </div> 
         </div>

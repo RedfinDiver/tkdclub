@@ -127,6 +127,23 @@
         "attributes": {
           "defer": true
         }
+      },
+      {
+        "name": "com_tkdclub.reload_fields",
+        "type": "script",
+        "uri": "com_tkdclub/reload_fields.js",
+        "dependencies": [
+          "com_tkdclub.gstatic"
+        ],
+        "attributes": {
+          "defer": true
+        }
       }
+
+
+
+
+
+
     ]
   }

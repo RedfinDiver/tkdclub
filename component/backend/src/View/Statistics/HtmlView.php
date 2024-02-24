@@ -10,6 +10,7 @@ namespace Redfindiver\Component\Tkdclub\Administrator\View\Statistics;
 \defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Language\Text;
@@ -49,8 +50,14 @@ class HtmlView extends BaseHtmlView
     public function addToolbar()
     {
         $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
+        ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_STATISTIC_ADMIN_VIEW'), 'tkdclub tkdclub-logo-v-sw');
 
-        ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_STATISTIC_ADMIN_VIEW'), 'tkdclub');
+        $canDo = ContentHelper::getActions('com_tkdclub');
+
+        if ($canDo->get('core.admin'))
+        {
+            ToolBarHelper::preferences('com_tkdclub');
+        }
 
         $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/statistik.html';
         ToolbarHelper::help('', false, $help_url);

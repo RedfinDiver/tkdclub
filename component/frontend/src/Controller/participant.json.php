@@ -21,7 +21,7 @@ class TkdClubControllerParticipant extends BaseController
             $app = Factory::getApplication();
             $html = '';
             $toRender = $app->input->get('selection', '', 'int');
-            $model = $this->getModel($name = 'participant', $prefix = 'TkdClubModel', $config = array());
+            $model = $this->getModel($name = 'participant', $prefix = 'Administrator', $config = array());
             $form = $model->getForm($data = array(), $loadData = true);
         
             if ($toRender == 1)

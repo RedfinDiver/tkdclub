@@ -5,7 +5,7 @@
         <message>COM_TKDCLUB_PARTICIPANT_MENU_NEW_DESC</message>
     </layout>
     
-    <fields name="params" addfieldpath="/administrator/components/com_tkdclub/models/fields">
+    <fields name="params" addfieldprefix="Redfindiver\Component\Tkdclub\Administrator\Field">
         
         <fieldset name="event" label="COM_TKDCLUB_PARTICIPANT_MENUITEM_TAB">
 
@@ -13,7 +13,7 @@
                 name="event_id" type="events"
                 onlypublished="true"
                 label="COM_TKDCLUB_EVENT_TITLE"
-                description="COM_TKDCLUB_EVENT_SELECT_DESC"
+                description="COM_TKDCLUB_PARTICIPANT_MENUITEM_EVENT_SELECT_DESC"
                 multiple="false" required="true" filter="safehtml" default="">
                 <option value="">COM_TKDCLUB_SELECT_EVENT</option> 
             </field>
