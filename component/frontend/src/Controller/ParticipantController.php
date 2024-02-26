@@ -18,16 +18,10 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Plugin\PluginHelper;
+use Joomla\CMS\Uri\Uri;
 
 class ParticipantController extends FormController
 {
-    
-    public function getTable($type = 'Participants', $prefix = 'TkdClubTable', $config = array())    
-    {
-        Table::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR . '/tables');
-        return Table::getInstance($type, $prefix, $config);
-    }
-    
     /**
      * Subscription to an event
      * 
@@ -37,19 +31,18 @@ class ParticipantController extends FormController
      */
     public function subscribe()
     {
-        Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));       
+        Session::checkToken();       
 
-        // Getting some variables
-        $app = Factory::getApplication();
+        $app  = Factory::getApplication();
+        $data = $app->input;
         $model = $this->getModel('participant');
-
-        $this->menu_params = Factory::getApplication()->getUserState('com_tkdclub.participant.itemparams');
-        $test = ComponentHelper::getParams('com_tkdclub')->get('captcha');
-        $this->item_id = $app->getMenu()->getActive()->id;
-        $event_data = $model->getEventData();
+        $table = $model->getTable();
+        $event = $model->getEvent($data->get('event_id'));
+        $currentUri = Uri::getInstance();
+        $params = $app->getMenu()->getActive()->getParams();
         
         // Get the input and preprocess it
-        $this->data = $this->preprocessData($app->input);
+        $data = $this->preprocessData($data);
 
         // Captcha Check
         if (!$this->checkCaptcha())
@@ -59,29 +52,27 @@ class ParticipantController extends FormController
         
         // Everything is fine, saving to the database
         try
-        {
-            $table = $this->getTable();
-            
-            if ($table->save($this->data))
+        {            
+            if ($table->save($data))
             {
                 $this->message = Text::_('COM_TKDCLUB_SUBSCRIBE_SUCCESS') 
-                . '"' .$event_data['title'] . '" ' .  Text::_('COM_TKDCLUB_AT') . ' '
-                . HTMLHelper::_('date', $event_data['date'], Text::_('DATE_FORMAT_LC4')) 
+                . '"' .$event['title'] . '" ' .  Text::_('COM_TKDCLUB_AT') . ' '
+                . HTMLHelper::_('date', $event['date'], Text::_('DATE_FORMAT_LC4')) 
                 . Text::_('COM_TKDCLUB_SUBSCRIBE_THANK_YOU');
 
-                if ($this->data['email'])
+                if ($data['email'])
                 {
                     $this->message .= Text::_('COM_TKDCLUB_EMAIL_CONFIRMATION');
                 }
         
-                // Send the mail to organizer
-                if ($this->menu_params->send_email)
+                // Send email to organizer and participant
+                if ($params->get('send_email'))
                 {
-                    $model->send($event_data, $this->data, $this->menu_params->email_user_group);   
+                    $model->send($event, $data, $params);   
                 }
                 
                 // Deleting the entered data, except value for clubname  
-                foreach ($this->data as $key => &$value)
+                foreach ($data as $key => &$value)
                 {
                     if ($key != "clubname" )
                     {
@@ -90,7 +81,7 @@ class ParticipantController extends FormController
                 }
             
                 // Setting the cleaned state after successful saving   
-                $app->setUserState('com_tkdclub.participant.data', $this->data);  
+                $app->setUserState('com_tkdclub.participant.data', $data);  
           
             }
             else
@@ -104,7 +95,7 @@ class ParticipantController extends FormController
             $this->message = $ex->getMessage();
         }
         
-        $this->setRedirect(Route::_('index.php?option=com_tkdclub&view=participant&Itemid='. $this->item_id, false));
+        $this->setRedirect($currentUri);
         
         return true;
     }
@@ -151,7 +142,7 @@ class ParticipantController extends FormController
         }
     
         // Appending event_id and publishing        
-        $data['event_id'] = $this->menu_params->event_id;
+        $data['event_id'] = $this->input->get('event_id');
         $data['published'] = (int) 1;
 
         if ($data['group'] == 0)

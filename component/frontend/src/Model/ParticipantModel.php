@@ -9,17 +9,38 @@ namespace Redfindiver\Component\Tkdclub\Site\Model;
 
 \defined('_JEXEC') or die;
 
+use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\MVC\Model\FormModel;
-use Joomla\CMS\Table\Table;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\Database\ParameterType;
 
 class ParticipantModel extends FormModel
 {
-    public function getTable($type = 'Participants', $prefix = 'TkdClubTable', $config = array())
+    public function getTable($type = 'Participants', $prefix = 'Administrator', $config = array())
     {
-        return Table::getInstance($type, $prefix, $config);
+        return parent::getTable($type, $prefix, $config);
+    }
+
+    /**
+     * Method to auto-populate the model state.
+     *
+     * Note. Calling getState in this method will result in recursion.
+     *
+     * @return  void
+     *
+     * @since   1.6
+     */
+    protected function populateState()
+    {
+        /** @var SiteApplication $app */
+        $app = Factory::getContainer()->get(SiteApplication::class);
+
+        $this->setState('event_id', $app->getInput()->getInt('event_id'));
+
+        $this->setState('params', $app->getParams());
+
     }
 
     public function getForm($data = array(), $loadData = true)
@@ -28,52 +49,52 @@ class ParticipantModel extends FormModel
         $form = $this->loadForm('tkdclub', 'participant',  $options);
         
         // Removing not displayed fields from the form and labeling of userfields
-        $params = Factory::getApplication()->getUserState('com_tkdclub.participant.itemparams');
-        !$params->show_email ? $form->removeField('email') : null;
-        !$params->show_age ? $form->removeField('age') && $form->removeField('age_dist') : null;
-        !$params->show_grade ? $form->removeField('grade') && $form->removeField('grade_dist') : null;
-        !$params->show_club ? $form->removeField('clubname') : null;
-        !$params->show_kupgradeachieve ? $form->removeField('kupgradesachieve') : null;
+        $params = Factory::getApplication()->getMenu()->getActive()->getParams();
+        !$params->get('show_age') ? $form->removeField('age') && $form->removeField('age_dist') : null;
+        !$params->get('show_email') ? $form->removeField('email') : null;
+        !$params->get('show_grade') ? $form->removeField('grade') && $form->removeField('grade_dist') : null;
+        !$params->get('show_club') ? $form->removeField('clubname') : null;
+        !$params->get('show_kupgradeachieve') ? $form->removeField('kupgradesachieve') : null;
         
-        if (!$params->allow_multi)
+        if (!$params->get('allow_multi'))
         {
             $form->setFieldAttribute('group', 'hidden', 'true');
         }
         
-        if ($params->show_user1)
+        if ($params->get('show_user1'))
         {
-            $form->setFieldAttribute('user1', 'label', $params->user1);
-            $form->setFieldAttribute('user1', 'description', $params->user1);
+            $form->setFieldAttribute('user1', 'label', $params->get('user1'));
+            $form->setFieldAttribute('user1', 'description', $params->get('user1'));
         }
         else
         {
             $form->removeField('user1');
         }
         
-        if ($params->show_user2)
+        if ($params->get('show_user2'))
         {
-            $form->setFieldAttribute('user2', 'label', $params->user2);
-            $form->setFieldAttribute('user2', 'description', $params->user2);
+            $form->setFieldAttribute('user2', 'label', $params->get('user2'));
+            $form->setFieldAttribute('user2', 'description', $params->get('user2'));
         }
         else 
         {
             $form->removeField('user2');
         }
         
-        if ($params->show_user3)
+        if ($params->get('show_user3'))
         {
-            $form->setFieldAttribute('user3', 'label', $params->user3);
-            $form->setFieldAttribute('user3', 'description', $params->user3);
+            $form->setFieldAttribute('user3', 'label', $params->get('user3'));
+            $form->setFieldAttribute('user3', 'description', $params->get('user3'));
         }
         else 
         {
             $form->removeField('user3');
         }
         
-        if ($params->show_user4)
+        if ($params->get('show_user4'))
         {
-            $form->setFieldAttribute('user4', 'label', $params->user4);
-            $form->setFieldAttribute('user4', 'description', $params->user4);
+            $form->setFieldAttribute('user4', 'label', $params->get('user4'));
+            $form->setFieldAttribute('user4', 'description', $params->get('user4'));
         }
         else 
         {
@@ -98,22 +119,22 @@ class ParticipantModel extends FormModel
 
     /**
      * Method to get data for an event
-     * 
-     * @param   integer  $event_id  The id of the event.
-     *
-     * @return  integer  Number of subscribed participants.
      *
      */
-    public function getEventData()
+    public function getEvent($event_id = 0)
     {   
-        $event_id = Factory::getApplication()->getParams()->toObject()->event_id;
+        if (!$event_id) {
+            // check for $event_id in the state
+            $event_id = $this->getState('event_id');
+        }
 
         $db = Factory::getDbo();
         $query = $db->getQuery(true);
 
-        $query->select('title, date, deadline, event_id, min, max')
+        $query->select($db->quoteName(array('title', 'date', 'deadline', 'event_id', 'min', 'max')))
                 ->from($db->quoteName('#__tkdclub_events'))
-                ->where('event_id = '. intval($event_id));
+                ->where($db->quoteName('event_id') . ' = :event_id')
+                ->bind(':event_id', $event_id, ParameterType::INTEGER);
 
         $db->setQuery($query);
         $event_data = $db->loadAssoc();
@@ -137,7 +158,8 @@ class ParticipantModel extends FormModel
 
         $query->select('sum('.$db->quoteName('registered').')')
                 ->from($db->quoteName('#__tkdclub_event_participants'))
-                ->where('event_id = '.$event_id);
+                ->where($db->quoteName('event_id') .' = :event_id')
+                ->bind(':event_id', $event_id, ParameterType::INTEGER);
 
         $db->setQuery($query);
         $db->execute();
@@ -150,39 +172,43 @@ class ParticipantModel extends FormModel
      * 
      * @param   array   $event_data     data for the event
      * @param   object  $data           form data
-     * @param   array   $groups         array of group numbers to send notification email to
+     * @param   array   $params         object of menu item parameters
      * 
      * @return  void
      * 
      */
-    public function send($event_data, $data, $groups)
+    public function send($event_data, $data, $params)
 	{   
-        $mail = new stdClass;
+        $mail = new \stdClass;
 
         // Prepare the data for the email
         $mail->title      = $event_data['title'];
         $mail->date       = HTMLHelper::_('date', $event_data['date'], Text::_('DATE_FORMAT_LC4'));
-        $mail->fields     = $this->prepareDataforEmail($data);
+        $mail->fields     = $this->prepareDataforEmail($data, $params);
         $mail->subscribed = $this->getSubscribedParticipants($event_data['event_id']);
         $mail->free       = $event_data['max'] - $mail->subscribed;
         $mail->name       = $data['firstname'] . ' ' . $data['lastname'];
         
-        $this->sendConformationMail($mail, $data['email']);                 
-        
-        $this->sendUsergroupMail($mail, $this->getOrganizerEmails($groups));
+        // sending conformation email only when there is an email adress present
+        if($data['email']) {
+
+            $this->sendConformationMail($mail, $data['email']);      
+        }
+                   
+        $this->sendUsergroupMail($mail, $this->getOrganizerEmails($params->get('email_user_group')));
     }
 
     /**
      * Prepare the data from fields for the email
      * 
-     * @param   array   $data   the preprocessed data from the form
+     * @param   array   $data       the preprocessed data from the form
+     * @param   array   $params     menu item parameter object
      * 
      * @return  string  the data as string, ready to use in email body
      * 
      */
-    public function prepareDataforEmail($data = array())
+    public function prepareDataforEmail($data = array(), $params)
     {   
-        $params = Factory::getApplication()->getUserState('com_tkdclub.participant.itemparams', '');
         $store_data = $data['store_data'] === 1 ? $store_data = Text::_('JYES') : $store_data = Text::_('JNO');
         $field_text = '';
 
@@ -193,10 +219,10 @@ class ParticipantModel extends FormModel
         $data['grade'] ? $field_text .= Text::_('COM_TKDCLUB_PARTICIPANT_GRADE_EMAIL') . ': ' . $data['grade'] . "\r\n" : null;
         $data['age'] ? $field_text .= Text::_('COM_TKDCLUB_PARTICIPANT_AGE') . ': ' . $data['age'] . "\r\n" : null;
         $data['registered'] ? $field_text .= Text::_('COM_TKDCLUB_PARTICIPANT_SUM') . ': ' . $data['registered'] . "\r\n" : null;
-        $data['user1'] ? $field_text .= $params->user1 . ': ' . $data['user1'] . "\r\n" : null;
-        $data['user2'] ? $field_text .= $params->user2 . ': ' . $data['user2'] . "\r\n" : null;
-        $data['user3'] ? $field_text .= $params->user3 . ': ' . $data['user3'] . "\r\n" : null;
-        $data['user4'] ? $field_text .= $params->user4 . ': ' . $data['user4'] . "\r\n" : null;
+        $data['user1'] ? $field_text .= $params->get('user1') . ': ' . $data['user1'] . "\r\n" : null;
+        $data['user2'] ? $field_text .= $params->get('user2') . ': ' . $data['user2'] . "\r\n" : null;
+        $data['user3'] ? $field_text .= $params->get('user3') . ': ' . $data['user3'] . "\r\n" : null;
+        $data['user4'] ? $field_text .= $params->get('user4') . ': ' . $data['user4'] . "\r\n" : null;
         $field_text .= Text::_('COM_TKDCLUB_PARTICIPANT_PRIVACY_ACCEPTED_EMAIL') . ': ' . Text::_('JYES') . "\r\n";
         $field_text .= Text::_('COM_TKDCLUB_PARTICIPANT_STOREDATA_ACCEPTED_EMAIL') . ': ' . $store_data . "\r\n";
         $data['notes'] ? $field_text .= Text::_('COM_TKDCLUB_PARTICIPANT_NOTES') . ': ' . $data['notes'] . "\r\n" : null;

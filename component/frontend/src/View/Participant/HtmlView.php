@@ -21,9 +21,9 @@ class HtmlView extends BaseHtmlView
 
     public function display($tpl = null)
     {
-        
+        $this->state = $this->get('State');
+        $this->event = $this->get('Event');
         $this->form = $this->get('Form');
-        $this->event_data = $this->get('Eventdata');
 
         parent::display($tpl);
     }

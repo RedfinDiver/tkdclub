@@ -21,28 +21,20 @@ $wa->useScript('keepalive')
 	->useScript('com_tkdclub.reload_fields')
 	->useStyle('com_tkdclub.tkdclub-site');
 
-$params = ComponentHelper::getParams('com_tkdclub');
-$menu = Factory::getApplication()->getMenu()->getActive();
-$item_params = $menu->getParams();
+$active = Factory::getApplication()->getMenu()->getActive();
+$item_params = $active->getParams();
 
-$places_free = $this->event_data['max'] - $this->event_data['subscribed'];
-$subscribed = $this->event_data['subscribed'] ? $subscribed = $this->event_data['subscribed'] : $subscribed = 0;
-$deadline = new DateTime($this->event_data['deadline']);
+$places_free = $this->event['max'] - $this->event['subscribed'];
+$subscribed = $this->event['subscribed'] ? $subscribed = $this->event['subscribed'] : $subscribed = 0;
+$deadline = new DateTime($this->event['deadline']);
 $now = new DateTime();
 $stop_sub = $now->diff($deadline)->invert;
-
-if ($params->get('captcha') != '0')
-{
-    // TODO: Handle Plugin with new joomla/event package
-    PluginHelper::importPlugin('captcha');
-}
-
 ?>
 
 <div class="tkdclub_subscribe">
     <h2>
-        <?php echo Text::_('COM_TKDCLUB_EVENT_SUBSCRIBE_TO') .'"'. $this->event_data['title'].'"'
-        . Text::_('COM_TKDCLUB_EVENT_ON') . HTMLHelper::_('date', $this->event_data['date'], Text::_('DATE_FORMAT_LC4')); ?>
+        <?php echo Text::_('COM_TKDCLUB_EVENT_SUBSCRIBE_TO') .'"'. $this->event['title'].'"'
+        . Text::_('COM_TKDCLUB_EVENT_ON') . HTMLHelper::_('date', $this->event['date'], Text::_('DATE_FORMAT_LC4')); ?>
     </h2>
     <!-- blocking form if it is set in parameters -->   
     <?php if ($item_params->get('block_form_places') && $places_free <= 0) : ?>
@@ -65,18 +57,20 @@ if ($params->get('captcha') != '0')
                     <p>    
                         <strong><?php echo Text::_('COM_TKDCLUB_PARTICIPANT_SUBSCRIBE_WAITLIST'); ?></strong>
                     <br/>
-                        <?php echo Text::_('COM_TKDCLUB_PARTICIPANT_WAITLIST'); ?><?php echo ($this->event_data['max'] - $subscribed) * -1; ?>
+                        <?php echo Text::_('COM_TKDCLUB_PARTICIPANT_WAITLIST'); ?><?php echo ($this->event['max'] - $subscribed) * -1; ?>
                     </p>
                 <?php endif;?>
             <?php endif;?>
         </div>   
-    <?php endif;?>
+   
 
     <p><?php echo Text::_('COM_TKDCLUB_EVENT_SUBSCIPTION_PLEASE_FILL'); ?></p>
 
     <hr>
 
-    <form action="<?php echo Route::_('index.php?option=com_tkdclub') ?>"
+    <form action="<?php echo Route::_('index.php?option=com_tkdclub&view=participant'
+                        . '&event_id=' . $this->event['event_id']
+                        . '&Itemid=' . $active->id) ?>"
         method="post"
         name="adminForm"
         id="participant-form"
@@ -161,10 +155,10 @@ if ($params->get('captcha') != '0')
             <div>
                 <input type="hidden" name="option" value="com_tkdclub">
                 <input type="hidden" name="task" value="participant.subscribe">
-                <input type="hidden" name="return" value="<?php echo $menu->id ?>">
                 <?php echo HTMLHelper::_('form.token'); ?>
             </div> 
         </div>
 
     </form>
+    <?php endif;?>
 </div>

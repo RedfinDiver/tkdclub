@@ -10,13 +10,15 @@ namespace Redfindiver\Component\Tkdclub\Administrator\Extension;
 \defined('JPATH_PLATFORM') or die;
 
 use Joomla\CMS\Extension\MVCComponent;
+use Joomla\CMS\Component\Router\RouterServiceInterface;
+use Joomla\CMS\Component\Router\RouterServiceTrait;
 
 /**
  * Component class for com_tkdclub
  *
- * @since  4.0.0
+ * @since  5.0
  */
-class TkdclubComponent extends MVCComponent
+class TkdclubComponent extends MVCComponent 
 {
 	
 }
