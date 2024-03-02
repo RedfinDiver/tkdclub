@@ -43,6 +43,7 @@ UPDATE `#__tkdclub_members` SET
 WHERE `member_id` > 0;
 
 ALTER TABLE `#__tkdclub_trainings`
+    ADD `participant_ids` JSON DEFAULT NULL AFTER `participants`,
     CHANGE `checked_out_time` `checked_out_time` datetime DEFAULT NULL,
     CHANGE `checked_out` `checked_out` int(10) UNSIGNED DEFAULT NULL,
     CHANGE `modified_by` `modified_by` int(10) UNSIGNED NOT NULL DEFAULT '0',

@@ -52,6 +52,7 @@ CREATE TABLE IF NOT EXISTS `#__tkdclub_trainings` (
   `assist3_paid` tinyint(3) DEFAULT NULL,
   `type` varchar(50) NOT NULL,
   `participants` int(5) NOT NULL,
+  `participant_ids` JSON DEFAULT NULL,
   `notes` text,
   `payment_state` tinyint(3) NOT NULL DEFAULT 0,
   `created` DATETIME DEFAULT NULL,

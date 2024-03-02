@@ -312,6 +312,53 @@ class MemberModel extends AdminModel
         return $db->loadObjectList();
     }
 
+    /**
+	 * Method to get trainingsdata for a member
+	 *
+	 * @return  array  trainingsdata for the given member
+     *
+	 */
+    public function getTrainings($member_id = 0)
+    {
+        if ($member_id == 0) {
+
+            $member_id = Factory::getApplication()->input->getInt('member_id');
+        }
+
+        $json_member_id = json_encode([strval($member_id)]);
+        
+        $trainings = [];
+
+        $db = Factory::getDbo();
+
+        // all trainings
+        $query = $db->getQuery(true);
+        $query->select('COUNT(*)')->from($db->quoteName('#__tkdclub_trainings'))
+                ->where('JSON_CONTAINS('. $db->quoteName('participant_ids') . ', ' . ':member_id' . ')')
+                ->bind([':member_id'], $json_member_id, ParameterType::STRING);
+        $db->setQuery($query);
+        $trainings['all'] = $db->loadResult();
+
+        // getting lastpromotion date
+        $query = $db->getQuery(true);
+        $query->select($db->quoteName('lastpromotion'))->from($db->quoteName('#__tkdclub_members'))
+                    ->where($db->quoteName('member_id') . ' = ' . ':member_id')
+                    ->bind(':member_id', $member_id, ParameterType::INTEGER);
+        $db->setQuery($query);
+        $lastpromotion = $db->loadResult();
+
+        // getting trainings since last promotion
+        $query = $db->getQuery(true);
+        $query->select('COUNT(*)')->from($db->quoteName('#__tkdclub_trainings'))
+                ->where('JSON_CONTAINS('. $db->quoteName('participant_ids') . ', ' . ':member_id' . ')')
+                ->where($db->quoteName('date') . ' > ' . $db->quote($lastpromotion))
+                ->bind([':member_id'], $json_member_id, ParameterType::STRING);
+        $db->setQuery($query);
+        $trainings['slastPromotion'] = $db->loadResult();
+
+        return $trainings;
+    }
+
 
     /**
      * Method to validate the form data.

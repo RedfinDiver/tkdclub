@@ -104,10 +104,11 @@ $wa->useScript('keepalive')->useScript('form.validate')
                         <?php else : ?>
                         <fieldset id="fieldset-club_data" class="options-form">
                             <legend class="card-title"><?php echo Text::_('COM_TKDCLUB_MEMBER_FILES_APPENDED'); ?></legend>
-                            <?php $attachments = (array) json_decode($this->item->attachments); ?>
-                            <?php if (empty($attachments)) :?>
+                            
+                            <?php if (!$this->item->attachments) :?>
                                 <?php echo Text::_('COM_TKDCLUB_MEMBER_NO_FILES'); ?>
                             <?php else : ?>
+                            <?php $attachments = (array) json_decode($this->item->attachments); ?>
                             <table class="table table-striped table-sm">
                                 <thead>
                                     <tr>
@@ -154,7 +155,8 @@ $wa->useScript('keepalive')->useScript('form.validate')
 
             <?php echo HtmlHelper::_('uitab.addTab', 'myTab', 'wins', Text::_('COM_TKDCLUB_MEMBER_MEDALS', true)); ?>
             <?php if (empty($this->medals)) : ?>
-                <div class="alert alert-no-items">
+                <div class="alert alert-info">
+                <span class="icon-info-circle" aria-hidden="true"></span><span class="visually-hidden"><?php echo Text::_('INFO'); ?></span>
                     <?php echo Text::_('COM_TKDCLUB_MEMBER_NO_MEDALS'); ?>
                 </div>
             <?php else : ?>
@@ -185,6 +187,21 @@ $wa->useScript('keepalive')->useScript('form.validate')
                     </table>
                 </div>
             <?php endif; ?>
+            <?php echo HtmlHelper::_('uitab.endTab'); ?>
+
+            <?php echo HtmlHelper::_('uitab.addTab', 'myTab', 'trainings_data', Text::_('COM_TKDCLUB_SIDEBAR_TRAININGS', true)); ?>
+            <?php if (!$this->trainings['all']) : ?>
+                <div class="alert alert-info">
+                    <span class="icon-info-circle" aria-hidden="true"></span><span class="visually-hidden"><?php echo Text::_('INFO'); ?></span>
+                    <?php echo Text::_('COM_TKDCLUB_MEMBER_NO_TRAINING_DATA'); ?>
+				</div>
+            <?php else : ?>
+                <div>
+                    <p><?php echo Text::_('COM_TKDCLUB_MEMBER_TRAININGS_ALL') . $this->trainings['all'] ?></p>
+                    <p><?php echo Text::_('COM_TKDCLUB_MEMBER_TRAININGS_S_LASTPROMOTION') . $this->trainings['slastPromotion'] ?></p>
+                </div>
+            <?php endif; ?>
+
             <?php echo HtmlHelper::_('uitab.endTab'); ?>
 
             <?php echo HtmlHelper::_('uitab.addTab', 'myTab', 'item_data', Text::_('COM_TKDCLUB_ITEM_DATA', true)); ?>

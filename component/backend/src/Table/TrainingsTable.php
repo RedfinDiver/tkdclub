@@ -24,6 +24,14 @@ class TrainingsTable extends Table
 	 * @since  4.0.0
 	 */
 	protected $_supportNullValue = true;
+
+     /**
+     * An array of key names to be json encoded in the bind function
+     *
+     * @var    array
+     * @since  3.3
+     */
+    protected $_jsonEncode = ['participant_ids'];
     
     /**
 	 * Constructor

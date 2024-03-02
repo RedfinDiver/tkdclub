@@ -21,14 +21,17 @@ $wa->useScript('keepalive')
 
 <form action="<?php echo Route::_('index.php?option=com_tkdclub&training_id=' . (int) $this->item->training_id); ?>" method="post" name="adminForm" id="training-form" class="form-validate">
     <div class="row form-vertical">
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-3">
             <?php echo $this->form->renderField('date'); ?>
         </div>
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-3">
             <?php echo $this->form->renderField('type'); ?>
         </div>
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-md-3">
             <?php echo $this->form->renderField('participants'); ?>
+        </div>
+        <div class="col-12 col-md-3">
+            <?php echo $this->form->renderField('participant_ids'); ?>
         </div>
     </div>
     <div>

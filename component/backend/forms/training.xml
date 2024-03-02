@@ -34,6 +34,18 @@
             required="true"
             size="5" filter="integer"
         />
+
+        <field
+            name="participant_ids"
+            type="members"
+            onlyactive="true"
+            multiple="true"
+            layout="joomla.form.field.list-fancy-select"
+            label="COM_TKDCLUB_TRAINING_PARTICIPANTS"
+            description="COM_TKDCLUB_TRAINING_PARTICIPANTS_DESC"
+            required="false"
+            size="5"
+        />
         
         <field 
             name="notes"
