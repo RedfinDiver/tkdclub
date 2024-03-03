@@ -108,7 +108,12 @@ class TkdclubHelper
      *                  STRING   names, diveded with "/" for 2 or more members
      */
     public static function getMembersNames($ids, $memberlist)
-    {
+    {   
+        // 0 means no more winner
+        if ($ids == 0) {
+            return '';
+        }
+
         $type = gettype($ids);
 
         switch ($type) {

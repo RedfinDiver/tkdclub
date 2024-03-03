@@ -17,7 +17,7 @@ Joomla.submitbutton = task => {
 	// intercepting the statistic view toggle in list views
 	if (
 		task === 'membersstats' ||
-		task === 'trainingsstats'
+		task === 'medalsstats'
 	) {
 	togglestats(task);
 	return;

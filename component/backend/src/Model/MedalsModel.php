@@ -268,7 +268,9 @@ class MedalsModel extends ListModel
             'championship', // 2
             'class',        // 3
             'placing',      // 4
-            'winner_ids'    // 5
+            'winner_1',     // 5
+            'winner_2',     // 6
+            'winner_3'      // 7
         );
 
         $pks = ArrayHelper::toInteger($pks);
@@ -295,7 +297,9 @@ class MedalsModel extends ListModel
             Text::_('COM_TKDCLUB_MEDAL_CHAMPIONSSHIP'),    // championship
             Text::_('COM_TKDCLUB_MEDAL_CLASS'),            // class
             Text::_('COM_TKDCLUB_MEDAL_PLACING'),          // placing
-            Text::_('COM_TKDCLUB_ATHLETS')                 // winner_ids
+            Text::_('COM_TKDCLUB_ATHLETS'),                // winner_1
+            Text::_('COM_TKDCLUB_ATHLETS'),                // winner_2
+            Text::_('COM_TKDCLUB_ATHLETS')                 // winner_3
         );
 
         $memberlist = TkdclubHelper::getMemberlist();
@@ -304,6 +308,12 @@ class MedalsModel extends ListModel
         {
             $row[] = TkdclubHelper::getMembersNames($row[5], $memberlist);
             unset($row[5]);
+
+            $row[] = TkdclubHelper::getMembersNames($row[6], $memberlist);
+            unset($row[6]);
+
+            $row[] = TkdclubHelper::getMembersNames($row[7], $memberlist);
+            unset($row[7]);
         }
 
 		// Return the results as an array of items, each consisting of an array of fields

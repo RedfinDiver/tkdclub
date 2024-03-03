@@ -19,12 +19,17 @@ HTMLHelper::_('behavior.multiselect');
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
 $wa = $this->document->getWebAssetManager();
 $wa->getRegistry();
-$wa->useStyle('com_tkdclub.tkdclub-admin');
+$wa->useStyle('com_tkdclub.tkdclub-admin')
+        ->useScript('com_tkdclub.taskhandling');
 
 $user      = Factory::getUser();
 $userId    = $user->get('id');
 $listOrder = $this->state->get('list.ordering');
 $listDirn  = $this->state->get('list.direction');
+
+$gold = isset($this->medaldata['placings']['1']) ? $this->medaldata['placings']['1'] : 0;
+$silver = isset($this->medaldata['placings']['2']) ? $this->medaldata['placings']['2'] : 0;
+$bronce = isset($this->medaldata['placings']['3']) ? $this->medaldata['placings']['3'] : 0;
 ?>
 
 <form action="<?php echo Route::_('index.php?option=com_tkdclub&view=medals'); ?>" method="post" name="adminForm" id="adminForm">
@@ -44,9 +49,51 @@ $listDirn  = $this->state->get('list.direction');
                     <div class="m-2">
                             <?php echo Text::sprintf('COM_TKDCLUB_ENTRIES', $this->total, $this->allrows); ?>
                     </div>
-                    <?php if ($this->togglestats) :  ?>
-                        <?php include_once(JPATH_COMPONENT . '/includes/medalsstats.php'); ?>
-                    <?php endif; ?>
+                    <div id="medalsstats" class="d-none container">
+                        <div class="p-3 row text-center">
+                            <div class="col-md-3">
+                                <div class="card alert-info">
+                                    <div class="card-body">
+                                        <span class="fas fa-medal fa-3x gold"></span>
+                                        <h5 class="card-title mt-2"><?php echo Text::_('COM_TKDCLUB_MEDAL_GOLD') ?></h5>
+                                        <div><?php echo $gold; ?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card alert-info">
+                                    <div class="card-body">
+                                        <span class="fas fa-medal fa-3x silver"></span>
+                                        <h5 class="card-title mt-2"><?php echo Text::_('COM_TKDCLUB_MEDAL_SILVER') ?></h5>
+                                        <div><?php echo $silver ?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card alert-info">
+                                    <div class="card-body">
+                                        <span class="fas fa-medal fa-3x bronce"></span>
+                                        <h5 class="card-title mt-2"><?php echo Text::_('COM_TKDCLUB_MEDAL_BRONCE') ?></h5>
+                                        <div><?php echo $bronce ?></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card alert-info">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col"><span class="fas fa-medal fa-3x gold"></span></div>
+                                            <div class="col"><span class="fas fa-medal fa-3x silver"></span></div>
+                                            <div class="col"><span class="fas fa-medal fa-3x bronce"></span></div>
+                                        </div>
+                                        
+                                        <h5 class="card-title mt-2"><?php echo Text::_('COM_TKDCLUB_MEDAL_SUMMARY') ?></h5>
+                                        <div><?php echo $this->medaldata['sum'] ?></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <table class="table table-striped table-sm">
                         <thead>
                             <tr>

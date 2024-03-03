@@ -12,7 +12,6 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Helper\ContentHelper;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Redfindiver\Component\Tkdclub\Administrator\Helper\TkdclubHelper;
@@ -105,12 +104,8 @@ class HtmlView extends BaseHtmlView
         $this->total         = $this->get('Total');
         $this->allrows       = $this->get('Allrows');
         $this->memberlist    = TkdclubHelper::getMemberlist();
-        $this->togglestats   = Factory::getSession()->get('togglestats_medals', null, 'tkdclub');
+        $this->medaldata     = $this->get('Medaldata');
 
-        if ($this->togglestats)
-        {
-            $this->medaldata = $this->get('Medaldata');
-        }
 
         $this->addToolbar();
         parent::display($tpl);
@@ -159,17 +154,28 @@ class HtmlView extends BaseHtmlView
 
         }
 
-        if ($this->togglestats)
-        {
-            ToolBarHelper::custom('medals.togglestats', 'eye-close', 'eye-close', 'COM_TKDCLUB_BUTTON_STATS', false);
-        }
-        else
-        {
-            ToolBarHelper::custom('medals.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);
-        }
+        ToolBarHelper::custom('medalsstats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);
 
-        ToolbarHelper::custom('export.medals', 'download', '', 'COM_TKDCLUB_EXPORT_CSV', true);
-        ToolbarHelper::custom('export.medals', 'download', '', 'COM_TKDCLUB_EXPORT_ALL_CSV', false);
+        $export = $toolbar->dropdownButton('download-group')
+		->text('COM_TKDCLUB_EXPORT')
+		->toggleSplit(false)
+		->icon('fa fa-file-download')
+		->buttonClass('btn btn-action')
+		->listCheck(false);
+
+        $dlchild = $export->getChildToolbar();
+
+        $dlchild->standardButton('download-all')
+		->icon('fa fa-file-download')
+		->text('COM_TKDCLUB_EXPORT_ALL_CSV')
+		->task('export.medals')
+		->listCheck(false);
+
+		$dlchild->standardButton('download-html')
+		->icon('fa fa-file-download')
+		->text('COM_TKDCLUB_EXPORT_CSV')
+		->task('export.medals')
+		->listCheck(true);
 
         if ($canDo->get('core.admin'))
         {
