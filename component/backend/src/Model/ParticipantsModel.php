@@ -13,6 +13,8 @@ use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\Utilities\ArrayHelper;
 
 /**
  * Model-class for list view 'participants'
@@ -182,26 +184,44 @@ class ParticipantsModel extends ListModel
 	 */
 	public function getExportData($pks)
 	{
-		$pklist = implode(',', $pks);
+        $db	= Factory::getDBO();
+        $query = $db->getQuery(true);
 
-		$db	= Factory::getDBO();
-		$query	= $db->getQuery(true);
+        $fields = array(
+            'b.firstname',  // 0
+            'b.lastname',   // 1    
+            'b.clubname',   // 2
+            'b.email',      // 3
+            'b.registered', // 4
+            'b.grade',      // 5
+            'b.age',        // 6
+            'b.user1',      // 8
+            'b.user2',      // 9
+            'b.user3',      // 10
+            'b.user4'       // 11
+        );
+
+        $pks = ArrayHelper::toInteger($pks);
 
         // select fields from events table
-        $query->select('a.title,a.date');
-        $query->from($db->quoteName('#__tkdclub_events', 'a'));  
+        $query->select($db->quoteName(['a.title','a.date']))->from($db->quoteName('#__tkdclub_events', 'a'));  
 
         // select fields from eventparts table
-        $query->select('b.firstname,b.lastname,b.clubname,b.email,b.registered,b.grade,b.age,b.user1,b.user2,b.user3,b.user4');
+        $query->select($db->quoteName($fields));
         $query->join('LEFT', $db->quoteName('#__tkdclub_event_participants', 'b') . ' ON a.event_id = b.event_id');
 
-        // only selected items in the list
-        $query->where('b.id IN ('.$pklist.')');
+        if (count($pks) > 0)
+        {
+            $query->whereIn($db->quoteName('b.id'), $pks);
+        }
+        else
+        {
+            $query->where($db->quoteName('b.id') . ' > 0');
+        }
 
-        // ordering
         $query->order('a.date DESC');
 
-		$db->setQuery((string)$query);
+		$db->setQuery($query);
 		$rows = $db->loadRowList();
 
         $headers = array(
@@ -223,6 +243,13 @@ class ParticipantsModel extends ListModel
 		// return the results as an array of items, each consisting of an array of fields
 		$content	= array($headers);	//header with column names
 		$content	= array_merge( $content,  $rows);
+
+        foreach ($content as $key => &$row)
+		{ 	
+			// conversion of date in LC4-format
+			if ($key > 0) {$row[1] = HTMLHelper::_('date', $row[1], Text::_('DATE_FORMAT_LC4')); }
+		}
+
 		return $content;
     }
     

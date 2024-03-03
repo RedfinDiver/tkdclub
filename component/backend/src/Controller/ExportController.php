@@ -138,17 +138,9 @@ class ExportController extends FormController
 	**/
 	public function participants()
 	{	
-		$content = $this->getContent('participants');
-
-		foreach ($content as $key => &$row)
-		{ 	
-			// conversion of date in LC4-format
-			if ($key > 0) {$row[1] = HTMLHelper::_('date', $row[1], Text::_('DATE_FORMAT_LC4')); }
-			
-			print implode(';', $row)."\n"; 
-		}
-
-		$this->setHeaders(Text::_('COM_TKDCLUB_SIDEBAR_PARTICIPANTS'));
+		// Check for request forgeries.
+		$this->checkToken();
+		$this->writeFile('participants', Text::_('COM_TKDCLUB_SIDEBAR_PARTICIPANTS'));
 	}
 
 	/**

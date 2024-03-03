@@ -37,8 +37,6 @@ class HtmlView extends BaseHtmlView
         $this->pagination = $this->get('Pagination');
         $this->total = $this->get('Total');
         $this->allrows = $this->get('Allrows');
-        // TODO statistics for participants
-        // $this->togglestats = Factory::getSession()->get('togglestats_participants', null, 'tkdclub');
         //ordering and sorting
         $this->sortDirection = $this->state->get('list.direction');
         $this->sortColumn = $this->state->get('list.ordering');
@@ -89,6 +87,27 @@ class HtmlView extends BaseHtmlView
         if ($canDo->get('core.admin')) {
             $toolbar->appendButton('confirm', 'COM_TKDKLUB_PARTICIPANT_GDPR_DELETE_MESSAGE', 'flash', 'COM_TKDKLUB_PARTICIPANT_GDPR_DELETE', 'participants.delete_gdpr');
         }
+
+        $export = $toolbar->dropdownButton('download-group')
+		->text('COM_TKDCLUB_EXPORT')
+		->toggleSplit(false)
+		->icon('fa fa-file-download')
+		->buttonClass('btn btn-action')
+		->listCheck(false);
+
+        $dlchild = $export->getChildToolbar();
+
+        $dlchild->standardButton('download-all')
+		->icon('fa fa-file-download')
+		->text('COM_TKDCLUB_EXPORT_ALL_CSV')
+		->task('export.participants')
+		->listCheck(false);
+
+		$dlchild->standardButton('download-html')
+		->icon('fa fa-file-download')
+		->text('COM_TKDCLUB_EXPORT_CSV')
+		->task('export.participants')
+		->listCheck(true);
 
 
         if ($canDo->get('core.admin')) {

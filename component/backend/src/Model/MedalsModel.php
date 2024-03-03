@@ -274,8 +274,7 @@ class MedalsModel extends ListModel
         );
 
         $pks = ArrayHelper::toInteger($pks);
-		$query->select($db->quoteName($fields))
-            ->from($db->quoteName('#__tkdclub_medals'));
+		$query->select($db->quoteName($fields))->from($db->quoteName('#__tkdclub_medals'));
 
         if (count($pks) > 0)
         {

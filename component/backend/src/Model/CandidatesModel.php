@@ -223,7 +223,7 @@ class CandidatesModel extends ListModel
         $query->select($db->quoteName($fields))->from($db->quoteName('#__tkdclub_members', 'b'));  
 
         // select fields from candidates table
-        $query->select('a.grade_achieve');
+        $query->select($db->quoteName('a.grade_achieve'));
         $query->join('LEFT', $db->quoteName('#__tkdclub_candidates', 'a') . ' ON a.id_candidate = b.member_id');
 
         if (count($pks) > 0)
