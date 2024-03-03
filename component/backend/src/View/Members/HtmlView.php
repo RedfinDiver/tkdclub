@@ -94,12 +94,7 @@ class HtmlView extends BaseHtmlView
         $this->activeFilters = $this->get('ActiveFilters');
         $this->total         = $this->get('Total');
         $this->allrows       = $this->get('Allrows');
-        $this->togglestats   = Factory::getSession()->get('togglestats_members', null, 'tkdclub');
-
-        if ($this->togglestats)
-        {
-            $this->memberdata = $this->get('Memberdata');
-        }
+        $this->memberdata    = $this->get('Memberdata');
 
         $this->addToolbar();
         parent::display($tpl);
@@ -130,14 +125,7 @@ class HtmlView extends BaseHtmlView
             ToolBarHelper::deleteList('COM_TKDCLUB_MEMBER_DELETE_QUESTION', 'members.delete', 'JTOOLBAR_DELETE');
         }
 
-        if ($this->togglestats)
-        {
-            ToolBarHelper::custom('members.togglestats', 'eye-close', 'eye-close', 'COM_TKDCLUB_BUTTON_STATS', false);
-        }
-        else
-        {
-            ToolBarHelper::custom('members.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);
-        }
+        ToolBarHelper::custom('membersstats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false, 'tooglestats');
 
         $export = $toolbar->dropdownButton('download-group')
 		->text('COM_TKDCLUB_EXPORT')

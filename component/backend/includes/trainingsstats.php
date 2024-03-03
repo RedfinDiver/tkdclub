@@ -161,7 +161,7 @@ if (!$filter_trainer && !$filter_type && !$filter_year && !$filter_search && $fi
     echo 'Gesamtzahl der Trainings in der Datenbank: ' . $this->trainingsdata->sums['trainings'];
 }
 
-// wenn nur State ausgwählt ist
+// wenn nur State ausgewählt ist
 if (!$filter_trainer && !$filter_type && !$filter_year && !$filter_search && $filter_payment_state == 1)
 { 
     echo 'Gesamtzahl der abgerechneten Trainings in der Datenbank: ' .'<b>'.$this->total .'</b>';

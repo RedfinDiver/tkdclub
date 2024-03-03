@@ -140,9 +140,9 @@
         }
       },
       {
-        "name": "com_tkdclub.export",
+        "name": "com_tkdclub.taskhandling",
         "type": "script",
-        "uri": "com_tkdclub/export.js",
+        "uri": "com_tkdclub/taskhandling.js",
         "dependencies": [
           "core"
         ],

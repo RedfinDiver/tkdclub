@@ -5,14 +5,24 @@
  */
 
 Joomla.submitbutton = task => {
-	// intercepting the export task for tkdclub
-  if (
-			task === 'export.members' || 
-			task === 'export.trainings'
-		) {
-		exportcommon(task);
-		return;
-	}
+	// intercepting the export tasks for tkdclub
+	if (
+				task === 'export.members' || 
+				task === 'export.trainings'
+			) {
+			exportcommon(task);
+			return;
+		}
+
+	// intercepting the statistic view toggle in list views
+	if (
+		task === 'membersstats' ||
+		task === 'trainingsstats'
+	) {
+	togglestats(task);
+	return;
+}
+
   // no special tkdclub task, perform standard Joomla task
 	Joomla.submitform(task);
 };
@@ -62,4 +72,19 @@ async function exportcommon(task) {
 	a.remove();
 	// and reset the form task or else ...
 	task_id.value = '';
+}
+
+function togglestats(task) {
+	let stats = document.getElementById(task);
+	let icon = document.getElementById("toolbar-eye-open").children[0].children[0];
+
+	console.log(icon);
+
+	if (stats.classList.contains("d-none")) {
+		stats.classList.remove("d-none");
+		icon.classList.replace("icon-eye-open", "icon-eye-close");
+	} else {
+		stats.classList.add("d-none");
+		icon.classList.replace("icon-eye-close", "icon-eye-open");
+	}
 }

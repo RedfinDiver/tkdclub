@@ -23,7 +23,7 @@ HtmlHelper::_('behavior.multiselect');
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('com_tkdclub.iban')
     ->useScript('com_tkdclub.members-format-iban')
-    ->useScript('com_tkdclub.export')
+    ->useScript('com_tkdclub.taskhandling')
     ->useStyle('com_tkdclub.tkdclub-admin');
 
 /**
@@ -54,9 +54,40 @@ $columns   = 10;
                     <div class="m-2">
                         <?php echo Text::sprintf('COM_TKDCLUB_ENTRIES', $this->total, $this->allrows); ?>
                     </div>
-                    <?php if ($this->togglestats) :  ?>
-                        <?php include_once(JPATH_COMPONENT . '/includes/membersstats.php'); ?>
-                    <?php endif; ?>
+                    <div id="membersstats" class="d-none container">
+                        <div class="p-3 row">
+                            <div class="col">
+                                <div class="card alert-info">
+                                    <div class="card-body">
+                                        <h4 class="card-title"><?php echo Text::_('COM_TKDCLUB_CONFIG_MEMBERS'); ?></h4>
+                                        <?php echo Text::_('COM_TKDCLUB_MEMBER_STATE_ACTIVE') . ': ' . $this->memberdata->active; ?><br>
+                                        <?php echo Text::_('COM_TKDCLUB_MEMBER_STATE_SUPPORTER') . ': ' . $this->memberdata->support; ?><br>
+                                        <?php echo Text::_('COM_TKDCLUB_MEMBER_STATE_INACTIVE') . ': ' . $this->memberdata->inactive; ?><br> 
+                                        <?php echo Text::_('COM_TKDCLUB_IN_DATABASE') . ': ' . $this->memberdata->allrows; ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card alert-info">
+                                    <div class="card-body">
+                                        <h4><?php echo Text::_('COM_TKDCLUB_MEMBER_GENDER_DISTRIBUTION'); ?></h4>
+                                        <?php echo Text::_('COM_TKDCLUB_MEMBER_SEX_FEMALE') . ': ' . $this->memberdata->genderdist['female']; ?><br>
+                                        <?php echo Text::_('COM_TKDCLUB_MEMBER_SEX_MALE') . ': ' . $this->memberdata->genderdist['male']; ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card alert-info">
+                                    <div class="card-body">
+                                        <h4><?php echo Text::_('COM_TKDCLUB_MEMBER_AGE_DISTRIBUTION'); ?></h4>
+                                        <?php echo Text::sprintf('COM_TKDCLUB_MEMBER_OLDEST', $this->memberdata->oldest['name'], $this->memberdata->oldest['age_y']) ?><br>
+                                        <?php echo Text::sprintf('COM_TKDCLUB_MEMBER_YOUNGEST', $this->memberdata->youngest['name'], $this->memberdata->youngest['age_y']) ?><br>
+                                        <?php echo Text::_('COM_TKDCLUB_STATISTIC_AVERAGE_AGE') . ': ' . $this->memberdata->average_age?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <table class="table table-striped table-sm">
                         <thead>
                             <tr>

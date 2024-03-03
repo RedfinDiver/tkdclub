@@ -14,6 +14,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 
 /**
@@ -140,6 +141,9 @@ class HtmlView extends BaseHtmlView
 	 */
     protected function addToolbar()
     {
+        // Get the toolbar object instance
+		$toolbar = Toolbar::getInstance('toolbar');
+
         $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
 
         ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_TRAINING_ADMIN_VIEW'), 'tkdclub tkdclub-logo-v-sw');
@@ -168,8 +172,26 @@ class HtmlView extends BaseHtmlView
             ToolBarHelper::custom('trainings.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);
         }
 
-        ToolbarHelper::custom('export.trainings', 'download', '', 'COM_TKDCLUB_EXPORT_CSV', true);
-        ToolbarHelper::custom('export.trainings', 'download', '', 'COM_TKDCLUB_EXPORT_ALL_CSV', false);
+        $export = $toolbar->dropdownButton('download-group')
+		->text('COM_TKDCLUB_EXPORT')
+		->toggleSplit(false)
+		->icon('fa fa-file-download')
+		->buttonClass('btn btn-action')
+		->listCheck(false);
+
+        $dlchild = $export->getChildToolbar();
+
+        $dlchild->standardButton('download-all')
+		->icon('fa fa-file-download')
+		->text('COM_TKDCLUB_EXPORT_ALL_CSV')
+		->task('export.trainings')
+		->listCheck(false);
+
+		$dlchild->standardButton('download-html')
+		->icon('fa fa-file-download')
+		->text('COM_TKDCLUB_EXPORT_CSV')
+		->task('export.trainings')
+		->listCheck(true);
 
         if ($canDo->get('core.admin')) {
             ToolBarHelper::divider();
