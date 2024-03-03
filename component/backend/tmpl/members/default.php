@@ -23,6 +23,7 @@ HtmlHelper::_('behavior.multiselect');
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('com_tkdclub.iban')
     ->useScript('com_tkdclub.members-format-iban')
+    ->useScript('com_tkdclub.export')
     ->useStyle('com_tkdclub.tkdclub-admin');
 
 /**
@@ -162,7 +163,10 @@ $columns   = 10;
                                     </td>
                                     <td><?php echo $this->escape($item->phone); ?></td>
                                     <td><?php echo $this->escape($item->email); ?></td>
-                                    <td><?php echo $this->escape($item->memberpass); ?></td>
+                                    <td><?php if ($item->memberpass) :?>
+                                            <?php echo $this->escape($item->memberpass); ?>
+                                        <?php endif; ?>
+                                    </td>
                                     <td>
                                         <?php
                                             if (!$item->grade) {
@@ -174,7 +178,9 @@ $columns   = 10;
                                     </td>
                                     <td>
                                         <?php
-                                            if (!$item->lastpromotion == null) {
+                                            if ($item->lastpromotion == '0000-00-00' || is_null($item->lastpromotion)) {
+                                                echo '';
+                                            } else {
                                                 echo HtmlHelper::_('date', $item->lastpromotion, Text::_('DATE_FORMAT_LC4'));
                                             }
                                         ?>
@@ -191,7 +197,7 @@ $columns   = 10;
                 <?php echo $this->pagination->getListFooter(); ?>
 
                 <div>
-                    <input type="hidden" name="task" value="" />
+                    <input type="hidden" id="task" name="task" value="" />
                     <input type="hidden" name="boxchecked" value="0" />
                     <?php echo HtmlHelper::_('form.token'); ?>
                 </div>

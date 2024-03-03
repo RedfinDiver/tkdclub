@@ -138,12 +138,17 @@
         "attributes": {
           "defer": true
         }
+      },
+      {
+        "name": "com_tkdclub.export",
+        "type": "script",
+        "uri": "com_tkdclub/export.js",
+        "dependencies": [
+          "core"
+        ],
+        "attributes": {
+          "defer": true
+        }
       }
-
-
-
-
-
-
     ]
   }

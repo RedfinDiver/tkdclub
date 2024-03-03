@@ -153,6 +153,11 @@ class CandidateController extends FormController
             $this->candidate_data['notes'] = Text::_('COM_TKDCLUB_CANDIDATE_DOUBLE_PROMOTION');
         }
 
+        // bring in the amount of trainings since last promotion
+        $member_model = $this->getModel($name = 'member', $prefix = 'Administrator', $config = array());
+        $trainings = $member_model->getTrainings($candidate_id);
+        $this->candidate_data['sLastPromotion'] = $trainings['sLastPromotion'];
+
         $this->candidate_data['no_error'] = true;
 
         $this->response($this->candidate_data);

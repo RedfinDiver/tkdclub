@@ -80,6 +80,10 @@ class MemberModel extends AdminModel
             $data = $this->getItem();
         }
 
+        $data->lastpromotion == '0000-00-00' ? $data->lastpromotion = '' : '';
+        $data->leave == '0000-00-00' ? $data->leave = '' : '';
+        $data->memberpass == 0 ? $data->memberpass = '' : '';
+
         return $data;
     }
 
@@ -346,6 +350,14 @@ class MemberModel extends AdminModel
                     ->bind(':member_id', $member_id, ParameterType::INTEGER);
         $db->setQuery($query);
         $lastpromotion = $db->loadResult();
+
+        // if there is no promotion date, all trainings count for the next promotion
+        if($lastpromotion == '0000-00-00') {
+
+            $trainings['slastPromotion'] = $trainings['all'];
+
+            return $trainings;
+        }
 
         // getting trainings since last promotion
         $query = $db->getQuery(true);
