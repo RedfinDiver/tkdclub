@@ -8,7 +8,12 @@ Joomla.submitbutton = task => {
 	// intercepting the export tasks for tkdclub
 	if (
 				task === 'export.members' || 
-				task === 'export.trainings'
+				task === 'export.trainings' ||
+				task === 'export.promotions' ||
+				task === 'export.candidates' ||
+				task === 'export.participants' ||
+				task === 'export.events' ||
+				task === 'export.subscribers'
 			) {
 			exportcommon(task);
 			return;

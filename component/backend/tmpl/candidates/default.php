@@ -22,7 +22,8 @@ HtmlHelper::_('behavior.multiselect');
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
 $this->document->getWebAssetManager()
     ->useScript('com_tkdclub.iban')
-    ->useStyle('com_tkdclub.tkdclub-admin');
+    ->useStyle('com_tkdclub.tkdclub-admin')
+    ->useScript('com_tkdclub.taskhandling');
 
 $params = ComponentHelper::getParams('com_tkdclub');
 $currency = $params->get('currency', '€');
@@ -143,7 +144,7 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
                 <?php endif; ?>
                 <?php echo $this->pagination->getListFooter(); ?>
                 <div>
-                    <input type="hidden" name="task" value="" />
+                    <input type="hidden" id="task" name="task" value="" />
                     <input type="hidden" name="boxchecked" value="0" />
                     <?php echo HTMLHelper::_('form.token'); ?>
                 </div>                             

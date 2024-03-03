@@ -15,6 +15,7 @@ use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\HTML\Helpers\Sidebar;
+use Joomla\CMS\Toolbar\Toolbar;
 
 /**
  * view-class for edit-view: 'candidates'
@@ -70,6 +71,9 @@ class HtmlView extends BaseHtmlView
 
     protected function addToolbar()
     {
+        // Get the toolbar object instance
+		$toolbar = Toolbar::getInstance('toolbar');
+
         $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
         ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_CANDIDATE_ADMIN_VIEW'), 'tkdclub tkdclub-logo-v-sw');
 
@@ -93,20 +97,30 @@ class HtmlView extends BaseHtmlView
             ToolBarHelper::deleteList('COM_TKDCLUB_CANDIDATE_DELETE_QUESTION', 'candidates.delete', 'JTOOLBAR_DELETE');
         }
 
-        /* TODO statistics for candidates
-        
-        if ($this->togglestats)
-        {ToolBarHelper::custom('candidates.togglestats', 'eye-close', 'eye-close', 'COM_TKDCLUB_BUTTON_STATS', false);}
-        else {ToolBarHelper::custom('candidates.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);} */
+        $export = $toolbar->dropdownButton('download-group')
+		->text('COM_TKDCLUB_EXPORT')
+		->toggleSplit(false)
+		->icon('fa fa-file-download')
+		->buttonClass('btn btn-action')
+		->listCheck(false);
 
-        ToolbarHelper::custom('export.canditates', 'download', '', 'COM_TKDCLUB_EXPORT_CSV', true);
-        ToolbarHelper::custom('export.canditates', 'download', '', 'COM_TKDCLUB_EXPORT_ALL_CSV', false);
+        $dlchild = $export->getChildToolbar();
+
+        $dlchild->standardButton('download-all')
+		->icon('fa fa-file-download')
+		->text('COM_TKDCLUB_EXPORT_ALL_CSV')
+		->task('export.candidates')
+		->listCheck(false);
+
+		$dlchild->standardButton('download-some')
+		->icon('fa fa-file-download')
+		->text('COM_TKDCLUB_EXPORT_CSV')
+		->task('export.candidates')
+		->listCheck(true);
 
         if ($canDo->get('core.admin')) {
             ToolBarHelper::preferences('com_tkdclub');
         }
-
-        Sidebar::setAction('index.php?option=com_tkdclub&view=candidates');
 
         $help_url  = 'https://tkdclub.readthedocs.io/{langcode}/latest/pruefungsteilnehmer.html';
         ToolBarHelper::help('', false, $help_url);

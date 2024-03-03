@@ -17,7 +17,8 @@ HTMLHelper::_('behavior.multiselect');
 
 /** @var Joomla\CMS\WebAsset\WebAssetManager $wa */
 $this->document->getWebAssetManager()
-    ->useStyle('com_tkdclub.tkdclub-admin');
+    ->useStyle('com_tkdclub.tkdclub-admin')
+    ->useScript('com_tkdclub.taskhandling');
 
 $user      = Factory::getUser();
 $userId    = $user->get('id');
@@ -117,7 +118,7 @@ $columns   = 10;
                 <?php endif; ?>
                 <?php echo $this->pagination->getListFooter(); ?>
                 <div>
-                    <input type="hidden" name="task" value="" />
+                    <input type="hidden" id="task" name="task" value="" />
                     <input type="hidden" name="boxchecked" value="0" />
                     <?php echo HTMLHelper::_('form.token'); ?>
                 </div>

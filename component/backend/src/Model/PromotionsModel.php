@@ -192,6 +192,19 @@ class PromotionsModel extends ListModel
 		// return the results as an array of items, each consisting of an array of fields
 		$content	= array($headers);	// header with column names
 		$content	= array_merge( $content,  $rows);
+
+
+        foreach ($content as $key => &$row)
+		{
+			if ($key > 0)
+			{
+				$row[3] == 'kup' ? $row[3] = Text::_('COM_TKDCLUB_KUP') : $row[3] = Text::_('COM_TKDCLUB_DAN');
+				$row[7] == 1 ? $row[7] = Text::_('COM_TKDCLUB_PROMOTION_ACTIVE') : $row[7] = Text::_('COM_TKDCLUB_PROMOTION_INACTIVE');
+			}
+
+			print implode(';', $row)."\n";
+		}
+
 		return $content;
 	}
  }

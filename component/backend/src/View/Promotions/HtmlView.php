@@ -51,7 +51,9 @@ class HtmlView extends BaseHtmlView
     }
 
     protected function addToolbar()
-    {
+    {   
+        $toolbar = Toolbar::getInstance('toolbar');
+
         $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
         ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_PROMOTION_ADMIN_VIEW'), 'tkdclub tkdclub-logo-v-sw');
 
@@ -76,21 +78,26 @@ class HtmlView extends BaseHtmlView
             ToolBarHelper::deleteList('COM_TKDCLUB_PROMOTION_DELETE_QUESTION', 'promotions.delete', 'JTOOLBAR_DELETE', true);
         }
 
-        $toolbar = Toolbar::getInstance('toolbar');
-        $toolbar->addButtonPath(JPATH_COMPONENT . '/buttons');
+        $export = $toolbar->dropdownButton('download-group')
+		->text('COM_TKDCLUB_EXPORT')
+		->toggleSplit(false)
+		->icon('fa fa-file-download')
+		->buttonClass('btn btn-action')
+		->listCheck(false);
 
-        // TODO mini statistiks for promotions
-        /* if ($this->togglestats)
-        {
-            ToolBarHelper::custom('promotions.togglestats', 'eye-close', 'eye-close', 'COM_TKDCLUB_BUTTON_STATS', false);
-        }
-        else
-        {
-            ToolBarHelper::custom('promotions.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);
-        } */
+        $dlchild = $export->getChildToolbar();
 
-        ToolbarHelper::custom('export.promotions', 'download', '', 'COM_TKDCLUB_EXPORT_CSV', true);
-        ToolbarHelper::custom('export.promotions', 'download', '', 'COM_TKDCLUB_EXPORT_ALL_CSV', false);
+        $dlchild->standardButton('download-all')
+		->icon('fa fa-file-download')
+		->text('COM_TKDCLUB_EXPORT_ALL_CSV')
+		->task('export.promotions')
+		->listCheck(false);
+
+		$dlchild->standardButton('download-html')
+		->icon('fa fa-file-download')
+		->text('COM_TKDCLUB_EXPORT_CSV')
+		->task('export.promotions')
+		->listCheck(true);
 
         if ($canDo->get('core.admin'))
         {

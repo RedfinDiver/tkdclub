@@ -16,6 +16,31 @@ use Joomla\CMS\HTML\HTMLHelper;
 class ExportController extends FormController
 {	
 	/**
+	 * Writes the export data to browser as csv file
+	 * 
+	 * @param	string	$model	The name of the model to call
+	 * @param	string	$name	The name of the file to write
+	 * 
+	 * @return	void
+	 */
+	protected function writeFile($model, $name)
+	{
+		$rows = $this->getContent($model);
+
+		$this->setHeaders($name);
+
+		$output = fopen("php://output", "w");
+
+		foreach ($rows as $row)
+		{
+			fputcsv($output, $row, ',');
+		}
+
+		fclose($output);
+		$this->app->close();
+	}
+
+	/**
 	 * Method to get the content for csv export
 	 *
 	 * @param string $model the name of model to call
@@ -44,31 +69,6 @@ class ExportController extends FormController
 			->setHeader('Content-Disposition', 'attachment; filename="' . $filename . '.csv"', true)
 			->setHeader('Cache-Control', 'must-revalidate', true)
 			->sendHeaders();
-	}
-
-	/**
-	 * Writes the export data to browser as csv file
-	 * 
-	 * @param	string	$model	The name of the model to call
-	 * @param	string	$name	The name of the file to write
-	 * 
-	 * @return	void
-	 */
-	protected function writeFile($model, $name)
-	{
-		$rows = $this->getContent($model);
-
-		$this->setHeaders($name);
-
-		$output = fopen("php://output", "w");
-
-		foreach ($rows as $row)
-		{
-			fputcsv($output, $row, ',');
-		}
-
-		fclose($output);
-		$this->app->close();
 	}
 
 	/**
@@ -102,24 +102,13 @@ class ExportController extends FormController
 	}
 
 	/**
-	 * csv export function for promotion-view
+	 * csv export function for promotions
 	 **/
     public function promotions()
 	{	
-		$content = $this->getContent('promotions');
-
-		foreach ($content as $key => &$row)
-		{
-			if ($key > 0)
-			{
-				$row[3] == 'kup' ? $row[3] = Text::_('COM_TKDCLUB_KUP') : $row[3] = Text::_('COM_TKDCLUB_DAN');
-				$row[7] == 1 ? $row[7] = Text::_('COM_TKDCLUB_PROMOTION_ACTIVE') : $row[7] = Text::_('COM_TKDCLUB_PROMOTION_INACTIVE');
-			}
-
-			print implode(';', $row)."\n";
-		}
-
-		$this->setHeaders(Text::_('COM_TKDCLUB_SIDEBAR_PROMOTIONS'));
+		// Check for request forgeries.
+		$this->checkToken();
+		$this->writeFile('promotions', Text::_('COM_TKDCLUB_SIDEBAR_PROMOTIONS'));
 	}
 
 	/**
