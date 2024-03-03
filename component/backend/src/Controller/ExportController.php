@@ -65,9 +65,9 @@ class ExportController extends FormController
 	 **/
 	protected function setHeaders($filename = 'download')
 	{
-		$this->app->setHeader('Content-Type', 'application/csv', true)
-			->setHeader('Content-Disposition', 'attachment; filename="' . $filename . '.csv"', true)
-			->setHeader('Cache-Control', 'must-revalidate', true)
+		$this->app->setHeader('Content-Type', 'text/csv; charset=utf-8', true)
+			->setHeader('Content-disposition', 'attachment; filename="' . $filename . '.csv"', true)
+			->setHeader('Cache-Control', 'no-cache', true)
 			->sendHeaders();
 	}
 
@@ -118,21 +118,9 @@ class ExportController extends FormController
 	**/
 	public function candidates()
 	{	
-		$content = $this->getContent('candidates');
-
-		foreach ($content as $key => &$row)
-		{ 	
-			// conversion of date in LC4-format
-			if ($key > 0)
-			{
-				$row[3] = HTMLHelper::_('date', $row[3], Text::_('DATE_FORMAT_LC4'));
-				$row[4] == 'male' ? $row[4] = Text::_('COM_TKDCLUB_MEMBER_SEX_MALE') : $row[4] = Text::_('COM_TKDCLUB_MEMBER_SEX_FEMALE');
-			}
-			
-			print implode(';', $row)."\n"; // write data to the browser
-		}
-
-		$this->setHeaders(Text::_('COM_TKDCLUB_SIDEBAR_CANDIDATES'));
+		// Check for request forgeries.
+		$this->checkToken();
+		$this->writeFile('candidates', Text::_('COM_TKDCLUB_SIDEBAR_CANDIDATES'));
 	}
 
 	/**
@@ -140,22 +128,9 @@ class ExportController extends FormController
 	 */
 	public function events()
 	{	
-		$content = $this->getContent('events');
-
-		foreach ($content as $key => &$row)
-		{ 	
-			// conversion of date in LC4-format
-			if ($key > 0)
-			{
-				$row[2] = HTMLHelper::_('date', $row[2], Text::_('DATE_FORMAT_LC4'));
-				$row[3] = HTMLHelper::_('date', $row[3], Text::_('DATE_FORMAT_LC4'));
-				$row[7] == 1 ? $row[7] = Text::_('JPUBLISHED') : $row[7] = Text::_('JUNPUBLISHED');
-			}
-			
-			print implode(';', $row)."\n"; 
-		}
-
-		$this->setHeaders(Text::_('COM_TKDCLUB_SIDEBAR_EVENTS'));
+		// Check for request forgeries.
+		$this->checkToken();
+		$this->writeFile('events', Text::_('COM_TKDCLUB_SIDEBAR_EVENTS'));
 	}
 
 	/**

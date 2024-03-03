@@ -13,7 +13,6 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Helper\ContentHelper;
-use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 
@@ -38,13 +37,6 @@ class HtmlView extends BaseHtmlView
         $this->allrows = $this->get('Allrows');
         $this->filterForm = $this->get('FilterForm');
         $this->activeFilters = $this->get('ActiveFilters');
-        $this->togglestats = Factory::getSession()->get('togglestats_events', null, 'tkdclub');
-
-        // TODO statistics for events
-        /* if ($this->togglestats)
-        {
-            // @todo implement statistics
-        } */
 
         $this->addToolbar();
         parent::display($tpl);
@@ -52,6 +44,8 @@ class HtmlView extends BaseHtmlView
 
     protected function addToolbar()
     {
+        $toolbar = Toolbar::getInstance('toolbar');
+
         $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
         ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_EVENT_ADMIN_VIEW'), 'tkdclub tkdclub-logo-v-sw');
 
@@ -61,31 +55,54 @@ class HtmlView extends BaseHtmlView
             ToolbarHelper::addNew('event.add', 'JTOOLBAR_NEW');
         }
 
-        if ($canDo->get('core.edit')) {
-            ToolbarHelper::editList('event.edit', 'JTOOLBAR_EDIT');
-        }
-
-        if ($canDo->get('core.delete')) {
-            ToolbarHelper::deleteList('COM_TKDCLUB_EVENT_DELETE_QUESTION', 'events.delete', 'JTOOLBAR_DELETE');
-        }
-
-        if ($canDo->get('core.edit.state')) {
-            ToolbarHelper::publish('events.publish', 'JTOOLBAR_PUBLISH', true);
-            ToolbarHelper::unpublish('events.unpublish', 'JTOOLBAR_UNPUBLISH', true);
-        }
-
-        $toolbar = Toolbar::getInstance('toolbar');
-        $toolbar->addButtonPath(JPATH_COMPONENT . '/buttons');
-
-        /* TODO statistics for events
-        if ($this->togglestats)
+        if ($canDo->get('core.edit.state'))
         {
-            ToolbarHelper::custom('events.togglestats', 'eye-close', 'eye-close', 'COM_TKDCLUB_BUTTON_STATS', false);
+            $dropdown = $toolbar->dropdownButton('status-group')
+            ->text('JTOOLBAR_CHANGE_STATUS')
+            ->toggleSplit(false)
+            ->icon('icon-ellipsis-h')
+            ->buttonClass('btn btn-action')
+            ->listCheck(true);
+            
+            $childBar = $dropdown->getChildToolbar();
+
+            if ($canDo->get('core.edit.state')) {
+                
+                $childBar->publish('events.publish')->listCheck(true);
+                $childBar->unpublish('events.unpublish')->listCheck(true);
+
+            }
+            
+            if ($canDo->get('core.delete'))
+            {
+                $childBar->delete('events.delete')
+                ->text('JTOOLBAR_DELETE')
+                ->message('COM_TKDCLUB_EVENT_DELETE_QUESTION')
+                ->listCheck(true);
+            }
+
         }
-        else 
-        {
-            ToolbarHelper::custom('events.togglestats', 'eye-open', 'eye-open', 'COM_TKDCLUB_BUTTON_STATS', false);
-        } */
+
+        $export = $toolbar->dropdownButton('download-group')
+		->text('COM_TKDCLUB_EXPORT')
+		->toggleSplit(false)
+		->icon('fa fa-file-download')
+		->buttonClass('btn btn-action')
+		->listCheck(false);
+
+        $dlchild = $export->getChildToolbar();
+
+        $dlchild->standardButton('download-all')
+		->icon('fa fa-file-download')
+		->text('COM_TKDCLUB_EXPORT_ALL_CSV')
+		->task('export.events')
+		->listCheck(false);
+
+		$dlchild->standardButton('download-some')
+		->icon('fa fa-file-download')
+		->text('COM_TKDCLUB_EXPORT_CSV')
+		->task('export.events')
+		->listCheck(true);
 
         if ($canDo->get('core.admin')) {
             ToolbarHelper::preferences('com_tkdclub');

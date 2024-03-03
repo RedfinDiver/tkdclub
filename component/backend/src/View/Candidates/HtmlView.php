@@ -83,18 +83,28 @@ class HtmlView extends BaseHtmlView
             ToolBarHelper::addNew('candidate.add', 'JTOOLBAR_NEW');
         }
 
-        if ($canDo->get('core.edit')) {
-            ToolBarHelper::editList('candidate.edit', 'JTOOLBAR_EDIT');
-        }
+        if ($canDo->get('core.edit.state'))
+        {
+            $dropdown = $toolbar->dropdownButton('status-group')
+            ->text('JTOOLBAR_CHANGE_STATUS')
+            ->toggleSplit(false)
+            ->icon('icon-ellipsis-h')
+            ->buttonClass('btn btn-action')
+            ->listCheck(true);
+            
+            $childBar = $dropdown->getChildToolbar();
 
-        if ($canDo->get('core.edit.state')) {
-            ToolBarHelper::publish('candidates.publish', 'COM_TKDCLUB_CANDIDATE_PASSED', true);
-            ToolBarHelper::unpublish('candidates.unpublish', 'COM_TKDCLUB_CANDIDATE_NOT_PASSED', true);
-            ToolBarHelper::archiveList('candidates.archive', 'COM_TKDCLUB_CANDIDATE_SUBSCRIBED', true);
-        }
+            $childBar->publish('candidates.publish', 'COM_TKDCLUB_CANDIDATE_PASSED')->listCheck(true);
+            $childBar->unpublish('candidates.unpublish', 'COM_TKDCLUB_CANDIDATE_NOT_PASSED')->listCheck(true);
+            $childBar->archive('candidates.archive', 'COM_TKDCLUB_CANDIDATE_SUBSCRIBED')->listCheck(true);
 
-        if ($canDo->get('core.delete')) {
-            ToolBarHelper::deleteList('COM_TKDCLUB_CANDIDATE_DELETE_QUESTION', 'candidates.delete', 'JTOOLBAR_DELETE');
+            if ($canDo->get('core.delete'))
+            {
+                $childBar->delete('candidates.delete')
+                ->text('JTOOLBAR_DELETE')
+                ->message('COM_TKDCLUB_CANDIDATE_DELETE_QUESTION')
+                ->listCheck(true);
+            }
         }
 
         $export = $toolbar->dropdownButton('download-group')

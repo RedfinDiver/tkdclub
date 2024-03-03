@@ -12,6 +12,7 @@ namespace Redfindiver\Component\Tkdclub\Administrator\Model;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\Utilities\ArrayHelper;
 
 /**
  * Model class for list view 'promotions'
@@ -164,18 +165,38 @@ class PromotionsModel extends ListModel
 	 * @return  mixed  The data.
 	 */
 	public function getExportData($pks)
-	{
-		$pklist = implode(',', $pks);
+	{   
+        $db	= Factory::getDBO();
+        $query = $db->getQuery(true);
 
-		$db	= Factory::getDBO();
-		$query	= $db->getQuery(true);
-		$query-> select('promotion_id, date, city, type, examiner_name, examiner_address, examiner_email, promotion_state, notes')
-			  -> from($db->quoteName('#__tkdclub_promotions'))
-			  -> where('promotion_id IN ('.$pklist.')')
-              ->order('date DESC');
+        $fields = array(
+            'promotion_id',       // 0
+            'date',               // 1    
+            'city',               // 2
+            'type',               // 3
+            'examiner_name',      // 4
+            'examiner_address',   // 5
+            'examiner_email',     // 6
+            'promotion_state',    // 7
+            'notes'               // 8
+        );
 
-		$db	-> setQuery((string)$query);
-		$rows	= $db->loadRowList();
+        $pks = ArrayHelper::toInteger($pks);
+		$query->select($db->quoteName($fields))->from($db->quoteName('#__tkdclub_promotions'));
+
+        if (count($pks) > 0)
+        {
+            $query->whereIn($db->quoteName('promotion_id'), $pks);
+        }
+        else
+        {
+            $query->where($db->quoteName('promotion_id') . ' > 0');
+        }
+
+        $query->order('date DESC');
+
+		$db->setQuery($query);
+		$rows = $db->loadRowList();
 
         $headers = array(
             Text::_('COM_TKDCLUB_PROMOTION_ID'),               // promotion_id
@@ -190,7 +211,7 @@ class PromotionsModel extends ListModel
         );
 
 		// return the results as an array of items, each consisting of an array of fields
-		$content	= array($headers);	// header with column names
+		$content    = array($headers);	// header with column names
 		$content	= array_merge( $content,  $rows);
 
 
@@ -201,8 +222,6 @@ class PromotionsModel extends ListModel
 				$row[3] == 'kup' ? $row[3] = Text::_('COM_TKDCLUB_KUP') : $row[3] = Text::_('COM_TKDCLUB_DAN');
 				$row[7] == 1 ? $row[7] = Text::_('COM_TKDCLUB_PROMOTION_ACTIVE') : $row[7] = Text::_('COM_TKDCLUB_PROMOTION_INACTIVE');
 			}
-
-			print implode(';', $row)."\n";
 		}
 
 		return $content;

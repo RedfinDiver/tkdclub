@@ -38,14 +38,6 @@ class HtmlView extends BaseHtmlView
         $this->filterForm    = $this->get('FilterForm');
         $this->activeFilters = $this->get('ActiveFilters');
 
-        /* TODO mini statistics for promotions
-        $this->togglestats = Factory::getSession()->get('togglestats_promotions', null, 'tkdclub');
-        
-        if ($this->togglestats)
-        {
-            $this->promotiondata = $this->get('Promotionsdata');
-        } */
-
         $this->addToolbar();;
         parent::display($tpl);
     }
@@ -65,17 +57,27 @@ class HtmlView extends BaseHtmlView
             ToolBarHelper::addNew('promotion.add', 'JTOOLBAR_NEW');
         }
 
-        if ($canDo->get('core.edit')) {
-            ToolBarHelper::editList('promotion.edit', 'JTOOLBAR_EDIT');
-        }
+        if ($canDo->get('core.edit.state'))
+        {
+            $dropdown = $toolbar->dropdownButton('status-group')
+            ->text('JTOOLBAR_CHANGE_STATUS')
+            ->toggleSplit(false)
+            ->icon('icon-ellipsis-h')
+            ->buttonClass('btn btn-action')
+            ->listCheck(true);
+            
+            $childBar = $dropdown->getChildToolbar();
 
-        if ($canDo->get('core.edit.state')) {
-            ToolBarHelper::publish('promotions.publish', 'JTOOLBAR_CHECKIN', true);
-            ToolBarHelper::unpublish('promotions.unpublish', 'COM_TKDCLUB_PROMOTION_UNPUBLISH', true);
-        }
+            $childBar->publish('promotions.publish', 'JTOOLBAR_CHECKIN')->listCheck(true);
+            $childBar->unpublish('promotions.unpublish', 'COM_TKDCLUB_PROMOTION_UNPUBLISH')->listCheck(true);
 
-        if ($canDo->get('core.delete')) {
-            ToolBarHelper::deleteList('COM_TKDCLUB_PROMOTION_DELETE_QUESTION', 'promotions.delete', 'JTOOLBAR_DELETE', true);
+            if ($canDo->get('core.delete'))
+            {
+                $childBar->delete('cpromotions.delete')
+                ->text('JTOOLBAR_DELETE')
+                ->message('COM_TKDCLUB_PROMOTION_DELETE_QUESTION')
+                ->listCheck(true);
+            }
         }
 
         $export = $toolbar->dropdownButton('download-group')

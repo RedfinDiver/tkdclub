@@ -403,8 +403,7 @@ class MembersModel extends ListModel
         );
 
         $pks = ArrayHelper::toInteger($pks);
-        $query->select($db->quoteName($fields))
-            ->from($db->quoteName('#__tkdclub_members'));
+        $query->select($db->quoteName($fields))->from($db->quoteName('#__tkdclub_members'));
 
         if (count($pks) > 0)
         {

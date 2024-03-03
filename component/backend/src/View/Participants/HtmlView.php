@@ -52,6 +52,8 @@ class HtmlView extends BaseHtmlView
 
     protected function addToolbar()
     {
+        $toolbar = ToolBar::getInstance('toolbar');
+
         $clubname = ComponentHelper::getParams('com_tkdclub')->get('club_name', Text::_('COM_TKDCLUB'));
         ToolBarHelper::title($clubname . Text::_('COM_TKDCLUB_PARTICIPANT_ADMIN_VIEW'), 'tkdclub tkdclub-logo-v-sw');
 
@@ -61,20 +63,28 @@ class HtmlView extends BaseHtmlView
             ToolBarHelper::addNew('participant.add');
         }
 
-        if ($canDo->get('core.edit')) {
-            ToolBarHelper::editList('participant.edit', 'JTOOLBAR_EDIT');
-        }
+        if ($canDo->get('core.edit.state'))
+        {
+            $dropdown = $toolbar->dropdownButton('status-group')
+            ->text('JTOOLBAR_CHANGE_STATUS')
+            ->toggleSplit(false)
+            ->icon('icon-ellipsis-h')
+            ->buttonClass('btn btn-action')
+            ->listCheck(true);
+            
+            $childBar = $dropdown->getChildToolbar();
 
-        if ($canDo->get('core.delete')) {
-            ToolBarHelper::deleteList('COM_TKDCLUB_PARTICIPANT_DELETE_QUESTION', 'participants.delete', 'JTOOLBAR_DELETE');
-        }
+            $childBar->publish('participants.publish', 'JTOOLBAR_PUBLISH')->listCheck(true);
+            $childBar->unpublish('participants.unpublish', 'JTOOLBAR_UNPUBLISH')->listCheck(true);
 
-        if ($canDo->get('core.edit.state')) {
-            ToolBarHelper::publish('participants.publish', 'JTOOLBAR_PUBLISH', true);
-            ToolBarHelper::unpublish('participants.unpublish', 'JTOOLBAR_UNPUBLISH', true);
+            if ($canDo->get('core.delete'))
+            {
+                $childBar->delete('participants.delete')
+                ->text('JTOOLBAR_DELETE')
+                ->message('COM_TKDCLUB_PARTICIPANT_DELETE_QUESTION')
+                ->listCheck(true);
+            }
         }
-
-        $toolbar = ToolBar::getInstance('toolbar');
 
         if ($canDo->get('core.admin')) {
             $toolbar->appendButton('confirm', 'COM_TKDKLUB_PARTICIPANT_GDPR_DELETE_MESSAGE', 'flash', 'COM_TKDKLUB_PARTICIPANT_GDPR_DELETE', 'participants.delete_gdpr');

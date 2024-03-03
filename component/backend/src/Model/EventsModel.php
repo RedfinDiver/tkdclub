@@ -11,7 +11,11 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\Utilities\ArrayHelper;
+use Redfindiver\Component\Tkdclub\Administrator\Helper\TkdclubHelper;
+
 
 /**
  * Model-class for list view 'events'
@@ -154,24 +158,42 @@ class EventsModel extends ListModel
 	 */
 	public function getExportData($pks)
 	{
-        JLoader::register('TkdclubHelperGetEventParts', JPATH_COMPONENT_ADMINISTRATOR. '/helpers/geteventparts.php');
-		$pklist = implode(',', $pks);
+        $db	= Factory::getDBO();
+        $query = $db->getQuery(true);
 
-		$db	= Factory::getDBO();
-		$query	= $db->getQuery(true);
-		$query-> select($db->quoteName(array('event_id', 'title', 'date', 'deadline', 'min', 'max', 'published', 'notes')))
-			  -> from($db->quoteName('#__tkdclub_events'))
-			  -> where($db->quoteName('event_id') . ' IN ' . '(' . $pklist . ')')
-              -> order($db->quoteName('date') . ' DESC');
+        $fields = array(
+            'event_id',  // 0
+            'title',     // 1    
+            'date',      // 2
+            'deadline',  // 3
+            'min',       // 4
+            'max',       // 5
+            'published', // 6
+            'notes'      // 7
+        );
 
-		$db	-> setQuery((string)$query);
-        $rows	= $db->loadRowList();
+        $pks = ArrayHelper::toInteger($pks);
+		$query->select($db->quoteName($fields))->from($db->quoteName('#__tkdclub_events'));
+
+        if (count($pks) > 0)
+        {
+            $query->whereIn($db->quoteName('event_id'), $pks);
+        }
+        else
+        {
+            $query->where($db->quoteName('event_id') . ' > 0');
+        }
+
+        $query->order($db->quoteName('date') . ' DESC');
+
+		$db->setQuery($query);
+        $rows = $db->loadRowList();
         
         foreach ($rows as $key => &$row)
         {
             $first = array_slice($row,0,6);
             $second = array_slice($row,6);
-            $first[] = TkdclubHelperGetEventParts::geteventparts($row[0]);
+            $first[] = TkdclubHelper::GetEventParts($row[0]);
             $row = array_merge($first, $second);
         }
 
@@ -190,7 +212,19 @@ class EventsModel extends ListModel
 		// return the results as an array of items, each consisting of an array of fields
 		$content	= array($headers);	// header with column names
 		$content	= array_merge( $content,  $rows);
-		return $content;
+        
+        foreach ($content as $key => &$row)
+		{ 	
+			// conversion of date in LC4-format
+			if ($key > 0)
+			{
+				$row[2] = HTMLHelper::_('date', $row[2], Text::_('DATE_FORMAT_LC4'));
+				$row[3] = HTMLHelper::_('date', $row[3], Text::_('DATE_FORMAT_LC4'));
+				$row[7] == 1 ? $row[7] = Text::_('JPUBLISHED') : $row[7] = Text::_('JUNPUBLISHED');
+			}
+		}
+
+        return $content;
 	}
  
  }

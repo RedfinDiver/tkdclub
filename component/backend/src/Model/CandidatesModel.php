@@ -11,7 +11,9 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Factory;
+use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\Utilities\ArrayHelper;
 
 /**
  * Model-class for list view 'candidates'
@@ -200,24 +202,41 @@ class CandidatesModel extends ListModel
 	 */
 	public function getExportData($pks)
 	{
-		$pklist = implode(',', $pks);
+        $db	= Factory::getDBO();
+        $query = $db->getQuery(true);
 
-		$db	= Factory::getDBO();
-		$query	= $db->getQuery(true);
+        $fields = array(
+            'b.memberpass',   // 0
+            'b.firstname',    // 1    
+            'b.lastname',     // 2
+            'b.birthdate',    // 3
+            'b.sex',          // 4
+            'b.citizenship',  // 5
+            'b.zip',          // 6
+            'b.city',         // 7
+            'b.street'        // 8
+        );
+
+        $pks = ArrayHelper::toInteger($pks);
 
         // select fields from members table
-        $query->select('b.memberpass,b.firstname,b.lastname,b.birthdate,b.sex,b.citizenship,b.zip,b.city,b.street');
-        $query->from($db->quoteName('#__tkdclub_members', 'b'));  
+        $query->select($db->quoteName($fields))->from($db->quoteName('#__tkdclub_members', 'b'));  
 
         // select fields from candidates table
         $query->select('a.grade_achieve');
         $query->join('LEFT', $db->quoteName('#__tkdclub_candidates', 'a') . ' ON a.id_candidate = b.member_id');
 
-        // only selected items in the list
-        $query->where('a.id IN ('.$pklist.')');
+        if (count($pks) > 0)
+        {
+            $query->whereIn($db->quoteName('a.id'), $pks);
+        }
+        else
+        {
+            $query->where($db->quoteName('a.id') . ' > 0');
+        }
 
-		$db	-> setQuery((string)$query);
-		$rows	= $db->loadRowList();
+		$db->setQuery($query);
+		$rows = $db->loadRowList();
 
         $headers = array(
             Text::_('COM_TKDCLUB_MEMBER_PASS'),                        // b.memberpass
@@ -235,7 +254,17 @@ class CandidatesModel extends ListModel
 		// return the results as an array of items, each consisting of an array of fields
 		$content	= array($headers);	//header with column names
 		$content	= array_merge( $content,  $rows);
+
+        foreach ($content as $key => &$row)
+		{ 	
+			// conversion of date in LC4-format
+			if ($key > 0)
+			{
+				$row[3] = HTMLHelper::_('date', $row[3], Text::_('DATE_FORMAT_LC4'));
+				$row[4] == 'male' ? $row[4] = Text::_('COM_TKDCLUB_MEMBER_SEX_MALE') : $row[4] = Text::_('COM_TKDCLUB_MEMBER_SEX_FEMALE');
+			}
+		}
+
 		return $content;
     }
- 
- }
+}
