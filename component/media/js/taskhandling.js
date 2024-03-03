@@ -92,4 +92,8 @@ function togglestats(task) {
 		stats.classList.add("d-none");
 		icon.classList.replace("icon-eye-close", "icon-eye-open");
 	}
+
+	// reset the task value
+	let task_id = document.getElementById("task");
+	task_id.value = '';
 }
