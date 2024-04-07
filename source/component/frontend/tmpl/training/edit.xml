@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+    <layout title="COM_TKDCLUB_TRAINING_MENU_TYPE_ADDTRAINING" option="COM_TKDCLUB_TRAINING_ADDTRAINING_OPTION">
+        <message>COM_TKDCLUB_TRAINING_MENU_TYPE_ADDTRAINING_DESC</message>
+    </layout>
+</metadata>

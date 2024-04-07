@@ -1,0 +1,95 @@
+#
+# WORKING WITH JOOMLA - https://docs.devwithlando.io/tutorials/joomla.html
+#
+
+# REQUIREMENTS: Lando 3
+
+name: tkdclub
+recipe: joomla
+
+proxy:
+  appserver:
+    - tkdclub.local
+  pma:
+    - pma.local
+  mailhog:
+    - mailhog.local
+
+config:
+  php: '8.2'
+  via: apache
+  webroot: www
+  xdebug: true
+
+  config:
+    php: .config/php.ini
+
+# Disable key loading - https://docs.lando.dev/config/ssh.html#customizing
+keys: false
+
+services:
+  appserver:
+    run_as_root:
+      # linking only if joomla is already set up
+      - "/bin/bash /app/.config/install.sh -l"
+
+  database:
+    type: mariadb:10.5
+    portforward: 3306
+    creds:
+      user: admin
+      password: admin
+      database: tkdclub
+
+  pma:
+    type: phpmyadmin
+
+  mailhog:
+    type: mailhog
+    portforward: 1025
+    hogfrom:
+      - appserver
+
+env_file:
+  # Secured procedure for installing Joomla with a remote database
+  # https://docs.joomla.org/J3.x:Secured_procedure_for_installing_Joomla_with_a_remote_database
+  - .config/defaults.env
+
+tooling:
+  # Tooling Example
+  # https://github.com/lando/lando/tree/main/examples/tooling
+
+  # USING SCRIPTY THINGS
+  # https://docs.devwithlando.io/config/services.html#using-scripty-things
+
+  install:
+    description: Installs Joomla, symlinks TDK-Club, installs TKD-Club.
+    cmd:
+      - appserver: bash /app/.config/install.sh -a
+      - database: cd /app && /helpers/sql-import.sh /app/.config/install.sql --no-wipe
+  
+  install-joomla:
+    description: Installs Joomla, w/o TKD-Club extensions.
+    cmd:
+      - appserver: bash /app/.config/install.sh -j
+      - database: cd /app && /helpers/sql-import.sh /app/.config/install.sql --no-wipe
+
+  tkdclub-link:
+    description: Symlink all TKD-Club extensions to webroot.
+    cmd:
+      - appserver: bash /app/.config/install.sh -l
+
+  tkdclub-unlink:
+    description: Unlink all TKD-Club extensions to webroot.
+    cmd:
+      - appserver: bash /app/.config/install.sh -u
+
+  tkdclub-install:
+    description: Command to discover and install tkdclub extensions
+    cmd:
+      - appserver: bash /app/.config/install.sh -t
+
+  test:
+    description: Just for testing
+    cmd:
+      - database: cd /app && /helpers/sql-import.sh /app/.config/install.sql --no-wipe

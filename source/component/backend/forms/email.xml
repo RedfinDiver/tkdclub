@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form addfieldprefix="Redfindiver\Component\Tkdclub\Administrator\Field">
+	<fieldset name="recipients">
+
+		<field
+            name="active" type="checkbox"
+			description=""
+			label="COM_TKDCLUB_EMAIL_FIELD_ACTIVE_LABEL"
+			value="1" default="0" />
+
+		<field
+            name="supporter" type="checkbox"
+			description=""
+			label="COM_TKDCLUB_EMAIL_FIELD_SUPPORTER_LABEL"
+			value="1" default="0" />
+
+		<field
+            name="inactive" type="checkbox"
+			description=""
+			label="COM_TKDCLUB_EMAIL_FIELD_INACTIVE_LABEL"
+			value="1" default="0" />
+                
+		<field
+            name="newsletter" type="checkbox"
+			description=""
+			label="COM_TKDCLUB_EMAIL_FIELD_NEWSLETTER_SUBS_LABEL"
+			value="1" default="0" />
+		
+		<field
+            name="event" type="events"
+			description=""
+			label="COM_TKDCLUB_EMAIL_FIELD_EVENT_LABEL"
+			onlypublished="true">
+			<option value="">COM_TKDCLUB_SELECT_EVENT</option>
+		</field>
+    
+    </fieldset>
+
+    <fieldset name="email">
+
+		<field
+            name="subject" type="text" required="true"
+			class="span9"
+			description="COM_TKDCLUB_EMAIL_FIELD_SUBJECT_DESC"
+			label="COM_TKDCLUB_EMAIL_FIELD_SUBJECT_LABEL"
+			maxlength="150"
+			size="30" />
+
+		<field
+            name="message" type="textarea" required="true"
+			class="span9 vert"
+			cols="60"
+			description="COM_TKDCLUB_EMAIL_FIELD_MESSAGE_DESC"
+			label="COM_TKDCLUB_EMAIL_FIELD_MESSAGE_LABEL"
+			rows="20" />
+
+	</fieldset>
+    
+	<fieldset name="attachments">
+
+        <field
+            name="attachment1" type="file" required="false"
+            label="COM_TKDCLUB_EMAIL_FIELD_ATTACHMENT1"
+            description="COM_TKDCLUB_EMAIL_FIELD_ATTACHMENT_DESC" />
+
+        <field
+            name="attachment2" type="file" required="false"
+            label="COM_TKDCLUB_EMAIL_FIELD_ATTACHMENT2"
+            description="COM_TKDCLUB_EMAIL_FIELD_ATTACHMENT_DESC" />
+        
+         <field
+            name="attachment3" type="file" required="false"
+            label="COM_TKDCLUB_EMAIL_FIELD_ATTACHMENT3"
+            description="COM_TKDCLUB_EMAIL_FIELD_ATTACHMENT_DESC" />
+
+	</fieldset>
+</form>

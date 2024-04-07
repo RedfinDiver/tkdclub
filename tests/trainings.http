@@ -1,0 +1,32 @@
+######################################
+### Tests for trainings api ##########
+######################################
+
+
+
+### Get all trainings ####
+GET http://tkdclub.local/api/index.php/v1/tkdclub/trainings HTTP/1.1
+Authorization: Basic admin:admin
+Accept: application/vnd.api+json
+
+
+### Get specific training with id 1 ###
+GET http://tkdclub.local/api/index.php/v1/tkdclub/trainings/1 HTTP/1.1
+Authorization: Basic admin:admin
+Accept: application/vnd.api+json
+
+
+### Create Training ###
+POST http://tkdclub.local/api/index.php/v1/tkdclub/trainings HTTP/1.1
+Authorization: Basic admin:admin
+Content-Type: application/json
+Accept: application/vnd.api+json
+
+{
+    "date":"{{$datetime 'YYYY-MM-DD' 1 y}}",
+    "type":"Erwachsenentraining",
+    "participants":"5",
+    "participant_ids":"[1,2]",
+    "trainer":"1",
+    "km_trainer":"76"
+}

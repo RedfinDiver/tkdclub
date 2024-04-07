@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form addfieldprefix="Redfindiver\Component\Tkdclub\Administrator\Field">
+    
+    <fieldset name="training_data">
+    
+        <field 
+            name="date"
+            type="calendar"
+            label="COM_TKDCLUB_DATE"
+            description="COM_TKDCLUB_TRAINING_DATE_DESC"
+            translateformat="true"
+		    showtime="false"
+            filter="user_utc"
+            required="true"
+        />
+
+        <field 
+            name="type"
+            type="traintypes"
+            label="COM_TKDCLUB_TRAINING_TYPE"
+            description="COM_TKDCLUB_TRAINING_TYPE_DESC"
+            filter="safehtml" 
+            required="true"
+            validate="options"
+            >
+            <option value="">COM_TKDCLUB_SELECT_TRAINING_TYPE</option>
+        </field>
+            
+        <field 
+            name="participants"
+            type="text"
+            label="COM_TKDCLUB_TRAINING_PARTICIPANTS"
+            description="COM_TKDCLUB_TRAINING_PARTICIPANTS_DESC"
+            required="true"
+            filter="integer"
+        />
+
+         <field
+            name="participant_ids"
+            type="members"
+            onlyactive="true"
+            multiple="true"
+            layout="joomla.form.field.list-fancy-select"
+            label="COM_TKDCLUB_TRAINING_PARTICIPANTS"
+            description="COM_TKDCLUB_TRAINING_PARTICIPANTS_DESC"
+            required="false"
+            size="5"
+        />
+        
+        <field 
+            name="notes"
+            type="textarea"
+            rows="7"
+            label="COM_TKDCLUB_TRAINING_NOTES"
+            description="COM_TKDCLUB_TRAINING_NOTES_DESC"
+            default=""
+            filter="safehtml"
+        />   
+
+    </fieldset>
+
+    <fieldset name="class_lead">
+
+        <field 
+            name="trainer"
+            type="trainers"
+            isFilter="false"
+            label="COM_TKDCLUB_TRAINING_TRAINER"
+            description="COM_TKDCLUB_TRAINING_TRAINER_DESC"
+            required="true"
+            filter="integer"
+            validate="options"
+            >
+            <option value="">COM_TKDCLUB_SELECT_TRAINER</option>
+        </field>
+        
+        <field 
+            name="km_trainer"
+            type="text"
+            label="COM_TKDCLUB_TRAINING_TRAINER_KM"
+            description="COM_TKDCLUB_TRAINING_TRAINER_KM_DESC"
+            required="true"
+            filter="integer"
+        />
+
+    </fieldset>
+             
+    <fieldset name="assistents">
+    
+         <field 
+            name="assist1"
+            type="trainers"
+            isFilter="false"
+            label="COM_TKDCLUB_TRAINING_ASSISTENT1"
+            description="COM_TKDCLUB_TRAINING_ASSISTENT1_DESC"
+            filter="integer"
+            validate="options"
+            >
+            <option value="">COM_TKDCLUB_SELECT_ASSISTENT1</option>
+        </field>
+        
+        <field 
+            name="km_assist1"
+            type="text"
+            showon="assist1!:"
+            label="COM_TKDCLUB_TRAINING_ASSISTENT1_KM"
+            description="COM_TKDCLUB_TRAINING_ASSISTENT1_KM_DESC"
+            filter="integer"
+        />
+        
+        <field type="spacer" name="spacer1" hr="true" />
+        
+         <field 
+            name="assist2"
+            type="trainers"
+            isFilter="false"
+            label="COM_TKDCLUB_TRAINING_ASSISTENT2"
+            description="COM_TKDCLUB_TRAINING_ASSISTENT2_DESC"
+            filter="integer"
+            validate="options"
+            >
+            <option value="">COM_TKDCLUB_SELECT_ASSISTENT2</option>
+        </field>
+        
+        <field 
+            name="km_assist2"
+            type="text"
+            showon="assist2!:"
+            label="COM_TKDCLUB_TRAINING_ASSISTENT2_KM"
+            description="COM_TKDCLUB_TRAINING_ASSISTENT2_KM_DESC"
+            filter="integer"
+        />
+        
+        <field type="spacer" name="spacer2" hr="true" />
+
+        <field 
+            name="assist3"
+            type="trainers"
+            isFilter="false"
+            label="COM_TKDCLUB_TRAINING_ASSISTENT3"
+            description="COM_TKDCLUB_TRAINING_ASSISTENT3_DESC"
+            filter="integer"
+            validate="options"
+            >
+            <option value="">COM_TKDCLUB_SELECT_ASSISTENT3</option>
+        </field>
+        
+        <field 
+            name="km_assist3"
+            type="text"
+            showon="assist3!:"
+            label="COM_TKDCLUB_TRAINING_ASSISTENT3_KM"
+            description="COM_TKDCLUB_TRAINING_ASSISTENT3_KM_DESC"
+            filter="integer"
+        />
+
+    </fieldset>
+   
+</form>

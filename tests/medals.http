@@ -1,0 +1,16 @@
+######################################
+### Tests for medals Api ############
+######################################
+
+
+
+### Get all medals ###
+GET http://tkdclub.local/api/index.php/v1/tkdclub/medals HTTP/1.1
+Authorization: Basic admin:admin
+Accept: application/vnd.api+json
+
+
+### Get specific medal id 1 ###
+GET http://tkdclub.local/api/index.php/v1/tkdclub/medals/1 HTTP/1.1
+Authorization: Basic admin:admin
+Accept: application/vnd.api+json

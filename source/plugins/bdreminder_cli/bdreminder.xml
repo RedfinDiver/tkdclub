@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="5.0.0" type="plugin" group="console" method="upgrade">
+	<name>plg_console_bdreminder</name>
+	<author>Markus Moser</author>
+	<creationDate>March 2024</creationDate>
+	<copyright>(C) Markus Moser</copyright>
+	<license>GNU General Public License version 3 or later</license>
+	<authorEmail>redfindiver@gmail.com</authorEmail>
+	<version>5.0.0</version>
+	<description>PLG_CONSOLE_BDREMINDER_DESCRIPTION</description>
+	<namespace path="src">Redfindiver\Plugin\Console\Bdreminder</namespace>
+	<scriptfile>install.php</scriptfile>
+	<files>
+		<folder plugin="bdreminder">services</folder>
+		<folder>src</folder>
+	</files>
+	<languages>
+        <language tag="de-DE">language/de-DE/plg_console_bdreminder.ini</language>
+		<language tag="de-DE">language/de-DE/plg_console_bdreminder.sys.ini</language>
+	</languages>
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field 
+					name="reminder_to" type="usergrouplist"
+					label="PLG_CONSOLE_BDREMINDER_EMAIL_TO"
+					description="PLG_CONSOLE_BDREMINDER_EMAIL_TO_DESC"
+					multiple="true" />
+
+				<field
+					name="reminder_for_status" type="list"
+					label="PLG_CONSOLE_BDREMINDER_MEMBERSTATE"
+					description="PLG_CONSOLE_BDREMINDER_MEMBERSTATE_DESC"
+					multiple="true" default="active">
+					
+					<option value="active">PLG_CONSOLE_BDREMINDER_STATE_ACTIVE</option>
+					<option value="inactive">PLG_CONSOLE_BDREMINDER_STATE_INACTIVE</option>
+					<option value="support">PLG_CONSOLE_BDREMINDER_STATE_SUPPORT</option>
+
+				</field>
+			</fieldset>
+		</fields>
+	</config>
+</extension>

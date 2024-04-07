@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="build-tkdclub-package" default="init" basedir=".">
+    
+    <taskdef resource="net/sf/antcontrib/antlib.xml">
+        <classpath>
+            <pathelement location="/usr/share/java/apache-ant/ant-contrib.jar"/>
+        </classpath>
+    </taskdef>
+
+    <taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask">
+        <classpath>
+            <pathelement location="/usr/share/java/apache-ant/xmltask.jar"/>
+        </classpath>
+    </taskdef>
+
+    <!-- properties for package and zip creation -->
+    <property name="name" value="tkdclub"/>
+    <property name="zips" location="${basedir}/zips/"/>
+    <property name="build" location="${basedir}/zips/build/"/>
+    <property name="packdir" location="${basedir}/zips/buildpack/packages/"/>
+    <property name="plgdir" location="${basedir}/source/plugins/"/>
+
+    <target name="clean" description="deletes the pkg_${name}.zip">
+        <delete dir="${zips}" />
+        <echo message="pkg_${name}.zip deleted!" />
+    </target>
+
+    <target name="init">
+        <mkdir dir="${packdir}"/>
+    </target>
+ 
+    <target name="createPackage" description="creates package" depends="init">
+        <!-- zipping all the extensions -->
+        <antcallback target="zipComponent" return="version_component"/>
+        <antcallback target="zipPlgGradeupdate" return="version_plg_gradeupdate"/>
+        <antcallback target="zipPlgTkdclubmember" return="version_plg_tkdclubmember"/>
+        <antcallback target="zipPlgBdreminder_cli" return="version_plg_bdreminder_cli"/>
+        <antcallback target="zipPlgBdreminder_task" return="version_plg_bdreminder_task"/>    
+        <antcallback target="zipPlgWebservice" return="version_plg_webservice"/>
+
+        <!-- copy manifest file and changing filenames according to version number -->
+        <copy file="${basedir}/source/pkg_tkdclub.xml" todir="${packdir}"/>
+        <property name="manifest" value="${packdir}/pkg_tkdclub.xml"/>
+        <xmltask source="${manifest}" dest="${manifest}">
+            
+            <replace path="/extension/files/file[@id='com_tkdclub']/text()"
+                    withText="com_tkdclub_v${version_component}.zip" />
+
+            <replace path="/extension/files/file[@id='plg_gradeupdate']/text()"
+                    withText="plg_content_gradeupdate_v${version_plg_gradeupdate}.zip" />
+
+            <replace path="/extension/files/file[@id='plg_tkdclubmember']/text()"
+                    withText="plg_user_tkdclubmember_v${version_plg_tkdclubmember}.zip" />
+
+            <replace path="/extension/files/file[@id='plg_bdreminder_cli']/text()"
+                    withText="plg_console_bdreminder_v${version_plg_bdreminder_cli}.zip" />
+
+            <replace path="/extension/files/file[@id='plg_bdreminder_task']/text()"
+                    withText="plg_task_bdreminder_v${version_plg_bdreminder_task}.zip" />
+            
+            <replace path="/extension/files/file[@id='plg_webservices_tkdclub']/text()"
+                    withText="plg_webservices_tkdclub_v${version_plg_webservice}.zip" />
+                                       
+        </xmltask>
+
+        <!-- copy language folder for package into  zips directory -->
+        <copy todir="${packdir}/language">
+            <fileset dir="source/language"/>
+        </copy>
+
+        <!-- zipping to package install file -->
+        <zip destfile="${zips}/pkg_tkdclub.zip">
+            <zipfileset dir="${packdir}"/>
+        </zip>
+        
+        <!-- delete all other files -->
+        <delete dir="${zips}/buildpack"/>
+        <echo message="Package created!" />
+    </target>
+
+    <target name="zipComponent">
+        <!-- copy all files to build directory -->
+        <copy todir="${build}">
+            <fileset dir="${basedir}/source/component/"/>
+        </copy>
+        <!-- get the version number from the manifest -->
+        <property name="manifest" value="${build}/backend/tkdclub.xml"/>
+        <xmlproperty file="${manifest}" keepRoot="false"
+                     semanticAttributes="true"/>
+        <propertyregex property="_version"
+               input="${version}"
+               regexp="\."
+               replace=""
+               global="true" />
+        <!-- move manifest file to build root -->
+        <copy file="${manifest}" todir="${build}"/>
+        <!-- zip all files -->
+        <property name="zipname" value="${build}/com_tkdclub_v${_version}.zip"/>
+        <zip destfile="${zipname}" basedir="${build}"></zip>
+        <!-- move zip to zips or package folder and delete build-directory -->
+        <if>
+            <available file="${packdir}" type="dir" />
+            <then>
+                <move file="${zipname}" todir="${packdir}"/>
+            </then>
+            <else>
+                <move file="${zipname}" todir="${zips}"/>
+            </else>
+        </if>
+        <delete dir="${build}"/>
+        <!-- define version number for antcallback to use it in package creation -->
+        <property name="version_component" value="${_version}" />
+    </target>
+
+    <target name="zipPlgGradeupdate">
+        <!-- copy all files to build directory-->
+        <copy todir="${build}">
+            <fileset dir="${plgdir}/gradeupdate" />
+        </copy>
+        <!-- get the version number from the manifest -->
+        <xmlproperty file="${build}/gradeupdate.xml" keepRoot="false"
+                     semanticAttributes="true"/>
+        <propertyregex property="_version"
+               input="${version}"
+               regexp="\."
+               replace=""
+               global="true" />
+        <!-- zip all files -->
+        <property name="zipfile" value="${build}/plg_content_gradeupdate_v${_version}.zip"/>
+        <zip destfile="${zipfile}">
+            <zipfileset dir="${build}" />
+        </zip>
+        <!-- move zip to zips or package folder and delete build-directory -->
+        <if>
+            <available file="${packdir}" type="dir" />
+            <then>
+                <move file="${zipfile}" todir="${packdir}"/>
+            </then>
+            <else>
+                <move file="${zipfile}" todir="${zips}"/>
+            </else>
+        </if>
+        <delete dir="${build}"/>
+        <!-- define version number for antcallback to use it in package creation -->
+        <property name="version_plg_gradeupdate" value="${_version}" />
+    </target>
+
+    <target name="zipPlgTkdclubmember">
+        <!-- copy all files to build directory-->
+        <copy todir="${build}">
+            <fileset dir="${plgdir}/tkdclubmember" />
+        </copy>
+        <!-- get the version number from the manifest -->
+        <xmlproperty file="${build}/tkdclubmember.xml" keepRoot="false"
+                     semanticAttributes="true"/>
+        <propertyregex property="_version"
+               input="${version}"
+               regexp="\."
+               replace=""
+               global="true" />
+        <!-- zip all files -->
+        <property name="zipfile" value="${build}/plg_user_tkdclubmember_v${_version}.zip"/>
+        <zip destfile="${zipfile}">
+            <zipfileset dir="${build}" />
+        </zip>
+        <!-- move zip to zips or package folder and delete build-directory -->
+        <if>
+            <available file="${packdir}" type="dir" />
+            <then>
+                <move file="${zipfile}" todir="${packdir}"/>
+            </then>
+            <else>
+                <move file="${zipfile}" todir="${zips}"/>
+            </else>
+        </if>
+        <delete dir="${build}"/>
+        <!-- define version number for antcallback to use it in package creation -->
+        <property name="version_plg_tkdclubmember" value="${_version}" />
+    </target>
+
+    <target name="zipPlgBdreminder_cli">
+        <!-- copy all files to build directory-->
+        <copy todir="${build}">
+            <fileset dir="${plgdir}/bdreminder_cli" />
+        </copy>
+        <!-- get the version number from the manifest -->
+        <xmlproperty file="${build}/bdreminder.xml" keepRoot="false"
+                     semanticAttributes="true"/>
+        <propertyregex property="_version"
+               input="${version}"
+               regexp="\."
+               replace=""
+               global="true" />
+        <!-- zip all files -->
+        <property name="zipfile" value="${build}/plg_console_bdreminder_v${_version}.zip"/>
+        <zip destfile="${zipfile}">
+            <zipfileset dir="${build}" />
+        </zip>
+        <!-- move zip to zips or package folder and delete build-directory -->
+        <if>
+            <available file="${packdir}" type="dir" />
+            <then>
+                <move file="${zipfile}" todir="${packdir}"/>
+            </then>
+            <else>
+                <move file="${zipfile}" todir="${zips}"/>
+            </else>
+        </if>
+        <delete dir="${build}"/>
+        <!-- define version number for antcallback to use it in package creation -->
+        <property name="version_plg_bdreminder_cli" value="${_version}" />
+    </target>
+
+    <target name="zipPlgBdreminder_task">
+        <!-- copy all files to build directory-->
+        <copy todir="${build}">
+            <fileset dir="${plgdir}/bdreminder_task" />
+        </copy>
+        <!-- get the version number from the manifest -->
+        <xmlproperty file="${build}/bdreminder.xml" keepRoot="false"
+                     semanticAttributes="true"/>
+        <propertyregex property="_version"
+               input="${version}"
+               regexp="\."
+               replace=""
+               global="true" />
+        <!-- zip all files -->
+        <property name="zipfile" value="${build}/plg_task_bdreminder_v${_version}.zip"/>
+        <zip destfile="${zipfile}">
+            <zipfileset dir="${build}" />
+        </zip>
+        <!-- move zip to zips or package folder and delete build-directory -->
+        <if>
+            <available file="${packdir}" type="dir" />
+            <then>
+                <move file="${zipfile}" todir="${packdir}"/>
+            </then>
+            <else>
+                <move file="${zipfile}" todir="${zips}"/>
+            </else>
+        </if>
+        <delete dir="${build}"/>
+        <!-- define version number for antcallback to use it in package creation -->
+        <property name="version_plg_bdreminder_task" value="${_version}" />
+    </target>
+
+    <target name="zipPlgWebservice">
+        <!-- copy all files to build directory-->
+        <copy todir="${build}">
+            <fileset dir="${plgdir}/webservice" />
+        </copy>
+        <!-- get the version number from the manifest -->
+        <xmlproperty file="${build}/tkdclub.xml" keepRoot="false"
+                     semanticAttributes="true"/>
+        <propertyregex property="_version"
+               input="${version}"
+               regexp="\."
+               replace=""
+               global="true" />
+        <!-- zip all files -->
+        <property name="zipfile" value="${build}/plg_webservices_tkdclub_v${_version}.zip"/>
+        <zip destfile="${zipfile}">
+            <zipfileset dir="${build}" />
+        </zip>
+        <!-- move zip to zips or package folder and delete build-directory -->
+        <if>
+            <available file="${packdir}" type="dir" />
+            <then>
+                <move file="${zipfile}" todir="${packdir}"/>
+            </then>
+            <else>
+                <move file="${zipfile}" todir="${zips}"/>
+            </else>
+        </if>
+        <delete dir="${build}"/>
+        <!-- define version number for antcallback to use it in package creation -->
+        <property name="version_plg_webservice" value="${_version}" />
+    </target>
+
+</project>

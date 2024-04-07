@@ -1,0 +1,48 @@
+{
+    "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+    "name": "plg_user_tkdclubmember",
+    "version": "5.0.0",
+    "description": "TKD Club",
+    "license": "GPL-2.0-or-later",
+    "assets": [
+      {
+        "name": "plg_user_tkdclubmember.iban",
+        "type": "script",
+        "uri": "https://cdn.jsdelivr.net/npm/iban@0.0.14/iban.min.js",
+        "dependencies": [
+            "core"
+        ],
+        "attributes": {
+            "defer": true
+        }
+      },
+      {
+        "name": "plg_user_tkdclubmember.mask-iban",
+        "type": "script",
+        "uri": "https://cdn.jsdelivr.net/npm/imask@6.0.7/dist/imask.min.js",
+        "dependencies": [
+            "core"
+        ],
+        "attributes": {
+            "defer": true
+        }
+      },
+      {
+        "name": "plg_user_tkdclubmember.format-iban",
+        "type": "script",
+        "uri": "plg_user_tkdclubmember/format-iban.js",
+        "dependencies": [
+            "plg_user_tkdclubmember.iban",
+            "plg_user_tkdclubmember.mask-iban"
+        ],
+        "attributes": {
+            "defer": true
+        }
+      },
+      {
+        "name": "plg_user_tkdclubmember.tkdclub",
+        "type": "style",
+        "uri": "plg_user_tkdclubmember/plg_user_tkdclubmember.css"
+      }
+    ]
+  }

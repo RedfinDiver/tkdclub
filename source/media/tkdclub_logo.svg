@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg877"
+   inkscape:version="0.92.2 2405546, 2018-03-11"
+   sodipodi:docname="tkdclub_logo.svg">
+  <defs
+     id="defs871" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="-386.51296"
+     inkscape:cy="-85.131693"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:pagecheckerboard="true"
+     showborder="false"
+     inkscape:snap-bbox="true"
+     inkscape:bbox-paths="true"
+     inkscape:snap-bbox-edge-midpoints="true"
+     inkscape:window-width="1920"
+     inkscape:window-height="1052"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata874">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Ebene 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g1471">
+      <rect
+         y="141.31158"
+         x="-396.11902"
+         height="173.83125"
+         width="417.24792"
+         id="rect1422"
+         style="opacity:1;fill:#9abfef;fill-opacity:1;stroke:none;stroke-width:3.14035487;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <path
+         id="rect1454"
+         transform="scale(0.26458333)"
+         d="M -1479.1426 552.0918 L -1479.1426 1173.0918 L -784.6875 1173.0918 C -757.9301 1016.4372 -734.94421 775.80357 -805.28711 552.0918 L -1479.1426 552.0918 z "
+         style="opacity:1;fill:#2980b9;fill-opacity:1;stroke:none;stroke-width:11.86905766;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <text
+         transform="scale(1.0231997,0.97732632)"
+         id="text1450"
+         y="267.21588"
+         x="-378.84442"
+         style="font-style:normal;font-weight:normal;font-size:10.8288641px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.27072158"
+         xml:space="preserve"><tspan
+           style="font-size:90.24053192px;stroke-width:0.27072158"
+           y="267.21588"
+           x="-378.84442"
+           id="tspan1448"
+           sodipodi:role="line">TKD<tspan
+   id="tspan1452"
+   style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:90.24053192px;font-family:sans-serif;-inkscape-font-specification:'sans-serif Italic';stroke-width:0.27072158">Club</tspan></tspan></text>
+    </g>
+  </g>
+</svg>

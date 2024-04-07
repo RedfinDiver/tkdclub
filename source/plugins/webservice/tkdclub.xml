@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<extension version="5.0.0" method="upgrade" type="plugin" group="webservices">
+	<name>plg_webservices_tkdclub</name>
+	<author>Markus Moser</author>
+	<authorEmail>Redfindiver@gmail.com</authorEmail>
+	<copyright>Copyright (c)2024 Markus Moser</copyright>
+	<license>GNU General Public License version 3, or later</license>
+	<creationDate>March 2024</creationDate>
+	<version>5.0.0</version>
+	<description>PLG_WEBSERVICES_TKDCLUB_XML_DESCRIPTION</description>
+	<namespace path="src">Redfindiver\Plugin\WebServices\Tkdclub</namespace>
+	<scriptfile>install.php</scriptfile>
+	<files>
+		<folder plugin="tkdclub">services</folder>
+		<folder>language</folder>
+		<folder>src</folder>
+	</files>
+</extension>

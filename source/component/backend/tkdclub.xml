@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="component" version="5.0.0" method="upgrade">
+    <name>com_tkdclub</name>
+    <author>Markus Moser</author>
+    <authorEmail>redfindiver@gmail.com</authorEmail>
+    <authorUrl>http://www.taekwondo-uttendorf.at</authorUrl>
+    <creationDate>March 2024</creationDate>
+    <copyright>Copyright (C) 2024 Markus Moser</copyright>
+    <license>GNU/GPL http://www.gnu.org/licenses/gpl-2.0.html</license>
+    <version>5.0.0</version>
+    <description>COM_TKDCLUB_XML_DESCRIPTION</description>
+    <namespace path="src">Redfindiver\Component\Tkdclub</namespace>
+
+    <install>
+        <sql>
+            <file driver="mysql" charset="utf8">sql/install.mysql.sql</file>
+        </sql>
+    </install>
+    
+    <update>
+        <schemas>
+            <schemapath type="mysql">sql/updates</schemapath>
+        </schemas>
+    </update>
+    
+    <uninstall>
+        <sql>
+            <file driver="mysql" charset="utf8">sql/uninstall.mysql.sql</file>
+        </sql>
+    </uninstall>
+    
+    <files folder="frontend"> 
+        <folder>forms</folder>
+        <folder>language</folder>
+        <folder>Service</folder>
+        <folder>src</folder>        
+        <folder>tmpl</folder>
+    </files>
+
+    <media destination="com_tkdclub" folder="media">
+		<filename>joomla.asset.json</filename>
+        <folder>fonts</folder>
+        <folder>js</folder>
+        <folder>css</folder>
+        <folder>images</folder>
+	</media>
+    
+    <administration>
+
+        <menu img="class:tkdclub-logo">COM_TKDCLUB</menu>
+
+        <submenu>
+           <menu
+                link="option=com_tkdclub&amp;view=members"
+                view="members"
+                img="class:tkdclub-logo"
+                >
+                COM_TKDCLUB_SUBMENU_MEMBERS
+            </menu>
+            <menu
+                link="option=com_tkdclub&amp;view=trainings"
+                view="trainings"
+                img="class:tkdclub-logo"
+                >
+                COM_TKDCLUB_SUBMENU_TRAININGS
+            </menu>
+            <menu
+                link="option=com_tkdclub&amp;view=medals"
+                view="medals"
+                img="class:tkdclub-logo"
+                >
+                COM_TKDCLUB_SUBMENU_MEDALS
+            </menu>
+            <menu
+                link="option=com_tkdclub&amp;view=promotions"
+                view="promotions"
+                img="class:tkdclub-logo"
+                >
+                COM_TKDCLUB_SUBMENU_PROMOTIONS
+            </menu>
+            <menu
+                link="option=com_tkdclub&amp;view=candidates"
+                view="candidates"
+                img="class:tkdclub-logo"
+                >
+                COM_TKDCLUB_SUBMENU_CANDIDATES
+            </menu>
+            <menu
+                link="option=com_tkdclub&amp;view=events"
+                view="events"
+                img="class:tkdclub-logo"
+                >
+                COM_TKDCLUB_SUBMENU_EVENTS
+            </menu>
+            <menu
+                link="option=com_tkdclub&amp;view=participants"
+                view="participants"
+                img="class:tkdclub-logo"
+                >
+                COM_TKDCLUB_SUBMENU_PARTICIPANTS
+            </menu>
+            <menu
+                link="option=com_tkdclub&amp;view=email"
+                view="EMAIL"
+                img="class:tkdclub-logo"
+                >
+                COM_TKDCLUB_SUBMENU_EMAIL
+            </menu>
+            <menu
+                link="option=com_tkdclub&amp;view=subscribers"
+                view="subscribers"
+                img="class:tkdclub-logo"
+                >
+                COM_TKDCLUB_SUBMENU_SUBSCRIBERS
+            </menu>
+            <menu
+                link="option=com_tkdclub&amp;view=statistics"
+                view="statistics"
+                img="class:tkdclub-logo"
+                >
+                COM_TKDCLUB_SUBMENU_STATISTICS
+            </menu>
+        </submenu>
+        
+        <files folder="backend">
+            <filename>tkdclub.xml</filename>
+            <filename>access.xml</filename>
+            <filename>config.xml</filename>
+            <folder>attachments</folder>
+            <folder>forms</folder>
+            <folder>includes</folder>
+            <folder>services</folder>
+            <folder>sql</folder>
+            <folder>src</folder>
+            <folder>tmpl</folder>
+            <folder>language</folder>
+        </files>
+
+    </administration>
+    <api>
+        <files folder="api">
+            <folder>src</folder>
+        </files>
+    </api>
+</extension>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<extension version="5.0.0" method="upgrade" type="plugin" group="user">
+	<name>plg_user_tkdclubmember</name>
+	<author>Markus Moser</author>
+	<authorEmail>Redfindiver@gmail.com</authorEmail>
+	<copyright>Copyright (c)2024 Markus Moser</copyright>
+	<license>GNU General Public License version 3, or later</license>
+	<creationDate>March 2024</creationDate>
+	<version>5.0.0</version>
+	<description>PLG_USER_TKDCLUBMEMBER_XML_DESCRIPTION</description>
+	<namespace path="src">Redfindiver\Plugin\User\Tkdclubmember</namespace>
+	<scriptfile>install.php</scriptfile>
+	<files>
+		<folder plugin="tkdclubmember">services</folder>
+		<folder>language</folder>
+		<folder>forms</folder>
+		<folder>src</folder>
+	</files>
+	<media folder="media" destination="plg_user_tkdclubmember">
+		<folder>js</folder>
+		<folder>css</folder>
+    	<file>joomla.asset.json</file>
+	</media>
+</extension>

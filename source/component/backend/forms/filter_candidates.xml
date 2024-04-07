@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form addfieldprefix="Redfindiver\Component\Tkdclub\Administrator\Field">
+    
+    <fields name="filter">
+        <field
+            name="search"
+            type="text"
+            label="COM_TKDCLUB_CANDIDATE_SEARCH_IN_COLOUMS"
+            description="COM_TKDCLUB_CANDIDATE_SEARCH_IN_COLOUMS"
+            hint="JSEARCH_FILTER"
+        />
+        
+        <field
+            name="promotion"
+            type="promotions"
+            label="COM_TKDCLUB_SELECT_PROMOTION"
+            description="COM_TKDCLUB_SELECT_PROMOTION"
+            onchange="this.form.submit();"
+        >
+            <option value="">COM_TKDCLUB_SELECT_PROMOTION</option>
+            
+        </field>
+
+        <field
+            name="candidate"
+            type="candidates"
+            label="COM_TKDCLUB_SELECT_CANDIDATE"
+            description="COM_TKDCLUB_SELECT_CANDIDATE"
+            onchange="this.form.submit();"
+        >
+            <option value="">COM_TKDCLUB_SELECT_CANDIDATE</option>
+            
+        </field>
+
+        <field
+            name="type"
+            type="list"
+            label="JSTATUS"
+            description=""
+            onchange="this.form.submit();">
+            <option value="">COM_TKDCLUB_SELECT_PROMOTION_TYPE</option>
+            <option value="kup">COM_TKDCLUB_KUP</option>
+            <option value="dan">COM_TKDCLUB_DAN</option>
+        </field>
+
+        <field
+            name="state" type="list"
+            label="COM_TKDCLUB_SELECT_CANDIDATE_STATE"
+            description="COM_TKDCLUB_SELECT_CANDIDATE_STATE"
+			onchange="this.form.submit();">
+
+			<option value="">COM_TKDCLUB_SELECT_CANDIDATE_STATE</option>
+            <option value="1">COM_TKDCLUB_CANDIDATE_PASSED</option>
+			<option value="0">COM_TKDCLUB_CANDIDATE_NOT_PASSED</option>
+            <option value="2">COM_TKDCLUB_CANDIDATE_SUBSCRIBED</option>
+
+        </field> 
+        
+    </fields> 
+
+    <fields name="list"> 
+
+        <field
+            name="fullordering" type="list"
+            label="COM_TKDCLUB_EXAM_DATEEXAM"
+            description=""
+            default="c.date_exam DESC"
+			onchange="this.form.submit();">
+
+			<option value="">JGLOBAL_SORT_BY</option>
+            <option value="c.date DESC">COM_TKDCLUB_CANDIDATE_ORDER_BY_DATE_DESC</option>
+			<option value="c.date ASC">COM_TKDCLUB_CANDIDATE_ORDER_BY_DATE_ASC</option>
+
+        </field> 
+
+        <field
+            name="limit"
+            type="limitbox"
+            class="input-mini"
+            default="25"
+            label="COM_CONTENT_LIST_LIMIT"
+            description="COM_CONTENT_LIST_LIMIT_DESC"
+            onchange="this.form.submit();"
+        />
+                 
+    </fields>                                                                                               
+    
+</form>

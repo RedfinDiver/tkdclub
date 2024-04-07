@@ -1,0 +1,16 @@
+######################################
+### Tests for members Api ############
+######################################
+
+
+
+### Get all active members ###
+GET http://tkdclub.local/api/index.php/v1/tkdclub/members HTTP/1.1
+Authorization: Basic admin:admin
+Accept: application/vnd.api+json
+
+
+### Get specific member with id 1 ###
+GET http://tkdclub.local/api/index.php/v1/tkdclub/members/1 HTTP/1.1
+Authorization: Basic admin:admin
+Accept: application/vnd.api+json

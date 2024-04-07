@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form addfieldprefix="Redfindiver\Component\Tkdclub\Administrator\Field">
+    
+    <fieldset name="training_data">
+        
+        <field 
+            name="date"
+            type="calendar"
+            label="COM_TKDCLUB_DATE"
+            description="COM_TKDCLUB_TRAINING_DATE_DESC"
+            translateformat="true"
+		    showtime="false"
+            filter="user_utc"
+            required="true"
+        />
+        
+         <field 
+            name="type"
+            type="traintypes"
+            label="COM_TKDCLUB_TRAINING_TYPE"
+            description="COM_TKDCLUB_TRAINING_TYPE_DESC"
+            required="true"
+            validate="options"
+            >
+            <option value="">COM_TKDCLUB_SELECT_TRAINING_TYPE</option>
+        </field>
+            
+        <field 
+            name="participants"
+            type="text"
+            label="COM_TKDCLUB_TRAINING_PARTICIPANTS"
+            description="COM_TKDCLUB_TRAINING_PARTICIPANTS_DESC"
+            required="true"
+            size="5" filter="integer"
+        />
+
+        <field
+            name="participant_ids"
+            type="members"
+            onlyactive="true"
+            multiple="true"
+            layout="joomla.form.field.list-fancy-select"
+            label="COM_TKDCLUB_TRAINING_PARTICIPANTS"
+            description="COM_TKDCLUB_TRAINING_PARTICIPANTS_DESC"
+            required="false"
+            size="5"
+        />
+        
+        <field 
+            name="notes"
+            type="textarea"
+            rows="7"
+            class="inputbox"
+            label="COM_TKDCLUB_TRAINING_NOTES"
+            description="COM_TKDCLUB_TRAINING_NOTES_DESC"
+            filter="raw"
+        />   
+
+    </fieldset>
+
+    <fieldset name="class_lead">
+        
+        <field 
+            name="trainer"
+            type="trainers"
+            isFilter="false"
+            label="COM_TKDCLUB_TRAINING_TRAINER"
+            description="COM_TKDCLUB_TRAINING_TRAINER_DESC"
+            required="true"
+            validate="options"
+            >
+            <option value="">COM_TKDCLUB_SELECT_TRAINER</option>
+        </field>
+        
+        <field 
+            name="km_trainer" type="text"
+            label="COM_TKDCLUB_TRAINING_TRAINER_KM"
+            description="COM_TKDCLUB_TRAINING_TRAINER_KM_DESC"
+            size="5" filter="integer"
+        />
+
+        <field
+            name="trainer_paid"
+            type="list"
+            label="COM_TKDCLUB_TRAINING_PAYMENT_STATE"
+            description="COM_TKDCLUB_TRAINING_PAYMENT_STATE_DESC"
+            default="0"
+            >
+            <option value="0">COM_TKDCLUB_TRAINING_NOT_PAID</option>
+            <option value="1">COM_TKDCLUB_TRAINING_PAID</option>
+        </field>
+
+    </fieldset>
+
+    <fieldset name="assistents">
+        
+        <field 
+            name="assist1" type="trainers"
+            isFilter="false"
+            label="COM_TKDCLUB_TRAINING_ASSISTENT1"
+            description="COM_TKDCLUB_TRAINING_ASSISTENT1_DESC"
+            filter="safehtml"
+            >
+            <option value="">COM_TKDCLUB_SELECT_ASSISTENT1</option>
+        </field>
+        
+        <field 
+            name="km_assist1"
+            type="text"
+            showon="assist1!:"
+            label="COM_TKDCLUB_TRAINING_ASSISTENT1_KM"
+            description="COM_TKDCLUB_TRAINING_ASSISTENT1_KM_DESC"
+            size="5"
+            filter="integer"
+        />
+        
+        <field
+            name="assist1_paid" 
+            type="list"
+            showon="assist1!:"
+            label="COM_TKDCLUB_TRAINING_PAYMENT_STATE"
+            description="COM_TKDCLUB_TRAINING_PAYMENT_STATE_DESC"
+            default="0"
+            >
+            <option value="0">COM_TKDCLUB_TRAINING_NOT_PAID</option>
+            <option value="1">COM_TKDCLUB_TRAINING_PAID</option>
+        </field>
+
+        <field type="spacer" name="spacer1" hr="true" />
+        
+        <field 
+            name="assist2"
+            type="trainers"
+            isFilter="false"
+            label="COM_TKDCLUB_TRAINING_ASSISTENT2"
+            description="COM_TKDCLUB_TRAINING_ASSISTENT2_DESC"
+            validate="options"
+            >
+            <option value="">COM_TKDCLUB_SELECT_ASSISTENT2</option>
+        </field>
+        
+        <field 
+            name="km_assist2"
+            type="text"
+            showon="assist2!:"
+            label="COM_TKDCLUB_TRAINING_ASSISTENT2_KM"
+            description="COM_TKDCLUB_TRAINING_ASSISTENT2_KM_DESC"
+            filter="integer"
+        />
+
+        <field
+            name="assist2_paid"
+            type="list"
+            showon="assist2!:"
+            label="COM_TKDCLUB_TRAINING_PAYMENT_STATE"
+            description="COM_TKDCLUB_TRAINING_PAYMENT_STATE_DESC"
+            default="0"
+            >
+            <option value="0">COM_TKDCLUB_TRAINING_NOT_PAID</option>
+            <option value="1">COM_TKDCLUB_TRAINING_PAID</option>
+        </field>
+
+        <field type="spacer" name="spacer2" hr="true" />
+         
+        <field 
+            name="assist3"
+            type="trainers"
+            isFilter="false"
+            label="COM_TKDCLUB_TRAINING_ASSISTENT3"
+            description="COM_TKDCLUB_TRAINING_ASSISTENT3_DESC"
+            multiple="false" filter="safehtml" >
+            <option value="">COM_TKDCLUB_SELECT_ASSISTENT3</option>
+        </field>
+        
+        <field 
+            name="km_assist3"
+            type="text"
+            showon="assist3!:"
+            label="COM_TKDCLUB_TRAINING_ASSISTENT3_KM"
+            description="COM_TKDCLUB_TRAINING_ASSISTENT3_KM_DESC"
+            filter="integer"
+        />
+
+        <field
+            name="assist3_paid"
+            type="list"
+            showon="assist3!:"
+            label="COM_TKDCLUB_TRAINING_PAYMENT_STATE"
+            description="COM_TKDCLUB_TRAINING_PAYMENT_STATE_DESC"
+            default="0"
+            >
+            <option value="0">COM_TKDCLUB_TRAINING_NOT_PAID</option>
+            <option value="1">COM_TKDCLUB_TRAINING_PAID</option>
+        </field>
+
+    </fieldset>
+    
+    <fieldset name="item_data">       
+
+        <field
+            name="id" type="text" default="0" filter="safehtml"
+            label="COM_TKDCLUB_FIELD_ID" description="COM_TKDCLUB_FIELD_ID_DESC"
+            readonly="true" class="readonly"/>       
+
+        <field 
+            name="created" type="calendar" label="COM_TKDCLUB_FIELD_CREATED"
+            description="COM_TKDCLUB_FIELD_CREATED_DESC" size="22"
+            translateformat="true" showtime="true" filter="user_utc" 
+            class="readonly" readonly="true" />
+
+        <field
+            name="created_by" type="user"
+            label="COM_TKDCLUB_FIELD_CREATED_BY" 
+            description="COM_TKDCLUB_FIELD_CREATED_BY_DESC"
+            class="readonly" readonly="true" />
+
+        <field
+            name="modified" type="calendar" class="readonly"
+            label="COM_TKDCLUB_FIELD_MODIFIED" description="COM_TKDCLUB_FIELD_MODIFIED_DESC"
+            translateformat="true" showtime="true" filter="user_utc"
+            size="22" readonly="true" />
+
+        <field
+            name="modified_by" type="user"
+            label="COM_TKDCLUB_FIELD_MODIFIED_BY" description="COM_TKDCLUB_FIELD_MODIFIED_BY_DESC"
+            class="readonly" readonly="true" />
+
+    </fieldset>    
+   
+</form>

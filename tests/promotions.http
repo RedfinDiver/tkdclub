@@ -1,0 +1,16 @@
+######################################
+### Tests for promotions Api ############
+######################################
+
+
+
+### Get all promotions ###
+GET http://tkdclub.local/api/index.php/v1/tkdclub/promotions HTTP/1.1
+Authorization: Basic admin:admin
+Accept: application/vnd.api+json
+
+
+### Get specific promotion id 1 ###
+GET http://tkdclub.local/api/index.php/v1/tkdclub/promotions/1 HTTP/1.1
+Authorization: Basic admin:admin
+Accept: application/vnd.api+json

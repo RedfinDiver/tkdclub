@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form>
+
+    <fieldset
+        name="member"
+        label="PLG_USER_TKDCLUBMEMBER_REGISTRATION_LABEL"
+        addfieldpath="/administrator/components/com_tkdclub/models/fields"
+    >
+		
+        <field
+			name="spacer"
+			type="spacer"
+			label="COM_USERS_REGISTER_REQUIRED"
+			class="text"
+		/>
+
+		<field
+			name="name"
+			type="text"
+			label="COM_USERS_REGISTER_NAME_LABEL"
+			description="COM_USERS_REGISTER_NAME_DESC"
+			filter="string"
+			required="true"
+			size="30"
+		/>
+
+		<field
+			name="username"
+			type="text"
+			label="COM_USERS_REGISTER_USERNAME_LABEL"
+			class="validate-username"
+			filter="username"
+			message="COM_USERS_REGISTER_USERNAME_MESSAGE"
+			required="true"
+			size="30"
+			validate="username"
+			autocomplete="username"
+		/>
+
+		<field
+			name="password1"
+			type="password"
+			label="COM_USERS_PROFILE_PASSWORD1_LABEL"
+			required="true"
+			autocomplete="new-password"
+			class="validate-password"
+			field="password1"
+			size="30"
+			validate="password"
+			strengthmeter="true"
+			rules="true"
+			force="on"
+			filter="raw"
+		/>
+
+        <field
+			name="password2"
+			type="password"
+			label="COM_USERS_PROFILE_PASSWORD2_LABEL"
+			autocomplete="new-password"
+			class="validate-password"
+			field="password1"
+			filter="raw"
+			message="COM_USERS_PROFILE_PASSWORD1_MESSAGE"
+			size="30"
+			validate="equals"
+			required="true"
+		/>
+
+		<field
+			name="email1"
+			type="email"
+			label="COM_USERS_REGISTER_EMAIL1_LABEL"
+			field="id"
+			filter="string"
+			required="true"
+			size="30"
+			unique="true"
+			validate="email"
+			validDomains="com_users.domains"
+			autocomplete="email"
+		/>
+
+    </fieldset>
+     
+    <fieldset 
+        
+        name="personal_data"
+        label="PLG_USER_TKDCLUBMEMBER_PERSONAL_DATA"
+        addfieldpath="administrator/components/com_tkdclub/models/fields"
+    >
+
+        <field 
+            name="firstname"
+            type="text"
+            label="PLG_USER_TKDCLUBMEMBER_FIRSTNAME"
+            description="PLG_USER_TKDCLUBMEMBER_FIRSTNAME_DESC"
+            required="true"
+            filter="string"
+            size="30"
+        />
+
+        <field 
+            name="lastname"
+            type="text"
+            label="PLG_USER_TKDCLUBMEMBER_LASTNAME"
+            description="PLG_USER_TKDCLUBMEMBER_LASTNAME_DESC"
+            required="true"
+            filter="string"
+            size="30"
+        />
+
+         <field 
+            name="sex"
+            type="list"
+            label="PLG_USER_TKDCLUBMEMBER_SEX"
+            description="PLG_USER_TKDCLUBMEMBER_SEX_DESC"
+            required="true"
+            filter="string">
+
+            <option value="">PLG_USER_TKDCLUBMEMBER_SEX_FILTER</option>
+            <option value="female">PLG_USER_TKDCLUBMEMBER_SEX_FEMALE</option>
+            <option value="male">PLG_USER_TKDCLUBMEMBER_SEX_MALE</option>
+        
+        </field>
+
+        <field 
+            name="birthdate"
+            type="calendar"
+            label="PLG_USER_TKDCLUBMEMBER_BIRTHDATE"
+            description="PLG_USER_TKDCLUBMEMBER_BIRTHDATE_DESC"
+            translateformat="true"
+		    showtime="false"
+            required="true"
+            filter="server_utc"
+            size="30"
+        />
+
+        <field 
+            name="citizenship"
+            type="nations" 
+            label="PLG_USER_TKDCLUBMEMBER_CITIZENSHIP"
+            description="PLG_USER_TKDCLUBMEMBER_CITIZENSHIP_DESC"
+            required="true"
+            filter="string"
+        />
+
+        <field 
+            name="street"
+            type="text" 
+            label="PLG_USER_TKDCLUBMEMBER_STREET"
+            description="PLG_USER_TKDCLUBMEMBER_STREET_DESC"
+            required="true"
+            filter="string" 
+            size="30"
+        />
+
+        <field 
+            name="zip"
+            type="text"
+            label="PLG_USER_TKDCLUBMEMBER_ZIP"
+            description="PLG_USER_TKDCLUBMEMBER_ZIP_DESC"
+            required="true"
+            filter="string"
+            size="30"
+        />
+
+        <field 
+            name="city"
+            type="text" 
+            label="PLG_USER_TKDCLUBMEMBER_CITY"
+            description="PLG_USER_TKDCLUBMEMBER_CITY_DESC"
+            required="true"
+            filter="string"
+            size="30"
+        />
+
+        <field 
+            name="country"
+            type="text"
+            label="PLG_USER_TKDCLUBMEMBER_COUNTRY"
+            description="PLG_USER_TKDCLUBMEMBER_COUNTRY_DESC"
+            required="true"
+            filter="string" 
+            size="30"
+        />
+        
+        <field 
+            name="phone"
+            type="text"
+            label="PLG_USER_TKDCLUBMEMBER_PHONE"
+            description="PLG_USER_TKDCLUBMEMBER_PHONE_DESC"
+            required="true"
+            filter="string"
+            size="30"
+        />
+
+        <field 
+            name="iban"
+            type="text"
+            label="PLG_USER_TKDCLUBMEMBER_IBAN"
+            description="PLG_USER_TKDCLUBMEMBER_IBAN_DESC"
+            required="true"
+            filter="string"
+            class="validate-iban"
+            size="30"
+        />
+
+    </fieldset>
+
+    <fieldset name="captcha">
+		<field
+			name="captcha"
+			type="captcha"
+			label="COM_USERS_CAPTCHA_LABEL"
+			validate="captcha"
+		/>
+	</fieldset>
+
+</form>

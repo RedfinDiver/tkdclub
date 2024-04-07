@@ -1,0 +1,154 @@
+{
+    "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+    "name": "com_tkdclub",
+    "version": "4.0.0",
+    "description": "TKD Club",
+    "license": "GPL-2.0-or-later",
+    "assets": [
+      {
+        "name": "com_tkdclub.iban",
+        "type": "script",
+        "uri": "https://cdn.jsdelivr.net/npm/iban@0.0.14/iban.min.js"
+      },
+      {
+        "name": "com_tkdclub.mask-iban",
+        "type": "script",
+        "uri": "https://cdn.jsdelivr.net/npm/imask@6.0.7/dist/imask.min.js"
+      },
+      {
+        "name": "com_tkdclub.members-format-iban",
+        "type": "script",
+        "uri": "com_tkdclub/members-format-iban.js"
+      },
+      {
+        "name": "com_tkdclub.member-format-iban",
+        "type": "script",
+        "uri": "com_tkdclub/member-format-iban.js"
+      },
+      {
+        "name": "com_tkdclub.trainer-select",
+        "type": "script",
+        "uri": "com_tkdclub/trainer-select.js"
+      },
+      {
+        "name": "com_tkdclub.tkdclub-site",
+        "type": "style",
+        "uri": "com_tkdclub/tkdclub-site.css"
+      },
+      {
+        "name": "com_tkdclub.tkdclub-admin",
+        "type": "style",
+        "uri": "com_tkdclub/tkdclub-admin.css"
+      },
+      {
+        "name": "com_tkdclub.training-edit",
+        "type": "script",
+        "uri": "com_tkdclub/training-edit.js",
+        "dependencies": [
+          "core"
+        ],
+        "attributes": {
+          "defer": true
+        }
+      },
+      {
+        "name": "com_tkdclub.medal-edit",
+        "type": "script",
+        "uri": "com_tkdclub/medal-edit.js",
+        "dependencies": [
+          "core"
+        ],
+        "attributes": {
+          "defer": true
+        }
+      },
+      {
+        "name": "com_tkdclub.getcandidatedata",
+        "type": "script",
+        "uri": "com_tkdclub/getcandidatedata.js",
+        "dependencies": [
+          "core"
+        ],
+        "attributes": {
+          "defer": true
+        }
+      },
+      {
+        "name": "com_tkdclub.email",
+        "type": "script",
+        "uri": "com_tkdclub/email.js",
+        "dependencies": [
+          "core"
+        ],
+        "attributes": {
+          "defer": true
+        }
+      },
+      {
+        "name": "com_tkdclub.gstatic",
+        "type": "script",
+        "uri": "https://www.gstatic.com/charts/loader.js",
+        "dependencies": [
+          "core"
+        ],
+        "attributes": {
+          "defer": true
+        }
+      },
+      {
+        "name": "com_tkdclub.statistics",
+        "type": "script",
+        "uri": "com_tkdclub/statistics.js",
+        "dependencies": [
+          "com_tkdclub.gstatic"
+        ],
+        "attributes": {
+          "defer": true
+        }
+      },
+      {
+        "name": "com_tkdclub.membercharts",
+        "type": "script",
+        "uri": "com_tkdclub/membercharts.js",
+        "dependencies": [
+          "com_tkdclub.gstatic"
+        ],
+        "attributes": {
+          "defer": true
+        }
+      },
+      {
+        "name": "com_tkdclub.trainingcharts",
+        "type": "script",
+        "uri": "com_tkdclub/trainingcharts.js",
+        "dependencies": [
+          "com_tkdclub.gstatic"
+        ],
+        "attributes": {
+          "defer": true
+        }
+      },
+      {
+        "name": "com_tkdclub.reload_fields",
+        "type": "script",
+        "uri": "com_tkdclub/reload_fields.js",
+        "dependencies": [
+          "com_tkdclub.gstatic"
+        ],
+        "attributes": {
+          "defer": true
+        }
+      },
+      {
+        "name": "com_tkdclub.taskhandling",
+        "type": "script",
+        "uri": "com_tkdclub/taskhandling.js",
+        "dependencies": [
+          "core"
+        ],
+        "attributes": {
+          "defer": true
+        }
+      }
+    ]
+  }

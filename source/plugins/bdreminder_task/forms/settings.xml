@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+    <fields name="params">
+        <fieldset name="task_params">
+            <field 
+                name="reminder_to" type="usergrouplist"
+                label="PLG_TASK_BDREMINDER_EMAIL_TO"
+                description="PLG_TASK_BDREMINDER_EMAIL_TO_DESC"
+                multiple="true" required="true"
+            />
+            <field
+                name="reminder_for_status" type="list"
+                label="PLG_TASK_BDREMINDER_MEMBERSTATE"
+                description="PLG_TASK_BDREMINDER_MEMBERSTATE_DESC"
+                multiple="true" required="true" default="active">
+                
+                <option value="active">PLG_TASK_BDREMINDER_STATE_ACTIVE</option>
+                <option value="inactive">PLG_TASK_BDREMINDER_STATE_INACTIVE</option>
+                <option value="support">PLG_TASK_BDREMINDER_STATE_SUPPORT</option>
+            </field>
+        </fieldset>
+    </fields>
+</form>

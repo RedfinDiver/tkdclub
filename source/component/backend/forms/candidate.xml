@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form addfieldprefix="Redfindiver\Component\Tkdclub\Administrator\Field">
+    
+    <fieldset name="top_data">
+
+        <field
+            name="test_state" type="list"
+            label="JSTATUS"
+            description="COM_TKDCLUB_CANDIDATE_TEST_STATE_DESC"
+            default="2" readonly="true">
+
+			<option value="">COM_TKDCLUB_SELECT_CANDIDATE_STATE</option>
+            <option value="1">COM_TKDCLUB_CANDIDATE_PASSED</option>
+			<option value="0">COM_TKDCLUB_CANDIDATE_NOT_PASSED</option>
+            <option value="2">COM_TKDCLUB_CANDIDATE_SUBSCRIBED</option>
+
+        </field>
+
+        <field 
+            name="id_promotion" type="promotions"
+            isCandidateForm="true"
+            class="inputbox" 
+            label="COM_TKDCLUB_PROMOTION"
+            description="COM_TKDCLUB_PROMOTION_DESC"
+            required="true" filter="integer">
+            <option value="">COM_TKDCLUB_SELECT_PROMOTION</option>
+            
+        </field>
+
+        <field 
+            name="id_candidate" type="members" showon="id_promotion!:"
+            class="inputbox" id="id_candidate"
+            label="COM_TKDCLUB_CANDIDATE"
+            description="COM_TKDCLUB_CANDIDATE_DESC"
+            filter="safehtml" default="" required="true" onchange="getcandidatedata()"
+            onlyactive="true" >
+            
+            <option value="">COM_TKDCLUB_SELECT_CANDIDATE</option>
+        </field>
+
+    </fieldset>
+
+    <fieldset name="readonly_data">
+
+        <field 
+            name="lastpromotion" type="text" showon="id_candidate!:"
+            id="lastpromotion"
+            label="COM_TKDCLUB_MEMBER_LAST_PROMOTION"
+            description="COM_TKDCLUB_CANDIDATE_LAST_PROMOTION_DESC"
+            readonly="true" default=""
+            class="info" />
+        
+        <field 
+            name="grade" type="text" showon="id_candidate!:"
+            label="COM_TKDCLUB_MEMBER_GRADE"
+            description="COM_TKDCLUB_CANDIDATE_CURRENT_GRADE_DESC"
+            readonly="true" default=""
+            class="info" />
+        
+        <field name="grade_achieve" type="text" showon="id_candidate!:"
+            label="COM_TKDCLUB_CANDIDATE_PROMOTION_GRADE_ACHIEVE"
+            description="COM_TKDCLUB_CANDIDATE_PROMOTION_GRADE_ACHIEVE_DESC"
+            default="" required="true" 
+            filter="safehtml" readonly="true">
+                <option value="">COM_TKDCLUB_SELECT_GRADE</option>
+        </field>
+
+        <field
+            name="tslpromotion" type="text" showon="id_candidate!:"
+            id="tslpromotion"
+            label="COM_TKDCLUB_CANDIDATE_TRAININGS_SLASTPROMOTION"
+            description="COM_TKDCLUB_CANDIDATE_TRAININGS_SLASTPROMOTION_DESC"
+            readonly="true" filter="integer" default="" />
+
+    </fieldset>
+
+    <field 
+            name="notes" type="textarea" showon="id_candidate!:"
+            rows="7"
+            class="inputbox"
+            label="COM_TKDCLUB_MEMBER_COMMENT"
+            description="COM_TKDCLUB_MEMBER_COMMENT_DESC"
+            default=""/>
+
+    <fieldset name="item_data">       
+
+        <field
+            name="id" type="text" default="0" filter="safehtml"
+            label="COM_TKDCLUB_FIELD_ID" description="COM_TKDCLUB_FIELD_ID_DESC"
+            readonly="true" class="readonly"/>       
+
+        <field 
+            name="created" type="calendar" label="COM_TKDCLUB_FIELD_CREATED"
+            description="COM_TKDCLUB_FIELD_CREATED_DESC" size="22"
+            translateformat="true" showtime="true" filter="user_utc" 
+            class="readonly" readonly="true" />
+
+        <field
+            name="created_by" type="user"
+            label="COM_TKDCLUB_FIELD_CREATED_BY" 
+            description="COM_TKDCLUB_FIELD_CREATED_BY_DESC"
+            class="readonly" readonly="true" />
+
+        <field
+            name="modified" type="calendar" class="readonly"
+            label="COM_TKDCLUB_FIELD_MODIFIED" description="COM_TKDCLUB_FIELD_MODIFIED_DESC"
+            translateformat="true" showtime="true" filter="user_utc"
+            size="22" readonly="true" />
+
+        <field
+            name="modified_by" type="user"
+            label="COM_TKDCLUB_FIELD_MODIFIED_BY" description="COM_TKDCLUB_FIELD_MODIFIED_BY_DESC"
+            class="readonly" readonly="true" />
+
+    </fieldset>
+   
+</form>

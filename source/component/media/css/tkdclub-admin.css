@@ -1,0 +1,269 @@
+/**
+ * Styles for member views
+ */
+
+.member-support {
+    color: orange !important;
+    border-color: orange !important;
+}
+
+.member-active {
+    color: green !important;
+    border-color: green !important;
+}
+
+.member-inactive {
+    color: red !important;
+    border-color: red !important;
+}
+
+/**
+ * Styles for training views
+ */
+
+.training-not-paid {
+    color: red !important;
+    border-color: red !important;
+}
+
+.training-partly-paid {
+    color: orange !important;
+    border-color: orange !important;
+}
+
+.training-paid {
+    color: green !important;
+    border-color: green !important;
+}
+
+/**
+ * Styles for medal views
+ */
+
+ .gold {
+  color: gold;
+}
+
+.silver {
+  color: silver;
+}
+
+.bronce {
+  color: #cd7f32;
+}
+
+.goldmedal {
+    background-image: url("../images/medals.png");
+    background-repeat: no-repeat;
+    display: inline-block;
+    font-size: 12px;
+    color: black;
+    height: 24px;
+    line-height: 24px;
+    margin: 3px auto auto;
+    text-align: center;
+    width: 24px;
+}
+
+.silbermedal {
+    background-image: url("../images/medals.png");
+    background-position: -24px 0;
+    background-repeat: no-repeat;
+    display: inline-block;
+    font-size: 12px;
+    color: black;
+    height: 24px;
+    line-height: 24px;
+    margin: 3px auto auto;
+    text-align: center;
+    width: 24px;
+}
+
+.bronzemedal {
+    background-image: url("../images/medals.png");
+    background-position: -48px 0;
+    background-repeat: no-repeat;
+    display: inline-block;
+    font-size: 12px;
+    color: black;
+    height: 24px;
+    line-height: 24px;
+    margin: 3px auto auto;
+    text-align: center;
+    width: 24px;
+}
+
+.loading {
+    background-image: url("../images/loading-24.gif");
+    background-repeat: no-repeat;
+    background-size: auto auto;
+    display: block;
+    height: 24px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    width: 24px;
+}
+
+.tkdclub-toolbar-hide {
+    display: none !important;
+}
+
+.tkdclub-statistics {
+    padding-left: 20px;
+    padding-bottom: 5px;
+}
+
+.tkd-club-chart {
+    width : 33%;
+    height: 200px;
+}
+
+.tkdclub-loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: tkdclub-spin 2s linear infinite;
+}
+
+div.tkdclub-loader {
+    margin-top: 50px;
+    margin-left: 50px;
+}
+
+@keyframes tkdclub-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+div.stats-member-row2 {
+  margin-top: 10px;
+}
+
+.tkdclub-icon-orange {
+    color: #C67605 !important;
+}
+
+.tkdclub-icon-red {
+    color: #942A25 !important;
+}
+
+@font-face {
+    font-family: 'tkdclub';
+    src:  url('../fonts/tkdclub.eot?id6odr');
+    src:  url('../fonts/tkdclub.eot?id6odr#iefix') format('embedded-opentype'),
+      url('../fonts/tkdclub.ttf?id6odr') format('truetype'),
+      url('../fonts/tkdclub.woff?id6odr') format('woff'),
+      url('../fonts/tkdclub.svg?id6odr#tkdclub') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+  }
+  
+  [class^="tkdclub-"], [class*=" tkdclub-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'tkdclub' !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+  
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  .tkdclub-logo-v-sw:before {
+    content: "\e901";
+  }
+  .tkdclub-logo-v-cl .path1:before {
+    content: "\e902";
+    color: rgb(0, 0, 255);
+  }
+  .tkdclub-logo-v-cl .path2:before {
+    content: "\e903";
+    margin-left: -1.2060546875em;
+    color: rgb(255, 0, 0);
+  }
+  .tkdclub-logo-v-cl .path3:before {
+    content: "\e904";
+    margin-left: -1.2060546875em;
+    color: rgb(0, 0, 0);
+  }
+  .tkdclub-logo-v-cl .path4:before {
+    content: "\e905";
+    margin-left: -1.2060546875em;
+    color: rgb(0, 0, 0);
+  }
+  .tkdclub-logo-v-cl .path5:before {
+    content: "\e906";
+    margin-left: -1.2060546875em;
+    color: rgb(0, 0, 0);
+  }
+  .tkdclub-logo-v-cl .path6:before {
+    content: "\e907";
+    margin-left: -1.2060546875em;
+    color: rgb(0, 0, 0);
+  }
+  .tkdclub-logo-v-cl .path7:before {
+    content: "\e908";
+    margin-left: -1.2060546875em;
+    color: rgb(0, 0, 0);
+  }
+  .tkdclub-logo-v-cl .path8:before {
+    content: "\e909";
+    margin-left: -1.2060546875em;
+    color: rgb(0, 0, 0);
+  }
+  .tkdclub-logo-v-cl .path9:before {
+    content: "\e90a";
+    margin-left: -1.2060546875em;
+    color: rgb(0, 0, 0);
+  }
+  .tkdclub-logo-v-cl .path10:before {
+    content: "\e90b";
+    margin-left: -1.2060546875em;
+    color: rgb(0, 0, 0);
+  }
+  .tkdclub-logo-v-cl .path11:before {
+    content: "\e90c";
+    margin-left: -1.2060546875em;
+    color: rgb(0, 0, 0);
+  }
+  .tkdclub-logo-v-cl .path12:before {
+    content: "\e90d";
+    margin-left: -1.2060546875em;
+    color: rgb(0, 0, 0);
+  }
+  .tkdclub-logo-v-cl .path13:before {
+    content: "\e90e";
+    margin-left: -1.2060546875em;
+    color: rgb(0, 0, 0);
+  }
+  .tkdclub-logo-v-cl .path14:before {
+    content: "\e90f";
+    margin-left: -1.2060546875em;
+    color: rgb(0, 0, 0);
+  }
+  .tkdclub-logo-v-cl .path15:before {
+    content: "\e910";
+    margin-left: -1.2060546875em;
+    color: rgb(0, 0, 0);
+  }
+  .tkdclub-logo-v-cl .path16:before {
+    content: "\e911";
+    margin-left: -1.2060546875em;
+    color: rgb(0, 0, 0);
+  }
+  .tkdclub-logo-v-cl .path17:before {
+    content: "\e912";
+    margin-left: -1.2060546875em;
+    color: rgb(0, 0, 0);
+  }
+  .tkdclub-logo:before {
+    content: "\e900";
+  }
+  

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form>
+
+    <fields name="filter" addfieldprefix="Redfindiver\Component\Tkdclub\Administrator\Field" >
+        <field
+            name="search"
+            type="text"
+            label="COM_TKDCLUB_TRAINING_SEARCH_IN_COLOUMS"
+            description="COM_TKDCLUB_TRAINING_SEARCH_IN_COLOUMS"
+            hint="JSEARCH_FILTER"
+        />
+
+        <field
+            name="payment_state"
+            type="list"
+            label="COM_TKDCLUB_SELECT_TRAINING_PAYMENT_STATE"
+            description=""
+            onchange="this.form.submit();">
+            <option value="">COM_TKDCLUB_SELECT_TRAINING_PAYMENT_STATE</option>
+            <option value="1">COM_TKDCLUB_TRAINING_PAID</option>
+            <option value="2">COM_TKDCLUB_TRAINING_PARTLY_PAID</option>
+            <option value="0">COM_TKDCLUB_TRAINING_NOT_PAID</option>
+        </field>
+
+        <field
+            name="trainer"
+            type="trainers"
+            isFilter="true"
+            label="COM_TKDCLUB_SELECT_TRAINER"
+            description=""
+            onchange="this.form.submit();">
+            <option value="">COM_TKDCLUB_SELECT_TRAINER</option>
+        </field>
+
+        <field 
+            name="type"
+            type="traintypes"
+            isFilter="true"
+            class="inputbox"
+            label="COM_TKDCLUB_SELECT_TRAINING_TYPE"
+            description=""
+            onchange="this.form.submit();">
+            <option value="">COM_TKDCLUB_SELECT_TRAINING_TYPE</option>
+            
+        </field>
+
+        <field 
+            name="year" type="trainyears"
+            class="inputbox"
+            label="COM_TKDCLUB_SELECT_YEAR"
+            description=""
+            onchange="this.form.submit();">
+            <option value="">COM_TKDCLUB_SELECT_YEAR</option>
+            
+        </field>
+
+    </fields>
+
+    <fields name="list">
+
+        <field
+            name="fullordering" type="list"
+            label=""
+            description=""
+            default="date DESC"
+			onchange="this.form.submit();">
+
+			<option value="">JGLOBAL_SORT_BY</option>
+            <option value="date DESC">COM_TKDCLUB_TRAINING_ORDER_BY_DATE_DESC</option>
+			<option value="date ASC">COM_TKDCLUB_TRAINING_ORDER_BY_DATE_ASC</option>
+
+        </field> 
+
+        <field
+            name="limit"
+            type="limitbox"
+            class="input-mini"
+            label="COM_CONTENT_LIST_LIMIT"
+            description="COM_CONTENT_LIST_LIMIT_DESC"
+            onchange="this.form.submit();"
+        />        
+            
+    </fields> 
+
+</form>

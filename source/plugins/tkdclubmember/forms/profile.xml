@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form>
+     
+    <fieldset
+        name="personal_data"
+        label="PLG_USER_TKDCLUBMEMBER_PERSONAL_DATA"
+        addfieldpath="/administrator/components/com_tkdclub/models/fields"
+    >
+
+        <field 
+            name="firstname"
+            type="text"
+            label="PLG_USER_TKDCLUBMEMBER_FIRSTNAME"
+            description="PLG_USER_TKDCLUBMEMBER_NOTEDITABLE_DESC"
+            filter="string"
+            disabled="true"
+        />
+
+
+        <field 
+            name="lastname"
+            type="text"
+            label="PLG_USER_TKDCLUBMEMBER_LASTNAME"
+            description="PLG_USER_TKDCLUBMEMBER_NOTEDITABLE_DESC"
+            filter="string"
+            disabled="true"
+        />
+
+        <field 
+            name="sex"
+            type="list"
+            label="PLG_USER_TKDCLUBMEMBER_SEX"
+            description="PLG_USER_TKDCLUBMEMBER_NOTEDITABLE_DESC"
+            filter="string"
+            disabled="true">
+
+            <option value="">PLG_USER_TKDCLUBMEMBER_SEX_FILTER</option>
+            <option value="female">PLG_USER_TKDCLUBMEMBER_SEX_FEMALE</option>
+            <option value="male">PLG_USER_TKDCLUBMEMBER_SEX_MALE</option>
+        
+        </field>
+
+        <field 
+            name="birthdate"
+            type="calendar"
+            label="PLG_USER_TKDCLUBMEMBER_BIRTHDATE"
+            description="PLG_USER_TKDCLUBMEMBER_NOTEDITABLE_DESC"
+            translateformat="true"
+		    showtime="false"
+            filter="server_utc"
+            disabled="true"
+        />
+
+        <field 
+            name="citizenship"
+            type="nations"
+            label="PLG_USER_TKDCLUBMEMBER_CITIZENSHIP"
+            description="PLG_USER_TKDCLUBMEMBER_NOTEDITABLE_DESC"
+            filter="string"
+            disabled="true"
+        />
+
+        <field 
+            name="street"
+            type="text"
+            label="PLG_USER_TKDCLUBMEMBER_STREET"
+            description="PLG_USER_TKDCLUBMEMBER_STREET_DESC"
+            filter="string"
+            required="true"
+            size="30"
+        />
+
+       <field 
+            name="zip"
+            type="text"
+            label="PLG_USER_TKDCLUBMEMBER_ZIP"
+            description="PLG_USER_TKDCLUBMEMBER_ZIP_DESC"
+            filter="string"
+            required="true"
+            size="30"
+        />
+
+        <field 
+            name="city"
+            type="text"
+            label="PLG_USER_TKDCLUBMEMBER_CITY"
+            description="PLG_USER_TKDCLUBMEMBER_CITY_DESC"
+            filter="string"
+            required="true"
+            size="30"
+        />
+
+        <field 
+            name="country"
+            type="text"
+            label="PLG_USER_TKDCLUBMEMBER_COUNTRY"
+            description="PLG_USER_TKDCLUBMEMBER_COUNTRY_DESC"
+            filter="string"
+            required="true"
+            size="30"
+        />
+
+        <field 
+            name="phone"
+            type="text"
+            label="PLG_USER_TKDCLUBMEMBER_PHONE"
+            description="PLG_USER_TKDCLUBMEMBER_PHONE_DESC"
+            filter="string"
+            required="true"
+            size="15"
+        />
+
+        <field 
+            name="iban"
+            type="text"
+            label="PLG_USER_TKDCLUBMEMBER_IBAN"
+            description="PLG_USER_TKDCLUBMEMBER_IBAN_DESC"
+            required="true"
+            filter="string"
+            class="validate-iban"
+            size="30"
+        />
+
+    </fieldset>
+
+    <fieldset name="taekwondo_data" label="PLG_USER_TKDCLUBMEMBER_TAEKWONDO_DATA">
+
+        <field 
+            name="memberpass"
+            type="text"
+            label="PLG_USER_TKDCLUBMEMBER_PASS"
+            description="PLG_USER_TKDCLUBMEMBER_NOTEDITABLE_DESC"
+            filter="string"
+            disabled="true"
+        />
+
+        <field 
+            name="grade"
+            type="text"
+            label="PLG_USER_TKDCLUBMEMBER_GRADE"
+            description="PLG_USER_TKDCLUBMEMBER_NOTEDITABLE_DESC"
+            filter="string"
+            disabled="true"
+        />
+
+        <field 
+            name="lastpromotion"
+            type="calendar"
+            label="PLG_USER_TKDCLUBMEMBER_LAST_PROMOTION"
+            description="PLG_USER_TKDCLUBMEMBER_NOTEDITABLE_DESC"
+            translateformat="true"
+		    showtime="false"
+            filter="server_utc"
+            disabled="true"
+        />
+
+        <field
+            name="licenses"
+            type="licenses"
+            label="PLG_USER_TKDCLUBMEMBER_LICENSES"
+            description="PLG_USER_TKDCLUBMEMBER_NOTEDITABLE_DESC"
+            multiple="true"
+            filter="string"
+            disabled="true"
+        />
+
+    </fieldset>
+
+    <fieldset name="club_data" label="PLG_USER_TKDCLUBMEMBER_CLUB_DATA">
+
+        <field 
+            name="id"
+            type="text"
+            label="PLG_USER_TKDCLUBMEMBER_MEMBER_ID"
+            description="PLG_USER_TKDCLUBMEMBER_NOTEDITABLE_DESC"
+            filter="integer"
+            disabled="true"
+        />
+
+        <field
+            name="member_state"
+            type="list"
+            label="PLG_USER_TKDCLUBMEMBER_STATE"
+            description="PLG_USER_TKDCLUBMEMBER_NOTEDITABLE_DESC"
+            disabled="true"
+        >
+            <option value="active">PLG_USER_TKDCLUBMEMBER_STATE_ACTIVE</option>
+            <option value="inactive">PLG_USER_TKDCLUBMEMBER_STATE_INACTIVE</option>
+            <option value="support">PLG_USER_TKDCLUBMEMBER_STATE_SUPPORT</option>
+        
+        </field>
+
+        <field
+            name="functions"
+            type="functions"
+            label="PLG_USER_TKDCLUBMEMBER_FUNCTIONS"
+            description="PLG_USER_TKDCLUBMEMBER_NOTEDITABLE_DESC"
+            multiple="true"
+            filter="string"
+            disabled="true"
+        />
+
+        <field 
+            name="entry"
+            type="calendar"
+            label="PLG_USER_TKDCLUBMEMBER_ENTRYDATE"
+            description="PLG_USER_TKDCLUBMEMBER_NOTEDITABLE_DESC"
+            translateformat="true"
+		    showtime="false"
+            filter="server_utc"
+            disabled="true"
+        />
+
+        <field 
+            name="leave"
+            type="calendar"
+            label="PLG_USER_TKDCLUBMEMBER_LEAVEDATE"
+            description="PLG_USER_TKDCLUBMEMBER_NOTEDITABLE_DESC"
+            translateformat="true"
+		    showtime="false"
+            filter="server_utc"
+            disabled="true"
+        />
+            
+    </fieldset>
+
+</form>

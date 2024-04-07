@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="5.0.0" type="plugin" group="task" method="upgrade">
+	<name>plg_task_bdreminder</name>
+	<author>Markus Moser</author>
+	<creationDate>March 2024</creationDate>
+	<copyright>(C) Markus Moser</copyright>
+	<license>GNU General Public License version 3 or later</license>
+	<authorEmail>redfindiver@gmail.com</authorEmail>
+	<version>5.0.0</version>
+	<description>PLG_TASK_BDREMINDER_DESCRIPTION</description>
+	<namespace path="src">Redfindiver\Plugin\Task\Bdreminder</namespace>
+	<scriptfile>install.php</scriptfile>
+	<files>
+		<folder plugin="bdreminder">services</folder>
+		<folder>forms</folder>
+		<folder>src</folder>
+	</files>
+	<languages>
+        <language tag="de-DE">language/de-DE/plg_task_bdreminder.ini</language>
+		<language tag="de-DE">language/de-DE/plg_task_bdreminder.sys.ini</language>
+	</languages>
+</extension>

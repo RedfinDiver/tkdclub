@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+    <layout title="COM_TKDCLUB_MEDAL_MENU_TYPE_ALLMEDALS" option="COM_TKDCLUB_MEDAL_VIEW_ALLMEDALS_OPTION">
+        <message>COM_TKDCLUB_MEDAL_MENU_TYPE_ALLMEDALS_DESC</message>
+    </layout>
+</metadata>

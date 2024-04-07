@@ -1,0 +1,10 @@
+##########################################
+### Gets config params for com_tkdclub ###
+##########################################
+
+
+
+### Get config data for com_tkdclub ###
+GET http://tkdclub.local/api/index.php/v1/config/com_tkdclub HTTP/1.1
+Authorization: Basic admin:admin
+Accept: application/vnd.api+json

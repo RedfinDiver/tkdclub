@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<config>
+    
+    <fieldset
+        name="comp_properties"
+        label="COM_TKDCLUB_CONFIG_COMP"
+        description="COM_TKDCLUB_CONFIG_COMP_DESC">
+        
+        <field name="club_name"
+            label="COM_TKDCLUB_CONFIG_CLUBNAME"
+            description="COM_TKDCLUB_CONFIG_CLUBNAME_DESC"
+            type="text" default="" size="40" />
+
+        <field name="currency"
+            label="COM_TKDCLUB_CONFIG_CURRENCY"
+            description="COM_TKDCLUB_CONFIG_CURRENCY_DESC"
+            type="text" default="" size="10" />
+    
+    </fieldset>
+    
+    <fieldset
+        name="members"
+        label="COM_TKDCLUB_CONFIG_MEMBERS"
+        description="COM_TKDCLUB_CONFIG_MEMBERS_DESC" >
+
+        <field
+            name="nations"
+            label="COM_TKDCLUB_CONFIG_NATIONS"
+            description="COM_TKDCLUB_CONFIG_NATIONS_DESC"
+            type="text" default="" size="60" filter="safehtml"/>
+
+        <field
+            name="functions"
+            label="COM_TKDCLUB_CONFIG_FUNCTIONS"
+            description="COM_TKDCLUB_CONFIG_FUNCTIONS_DESC"
+            type="text" defautlt="" size="60" filter="safehtml"/>
+
+        <field
+            name="licenses"
+            label="COM_TKDCLUB_CONFIG_LICENSES"
+            description="COM_TKDCLUB_CONFIG_LICENSES_DESC"
+            type="text" defautlt="" size="60" filter="safehtml"/>
+
+        <field
+            name="attachments_path"
+            label="COM_TKDCLUB_CONFIG_ATTACHMENT_FOLDER"
+            description="COM_TKDCLUB_CONFIG_ATTACHMENT_FOLDER_DESC"
+            type="text" default="" filter="safehtml" />
+             
+    </fieldset>
+
+    <fieldset
+        name="trainings"
+        label="COM_TKDCLUB_CONFIG_TRAININGS"
+        description="COM_TKDCLUB_CONFIG_TRAININGS_DESC" 
+        addfieldpath="/administrator/components/com_tkdclub/models/fields">
+
+        <field
+            name="training_types"
+            label="COM_TKDCLUB_CONFIG_TRAINING_TYPES"
+            description="COM_TKDCLUB_CONFIG_TRAINING_TYPES_DESC"
+            type="text" default="" size="60" />
+
+        <field
+            name="training_years"
+            label="COM_TKDCLUB_CONFIG_TRAINING_YEARS"
+            description="COM_TKDCLUB_CONFIG_TRAINING_YEARS_DESC"
+            type="text" default="" size="10" filter="integer"/>
+
+        <field
+            name="training_salary"
+            label="COM_TKDCLUB_CONFIG_TRAINER_SALARY"
+            description="COM_TKDCLUB_CONFIG_TRAINER_SALARY_DESC"
+            type="text" default="" size="10" filter="integer" />
+        
+        <field
+            name="assistent_salary"
+            label="COM_TKDCLUB_CONFIG_ASSIST_SALARY"
+            description="COM_TKDCLUB_CONFIG_ASSIST_SALARY_DESC"
+            type="text" default="" size="10" filter="integer" />        
+
+        <field
+            name="distance_salary"
+            label="COM_TKDCLUB_CONFIG_DISTANCE_SALARY"
+            description="COM_TKDCLUB_CONFIG_DISTANCE_SALARY_DESC"
+            type="text" default="" size="10" filter="float" />
+
+        <field
+			name="integration_newsfeeds"
+			type="note"
+			label="COM_TKDCLUB_CONFIG_EMAIL_NOTE"
+		/>
+
+        <field
+				name="training_email"
+				type="radio"
+				label="COM_TKDCLUB_CONFIG_SEND_TRAINING_EMAIL"
+				description="COM_TKDCLUB_CONFIG_SEND_TRAINING_EMAIL_DESC"
+				class="btn-group btn-group-yesno"
+				default="0"
+        >
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+        <field 
+            name="training_info_to" type="usergrouplist"
+            label="COM_TKDCLUB_CONFIG_NEWTRAINING_EMAIL_TO"
+            description="COM_TKDCLUB_CONFIG_NEWTRAINING_EMAIL_TO_DESC"
+            multiple="true" showon="training_email:1" />
+
+    </fieldset>
+
+    <fieldset
+        name="medals"
+        label="COM_TKDCLUB_CONFIG_MEDALS"
+        description="COM_TKDCLUB_CONFIG_MEDALS_DESC">
+
+        <field
+            name="championship_types"
+            label="COM_TKDCLUB_CONFIG_CHAMPIONSHIP_TYPES"
+            description="COM_TKDCLUB_CONFIG_CHAMPIONSHIP_TYPES_DESC"
+            type="text" defautlt="" size="60" filter="safehtml" />
+
+        <field
+			name="integration_newsfeeds"
+			type="note"
+			label="COM_TKDCLUB_CONFIG_EMAIL_NOTE"
+		/>
+
+        <field
+				name="medal_email"
+				type="radio"
+				label="COM_TKDCLUB_CONFIG_SEND_MEDAL_EMAIL"
+				description="COM_TKDCLUB_CONFIG_SEND_MEDAL_EMAIL_DESC"
+				class="btn-group btn-group-yesno"
+				default="0"
+        >
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
+
+        <field 
+            name="medal_info_to" type="usergrouplist"
+            label="COM_TKDCLUB_CONFIG_NEWMEDAL_EMAIL_TO"
+            description="COM_TKDCLUB_CONFIG_NEWMEDAL_EMAIL_TO_DESC"
+            multiple="true" showon="medal_email:1" />
+    
+    </fieldset>
+    
+    <fieldset
+        name="promotions_kup"
+        label="COM_TKDCLUB_CONFIG_PROMOTIONS_KUP"
+        description="COM_TKDCLUB_CONFIG_PROMOTIONS_KUP_DESC" >
+    
+        <field
+            name="badge_cost"
+            label="COM_TKDCLUB_CONFIG_PROMOTION_KUP_BADGE"
+            description="COM_TKDCLUB_CONFIG_PROMOTION_KUP_BADGE_DESC"
+            type="text" default="" size="10" filter="float" />
+
+        <field
+            name="examiner_cost"
+            label="COM_TKDCLUB_CONFIG_PROMOTION_KUP_EXAMINER"
+            description="COM_TKDCLUB_CONFIG_PROMOTION_KUP_EXAMINER_DESC"
+            type="text" default="" size="10" filter="float" />
+
+        <field
+            name="club_cost"
+            label="COM_TKDCLUB_CONFIG_PROMOTION_KUP_CLUB"
+            description="COM_TKDCLUB_CONFIG_PROMOTION_KUP_CLUB_DESC"
+            type="text" default="" size="10" filter="float" />
+
+
+        <field
+            name="fed_cost_under_15"
+            label="COM_TKDCLUB_CONFIG_PROMOTION_COST_UNDER_15"
+            description="COM_TKDCLUB_CONFIG_PROMOTION_COST_UNDER_15_DESC"
+            type="text" default="" size="10" filter="float" />
+
+        <field
+            name="fed_cost_from_15"
+            label="COM_TKDCLUB_CONFIG_PROMOTION_COST_FROM_15"
+            description="COM_TKDCLUB_CONFIG_PROMOTION_COST_FROM_15_DESC"
+            type="text" default="" size="10" filter="float" />
+
+    </fieldset>
+
+    <fieldset
+        name="promotions_dan"
+        label="COM_TKDCLUB_CONFIG_PROMOTIONS_DAN"
+        description="COM_TKDCLUB_CONFIG_PROMOTIONS_DAN_DESC" >
+    
+        <field
+            name="dan_1"
+            label="COM_TKDCLUB_CONFIG_PROMOTION_DAN1"
+            description="COM_TKDCLUB_CONFIG_PROMOTION_DAN1_DESC"
+            type="text" default="" size="10" filter="float" />
+
+        <field
+            name="dan_2"
+            label="COM_TKDCLUB_CONFIG_PROMOTION_DAN2"
+            description="COM_TKDCLUB_CONFIG_PROMOTION_DAN2_DESC"
+            type="text" default="" size="10" filter="float" />
+
+        <field
+            name="dan_3"
+            label="COM_TKDCLUB_CONFIG_PROMOTION_DAN3"
+            description="COM_TKDCLUB_CONFIG_PROMOTION_DAN3_DESC"
+            type="text" default="" size="10" filter="float" />
+
+        <field
+            name="dan_4"
+            label="COM_TKDCLUB_CONFIG_PROMOTION_DAN4"
+            description="COM_TKDCLUB_CONFIG_PROMOTION_DAN4_DESC"
+            type="text" default="" size="10" filter="float" />
+
+        <field
+            name="dan_5"
+            label="COM_TKDCLUB_CONFIG_PROMOTION_DAN5"
+            description="COM_TKDCLUB_CONFIG_PROMOTION_DAN5_DESC"
+            type="text" default="" size="10" filter="float" />
+
+        <field
+            name="dan_6"
+            label="COM_TKDCLUB_CONFIG_PROMOTION_DAN6"
+            description="COM_TKDCLUB_CONFIG_PROMOTION_DAN6_DESC"
+            type="text" default="" size="10" filter="float" />
+    </fieldset>
+    
+    <fieldset
+        name="events"
+        label="COM_TKDCLUB_CONFIG_EVENTS"
+        description="COM_TKDCLUB_CONFIG_EVENTS_LABEL">
+    
+        <field
+            name="captcha"
+            type="plugins"
+            folder="captcha"
+            default=""
+            label="COM_TKDCLUB_CONFIG_EVENTS_CAPTCHA"
+            description="COM_TKDCLUB_CONFIG_EVENTS_CAPTCHA_DESC"
+            filter="cmd" >
+            <option value="">JOPTION_USE_DEFAULT</option>
+            <option value="0">JOPTION_DO_NOT_USE</option>
+        </field>
+        
+        <!-- Duration after event participant data is deleted  -->
+        <field
+            name="days" type="text"
+            label="COM_TKDCLUB_CONFIG_EVENTS_DAYS_TO_SAVE_DATA"
+            description="COM_TKDCLUB_CONFIG_EVENTS_DAYS_TO_SAVE_DATA_DESC"
+            default="365" filter="integer" /> 
+
+    </fieldset>
+    
+    <fieldset
+        name="email"
+        label="COM_TKDCLUB_CONFIG_EMAIL"
+        description="COM_TKDCLUB_CONFIG_EMAIL_DESC" >
+    
+        <field
+            name="mail_prefix"
+            label="COM_TKDCLUB_CONFIG_EMAIL_PREFIX"
+            description="COM_TKDCLUB_CONFIG_EMAIL_PREFIX_DESC"
+            type="text" default="" size="10" filter="safehtml" />
+        
+        <field
+            name="mail_signature"
+            label="COM_TKDCLUB_CONFIG_EMAIL_SIGNATURE"
+            description="COM_TKDCLUB_CONFIG_EMAIL_SIGNATURE_DESC"
+            type="textarea" default="" filter="safehtml"
+            rows="8" />
+        
+        <field 
+            name="email_test" type="email"
+            class="inputbox"
+            label="COM_TKDCLUB_EMAIL_TEST_ADDRESS"
+            description="COM_TKDCLUB_EMAIL_TEST_ADDRESS_DESC"
+            size="30" />
+
+        <field
+            name="allowed_extensions"
+            label="COM_TKDCLUB_CONFIG_EMAIL_ALLOWED_EXT"
+            description="COM_TKDCLUB_CONFIG_EMAIL_ALLOWED_EXT_DESC"
+            type="text" default="pdf,jpeg,jpg" filter="safehtml"
+            size="10" />
+             
+    </fieldset>
+
+    <fieldset
+        name="permissions"
+        label="JCONFIG_PERMISSIONS_LABEL"
+        description="JCONFIG_PERMISSIONS_DESC" >
+    
+        <field
+            name="rules"
+            type="rules"
+            label="JCONFIG_PERMISSIONS_LABEL"
+            filter="rules"
+            validate="rules"
+            component="com_tkdclub"
+            section="component" />
+            
+   </fieldset>
+    
+</config>

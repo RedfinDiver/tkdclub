@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form addfieldprefix="Redfindiver\Component\Tkdclub\Administrator\Field">
+     
+    <fieldset name="topdata">
+
+        <field 
+            name="lastname" type="text"
+            class="inputbox"
+            label="COM_TKDCLUB_MEMBER_LASTNAME"
+            size="30" required="true" filter="safehtml" />
+
+        <field 
+            name="firstname" type="text"
+            class="inputbox"
+            label="COM_TKDCLUB_MEMBER_FIRSTNAME"
+            size="30" required="true" filter="safehtml" />
+
+        <field 
+            name="birthdate" type="calendar"
+            class="inputbox"
+            label="COM_TKDCLUB_MEMBER_BIRTHDATE"
+            description="COM_TKDCLUB_MEMBER_BIRTHDATE_DESC"
+            translateformat="true"
+		    showtime="false"
+            filter="server_utc" required="true"
+            size="12" />
+        
+        <field 
+            name="sex" type="list"
+            required="true"
+            label="COM_TKDCLUB_MEMBER_SEX">
+            <option value="">COM_TKDCLUB_MEMBER_SEX_FILTER</option>
+            <option value="female">COM_TKDCLUB_MEMBER_SEX_FEMALE</option>
+            <option value="male">COM_TKDCLUB_MEMBER_SEX_MALE</option>
+        </field>
+
+        <field 
+            name="entry" type="calendar"
+            class="inputbox"
+            required="true"
+            label="COM_TKDCLUB_MEMBER_ENTRY"
+            description="COM_TKDCLUB_MEMBER_ENTRY_DESC"
+            translateformat="true"
+		    showtime="false"
+            filter="server_utc"
+            size="12" />
+        
+        <field
+            name="member_state"
+            type="list"
+            label="COM_TKDCLUB_MEMBER_STATE"
+            description="COM_TKDCLUB_MEMBER_STATE_DESC"
+            class="inputbox"
+            size="1"
+            default="1">
+            <option value="active">COM_TKDCLUB_MEMBER_STATE_ACTIVE</option>
+            <option value="inactive">COM_TKDCLUB_MEMBER_STATE_INACTIVE</option>
+            <option value="support">COM_TKDCLUB_MEMBER_STATE_SUPPORTER</option>
+        </field> 
+
+    </fieldset>
+
+    <fieldset name="personal_data">
+
+        <field 
+            name="citizenship" type="nations"
+            class="inputbox"
+            label="COM_TKDCLUB_MEMBER_CITIZENSHIP"
+            description="COM_TKDCLUB_MEMBER_CITIZENSHIP_DESC"
+            filter="safehtml" />
+
+        <field 
+            name="street" type="text"
+            class="inputbox"
+            label="COM_TKDCLUB_MEMBER_STREET"
+            description="COM_TKDCLUB_MEMBER_STREET_DESC"
+            size="30" filter="safehtml" />
+
+        <field 
+            name="zip" type="text"
+            class="inputbox"
+            label="COM_TKDCLUB_MEMBER_ZIP"
+            description="COM_TKDCLUB_MEMBER_ZIP_DESC"
+            size="20" filter="safehtml" />
+
+        <field 
+            name="city" type="text"
+            class="inputbox"
+            label="COM_TKDCLUB_MEMBER_CITY"
+            description="COM_TKDCLUB_MEMBER_CITY_DESC"
+            size="30" filter="safehtml" />
+
+        <field 
+            name="country" type="text"
+            class="inputbox"
+            label="COM_TKDCLUB_MEMBER_COUNTRY"
+            description="COM_TKDCLUB_MEMBER_COUNTRY_DESC"
+            size="30" filter="safehtml" />
+        
+        <field 
+            name="phone" type="text"
+            class="inputbox"
+            label="COM_TKDCLUB_MEMBER_PHONE"
+            description="COM_TKDCLUB_MEMBER_PHONE_DESC"
+            size="15" filter="safehtml" />
+
+        <field 
+            name="email" type="email"
+            class="inputbox"
+            label="COM_TKDCLUB_MEMBER_EMAIL"
+            description="COM_TKDCLUB_MEMBER_EMAIL_DESC"
+            size="30" />
+
+        <field 
+            name="iban" type="text"
+            class="validate-iban"
+            label="COM_TKDCLUB_MEMBER_IBAN"
+            description="COM_TKDCLUB_MEMBER_IBAN_DESC"
+            size="50" filter="safehtml" />
+
+        <field 
+            name="notes_personel" type="textarea"
+            rows="7"
+            class="inputbox"
+            label="COM_TKDCLUB_MEMBER_COMMENT"
+            description="COM_TKDCLUB_MEMBER_COMMENT_DESC"
+            default=""/>
+
+    </fieldset>
+
+    <fieldset name="taekwondo_data">
+
+        <field 
+            name="memberpass" type="text"
+            class="inputbox"
+            label="COM_TKDCLUB_MEMBER_PASS"
+            description="COM_TKDCLUB_MEMBER_PASS_DESC"
+            size="10" filter="safehtml" />
+
+        <field 
+            name="grade" type="grades"
+            class="inputbox"
+            label="COM_TKDCLUB_MEMBER_GRADE"
+            description="COM_TKDCLUB_MEMBER_GRADE_DESC"
+            multiple="false" required="false" filter="safehtml" default="">
+        </field>
+
+        <field 
+            name="lastpromotion" type="calendar"
+            class="inputbox"
+            label="COM_TKDCLUB_MEMBER_LAST_PROMOTION"
+            description="COM_TKDCLUB_MEMBER_LAST_PROMOTION_DESC"
+            translateformat="true"
+		    showtime="false"
+            filter="server_utc"
+            size="12" />
+
+        <field
+            name="licenses" type="licenses"
+            label="COM_TKDCLUB_MEMBER_LICENSES"
+            description="COM_TKDCLUB_MEMBER_LICENSES_DESC"
+            multiple="true" layout="joomla.form.field.list-fancy-select">
+            
+        </field>
+
+        <field 
+            name="notes_taekwondo" type="textarea"
+            rows="7"
+            class="inputbox"
+            label="COM_TKDCLUB_MEMBER_COMMENT"
+            description="COM_TKDCLUB_MEMBER_COMMENT_DESC"
+            default=""/>
+
+    </fieldset>
+
+    <fieldset name="club_data">
+
+        <field
+            name="functions" type="functions" default=""
+            label="COM_TKDCLUB_MEMBER_FUNCTIONS"
+            description="COM_TKDCLUB_MEMBER_FUNCTIONS_DESC"
+            multiple="true" layout="joomla.form.field.list-fancy-select">
+            
+        </field>
+
+        <field 
+            name="leave" type="calendar"
+            class="inputbox"
+            label="COM_TKDCLUB_MEMBER_LEAVE"
+            description="COM_TKDCLUB_MEMBER_LEAVE_DESC"
+            translateformat="true"
+		    showtime="false"
+            filter="server_utc" />
+
+        <field 
+            name="notes_clubdata" type="textarea"
+            rows="7"
+            class="inputbox"
+            label="COM_TKDCLUB_MEMBER_COMMENT"
+            description="COM_TKDCLUB_MEMBER_COMMENT_DESC"
+            default=""/>
+
+    </fieldset>
+
+    <fieldset name="more_data">
+
+        <field
+			name="image"
+			type="media"
+			label="COM_TKDCLUB_MEMBER_PICTURE"
+		/>
+
+        <field
+            name="user_id" type="user"
+            label="COM_TKDCLUB_MEMBER_LINKED_USER"
+            description="COM_TKDCLUB_MEMBER_LINKED_USER_DESC" />
+
+    </fieldset>
+
+    <fieldset name="attachments">
+
+        <field 
+            name="file"
+            type="file"
+            label="COM_TKDCLUB_MEMBER_FILE_APPEND"
+            description="COM_TKDCLUB_MEMBER_FILE_APPEND_DESC"
+            accept=".pdf,.jpg,.png"
+            onchange="Joomla.submitbutton('member.uploadfile')">
+        </field>
+
+    </fieldset>
+
+    <fieldset name="item_data">       
+
+        <field
+            name="id" type="text" default="0" filter="safehtml"
+            label="COM_TKDCLUB_FIELD_ID" description="COM_TKDCLUB_FIELD_ID_DESC"
+            readonly="true" class="readonly"/>       
+
+        <field 
+            name="created" type="calendar" label="COM_TKDCLUB_FIELD_CREATED"
+            description="COM_TKDCLUB_FIELD_CREATED_DESC" size="22"
+            translateformat="true" showtime="true" filter="user_utc" 
+            class="readonly" readonly="true" />
+
+        <field
+            name="created_by" type="user"
+            label="COM_TKDCLUB_FIELD_CREATED_BY" 
+            description="COM_TKDCLUB_FIELD_CREATED_BY_DESC"
+            class="readonly" readonly="true" />
+
+        <field
+            name="modified" type="calendar" class="readonly"
+            label="COM_TKDCLUB_FIELD_MODIFIED" description="COM_TKDCLUB_FIELD_MODIFIED_DESC"
+            translateformat="true" showtime="true" filter="user_utc"
+            size="22" readonly="true" />
+
+        <field
+            name="modified_by" type="user"
+            label="COM_TKDCLUB_FIELD_MODIFIED_BY" description="COM_TKDCLUB_FIELD_MODIFIED_BY_DESC"
+            class="readonly" readonly="true" />
+
+    </fieldset>
+        
+</form>

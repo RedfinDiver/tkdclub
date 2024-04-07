@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form addfieldprefix="Redfindiver\Component\Tkdclub\Administrator\Field">
+    
+    <fieldset name="promotion_data">
+        <field
+            name="id" type="text" default="0" filter="safehtml" hidden="true" />
+        
+        <field 
+            name="date" type="calendar"
+            class="inputbox"
+            label="COM_TKDCLUB_DATE"
+            description="COM_TKDCLUB_PROMOTION_DATE_DESC"
+            translateformat="true"
+		    showtime="false"
+            filter="server_utc"
+            size="12" required="true" />
+        
+        <field 
+            name="city" type="text"
+            class="inputbox"
+            label="COM_TKDCLUB_PROMOTION_CITY"
+            description="COM_TKDCLUB_PROMOTION_CITY_DESC"
+            filter="safehtml" required="true" size="12" >
+        </field>
+        
+        <field 
+            name="type" type="list"
+            class="inputbox"
+            label="COM_TKDCLUB_PROMOTION_TYPE"
+            description="COM_TKDCLUB_PROMOTION_TYPE_DESC"
+            filter="safehtml" required="true" >
+            <option value="">COM_TKDCLUB_SELECT_PROMOTION_TYPE</option>
+            <option value="kup">COM_TKDCLUB_KUP</option>
+            <option value="dan">COM_TKDCLUB_DAN</option>
+        </field>
+
+    </fieldset>
+
+    <fieldset name="more-data">
+
+         <field
+            name="promotion_state"
+            type="list"
+            label="JSTATUS"
+            description="COM_TKDCLUB_PROMOTION_STATE_DESC"
+            class="inputbox" default="1" filter="safehtml">
+            <option value="">COM_TKDCLUB_SELECT_PROMOTION_STATE</option>
+            <option value="1">COM_TKDCLUB_PROMOTION_ACTIVE</option>
+            <option value="0">COM_TKDCLUB_PROMOTION_INACTIVE</option>
+            
+        </field> 
+
+        <field 
+            name="notes" type="textarea"
+            rows="7"
+            class="inputbox"
+            label="COM_TKDCLUB_MEMBER_COMMENT"
+            description="COM_TKDCLUB_MEMBER_COMMENT_DESC"
+            default=""/> 
+
+    </fieldset>
+
+    <fieldset name="examiner-data">
+
+        <field 
+            name="examiner_name" type="text"
+            class="inputbox"
+            label="COM_TKDCLUB_PROMOTION_EXAMINER"
+            description="COM_TKDCLUB_PROMOTION_EXAMINER_DESC"
+            filter="safehtml" required="false" size="30" >
+        </field>
+        
+        <field 
+            name="examiner_address" type="text"
+            class="inputbox"
+            label="COM_TKDCLUB_PROMOTION_EXAMINER_ADDRESS"
+            description="COM_TKDCLUB_PROMOTION_EXAMINER_ADDRESS_DESC"
+            filter="safehtml" required="false" size="30" >
+        </field>
+        
+        <field 
+            name="examiner_email" type="email"
+            class="inputbox"
+            label="COM_TKDCLUB_PROMOTION_EXAMINER_EMAIL"
+            description="COM_TKDCLUB_PROMOTION_EXAMINER_EMAIL_DESC"
+            size="30" />   
+    </fieldset>
+
+    <fieldset name="item_data">       
+
+        <field
+            name="id" type="text" default="0" filter="safehtml"
+            label="COM_TKDCLUB_FIELD_ID" description="COM_TKDCLUB_FIELD_ID_DESC"
+            readonly="true" class="readonly"/>       
+
+        <field 
+            name="created" type="calendar" label="COM_TKDCLUB_FIELD_CREATED"
+            description="COM_TKDCLUB_FIELD_CREATED_DESC" size="22"
+            translateformat="true" showtime="true" filter="user_utc" 
+            class="readonly" readonly="true" />
+
+        <field
+            name="created_by" type="user"
+            label="COM_TKDCLUB_FIELD_CREATED_BY" 
+            description="COM_TKDCLUB_FIELD_CREATED_BY_DESC"
+            class="readonly" readonly="true" />
+
+        <field
+            name="modified" type="calendar" class="readonly"
+            label="COM_TKDCLUB_FIELD_MODIFIED" description="COM_TKDCLUB_FIELD_MODIFIED_DESC"
+            translateformat="true" showtime="true" filter="user_utc"
+            size="22" readonly="true" />
+
+        <field
+            name="modified_by" type="user"
+            label="COM_TKDCLUB_FIELD_MODIFIED_BY" description="COM_TKDCLUB_FIELD_MODIFIED_BY_DESC"
+            class="readonly" readonly="true" />
+
+    </fieldset>
+    
+</form>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form>
+
+    <fields name="filter" addfieldprefix="Redfindiver\Component\Tkdclub\Administrator\Field">
+        <field
+            name="search"
+            type="text"
+            label="COM_TKDCLUB_PROMOTION_SEARCH_IN_COLOUMS"
+            description="COM_TKDCLUB_PROMOTION_SEARCH_IN_COLOUMS"
+            hint="JSEARCH_FILTER"
+        />
+
+        <field
+            name="promotion_state" type="list"
+            label="JSTATUS"
+            description=""
+            onchange="this.form.submit();">
+            <option value="">COM_TKDCLUB_SELECT_PROMOTION_STATE</option>
+            <option value="1">COM_TKDCLUB_PROMOTION_ACTIVE</option>
+            <option value="0">COM_TKDCLUB_PROMOTION_INACTIVE</option>
+        </field>
+
+        <field
+            name="type" type="list"
+            label="JSTATUS"
+            description=""
+            onchange="this.form.submit();">
+            <option value="">COM_TKDCLUB_SELECT_PROMOTION_TYPE</option>
+            <option value="kup">COM_TKDCLUB_KUP</option>
+            <option value="dan">COM_TKDCLUB_DAN</option>
+        </field>
+
+    </fields>
+
+    <fields name="list">
+
+        <field
+            name="fullordering" type="list"
+            label=""
+            description=""
+            default="date DESC"
+			onchange="this.form.submit();">
+
+			<option value="">JGLOBAL_SORT_BY</option>
+            <option value="date DESC">COM_TKDCLUB_PROMOTION_ORDER_BY_DATE_DESC</option>
+			<option value="date ASC">COM_TKDCLUB_PROMOTION_ORDER_BY_DATE_ASC</option>
+
+        </field> 
+
+        <field
+            name="limit"
+            type="limitbox"
+            class="input-mini"
+            label="COM_CONTENT_LIST_LIMIT"
+            description="COM_CONTENT_LIST_LIMIT_DESC"
+            onchange="this.form.submit();"
+        />        
+            
+    </fields> 
+
+</form>

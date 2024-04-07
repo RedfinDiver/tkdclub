@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+  <extension type="package" version="5.0.0" method="upgrade">
+    <name>pkg_tkdclub</name>
+    <author>Markus Moser</author>
+    <creationDate>March 2024</creationDate>
+    <packagename>tkdclub</packagename>
+    <version>5.0.0</version>
+    <url>http://www.taekwondo-uttendorf.at</url>
+    <packager>Markus Moser</packager>
+    <packagerurl>http://www.taekwondo-uttendorf.at</packagerurl>
+    <description>PKG_TKDCLUB_XML_DESCRIPTION</description>
+    <updateservers>
+		  <server type="extension" name="TKD Club Update Site " priority="2">https://raw.githubusercontent.com/RedfinDiver/tkdclub/main/source/update.xml</server>
+	  </updateservers>
+    <files>
+      <file type="component" id="com_tkdclub">com_tkdclub.zip</file>
+      <file type="plugin" id="plg_gradeupdate" group="content">plg_content_gradeupdate.zip</file>
+      <file type="plugin" id="plg_tkdclubmember" group="user">plg_user_tkdclubmember.zip</file>
+      <file type="plugin" id="plg_bdreminder_cli" group="console">plg_console_bdreminder.zip</file>
+      <file type="plugin" id="plg_bdreminder_task" group="task">plg_task_bdreminder.zip</file>
+      <file type="plugin" id="plg_webservices_tkdclub" group="webservices">plg_webservices_tkdclub.zip</file>
+    </files>
+    <languages folder="language">
+		  <language tag="en-GB">en-GB/pkg_tkdclub.sys.ini</language>
+      <language tag="de-DE">en-GB/pkg_tkdclub.sys.ini</language>
+	  </languages>
+  </extension>

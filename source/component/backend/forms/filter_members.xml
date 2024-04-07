@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form>
+
+    <fields name="filter" addfieldprefix="Redfindiver\Component\Tkdclub\Administrator\Field">
+        <field
+            name="search"
+            type="text"
+            label="COM_TKDCLUB_MEMBER_SEARCH_IN_COLOUMS"
+            description="COM_TKDCLUB_MEMBER_SEARCH_IN_COLOUMS"
+            hint="JSEARCH_FILTER"
+        />
+
+        <field 
+            name="member_state" type="list"
+            class="inputbox"
+            label="COM_TKDCLUB_SELECT_ALL_MEMBERS"
+            description=""
+            default="active"
+            onchange="this.form.submit();">
+            <option value="all">COM_TKDCLUB_SELECT_ALL_MEMBERS</option>
+            <option value="active">COM_TKDCLUB_SELECT_ACTIVE</option>
+            <option value="support">COM_TKDCLUB_SELECT_SUPPORTER</option>
+            <option value="inactive">COM_TKDCLUB_SELECT_INACTIVE</option>
+        </field>        
+
+        <field
+            name="grade"
+            type="grades"
+            label="COM_TKDCLUB_SELECT_GRADE"
+            description=""
+            onchange="this.form.submit();">
+            <option value="">COM_TKDCLUB_SELECT_GRADE</option>
+        
+        </field>
+
+    </fields>
+
+    <fields name="list">
+
+        <field
+            name="fullordering" type="list"
+            label=""
+            description=""
+            default="id ASC"
+			onchange="this.form.submit();">
+
+			<option value="">JGLOBAL_SORT_BY</option>
+            <option value="id ASC">COM_TKDCLUB_MEMBER_ORDERING_ID_ASC</option>
+			<option value="id DESC">COM_TKDCLUB_MEMBER_ORDERING_ID_DESC</option>
+
+        </field> 
+
+        <field
+            name="limit"
+            type="limitbox"
+            class="input-mini"
+            label="COM_CONTENT_LIST_LIMIT"
+            description="COM_CONTENT_LIST_LIMIT_DESC"
+            onchange="this.form.submit();"
+        />        
+            
+    </fields> 
+
+</form>

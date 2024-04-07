@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form>
+
+    <fields name="filter">
+
+        <field
+            name="search"
+            type="text"
+            label="COM_TKDCLUB_SUBSCRIBER_SEARCH_IN_COLOUMS"
+            description="COM_TKDCLUB_SUBSCRIBER_SEARCH_IN_COLOUMS"
+            hint="JSEARCH_FILTER"
+        />
+
+        <field
+            name="origin"
+            type="list"
+            label="COM_TKDCLUB_SELECT_SUBSCRIBER_ORIGIN"
+            description="COM_TKDCLUB_SELECT_SUBSCRIBER_ORIGIN_DESC"
+            onchange="this.form.submit();">
+            <option value="">COM_TKDCLUB_SELECT_SUBSCRIBER_ORIGIN</option>
+            <option value="1">COM_TKDCLUB_SUBSCRIBER_ORIGIN_MANUAL</option>
+            <option value="2">COM_TKDCLUB_SUBSCRIBER_ORIGIN_FORM</option>
+        </field>
+
+    </fields>
+
+    <fields name="list">
+
+        <field
+            name="fullordering" type="list"
+            label=""
+            description=""
+            default="date DESC"
+			onchange="this.form.submit();">
+
+			<option value="">JGLOBAL_SORT_BY</option>
+            <option value="date DESC">COM_TKDCLUB_SUBSCRIBER_ORDER_BY_DATE_DESC</option>
+			<option value="date ASC">COM_TKDCLUB_SUBSCRIBER_ORDER_BY_DATE_ASC</option>
+
+        </field> 
+
+        <field
+            name="limit"
+            type="limitbox"
+            class="input-mini"
+            label="COM_CONTENT_LIST_LIMIT"
+            description="COM_CONTENT_LIST_LIMIT_DESC"
+            onchange="this.form.submit();"
+        />        
+            
+    </fields> 
+
+</form>
