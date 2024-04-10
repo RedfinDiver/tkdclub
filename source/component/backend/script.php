@@ -44,6 +44,7 @@ class Com_TkdclubInstallerScript
             }
         }
 
+        echo 'hier bin ich!!!!';
         return true;
     }
 }
