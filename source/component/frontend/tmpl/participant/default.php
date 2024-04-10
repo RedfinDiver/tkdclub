@@ -79,22 +79,11 @@ $stop_sub = $now->diff($deadline)->invert;
         <div class="form-horizontal">
             <fieldset>
                 <!-- check for multi-participants -->
-                <?php if ($item_params->get('allow_multi')){ echo $this->form->renderField('group');} ?>
-                <!-- render fields for all participants -->
-                <?php
-                    foreach($this->form->getFieldset('participant_data_all') as $field)
-                    {
-                        // If the field is not hidden, render it
-                        if (!$field->hidden)
-                        {
-                            echo $this->form->renderField($field->fieldname);
-                        }
-                    };
-                ?>
-                <!-- render fields for multiple or single participants -->
-                <div id="single_multiple">
+                <?php echo $this->form->renderField('group') ?>
+                <!-- render fields for participants -->
+                <div id="participant_data">
                     <?php
-                        foreach($this->form->getFieldset('participant_data_single') as $field)
+                        foreach($this->form->getFieldset('participant_data') as $field)
                         {
                             // If the field is not hidden, render it
                             if (!$field->hidden)
@@ -149,12 +138,19 @@ $stop_sub = $now->diff($deadline)->invert;
             <div class="btn-toolbar">
                 <div class="btn-group">
                     <button class="btn btn-primary validate" type="submit"><?php echo Text::_('COM_TKDCLUB_SUBSCRIBE'); ?></button>
+                    <a class="btn btn-secondary" 
+                       href="index.php?option=com_tkdclub&task=participant.reloadform&item_id=
+                        <?php echo $active->id ?>&event_id=<?php echo $this->event['id']?>&todo=reset">
+                        <?php echo Text::_('COM_TKDCLUB_RESET_FORM'); ?>
+                    </a>
                 </div>
             </div>
                     
             <div>
                 <input type="hidden" name="option" value="com_tkdclub">
                 <input type="hidden" name="task" value="participant.subscribe">
+                <input id="item_id" type="hidden" name="item_id" value="<?php echo $active->id; ?>">
+                <input id="event_id" type="hidden" name="event_id" value="<?php echo $this->event['id']; ?>">
                 <?php echo HTMLHelper::_('form.token'); ?>
             </div> 
         </div>

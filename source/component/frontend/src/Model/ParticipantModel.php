@@ -9,12 +9,14 @@ namespace Redfindiver\Component\Tkdclub\Site\Model;
 
 \defined('_JEXEC') or die;
 
+use Exception;
 use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\MVC\Model\FormModel;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\Database\ParameterType;
+use Joomla\Input\Input;
 
 class ParticipantModel extends FormModel
 {
@@ -46,21 +48,90 @@ class ParticipantModel extends FormModel
     public function getForm($data = array(), $loadData = true)
     {   
         $options = array('control' => 'jform', 'load_data' => $loadData);
-        $form = $this->loadForm('tkdclub', 'participant',  $options);
+        $form = $this->loadForm('tkdclub', 'participant',  $options, true);
+
+
+        $app = Factory::getApplication();
+        $menu = $app->getMenu();
+        $input = Factory::getApplication()->input;
+        $itemId = $input->getInt('item_id', 0);
+        $group = 0;
         
-        // Removing not displayed fields from the form and labeling of userfields
-        $params = Factory::getApplication()->getMenu()->getActive()->getParams();
-        !$params->get('show_age') ? $form->removeField('age') && $form->removeField('age_dist') : null;
-        !$params->get('show_email') ? $form->removeField('email') : null;
-        !$params->get('show_grade') ? $form->removeField('grade') && $form->removeField('grade_dist') : null;
-        !$params->get('show_club') ? $form->removeField('clubname') : null;
-        !$params->get('show_kupgradeachieve') ? $form->removeField('kupgradesachieve') : null;
-        
-        if (!$params->get('allow_multi'))
+        // from javascript event in reload_fields.js
+        if ($input->exists('group'))
         {
-            $form->setFieldAttribute('group', 'hidden', 'true');
+            $group = $input->getIn('group');
+        }
+
+        // Get the data from POST
+        $data = new Input($input->get('jform', [], 'array'));
+
+        if ($data->getInt('group'))
+        {
+                $group = $data->getInt('group');
+        }
+
+        // Get all parameters
+        if (!$itemId)
+        {
+            $params = $menu->getActive()->getParams();
+        }
+        else
+        {
+            $params = $menu->getItem($itemId)->getParams();
+        }
+
+        // Removing not displayed fields from the form
+        if (!$params->get('allow_multi')) 
+        {
+            $form->removeField('group');
+        }
+
+        if (!$params->get('show_age'))
+        {
+            $form->removeField('age');
+            $form->removeField('age_dist');
+        }
+
+        if (!$params->get('show_email'))
+        {
+            $form->removeField('email');
+        }
+
+        if (!$params->get('show_grade'))
+        {
+            $form->removeField('grade');
+            $form->removeField('grade_dist');
+        }
+
+        if (!$params->get('show_club'))
+        {
+            $form->removeField('clubname');
+        }
+   
+        if (!$params->get('show_kupgradeachieve'))
+        {
+            $form->removeField('kupgradesachieve');
+        }
+
+        if ($group == 0)
+        {
+            $form->removeField('registered');
+            $form->removeField('grade_dist');
+            $form->removeField('age_dist');
+        }
+
+        if ($group == 1)
+        {
+            $form->removeField('grade');
+            $form->removeField('age');
+            $form->setFieldAttribute('firstname', 'description', 'COM_TKDCLUB_PARTICIPANT_FIRSTNAME_MULTIPLE_DESC');
+            $form->setFieldAttribute('lastname', 'description', 'COM_TKDCLUB_PARTICIPANT_LASTNAME_MULTIPLE_DESC');
+            $form->setFieldAttribute('clubname', 'description', 'COM_TKDCLUB_PARTICIPANT_CLUBNAME_MULTIPLE_DESC');
+            $form->setFieldAttribute('email', 'description', 'COM_TKDCLUB_PARTICIPANT_EMAIL_MULTIPLE_DESC');
         }
         
+        // Labeling of userfields
         if ($params->get('show_user1'))
         {
             $form->setFieldAttribute('user1', 'label', $params->get('user1'));

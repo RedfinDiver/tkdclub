@@ -15,7 +15,9 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Response\JsonResponse;
 use Joomla\CMS\Uri\Uri;
+use Joomla\Input\Input;
 
 class ParticipantController extends FormController
 {
@@ -33,9 +35,11 @@ class ParticipantController extends FormController
 
         $app   = Factory::getApplication();
         $model = $this->getModel('participant');
-        $table = $model->getTable();
-        $item_id = $this->input->getInt('Itemid');
+        $table = $model->getTable();     
+        $item_id = $this->input->getInt('Itemid', 0);
+        $event_id = $this->input->getInt('event_id', 0);
         
+        // Get the data from POST
         // Get the data from POST
         $data = $this->input->post->get('jform', [], 'array');
         
@@ -47,7 +51,15 @@ class ParticipantController extends FormController
         $currentUri = Uri::getInstance();
 
         // Get the menu-parameters for the current menu item
-        $params = $app->getMenu()->getActive()->getParams();
+        if (!$item_id)
+        {
+            $params = $app->getMenu()->getActive()->getParams();
+        }
+        else
+        {
+            $params = $app->getMenu()->getItem($item_id)->getParams();
+        }
+        
         
         // Get the form
         $form = $model->getForm();
@@ -55,9 +67,6 @@ class ParticipantController extends FormController
         if (!$form) {
             throw new \Exception($model->getError(), 500);
         }
-
-        // Prepare the form before data validation
-        $form = $this->prepareForm($form, $params);
 
         if (!$model->validate($form, $data)) {
             $errors = $model->getErrors();
@@ -127,6 +136,7 @@ class ParticipantController extends FormController
         catch (\Exception $ex)
         {
             $this->message = $ex->getMessage();
+            $item_id = $this->input->getInt('Itemid');
         }
         
         $this->setRedirect($currentUri);
@@ -134,56 +144,28 @@ class ParticipantController extends FormController
         return true;
     }
 
-    /** Prepare the form
-     * 
-     * Not necassary fields and groups are removed from the form object
-     * 
-     * @param   object  $form  Joomla form object
-     * 
-     * @param   object  $params  Joomla registry object with menu item parameters
-     * 
-     * @return  object  prepared form, ready to validate
-     * 
-     */
-    public function prepareForm(&$form, $params)
+    public function reloadform()
     {
-        // Change the form according to menu-parameters        
-        // Checking for single or multiple subscription
-        if ($params->get('allow_multi') == '0') {
-            $form->removeField('registered');
-            $form->removeField('age_dist');
-            $form->removeField('grade_dist');
-        } elseif ($params->get('allow_multi') == '1') {
-            $form->removeField('age');
-            $form->removeField('grade');
-            $form->removeField('kupgradesachieve');
-        };
+        // Check for request forgeries.
+        Session::checkToken();
+        $app = Factory::getApplication();      
+        $event_id = $app->input->getInt('event_id');
+        $item_id = $app->input->getInt('item_id');
+        $todo = $app->input->getString('todo');
 
-        // Checking for age fields
-        if ($params->get('show_age') == '0') {
-            $form->removeField('age');
-            $form->removeField('age_dist');
+        if ($todo = 'reset')
+        {
+            // empty session data
+            $app->setUserState('com_tkdclub.participant.data', '');
+            $app->enqueueMessage( Text::_('COM_TKDCLUB_FORM_RESET'), 'message');
         }
 
-        // Checking for grade fields (when not removed previously, doesn't harm)
-        if ($params->get('show_grade') == '0') {
-            $form->removeField('grade');
-            $form->removeField('grade_dist');
-        }
+        // Redirect back to the contact form.
+        $this->setRedirect(Route::_('index.php?option=com_tkdclub&view=participant&event_id='. $event_id . '&Itemid=' . $item_id));
+        
 
-        // Checking for the other fields
-        $params->get('show_club')  == '0' ? $form->removeField('clubname') : null;
-        $params->get('show_email') == '0' ? $form->removeField('email') : null;
-        $params->get('show_user1') == '0' ? $form->removeField('user1') : null;
-        $params->get('show_user2') == '0' ? $form->removeField('user2') : null;
-        $params->get('show_user3') == '0' ? $form->removeField('user3') : null;
-        $params->get('show_user4') == '0' ? $form->removeField('user4') : null;
-        $params->get('show_kupgradeachieve') == '0' ? $form->removeField('kupgradesachieve') : null;
-
-        // The 'group' field is never necessary in that case
-        $form->removeField('group');
-
-        return $form;
+        return;
+        
     }
 
     /** Preprocess the data before saving to the database
@@ -224,5 +206,39 @@ class ParticipantController extends FormController
         }
 
         return $data;
+    }
+
+    /** Create the html markup for single/multiple subscriptions
+     * 
+     * @return  json   html markup
+     * 
+     */
+    public function reloadfields()
+    {
+        try
+        {
+            $app = Factory::getApplication();
+            $model = $this->getModel($name = 'participant', $prefix = 'Site', $config = array());
+            $form = $model->getForm($data = array(), $loadData = true);
+            $html = '';
+
+            foreach($form->getFieldset('participant_data') as $field)
+            {
+                $html .= !$field->hidden ? $form->renderField($field->fieldname) : null;
+            }
+
+            $result = array('response' => $html);
+            
+            //@TODO Make JsonResponse work
+            //echo new JsonResponse($result);
+
+            echo $html;
+            $app->close();
+            
+        }
+        catch(\Exception $e)
+        {
+            echo new JsonResponse($e);
+        }
     }
 }
