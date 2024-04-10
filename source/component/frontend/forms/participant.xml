@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form addfieldprefix="Redfindiver\Component\Tkdclub\Administrator\Field">
-    <!-- Field for selecting single subscription or multiple subscription -->
-    <fieldset name="participant_multiple">
+        
+        <field
+            name="id" type="text" default="0" filter="safehtml" hidden="true" />
+        
         <field
             name="group" type="list" required="true"
+            id="group"
             label="COM_TKDCLUB_PLEASE_SELECT"
             description="COM_TKDCLUB_PLEASE_SELECT_MULTIBLE_SUBS_DESC"
             default="0"
@@ -11,13 +14,32 @@
             <option value="0">COM_TKDCLUB_PARTICIPANT_OPTION_SINGLE_SUBSCRIPTION</option>
             <option value="1">COM_TKDCLUB_PARTICIPANT_OPTION_GROUP_SUBSCRIPTION</option>        
         </field>
-    </fieldset>
+        
 
-    <!--This fieldset is always renderd in the form -->
-    <fieldset name="participant_data_all">
+    <fieldset name="participant_data">
+        
+        <field 
+            name="registered" type="text"
+            class="required validate-numeric"
+            label="COM_TKDCLUB_PARTICIPANT_SUM"
+            description="COM_TKDCLUB_PARTICIPANT_SUM_DESC"
+            required="true"
+            filter="integer" />
 
-        <field
-            name="id" type="text" default="0" filter="safehtml" hidden="true" />
+         <field 
+            name="age_dist" type="text"
+            class="inputbox"
+            label="COM_TKDCLUB_PARTICIPANT_AGE_DIST"
+            description="COM_TKDCLUB_PARTICIPANT_AGE_DIST_DESC"
+            required="true" filter="safehtml" />
+
+        <field 
+            name="grade_dist" type="text"
+            class="inputbox"
+            label="COM_TKDCLUB_PARTICIPANT_GRADE_DIST"
+            description="COM_TKDCLUB_PARTICIPANT_GRADE_DIST_DESC"
+            required="true" filter="safehtml" default="" />
+        
 
         <field 
             name="firstname" type="text"
@@ -45,11 +67,7 @@
             class="required validate-email"
             label="COM_TKDCLUB_PARTICIPANT_EMAIL"
             description="COM_TKDCLUB_PARTICIPANT_EMAIL_DESC"
-            required="true" validate="email" filter="safehtml" />       
-               
-    </fieldset>
-
-    <fieldset name="participant_data_single">      
+            required="true" validate="email" filter="safehtml" />        
 
         <field 
             name="age" type="text"
@@ -64,7 +82,7 @@
             label="COM_TKDCLUB_PARTICIPANT_GRADE"
             description="COM_TKDCLUB_PARTICIPANT_GRADE_DESC"
             multiple="false" required="true" filter="safehtml" default=""
-            validate="list" >
+            validate="options" >
             <option value="">COM_TKDCLUB_SELECT_GRADE</option>
         </field>
 
@@ -74,37 +92,10 @@
             label="COM_TKDCLUB_PARTICIPANT_PROMOTION_GRADE_ACHIEVE"
             description="COM_TKDCLUB_PARTICIPANT_PROMOTION_GRADE_ACHIEVE_DESC"
             multiple="false" required="true" filter="safehtml" default=""
-            validate="list" >
+            validate="options" >
             <option value="">COM_TKDCLUB_SELECT_GRADE</option>
         </field>
-
-    </fieldset>
-
-    <fieldset name="participant_data_multiple">
-        
-        <field 
-            name="registered" type="text"
-            class="required validate-numeric"
-            label="COM_TKDCLUB_PARTICIPANT_SUM"
-            description="COM_TKDCLUB_PARTICIPANT_SUM_DESC"
-            required="true"
-            filter="integer" />
-
-        <field 
-            name="age_dist" type="text"
-            class="inputbox"
-            label="COM_TKDCLUB_PARTICIPANT_AGE_DIST"
-            description="COM_TKDCLUB_PARTICIPANT_AGE_DIST_DESC"
-            required="true" filter="safehtml" />
-
-        <field 
-            name="grade_dist" type="text"
-            class="inputbox"
-            label="COM_TKDCLUB_PARTICIPANT_GRADE_DIST"
-            description="COM_TKDCLUB_PARTICIPANT_GRADE_DIST_DESC"
-            required="true" filter="safehtml" default="" />
-
-    </fieldset>
+    </fieldset>  
 
     <fieldset name="participant_data_userfields">
         <field 
