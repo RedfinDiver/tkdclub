@@ -5,11 +5,12 @@
     <author>Markus Moser</author>
     <creationDate>March 2024</creationDate>
     <packagename>tkdclub</packagename>
-    <version>5.0.0</version>
+    <version>5.0.1</version>
     <url>http://www.taekwondo-uttendorf.at</url>
     <packager>Markus Moser</packager>
     <packagerurl>http://www.taekwondo-uttendorf.at</packagerurl>
     <description>PKG_TKDCLUB_XML_DESCRIPTION</description>
+    <scriptfile>script.php</scriptfile>
     <updateservers>
 		  <server type="extension" name="TKD Club Update Site " priority="2">https://raw.githubusercontent.com/RedfinDiver/tkdclub/main/source/update.xml</server>
 	  </updateservers>
