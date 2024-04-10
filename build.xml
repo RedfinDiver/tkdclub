@@ -41,6 +41,7 @@
 
         <!-- copy manifest file and changing filenames according to version number -->
         <copy file="${basedir}/source/pkg_tkdclub.xml" todir="${packdir}"/>
+        <copy file="${basedir}/source/script.php" todir="${packdir}"/>
         <property name="manifest" value="${packdir}/pkg_tkdclub.xml"/>
         <xmltask source="${manifest}" dest="${manifest}">
             
@@ -69,8 +70,17 @@
             <fileset dir="source/language"/>
         </copy>
 
+        <!-- get the package version number from the manifest -->
+        <xmlproperty file="${manifest}" keepRoot="false"
+                     semanticAttributes="true"/>
+        <propertyregex property="pkg_version"
+               input="${version}"
+               regexp="\."
+               replace=""
+               global="true" />
+
         <!-- zipping to package install file -->
-        <zip destfile="${zips}/pkg_tkdclub.zip">
+        <zip destfile="${zips}/pkg_tkdclub_v${pkg_version}.zip">
             <zipfileset dir="${packdir}"/>
         </zip>
         
@@ -93,8 +103,10 @@
                regexp="\."
                replace=""
                global="true" />
-        <!-- move manifest file to build root -->
+        <!-- move manifest an script file to build root -->
         <copy file="${manifest}" todir="${build}"/>
+        <copy file="${build}/backend/script.php" todir="${build}"/>
+        <delete file="${build}/backend/script.php" />
         <!-- zip all files -->
         <property name="zipname" value="${build}/com_tkdclub_v${_version}.zip"/>
         <zip destfile="${zipname}" basedir="${build}"></zip>
