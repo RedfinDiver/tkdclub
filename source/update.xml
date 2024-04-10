@@ -22,9 +22,9 @@
         <client>0</client>
         <client_id>0</client_id>
         <version>5.0.0</version>
-        <infourl title="TKD Club 5.0.0 released">https://github.com/RedfinDiver/tkdclub/releases/tag/v5.0.1</infourl>
+        <infourl title="TKD Club 5.0.1 released">https://github.com/RedfinDiver/tkdclub/releases/tag/v5.0.1</infourl>
         <downloads>
-            <downloadurl type="full" format="zip">https://github.com/RedfinDiver/tkdclub/releases/download/v5.0.0/pkg_tkdclub_v501.zip</downloadurl>
+            <downloadurl type="full" format="zip">https://github.com/RedfinDiver/tkdclub/releases/download/v5.0.1/pkg_tkdclub_v501.zip</downloadurl>
         </downloads>
         <maintainer>RedfinDiver</maintainer>
         <targetplatform name="joomla" version="5.[0123456789]"/>
