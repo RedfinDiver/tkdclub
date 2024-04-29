@@ -3,9 +3,9 @@
   <extension type="package" version="5.0.0" method="upgrade">
     <name>pkg_tkdclub</name>
     <author>Markus Moser</author>
-    <creationDate>March 2024</creationDate>
+    <creationDate>April 2024</creationDate>
     <packagename>tkdclub</packagename>
-    <version>5.0.1</version>
+    <version>5.0.2</version>
     <url>http://www.taekwondo-uttendorf.at</url>
     <packager>Markus Moser</packager>
     <packagerurl>http://www.taekwondo-uttendorf.at</packagerurl>
