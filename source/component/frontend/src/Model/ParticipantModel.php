@@ -243,7 +243,7 @@ class ParticipantModel extends FormModel
      * 
      * @param   array   $event_data     data for the event
      * @param   object  $data           form data
-     * @param   array   $params         object of menu item parameters
+     * @param   object   $params         object of menu item parameters
      * 
      * @return  void
      * 
@@ -256,7 +256,7 @@ class ParticipantModel extends FormModel
         $mail->title      = $event_data['title'];
         $mail->date       = HTMLHelper::_('date', $event_data['date'], Text::_('DATE_FORMAT_LC4'));
         $mail->fields     = $this->prepareDataforEmail($data, $params);
-        $mail->subscribed = $this->getSubscribedParticipants($event_data['event_id']);
+        $mail->subscribed = $this->getSubscribedParticipants($event_data['id']);
         $mail->free       = $event_data['max'] - $mail->subscribed;
         $mail->name       = $data['firstname'] . ' ' . $data['lastname'];
         
