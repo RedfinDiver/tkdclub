@@ -208,7 +208,7 @@ class ParticipantsModel extends ListModel
 
         // select fields from eventparts table
         $query->select($db->quoteName($fields));
-        $query->join('LEFT', $db->quoteName('#__tkdclub_event_participants', 'b') . ' ON a.event_id = b.event_id');
+        $query->join('LEFT', $db->quoteName('#__tkdclub_event_participants', 'b') . ' ON a.id = b.event_id');
 
         if (count($pks) > 0)
         {
