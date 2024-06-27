@@ -95,8 +95,8 @@ CREATE TABLE IF NOT EXISTS `#__tkdclub_promotions` (
   `examiner_address` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `examiner_email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `promotion_state` tinyint(4) NOT NULL,
-  `checked_out` int(10) NOT NULL,
-  `checked_out_time` datetime NOT NULL,
+  `checked_out` int(10) UNSIGNED DEFAULT NULL,
+  `checked_out_time` datetime DEFAULT NULL,
   `notes` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `created_by` int(10) UNSIGNED NOT NULL DEFAULT 0,
@@ -116,8 +116,8 @@ CREATE TABLE IF NOT EXISTS `#__tkdclub_candidates` (
   `created_by` int(10) UNSIGNED NOT NULL DEFAULT 0,
   `modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `modified_by` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `checked_out` int(10) NOT NULL,
-  `checked_out_time` datetime NOT NULL,
+  `checked_out` int(10) UNSIGNED DEFAULT NULL,
+  `checked_out_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 
@@ -134,8 +134,8 @@ CREATE TABLE IF NOT EXISTS `#__tkdclub_events` (
   `created_by` int(10) UNSIGNED NOT NULL DEFAULT 0,
   `modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `modified_by` int(10) UNSIGNED NOT NULL DEFAULT 0,
-  `checked_out` int(10) NOT NULL,
-  `checked_out_time` datetime NOT NULL,
+  `checked_out` int(10) UNSIGNED DEFAULT NULL,
+  `checked_out_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 DEFAULT COLLATE=utf8mb4_unicode_ci;
 

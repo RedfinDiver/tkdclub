@@ -76,4 +76,20 @@
         <sha512>ce4439903197395907138a7d395eb529d817a5be4858d7c562276f159d9cf816b9ad1c591b0fadab84e55014896fc17e4ff95d798f479ddc082890d6ba786603</sha512>
         <targetplatform name="joomla" version="5.[0123456789]"/>
     </update>
+     <update>
+        <name>TKD Club Package</name>
+        <description>Taekwondo Club Extension</description>
+        <element>pkg_tkdclub</element>
+        <type>package</type>
+        <client>0</client>
+        <client_id>0</client_id>
+        <version>5.0.5</version>
+        <infourl title="TKD Club 5.0.5 released">https://github.com/RedfinDiver/tkdclub/releases/tag/v5.0.5</infourl>
+        <downloads>
+            <downloadurl type="full" format="zip">https://github.com/RedfinDiver/tkdclub/releases/download/v5.0.4/pkg_tkdclub_v505.zip</downloadurl>
+        </downloads>
+        <maintainer>RedfinDiver</maintainer>
+        <sha512>b064221eef021e3230105869a5a95558a4cbd306dad57852cf55fa119adcfb59280d334b8bd582cc6b740890bf5880f995cb294b1177bcbc9b7e6ea21c2dd843</sha512>
+        <targetplatform name="joomla" version="5.[0123456789]"/>
+    </update>
 </updates>

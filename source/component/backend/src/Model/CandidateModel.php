@@ -169,7 +169,7 @@ class CandidateModel extends AdminModel
             ->from($db->quoteName('#__tkdclub_members', 'a'))
             ->select($db->quoteName('b.date', 'promotion_date'))
             ->select($db->quoteName('b.type', 'promotion_type'))
-            ->join('LEFT', $db->quoteName('#__tkdclub_promotions', 'b') . ' ON  (' . $db->quoteName('b.promotion_id') . ' = ' . $promotion_id . ')')
+            ->join('LEFT', $db->quoteName('#__tkdclub_promotions', 'b') . ' ON  (' . $db->quoteName('b.id') . ' = ' . $promotion_id . ')')
             ->where('a.id = '. (int) $candidate_id);
         
         $db->setQuery($query);

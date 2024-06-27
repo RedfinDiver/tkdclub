@@ -4,10 +4,10 @@
     <author>Markus Moser</author>
     <authorEmail>redfindiver@gmail.com</authorEmail>
     <authorUrl>http://www.taekwondo-uttendorf.at</authorUrl>
-    <creationDate>Mai 2024</creationDate>
+    <creationDate>June 2024</creationDate>
     <copyright>Copyright (C) 2024 Markus Moser</copyright>
     <license>GNU/GPL http://www.gnu.org/licenses/gpl-2.0.html</license>
-    <version>5.0.4</version>
+    <version>5.0.5</version>
     <description>COM_TKDCLUB_XML_DESCRIPTION</description>
     <scriptfile>script.php</scriptfile>
     <namespace path="src">Redfindiver\Component\Tkdclub</namespace>
