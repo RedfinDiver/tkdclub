@@ -39,7 +39,7 @@ WHERE `name` = 'plg_api-authentication_basic';
 
 -- mock data
 
--- configurtion parameters
+-- configuration parameters
 UPDATE `dev_extensions`
 SET `params` = '{\"club_name\":\"TKD Club\",\"currency\":\"\",\"nations\":\"\",\"functions\":\"\",\"licenses\":\"\",\"attachments_path\":\"\",\"training_types\":\"adult,child\",\"training_years\":\"\",\"training_salary\":5,\"assistent_salary\":5,\"distance_salary\":0.1,\"training_email\":\"0\",\"championship_types\":\"\",\"medal_email\":\"0\",\"badge_cost\":8,\"examiner_cost\":1,\"club_cost\":1,\"fed_cost_under_15\":15,\"fed_cost_from_15\":25,\"dan_1\":100,\"dan_2\":150,\"dan_3\":200,\"dan_4\":300,\"dan_5\":350,\"dan_6\":400,\"captcha\":\"\",\"days\":365,\"mail_prefix\":\"Update from TKD Club: \",\"mail_signature\":\"\\r\\n===============================\\r\\nThis email was sent from the TKD-Club site\\r\\nSee you in class!\",\"email_test\":\"tkdclub@tkdclub.test\",\"allowed_extensions\":\"pdf,jpeg,jpg\"}'
 WHERE `name` = 'com_tkdclub'
