@@ -1,7 +1,7 @@
 ### helper script for installing joomla ###
 
 ### Give the link to Joomla install file ###
-JOOMLA_URL=https://github.com/joomlagerman/joomla/releases/download/5.0.3v1/Joomla_5.0.3-Stable-Full_Package_German.tar.gz
+JOOMLA_URL=https://github.com/joomlagerman/joomla/releases/download/5.2.4v1/Joomla_5.2.4-Stable-Full_Package_German.tar.gz
 
 # flag -j
 joomla()
@@ -16,7 +16,6 @@ joomla()
     echo "Downloading Joomla and extracting to \"$LANDO_WEBROOT\"..."
     sleep 1
     curl -L $JOOMLA_URL | tar zxv -C $LANDO_WEBROOT
-    ## for local file tar -zxvf /app/Joomla_5.0.3-Stable-Full_Package_German.tar.gz -C $LANDO_WEBROOT
     sleep 1
 
     echo "Installing Joomla via CLI installation..."
