@@ -1,7 +1,13 @@
 ### helper script for installing joomla ###
 
 ### Give the link to Joomla install file ###
-JOOMLA_URL=https://github.com/joomlagerman/joomla/releases/download/5.2.4v1/Joomla_5.2.4-Stable-Full_Package_German.tar.gz
+### Please don't use .zst type as I wasn't able to get this archive type decompressed in lando :-( ###
+JOOMLA_INSTALL_URL="https://github.com/joomlagerman/joomla/releases/download/5.2.4v1/Joomla_5.2.4-Stable-Full_Package_German.tar.gz"
+
+### Extraction filename of given url ###
+JOOMLA_INSTALL_FILE_NAME="$(basename "$JOOMLA_INSTALL_URL")"
+JOOMLA_INSTALL_FILE_PATH="/app/zips/$JOOMLA_INSTALL_FILE_NAME"
+
 
 # flag -j
 joomla()
@@ -13,10 +19,8 @@ joomla()
     mkdir -p /app/www
     sleep 1
 
-    echo "Downloading Joomla and extracting to \"$LANDO_WEBROOT\"..."
-    sleep 1
-    curl -L $JOOMLA_URL | tar zxv -C $LANDO_WEBROOT
-    sleep 1
+    download
+    decompress
 
     echo "Installing Joomla via CLI installation..."
     php /app/www/installation/joomla.php install \
@@ -42,6 +46,51 @@ joomla()
     echo "Clean Joomla installation is done!"
     sleep 1
 }
+
+download()
+{   
+    echo "Checking for zips folder..."
+    if [ ! -d "/app/zips" ]; then
+        mkdir -p "/app/zips"
+        echo "zips folder created!"
+    else
+        echo "Zips folder already present!"
+    fi
+
+    echo "Checking for Joomla file..."
+    if [ -f "$JOOMLA_INSTALL_FILE_PATH" ]; then
+        echo "Joomla install file '"$JOOMLA_INSTALL_FILE_NAME"' already exists, no download necessary!"
+    else
+        echo "Joomla file '"$JOOMLA_INSTALL_FILE_NAME"' is downloading..."
+        wget -nv -O "$JOOMLA_INSTALL_FILE_PATH" "$JOOMLA_INSTALL_URL"
+    fi
+}
+
+decompress()
+{
+    echo "Unzipping joomla install files..."
+    TYPE=$(file --mime-type -b "$JOOMLA_INSTALL_FILE_PATH")
+
+    echo "Type is $TYPE"
+    
+    case "$TYPE" in
+        application/zip)
+            unzip "$JOOMLA_INSTALL_FILE_PATH" -d $LANDO_WEBROOT
+            echo "Joomla install files unzipped!"
+            ;;
+        application/gzip)
+            tar -xzf "$JOOMLA_INSTALL_FILE_PATH" -C $LANDO_WEBROOT
+            echo "Joomla install files unzipped!"
+            ;;
+        *)
+            echo "Unknown or unsupported archive type: $TYPE"
+            echo "Please provide a .zip or .gz file"
+            exit 1
+            ;;
+    esac
+}
+
+
 
 # flag -l
 link()

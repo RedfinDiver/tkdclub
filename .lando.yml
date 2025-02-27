@@ -53,7 +53,7 @@ services:
 env_file:
   # Secured procedure for installing Joomla with a remote database
   # https://docs.joomla.org/J3.x:Secured_procedure_for_installing_Joomla_with_a_remote_database
-  - .config/defaults.env
+  #- .config/defaults.env
 
 tooling:
   # Tooling Example

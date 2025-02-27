@@ -21,9 +21,12 @@
     <property name="packdir" location="${basedir}/zips/buildpack/packages/"/>
     <property name="plgdir" location="${basedir}/source/plugins/"/>
 
-    <target name="clean" description="deletes the pkg_${name}.zip">
-        <delete dir="${zips}" />
-        <echo message="pkg_${name}.zip deleted!" />
+    <target name="clean" description="deletes the installable zip files">
+        <delete>
+            <fileset dir="${zips}" includes="com*"/>
+            <fileset dir="${zips}" includes="plg*"/>
+            <fileset dir="${zips}" includes="pkg*"/>
+        </delete>
     </target>
 
     <target name="init">
