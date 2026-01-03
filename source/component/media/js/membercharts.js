@@ -21,10 +21,7 @@ Tkdclub.drawStateChart = function () {
         titleTextStyle: { fontSize: 12, color: '#333' },
         "colors": ["#3366CC", "#ec8f6e", "#F9A541"],
         slices: { 1: { offset: 0.15 } },
-        chartArea: {
-            left: 30,
-            top: 50
-        },
+
     };
 
     var chart = new google.visualization.PieChart(document.getElementById("chart_state"));
@@ -46,10 +43,7 @@ Tkdclub.drawGenderChart = function () {
         title: Joomla.JText._('COM_TKDCLUB_STATISTIC_GENDER_DIST'),
         titleTextStyle: { fontSize: 12, color: '#333' },
         "colors": ["#ec8f6e", "#3366CC"],
-        chartArea: {
-            left: 30,
-            top: 50
-        }
+
     };
 
     var chart = new google.visualization.PieChart(document.getElementById("chart_genderdist"));
@@ -72,10 +66,7 @@ Tkdclub.drawAgeChart = function () {
     var options = {
         title: Joomla.JText._('COM_TKDCLUB_STATISTIC_AGE_DIST'),
         titleTextStyle: { fontSize: 12, color: '#333' },
-        chartArea: {
-            left: 30,
-            top: 50
-        },
+
         legend: {
             position: 'none'
         }

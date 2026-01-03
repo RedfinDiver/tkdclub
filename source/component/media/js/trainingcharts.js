@@ -25,11 +25,12 @@ Tkdclub.drawTrainingsDistChart = function () {
         titleTextStyle: { fontSize: 10, color: '#333' },
         "colors": Tkdclub.colorsTypes,
         slices: { 2: { offset: 0.1 } },
+        legend: { position: 'right', alignment: 'center' },
         chartArea: {
-            left: 30,
-            top: 50
+            width: '75%',
+            left: 10
         },
-        legend: { position: 'right', alignment: 'center' }
+        width: 500,
     };
 
     var chart = new google.visualization.PieChart(document.getElementById("chart_trainingstypes"));
@@ -48,11 +49,12 @@ Tkdclub.drawTrainingYearsChart = function () {
         title: Joomla.JText._('COM_TKDCLUB_STATISTIC_TRAININGS_PER_YEAR'),
         titleTextStyle: { fontSize: 10, color: '#333' },
         "colors": Tkdclub.colorsTypes,
+        legend: { position: 'right', alignment: 'center' },
         chartArea: {
-            left: 40,
-            top: 50
+            width: '69%',
+            left: 10
         },
-        legend: { position: 'right', alignment: 'center' }
+        width: 500,
     };
 
     var chart = new google.visualization.ColumnChart(document.getElementById("chart_trainingyears"));
@@ -71,11 +73,12 @@ Tkdclub.drawParticipantsChart = function () {
         title: Joomla.JText._('COM_TKDCLUB_STATISTIC_AVERAGE_PARTICIPANTS'),
         titleTextStyle: { fontSize: 10, color: '#333' },
         "colors": Tkdclub.colorsTypes,
+        legend: { position: 'right', alignment: 'center' },
         chartArea: {
-            left: 40,
-            top: 50
+            width: '69%',
+            left: 10
         },
-        legend: { position: 'right', alignment: 'center' }
+        width: 500,
     };
 
     var chart = new google.visualization.LineChart(document.getElementById("chart_participants"));
