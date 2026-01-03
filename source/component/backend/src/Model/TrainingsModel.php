@@ -343,6 +343,8 @@ class TrainingsModel extends ListModel
                 $trainer->sums = $this->sum_up_trainerdata($trainer->$year, $sum_data);
             }
 
+            $trainer->sums['unpaid_sum'] = round($trainer->sums['unpaid_sum'], 2);
+
             $trainerdata[] = $trainer;  // send the collected data to variable
         }
 
@@ -365,6 +367,10 @@ class TrainingsModel extends ListModel
         if (!$this->training_years) {
             return false;
         }
+
+        // Restrict the training years to the last N years if set in component parameters
+        $max_years = ComponentHelper::getParams('com_tkdclub')->get('statistics_years', 5);
+        // $this->training_years = array_slice($this->training_years, 0, $max_years);
 
         // Initialise the container and some variables
         $trainingsdata = new \stdClass;
@@ -427,6 +433,7 @@ class TrainingsModel extends ListModel
     {
         $chartdata = array();
         $traintypes = array();
+        $currentyear = date('Y');
 
         $chartdata[0][] = Text::_('COM_TKDCLUB_YEAR');
 
@@ -438,7 +445,7 @@ class TrainingsModel extends ListModel
 
         foreach ($data as $year => $value) {
             $i = count($chartdata);
-            if (is_numeric($year)) {
+            if (is_numeric($year) && $year >= ($currentyear - ComponentHelper::getParams('com_tkdclub')->get('statistics_years', 5))) {
                 $chartdata[$i][] = $year;
                 foreach ($traintypes as $traintype) {
                     if (array_key_exists($traintype, $value['types'])) {
@@ -460,10 +467,11 @@ class TrainingsModel extends ListModel
     {
         $chartdata = array();
         $chartdata[0] = $data->TrainingYearsChart[0]; // The same as in the TrainingsYearsChart
+        $currentyear = date('Y');
 
         foreach ($data as $year => $value) {
             $j = count($chartdata);
-            if (is_numeric($year)) {
+            if (is_numeric($year) && $year >= ($currentyear - ComponentHelper::getParams('com_tkdclub')->get('statistics_years', 5))) {
                 $chartdata[$j][] = $year;
                 foreach ($this->training_types as $type) {
                     if (array_key_exists($type, $data->{$year}['parts'])) {

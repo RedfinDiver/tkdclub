@@ -72,13 +72,13 @@
             name="training_salary"
             label="COM_TKDCLUB_CONFIG_TRAINER_SALARY"
             description="COM_TKDCLUB_CONFIG_TRAINER_SALARY_DESC"
-            type="text" default="" size="10" filter="integer" />
+            type="text" default="" size="10" filter="float" />
         
         <field
             name="assistent_salary"
             label="COM_TKDCLUB_CONFIG_ASSIST_SALARY"
             description="COM_TKDCLUB_CONFIG_ASSIST_SALARY_DESC"
-            type="text" default="" size="10" filter="integer" />        
+            type="text" default="" size="10" filter="float" />        
 
         <field
             name="distance_salary"
@@ -252,6 +252,19 @@
             label="COM_TKDCLUB_CONFIG_EVENTS_DAYS_TO_SAVE_DATA"
             description="COM_TKDCLUB_CONFIG_EVENTS_DAYS_TO_SAVE_DATA_DESC"
             default="365" filter="integer" /> 
+
+    </fieldset>
+
+    <fieldset
+        name="statistics"
+        label="COM_TKDCLUB_CONFIG_STATISTICS"
+        description="COM_TKDCLUB_CONFIG_STATISTICS_DESC">
+    
+        <field
+            name="statistics_years"
+            label="COM_TKDCLUB_CONFIG_STATISTICS_YEARS"
+            description="COM_TKDCLUB_CONFIG_STATISTICS_YEARS_DESC"
+            type="text" default="5" size="10" filter="integer"/>
 
     </fieldset>
     
