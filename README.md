@@ -30,6 +30,13 @@ Apache Ant needs a Java runtime as a dependency - your favorite package manager 
 
 Consider changing the path to this extensions in the build.xlm in the root directory of this repo according to your setup.
 
+As of newer OpenJDK there might be some issues for the module `xmltask` to access other 
+Java modules. You have to export following enviroment variable to solve this issue:
+
+`export ANT_OPTS="--add-exports java.xml/com.sun.org.apache.xpath.internal=ALL-UNNAMED --add-exports java.xml/com.sun.org.apache.xpath.internal.objects=ALL-UNNAMED"`
+
+Alternativley you can add this to your .bashrc or .zshrc
+
 [Git](https://git-scm.com/) - Version control system
 
 ### Optional
