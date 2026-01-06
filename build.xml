@@ -4,16 +4,16 @@
     
     <taskdef resource="net/sf/antcontrib/antlib.xml">
         <classpath>
-            <pathelement location="/usr/share/java/apache-ant/ant-contrib.jar"/>
+            <pathelement location="/usr/share/java/ant/ant-contrib.jar"/>
         </classpath>
     </taskdef>
 
     <taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask">
         <classpath>
-            <pathelement location="/usr/share/java/apache-ant/xmltask.jar"/>
+            <pathelement location="/usr/share/java/ant/xmltask.jar"/>
         </classpath>
     </taskdef>
-
+    
     <!-- properties for package and zip creation -->
     <property name="name" value="tkdclub"/>
     <property name="zips" location="${basedir}/zips/"/>
